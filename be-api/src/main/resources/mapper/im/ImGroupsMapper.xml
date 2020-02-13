@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phlink.bus.api.im.dao.ImGroupsMapper">
+    <update id="removeByGroupId">
+        update t_im_groups
+        set deleted = true
+        where group_id =any(#{groupIds}::text[])
+    </update>
+
+    <select id="list" resultType="com.phlink.bus.api.im.domain.ImGroups">
+        select g.*, case when u.realname is null then u.username else u.realname end as managerName, u.mobile as managerMobile
+        from t_im_groups g left join sys_user u on g.manager_id = u.user_id
+        where g.deleted = false
+        <if test="imGroups.createTimeFrom != null and imGroups.createTimeFrom !=''">
+            And g.create_time::date &gt; #{imGroups.createTimeFrom}::date
+        </if>
+        <if test="imGroups.createTimeTo!= null and imGroups.createTimeTo !=''">
+            And g.create_time::date &lt; #{imGroups.createTimeTo}::date
+        </if>
+        <if test="imGroups.name!= null and imGroups.name !=''">
+            And g.name like CONCAT('%', #{imGroups.name}, '%')
+        </if>
+        order by g.id desc
+    </select>
+</mapper>

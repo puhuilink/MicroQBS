@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phlink.bus.api.attendance.dao.BusAttendanceMapper">
+	<select id="selectListByCondi" 
+	parameterType="com.phlink.bus.api.attendance.domain.vo.BusAttendanceVO" 
+	resultType="com.phlink.bus.api.attendance.domain.vo.BusAttendanceVO">
+		select
+		att.id              as id, 
+		att.number_plate    as numberPlate,
+		att.type            as type,        
+		att.create_time     as createTime,
+		att.position        as position,
+		att.time            as time,
+		u.mobile            as mobile,
+		u.username          as userName,
+		u.realname          as realname,
+		r.role_name         as roleName
+		from 
+		t_bus_attendance att 
+		LEFT JOIN sys_user u on u.user_id = att.user_id
+		LEFT JOIN sys_user_role ur on ur.user_id = att.user_id
+		LEFT JOIN sys_role r on r.role_id = ur.role_id
+		where 1 = 1
+		AND att.deleted = false
+		<if test="userId!=null">
+            AND att.user_id = #{userId}
+        </if>
+		<if test="timeFrom!=null">
+            AND att.create_time <![CDATA[>=]]> #{timeFrom}
+        </if>
+        <if test="timeTo!=null">
+            AND att.create_time <![CDATA[<=]]>#{timeTo}
+        </if>
+        <if test="roleId!=null">
+            AND r.role_id = #{roleId}::bigint
+        </if>
+       	<if test="type!=null">
+            AND att.type = #{type}
+        </if>
+       	<if test="realname!=null and realname != ''">
+            AND u.realname like CONCAT('%', #{realname}, '%')
+        </if>
+       	<if test="mobile!=null and mobile != ''">
+            AND u.mobile like CONCAT('%', #{mobile}, '%')
+        </if>
+        <if test="source == '1'.toString()">
+            ORDER BY att.create_time ASC
+        </if>
+        <if test="source == '2'.toString()">
+            ORDER BY att.create_time DESC
+        </if>
+        <if test="pageNum!=-1">
+            limit #{pageSize} OFFSET #{pageNum} 
+        </if>
+	</select>
+	<select id="findAttendanceInToday" resultType="com.phlink.bus.api.attendance.domain.BusAttendance">
+		select id,
+		create_time createTime,
+		user_id userId,
+		number_plate numberPlate,
+		bus_id busId,
+		route_id routeId,
+		type,
+		time,
+		reason
+		from t_bus_attendance
+		where 1 =1 
+		and user_id = #{userId}
+		and time = CURRENT_DATE
+		ORDER BY create_time desc
+		LIMIT 1	
+	</select>
+		<select id="findAttendanceInDay" resultType="com.phlink.bus.api.attendance.domain.BusAttendance">
+		select id,
+		create_time createTime,
+		user_id userId,
+		number_plate numberPlate,
+		bus_id busId,
+		route_id routeId,
+		type,
+		time,
+		reason
+		from t_bus_attendance
+		where 1 =1 
+		and user_id = #{userId}
+		and time = #{time}
+		ORDER BY create_time desc
+		LIMIT 1	
+	</select>
+</mapper>

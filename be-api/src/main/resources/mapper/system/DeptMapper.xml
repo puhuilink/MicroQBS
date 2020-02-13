@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phlink.bus.api.system.dao.DeptMapper">
+    <!-- 递归删除菜单，作用为根据当前 deptId递归查找出其所有下级部门 -->
+    <delete id="deleteDepts" parameterType="string">
+        DELETE
+        FROM
+            sys_dept
+        WHERE
+            dept_id IN (
+                        with recursive subdept as (
+                          select t.dept_id,
+                                 t.parent_id,
+                                 t.dept_name
+                          from sys_dept t
+                          where t.dept_id = #{deptId}::bigint
+                          union all
+                          select m.dept_id,
+                                 m.parent_id,
+                                 m.dept_name
+                          from sys_dept m
+                                 inner join subdept s on s.dept_id = m.parent_id
+                        )
+                        select s.dept_id
+                        from subdept s
+                      )
+    </delete>
+    <select id="listChildrenDepts" resultType="com.phlink.bus.api.system.domain.Dept">
+        with recursive subdept as (
+          select t.dept_id,
+                 t.parent_id,
+                 t.dept_name
+          from sys_dept t
+          where t.dept_id = #{deptId}
+          union all
+          select m.dept_id,
+                 m.parent_id,
+                 m.dept_name
+          from sys_dept m
+                 inner join subdept s on s.dept_id = m.parent_id
+        )
+        select s.dept_id as deptId, s.dept_name as deptName, s.parent_id as parentId
+        from subdept s
+    </select>
+    <select id="listDepts" resultType="com.phlink.bus.api.system.domain.Dept">
+        with recursive subdept as (
+            select t.dept_id,
+                         t.parent_id,
+                         t.dept_name as org_name,
+                         t.order_num,
+                         t.create_time,
+                         t.modify_time,
+                   t.dept_name::text as dept_name
+            from sys_dept t
+            where t.parent_id = 0
+            union all
+            select m.dept_id,
+                         m.parent_id,
+                         m.dept_name as org_name,
+                         m.order_num,
+                         m.create_time,
+                         m.modify_time,
+                   s.dept_name || '>' || m.dept_name as dept_name
+            from sys_dept m
+                         inner join subdept s on s.dept_id = m.parent_id
+        )
+        select dept_id, parent_id, order_num, create_time, modify_time, org_name as dept_name, substring(dept_name from 0 for position('>'||org_name in dept_name)) as parentDeptName
+        from subdept s
+        ${ew.customSqlSegment}
+
+    </select>
+</mapper>

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phlink.bus.api.bus.dao.BusMapper">
+
+    <resultMap id="bus" type="com.phlink.bus.api.bus.domain.Bus">
+        <id column="id" jdbcType="DECIMAL" property="id"/>
+        <result column="number_plate" jdbcType="VARCHAR" property="numberPlate"/>
+        <result column="bus_code" jdbcType="VARCHAR" property="busCode"/>
+        <result column="model" jdbcType="VARCHAR" property="model"/>
+        <result column="brand" jdbcType="VARCHAR" property="brand"/>
+        <result column="chassis" jdbcType="VARCHAR" property="chassis"/>
+        <result column="engine_model" jdbcType="VARCHAR" property="engineModel"/>
+        <result column="power" jdbcType="VARCHAR" property="power"/>
+        <result column="emission" jdbcType="VARCHAR" property="emission"/>
+        <result column="length" jdbcType="VARCHAR" property="length"/>
+        <result column="width" jdbcType="VARCHAR" property="width"/>
+        <result column="height" jdbcType="VARCHAR" property="height"/>
+        <result column="seat" jdbcType="VARCHAR" property="seat"/>
+        <result column="fuel_tank" jdbcType="VARCHAR" property="fuelTank"/>
+        <result column="dept_id" jdbcType="VARCHAR" property="deptId"/>
+        <!--        <result column="service_org" jdbcType="VARCHAR" property="serviceOrg"/>-->
+        <!--        <result column="route_id" jdbcType="VARCHAR" property="routeId"/>-->
+        <result column="entity_name" jdbcType="VARCHAR" property="entityName"/>
+        <result column="tid" jdbcType="VARCHAR" property="tid"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
+    </resultMap>
+
+    <update id="updateBusBaiduTerminalId">
+        update t_bus
+        set entity_name = #{busCode}
+        where bus_code = #{busCode}
+    </update>
+
+    <update id="updateBusAmapTerminalId">
+        update t_bus
+        set tid = #{tid}
+        where bus_code = #{busCode}
+    </update>
+    <select id="listBus" resultType="com.phlink.bus.api.bus.domain.Bus">
+        select distinct
+        t.*,
+        d.dept_name,
+        s.school_name      as serviceOrgName,
+        dvr.dvr_code       as dvrCode,
+        dvr.channel_number as channelNumber,
+        case when ro.id is null then '已入库' else '已绑定' end as busState
+        from t_bus t
+        LEFT JOIN sys_dept d ON t.dept_id = d.dept_id
+        LEFT JOIN t_route tr ON t.id = tr.bus_id and tr.deleted = false
+        LEFT JOIN t_bus_attendance a ON tr.id = a.route_id and a.deleted = false
+        LEFT JOIN t_school s ON tr.school_id = s.id and s.deleted = false
+        LEFT JOIN t_dvr dvr on t.id = dvr.bus_id and dvr.deleted = false
+        LEFT JOIN t_route_operation ro on t.id = ro.bind_bus_id and ro.deleted = false
+        where t.deleted = false
+        <if test="busViewVO.numberPlate!=null and busViewVO.numberPlate!=''">
+            and t.number_plate like CONCAT('%',#{busViewVO.numberPlate}, '%')
+        </if>
+        <if test="busViewVO.busCode!=null and busViewVO.busCode!=''">
+            and t.bus_code like CONCAT('%',#{busViewVO.busCode}, '%')
+        </if>
+        <if test="busViewVO.dvrCode!=null and busViewVO.dvrCode!=''">
+            and dvr.dvr_code like CONCAT('%',#{busViewVO.dvrCode}, '%')
+        </if>
+        <if test="busViewVO.deptId!=null">
+            and t.dept_id IN (
+            with recursive subdept as (
+            select t.dept_id,
+            t.parent_id,
+            t.dept_name
+            from sys_dept t
+            where t.dept_id = #{busViewVO.deptId}::bigint
+            union all
+            select m.dept_id,
+            m.parent_id,
+            m.dept_name
+            from sys_dept m
+            inner join subdept s on s.dept_id = m.parent_id
+            )
+            select s.dept_id
+            from subdept s
+            )
+
+        </if>
+        order by id desc
+    </select>
+    <select id="unbindRouteBusList" resultMap="bus">
+        select *
+        from t_bus t
+        where t.id != all(select bind_bus_id from t_route_operation where deleted = false)
+        and t.deleted = false
+        <if test="entity.numberPlate != null and entity.numberPlate != ''">
+            and t.number_plate like CONCAT('%', #{entity.numberPlate}, '%')
+        </if>
+        <if test="entity.busCode != null and entity.busCode != ''">
+            and t.bus_code like CONCAT('%', #{entity.busCode}, '%')
+        </if>
+    </select>
+    <select id="unbindRouteDriverList" resultType="com.phlink.bus.api.system.domain.User">
+        select t.user_id as userId,
+        t.realname as realname,
+        t.mobile as mobile
+        from sys_user t
+        left join sys_user_role t1 on t.user_id = t1.user_id
+        where t.user_id != all(select bind_driver_id from t_route_operation where deleted = false)
+        and t1.role_id = #{roleID}
+        <if test="entity.realname != null and entity.realname != ''">
+            and t.realname like CONCAT('%', #{entity.realname}, '%')
+        </if>
+        <if test="entity.contactNumber != null and entity.contactNumber != ''">
+            and t.mobile like CONCAT('%', #{entity.contactNumber}, '%')
+        </if>
+        group by t.user_id
+    </select>
+    <select id="unbindRouteBusTeacherList" resultType="com.phlink.bus.api.system.domain.User">
+        select t.user_id as userId,
+        t.realname as realname,
+        t.mobile as mobile
+        from sys_user t
+        left join sys_user_role t1 on t.user_id = t1.user_id
+        where t.user_id != all(select bind_bus_teacher_id from t_route_operation where deleted = false)
+        and t1.role_id = #{roleID}
+        <if test="entity.realname != null and entity.realname != ''">
+            and t.realname like CONCAT('%', #{entity.realname}, '%')
+        </if>
+        <if test="entity.contactNumber != null and entity.contactNumber != ''">
+            and t.mobile like CONCAT('%', #{entity.contactNumber}, '%')
+        </if>
+        group by t.user_id
+    </select>
+
+    <select id="checkNumberPlate" resultType="integer">
+        select count(1)
+        from t_bus t
+        where t.number_plate = #{numberPlate}
+    </select>
+
+    <select id="findEntitysByids" resultType="string">
+        select t.entity_name from t_bus t where t.deleted=false
+        <if test="routeId!=null">
+            AND t.route_id=#{routeId}
+        </if>
+    </select>
+
+    <select id="findBusByUserId" resultType="com.phlink.bus.api.bus.domain.Bus">
+    	select b.id,
+    	b.number_plate numberPlate,
+    	b.model,
+    	b.brand,
+    	ro.route_id
+    	from t_bus b 
+    	left join t_route_operation ro on ro.bind_bus_id = b.id
+		where 1 = 1 
+		and ro.bind_bus_teacher_id = #{userId}
+		and ro.deleted = false
+    </select>
+
+    <select id="getBusByWorkerId" resultType="com.phlink.bus.api.bus.domain.Bus">
+    	select b.*,
+    	ro.route_id
+    	from t_bus b
+    	left join t_route_operation ro on ro.bind_bus_id = b.id
+		where 1 = 1 
+		and (ro.bind_driver_id = #{userId} or ro.bind_bus_teacher_id = #{userId})
+		and ro.deleted = false
+		limit 1
+    </select>
+    <select id="listSchoolBus" resultType="com.phlink.bus.api.bus.domain.VO.SchoolBusListVO">
+        select t.id                                                                        as schoolId,
+        t.school_name,
+        COALESCE(json_agg(v.* ORDER BY v.id) filter (where v.id is not null), '[]') as buslist,
+        (select count(1) from v_bindbus_detail_info v1 where v1.school_id = t.id and v1.online = 1)  as onlineCount,
+        (select count(1) from v_bindbus_detail_info v1 where v1.school_id = t.id and (v1.online = 0 or v1.online is null))  as offlineCount
+        from t_school t
+        left join v_bindbus_detail_info v on t.id = v.school_id
+        where t.deleted = false
+        <if test="numberPlate != null and numberPlate != ''">
+            AND b.number_plate like CONCAT('%', #{numberPlate}, '%')
+        </if>
+        group by t.id
+        order by t.id
+    </select>
+    <select id="listSchoolRouteBus" resultType="com.phlink.bus.api.bus.domain.VO.SchoolRouteBusListVO">
+        select s.id as schoolId, s.school_name as schoolName, json_agg(t.value) as routeList
+        from (
+        select r.school_id,
+        to_json(json_build_object('route_id', r.id,
+        'route_name', r.route_name,
+        'busList', (select COALESCE(json_agg(v.*), '[]')
+                    from v_bindbus_detail_info v
+                    where v.route_id = r.id
+                    <if test="numberPlate != null and numberPlate != ''">
+                        AND v.number_plate like CONCAT('%', #{numberPlate}, '%')
+                    </if>
+                    <if test="busCode != null and busCode != ''">
+                        AND v.bus_code like CONCAT('%', #{busCode}, '%')
+                    </if>)
+                    )) as value
+        from t_route r
+        where r.deleted = false
+        group by r.id
+        ) as t
+        left join t_school s on t.school_id = s.id and s.deleted = false
+        group by s.id
+    </select>
+    <select id="findUserAndBusByMobile" resultType="com.phlink.bus.api.bus.domain.VO.UserBusVO">
+		select u.user_id,u.username,u.mobile,u.realname
+		from sys_user u
+		LEFT JOIN sys_user_role ur on ur.user_id = u.user_id
+		where 1 = 1
+		and u.mobile = #{mobile}    
+    </select>
+    <select id="findUserAndBusByTeacher" resultType="com.phlink.bus.api.bus.domain.VO.UserBusVO">
+        select v.bind_bus_teacher_id as userId, v.bus_teacher_name as realName, v.bus_teacher_mobile as mobile, v.number_plate as numberPlate
+        from v_bindbus_detail_info v
+    </select>
+    <select id="findUserAndBusByDriver" resultType="com.phlink.bus.api.bus.domain.VO.UserBusVO">
+        select v.bind_driver_id as userId, v.driver_name as realName, v.driver_mobile as mobile, v.number_plate as numberPlate
+        from v_bindbus_detail_info v
+    </select>
+    <select id="listDetailByIds" resultType="com.phlink.bus.api.device.domain.VO.BusDetailLocationVO">
+        select *
+        from v_bus_detail_info v
+        where v.id =any(#{busIds}::bigint[])
+    </select>
+    <select id="listBusTripTime" resultType="com.phlink.bus.api.alarm.domain.BusTripTime">
+        select v.*
+        from v_route_time v
+        where v.route_id =
+              (select t.route_id from t_route_operation t where t.bind_bus_id = #{busId} and t.deleted = false)
+    </select>
+    <select id="listBindBusDetailInfo" resultType="com.phlink.bus.api.bus.domain.BindBusDetailInfo">
+        select *
+        from v_bindbus_detail_info
+        where 1=1
+        <if test="busCode != null and busCode != ''">
+            AND bus_code = #{busCode}
+        </if>
+
+    </select>
+    <select id="getBindBusDetailInfo" resultType="com.phlink.bus.api.bus.domain.BindBusDetailInfo">
+        select *
+        from v_bindbus_detail_info
+        where 1=1
+        <if test="busCode != null and busCode != ''">
+            AND bus_code = #{busCode}
+        </if>
+        <if test="workerId != null">
+            AND (bind_bus_teacher_id = #{workerId} or bind_driver_id = #{workerId})
+        </if>
+    </select>
+    <select id="listBusStopTimeDetailInfos"
+            resultType="com.phlink.bus.api.bus.domain.BindBusStoptimeDetailInfo">
+        select *
+        from v_bindbus_stoptime_info
+    </select>
+
+</mapper>

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+import "common.proto";
+
+option java_multiple_files = true;
+option java_package = "io.rpc.core.device";
+option java_outer_classname = "EWatchProto";
+option objc_class_prefix = "EWatch";
+
+package device;
+
+service EWatchService {
+    // 保存一条手环上传的数据
+    rpc save (EWatchInfo) returns (CommonReply) {}
+}
+
+message EWatchInfo {
+    // 设备号
+    string deviceId = 1;
+    // 时间戳
+    uint64 timestamp = 2;
+    // 电池电量
+    uint32 batteryLevel = 3;
+    // 经度
+    double latitude = 4;
+    // 纬度
+    double longitude = 5;
+    // 速度
+    uint32 speed = 6;
+    // 方向
+    uint32 direction = 7;
+}
+

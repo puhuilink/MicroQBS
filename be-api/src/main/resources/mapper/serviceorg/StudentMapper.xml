@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phlink.bus.api.serviceorg.dao.StudentMapper">
+
+    <select id="getStudentByClassId" resultType="com.phlink.bus.api.serviceorg.domain.Student">
+        select id        id,
+               name,
+               school_id schoolId,
+               class_id  classId,
+               sex       sex,
+               birthday  birthday
+        from t_student
+        where deleted = false
+          and class_id = #{classId}
+    </select>
+
+    <select id="getStudentDetail" resultType="com.phlink.bus.api.serviceorg.domain.Student">
+        select s.*,
+               u.realname as main_guardian_name,
+               u.mobile   as main_guardian_mobile,
+               g.idcard   as main_guardian_idcard,
+               u.status   as main_guardian_status,
+               u.registration_id   as main_registration_id,
+               g.leave_permissions,
+               c.class_level,
+               c.grade,
+               st.stop_name,
+               d.device_code,
+               l.loginTimes,
+               last.lastLoginTime
+        from t_student s
+                 left join sys_user u on s.main_guardian_id = u.user_id
+                 left join t_guardian g on s.main_guardian_id = g.user_id
+                 left join t_classes c on s.class_id = c.id
+                 left join t_device_relation d on s.id = d.student_id
+                 left join t_stop st on s.stop_id = st.id
+                 left join (select count(1) as loginTimes, l.username from sys_login_log l group by l.username) l
+                           on l.username = u.username
+                 left join (select max(log.login_time) as lastLoginTime, log.username
+                            from sys_login_log log
+                            group by log.username) last on u.username = last.username
+        where s.id = #{studentId}
+    </select>
+
+    <select id="listStudents" resultType="com.phlink.bus.api.serviceorg.domain.Student">
+        select distinct
+        t1.*,
+        t2.class_level  as classLevel,
+        t2.grade,
+        t2.enroll_year  as enrollYear,
+        t3.school_name  as schoolName,
+        u1.realname  as mainGuardianName,
+        u1.mobile  as mainGuardianMobile,
+        u1.idcard  as mainGuardianIdcard,
+        u1.status  as mainGuardianStatus,
+        (t1.main_guardian_id = t1.leave_guardian_id) as leavePermissions,
+        u2.realname  as leaveGuardianName,
+        u2.mobile  as leaveGuardianMobile,
+        t6.device_code,
+        t7.stop_name    as stopName,
+        t7.id           as stopId,
+        t7.stop_sequence,
+        t8.id           as routeId,
+        t8.route_name   as routeName,
+        t8.bus_code   as busCode,
+        t8.number_plate
+        from t_student t1
+        left join t_classes t2 on t1.class_id = t2.id and t2.deleted = false
+        left join t_school t3 on t1.school_id = t3.id and t3.deleted = false
+        left join t_guardian t5 on t1.id = any (t5.student_id) and t5.deleted = false
+        left join sys_user u1 on u1.user_id = t1.main_guardian_id
+        left join sys_user u2 on u2.user_id = t1.leave_guardian_id
+        left join t_device_relation t6 on t1.id = t6.student_id and t6.deleted = false
+        left join v_bindbus_detail_info t8 on t1.route_operation_id = t8.route_operation_id and t8.deleted = false
+        left join v_stop t7 on t1.stop_id = t7.id and t7.route_id = t8.route_id and t7.deleted = false
+        where t1.deleted = false
+        <if test="studentViewVO.id!=null">
+            and t1.id::text like CONCAT('%', #{studentViewVO.id}, '%')
+        </if>
+        <if test="studentViewVO.routeOperationId!=null">
+            and t1.route_operation_id=#{studentViewVO.routeOperationId}
+            and t7.id is not null
+        </if>
+        <if test="studentViewVO.classLevel!=null">
+            and t2.class_level=#{studentViewVO.classLevel}
+        </if>
+        <if test="studentViewVO.schoolName!=null and studentViewVO.schoolName!=''">
+            and t3.school_name like CONCAT('%', #{studentViewVO.schoolName}, '%')
+        </if>
+        <if test="studentViewVO.name!=null and studentViewVO.name!=''">
+            and t1.name like CONCAT('%', #{studentViewVO.name}, '%')
+        </if>
+        <if test="studentViewVO.enrollYear!=null">
+            and t2.enroll_year=#{studentViewVO.enrollYear}
+        </if>
+        <if test="studentViewVO.mobile!=null and studentViewVO.mobile!=''">
+            and u1.mobile like CONCAT('%', #{studentViewVO.mobile}, '%')
+        </if>
+        <if test="studentViewVO.serviceStatus!=null">
+            and t1.service_status=#{studentViewVO.serviceStatus}
+        </if>
+        <if test="studentViewVO.stopId!=null">
+            and t7.id=#{studentViewVO.stopId}
+        </if>
+        <if test="studentViewVO.stopName!=null and studentViewVO.stopName!=''">
+            and t7.stop_name like CONCAT('%', #{studentViewVO.stopName}, '%')
+        </if>
+        <if test="studentViewVO.routeId!=null">
+            and t8.id=#{studentViewVO.routeId}
+        </if>
+        <if test="studentViewVO.stopName!=null">
+            and t7.stop_name like CONCAT('%', #{studentViewVO.stopName}, '%')
+        </if>
+        <if test="studentViewVO.grade!=null">
+            and t2.grade = #{studentViewVO.grade}
+        </if>
+        order by
+        <if test="studentViewVO.routeOperationId!=null">
+        t7.stop_sequence asc,
+        </if>
+        t1.id desc
+    </select>
+    <select id="listStudentByGuardian" resultType="com.phlink.bus.api.serviceorg.domain.Student">
+        select distinct
+               t1.*,
+                     t2.class_level  as classLevel,
+                     t2.grade,
+                     t2.enroll_year  as enrollYear,
+                     t3.school_name  as schoolName,
+                     u1.realname  as mainGuardianName,
+                     u1.mobile  as mainGuardianMobile,
+                     u1.idcard  as mainGuardianIdcard,
+                     u1.status  as mainGuardianStatus,
+                     u2.realname  as leaveGuardianName,
+                     u2.mobile  as leaveGuardianMobile,
+                     t6.device_code,
+                     t7.stop_name    as stopName,
+                     t7.id           as stopId,
+                     t8.id           as routeId,
+                     t8.route_name   as routeName,
+                     t8.bus_code   as busCode,
+                     t8.number_plate
+        from t_student t1
+                         left join t_classes t2 on t1.class_id = t2.id and t2.deleted = false
+                         left join t_school t3 on t1.school_id = t3.id and t3.deleted = false
+                         left join t_guardian t5 on t1.id = any (t5.student_id) and t5.deleted = false
+                         left join sys_user u1 on u1.user_id = t1.main_guardian_id
+                         left join sys_user u2 on u2.user_id = t1.leave_guardian_id
+                         left join t_device_relation t6 on t1.id = t6.student_id and t6.deleted = false
+                         left join v_bindbus_detail_info t8 on t1.route_operation_id = t8.route_operation_id and t8.deleted = false
+                         left join t_stop t7 on t1.stop_id = t7.id and t7.deleted = false and t7.route_id = t8.route_id
+        where t1.deleted = false
+          and t5.user_id = #{guardianUserId}
+        order by t1.id desc
+    </select>
+
+    <update id="invalidate">
+        update t_student
+        set service_status='0',
+            service_invalid_reason= #{serviceInvalidateVO.invalidReason}
+        where id = #{serviceInvalidateVO.studentId}
+    </update>
+
+    <select id="findById" resultType="com.phlink.bus.api.serviceorg.domain.Student">
+        select id,
+               name,
+               school_id          schoolId,
+               class_id           classId,
+               sex,
+               birthday,
+               service_status     serviceStatus,
+               service_start_date serviceStartDate,
+               service_end_date   serviceEndDate,
+               stop_id            stopId,
+               main_guardian_id   mainGuardianId,
+               address,
+               student_code       studentCode,
+               start_year         startYear,
+               bus_id             busId,
+               age,
+               school_name        schoolName,
+               route_operation_id routeOperationId,
+               leave_guardian_id  leaveGuardianId
+        from t_student
+        where id = #{studentId}
+          and deleted = false
+    </select>
+    <select id="getStudentByDeviceCode" resultType="com.phlink.bus.api.serviceorg.domain.Student">
+        select t.*, r.school_name, c.grade, c.class_level
+        from t_student t
+                 left join v_device_detailinfo r on t.id = r.student_id and r.deleted = false
+                 left join t_classes c on c.id = t.class_id and c.deleted = false
+        where t.deleted = false and r.device_code = #{deviceCode} and r.deleted = false
+    </select>
+    <select id="listByGuardianInRouteOperation" resultType="com.phlink.bus.api.serviceorg.domain.Student">
+        select distinct
+                 t1.id,
+                 t1.name,
+                 t1.birthday,
+                 t1.service_status,
+                 t1.service_start_date,
+                 t1.service_end_date,
+                 t1.service_invalid_reason,
+                 t1.start_year,
+                 t1.school_id,
+                 t1.bus_id,
+                 t1.main_guardian_id,
+                 t1.leave_guardian_id,
+                 t1.sex,
+                 t1.address,
+                 t2.class_level  as classLevel,
+                 t2.grade,
+                 t2.enroll_year  as enrollYear,
+                 t3.school_name  as schoolName,
+                 t6.device_code,
+                 t7.stop_name    as stopName,
+                 t7.id           as stopId,
+                 t8.id           as routeId,
+                 t8.route_name   as routeName,
+                 t9.number_plate as numberPlate
+        from t_student t1
+                         left join t_classes t2 on t1.class_id = t2.id and t2.deleted = false
+                         left join t_school t3 on t1.school_id = t3.id and t3.deleted = false
+                         left join t_guardian t5 on t1.id = any (t5.student_id) and t5.deleted = false
+                         left join t_device_relation t6 on t1.id = t6.student_id and t6.deleted = false
+                         left join t_stop t7 on t1.stop_id = t7.id and t7.deleted = false
+                         left join t_route t8 on t7.route_id = t8.id and t8.deleted = false
+                         left join t_bus t9 on t1.bus_id = t9.id and t9.deleted = false
+                         left join t_route_operation t10 on t10.id = t1.route_operation_id and t10.deleted = false
+        where t1.deleted = false
+              and t5.user_id = #{guardianId}
+              and t1.route_operation_id = #{routeOperationId}
+    </select>
+    <select id="listLeaveStudentByTrip" resultType="com.phlink.bus.api.serviceorg.domain.Student">
+        select *
+        from t_student t
+        where t.id = any (select l.student_id
+        from t_leave l
+        where l.deleted = false
+        and l.leave_date_start &gt;= #{day}
+        and l.leave_date_end &lt;= #{day}
+        and #{tripTime} =any(l.bus_time)
+        and #{tripId} =any(l.trip_id)
+        <if test="studentIds != null">
+            and l.student_id =any(#{studentIds})
+        </if>
+        )
+        and t.deleted = false
+    </select>
+    <select id="listStudentGuardianInfoNotLeaveByStop"
+            resultType="com.phlink.bus.api.serviceorg.domain.StudentGuardianInfo">
+        select s1.id       as student_id,
+        s1.name     as student_name,
+        s1.sex,
+        s1.age,
+        s1.birthday,
+        s1.school_id,
+        s1.school_name,
+        s1.service_start_date,
+        s1.service_end_date,
+        s1.avatar,
+        s1.main_guardian_id,
+        s1.main_guardian_relation,
+        u1.mobile   as main_guardian_mobile,
+        u1.realname as main_guardian_name,
+        s1.leave_guardian_id,
+        u2.mobile   as main_guardian_mobile,
+        u2.realname as main_guardian_name
+        from t_student s1
+        left join sys_user u1 on s1.main_guardian_id = u1.user_id
+        left join sys_user u2 on s1.leave_guardian_id = u2.user_id
+        where s1.id != all (select l.student_id
+        from t_leave l
+        where l.deleted = false
+        and l.leave_date_start &gt;= #{day}
+        and l.leave_date_end &lt;= #{day}
+        and #{tripTime} = any (l.bus_time)
+        and #{tripId} = any (l.trip_id)
+        )
+        and s1.stop_id = #{stopId}
+        and s1.deleted = false
+    </select>
+    <select id="listStudentGuardianInfoByStop"
+            resultType="com.phlink.bus.api.serviceorg.domain.StudentGuardianInfo">
+        select s1.id       as student_id,
+        s1.name     as student_name,
+        s1.sex,
+        s1.age,
+        s1.birthday,
+        s1.school_id,
+        s1.school_name,
+        s1.service_start_date,
+        s1.service_end_date,
+        s1.avatar,
+        s1.main_guardian_id,
+        s1.main_guardian_relation,
+        u1.mobile   as main_guardian_mobile,
+        u1.realname as main_guardian_name,
+        s1.leave_guardian_id,
+        u2.mobile   as main_guardian_mobile,
+        u2.realname as main_guardian_name
+        from t_student s1
+        left join sys_user u1 on s1.main_guardian_id = u1.user_id
+        left join sys_user u2 on s1.leave_guardian_id = u2.user_id
+        where s1.deleted = false
+        and s1.service_status = '1'
+        and s1.stop_id = #{stopId}
+        and s1.route_operation_id = #{routeOperationId}
+    </select>
+    <select id="listStudentUnbindStopInSchool" resultType="com.phlink.bus.api.serviceorg.domain.Student">
+        SELECT t.*
+        FROM t_student as t
+        WHERE t.deleted = false
+          AND (t.stop_id is null or t.stop_id != all (select v.id from v_stop v where v.school_id = #{schoolId}))
+          AND t.school_id = #{schoolId}
+          AND t.service_status = '1'
+        ORDER BY t.ID ASC;
+    </select>
+</mapper>

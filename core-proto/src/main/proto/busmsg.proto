@@ -1,0 +1,1 @@
+syntax = "proto3";option java_multiple_files = true;option java_package = "io.rpc.core.msg";option java_outer_classname = "MsgProto";option objc_class_prefix = "MSG";package message;message UserInfo {    string email = 1;    string mobile = 2;    string username = 3;    bool isActive = 4;}

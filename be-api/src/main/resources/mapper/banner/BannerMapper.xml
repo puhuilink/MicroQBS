@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phlink.bus.api.banner.dao.BannerMapper">
+
+    <select id="getBannerListCount" resultType="java.lang.Integer">
+        select count(*) from t_banner where status='1' AND deleted='f'
+    </select>
+
+    <select id="list" resultType="com.phlink.bus.api.banner.domain.Banner">
+        select id,file_url,title,linkaddr,status,pubdate from t_banner where deleted='f'
+    </select>
+
+    <select id="getimg" resultType="com.phlink.bus.api.banner.domain.Banner">
+              select id,file_url,title,linkaddr,status,pubdate,sort from t_banner where status='1' AND deleted='f' order by sort
+    </select>
+
+    <update id="updateSortById" parameterType="com.phlink.bus.api.banner.domain.Banner">
+        update t_banner set sort=#{sort} where id=#{id}
+    </update>
+
+    <update id="modifyBannerLineTape" parameterType="com.phlink.bus.api.banner.domain.Banner">
+        update t_banner set status='2' where  id=#{id}
+    </update>
+
+</mapper>

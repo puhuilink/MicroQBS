@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phlink.bus.api.route.dao.TripMapper">
+	<select id="findTripListByStudentId" resultType="com.phlink.bus.api.route.domain.Trip">
+		select  
+		t.id,
+		t.route_id routeId,
+		t.school_id schoolId,
+		t.direction_id directionId,
+		t.trip_time tripTime
+		from  t_trip t
+		LEFT JOIN t_route_operation r on t.route_id = r.route_id
+		LEFT JOIN t_student s on r.id = s.route_operation_id
+		where 1 =1 
+		and s.id = #{studentId}
+	</select>
+	
+	<select id="findTripStopStudent" resultType="com.phlink.bus.api.route.domain.vo.TripStopStudentVO">
+		select t4.* 
+		from 
+		(select t1.daka totalCount,
+		CASE 
+			WHEN t2.attend is null THEN
+				0
+			ELSE
+				t2.attend
+		END as attendCount,
+		CASE 
+			WHEN t3.leave is null THEN
+				0
+			ELSE
+				t3.leave
+		END as leaveCount,
+		t1.stop_name stopName,
+		t1.ID stopId,
+		t1.stop_sequence seq
+		from (select count(stu.*) daka,s.stop_name,s.ID,s.stop_sequence
+		from t_student stu
+		LEFT JOIN t_stop s on s.Id = stu.stop_id
+		LEFT JOIN t_route_operation ro on s.route_id = ro.route_id and stu.route_operation_id = ro.id
+		left join t_trip t on ro.route_id = t.route_id
+		where 1 =1
+		and ro.bind_bus_teacher_id = #{busTeacherId}
+		and ro.deleted= false
+		and t.trip_time = #{tripTime}
+		GROUP BY s.stop_name,s.ID,s.stop_sequence) t1 
+		LEFT JOIN 
+		(select
+		count(att.*) attend,
+		s.stop_name,s.ID,s.stop_sequence
+		from t_stop s
+		LEFT JOIN t_route_operation ro on s.route_id = ro.route_id
+		left join t_trip t on ro.route_id = t.route_id
+		left join t_stop_attendance att on (s.ID = att.stop_id and att."time" = CURRENT_DATE and att.type = #{inType}
+		and att.trip_id = t.ID)
+		where 1 =1
+		and ro.bind_bus_teacher_id = #{busTeacherId}
+		and ro.deleted= false
+		and t.trip_time = #{tripTime}
+		and att.time = CURRENT_DATE
+		GROUP BY s.stop_name,s.ID,s.stop_sequence) t2 on t1.ID = t2.ID
+		LEFT JOIN 
+		(select count(tl.*) as leave,
+		s.stop_name,
+		s.ID,
+		s.stop_sequence
+		from t_leave tl
+		LEFT JOIN t_student stu on tl.student_id = stu.ID
+		LEFT JOIN t_stop s on stu.stop_id = s.ID
+		LEFT JOIN t_route_operation ro on s.route_id = ro.route_id and stu.route_operation_id = ro.id
+		left join t_trip t on ro.route_id = t.route_id
+		where 1 =1
+		and ro.bind_bus_teacher_id = #{busTeacherId}
+		and ro.deleted= false
+		and t.trip_time = #{tripTime}
+		and #{tripTime}  = ANY(tl.bus_time)
+		and CURRENT_DATE BETWEEN leave_date_start and leave_date_end
+		GROUP BY s.stop_name,s.ID,s.stop_sequence) t3 on t1.ID = t3.ID
+		union all
+		(
+		select 
+		(select count(1)
+		from t_student stu
+		LEFT JOIN t_stop s on s.Id = stu.stop_id
+		LEFT JOIN t_route_operation ro on s.route_id = ro.route_id and stu.route_operation_id = ro.id
+		LEFT JOIN t_trip t on t.route_id = ro.route_id
+		where 1 = 1
+		and ro.bind_bus_teacher_id = #{busTeacherId}
+		and ro.deleted= false
+		and t.trip_time = #{tripTime}) as dakacount,
+		(select count(1)
+		from t_stop_attendance att 
+		left join t_trip t on t.ID = att.trip_id
+		left join t_route_operation ro on ro.route_id = t.route_id
+		where 1 = 1
+		and ro.bind_bus_teacher_id = #{busTeacherId}
+		and ro.deleted= false
+		and t.trip_time = #{tripTime}
+		and att.type = #{outType}
+		and att.time = CURRENT_DATE) as attendcount,
+		0 as leavecount,s.stop_name stopname,s.ID stopid,s.stop_sequence seq
+		from t_stop s 
+		left join t_route_operation ro on ro.route_id = s.route_id
+		LEFT JOIN t_trip t on t.route_id = ro.route_id
+		where 1= 1
+		and ro.bind_bus_teacher_id = #{busTeacherId}
+		and ro.deleted= false
+		and t.trip_time = #{tripTime}
+		order by s.stop_sequence desc LIMIT 1 ))  t4 
+		<if test='tripTime == "1"'>
+			order by  t4.seq asc
+		</if>
+		<if test='tripTime == "2"'>
+			order by  t4.seq desc
+		</if>
+		
+		<if test='tripTime == "3"'>
+			order by  t4.seq asc
+		</if>
+		<if test='tripTime == "4"'>
+			order by  t4.seq desc
+		</if>					
+	</select>
+	
+	<select id="findTripState" resultType="com.phlink.bus.api.route.domain.vo.TripStateVO">
+		select t.ID tripId,
+			   t.route_id routeId,
+			   t.trip_time tripTime,
+			   log.state  state,
+			   log.ID logId
+		from t_trip t
+				 left join t_trip_log  log on (log.trip_id = t.ID and log.time = CURRENT_DATE)
+		where 1 =1
+		  and log.bus_teacher_id = #{userId}
+		  and t.id = #{tripId}
+		  and t.deleted = false
+		order by t.trip_time asc
+	</select>
+	
+	<select id="findStuStateByStopId" resultType="com.phlink.bus.api.route.domain.vo.StopStudentVo">
+		select 
+		stu.ID id,
+		stu.name,
+		u.mobile,
+		stu.stop_id stopId,
+		t.ID tripId,
+		CASE WHEN att.type ='1' THEN 'ARRIVE'
+				 WHEN att.type ='2' THEN 'ATTEND'
+				 WHEN att.type is null and tl.student_id is not null THEN 'LEAVE'
+				 WHEN att.type is null and tl.student_id is null THEN 'WAIT' 
+		END stat
+		from  t_student stu
+		LEFT JOIN t_route_operation ro on ro.ID = stu.route_operation_id
+		left JOIN t_trip t on t.route_id = ro.route_id
+		left join t_stop_attendance att on (stu.ID = att.student_id and stu.stop_id = att.stop_id and att.time = CURRENT_DATE and att.type = #{type})
+		left join t_leave tl on (stu.ID = tl.student_id and #{tripTime} = ANY(tl.bus_time) 
+		and CURRENT_DATE BETWEEN tl.leave_date_start and tl.leave_date_end)
+		LEFT JOIN sys_user u ON u.user_id = stu.leave_guardian_id 
+		where 1=1
+		and ro.bind_bus_teacher_id = #{busTeacherId}
+		and ro.deleted= false
+		and t.trip_time = #{tripTime}
+		and stu.stop_id = #{stopId}
+		order by stu.age asc
+	</select>
+	
+	<select id="findSchoolStuState" resultType="com.phlink.bus.api.route.domain.vo.StopStudentVo">
+		select 
+		stu.ID id,
+		stu.name,
+		(select stop_id from t_stop s 
+				left join t_route_operation ro on ro.route_id = s.route_id
+				LEFT JOIN t_trip t on t.route_id = ro.route_id
+				where 1= 1
+				and ro.bind_bus_teacher_id = #{busTeacherId}
+				and t.trip_time = #{tripTime}
+				order by s.stop_sequence desc LIMIT 1) as stopId,
+		u.mobile,
+		t.ID tripId,
+		CASE WHEN tl.student_id is not null then 'LEAVE'
+		     ELSE 'WAIT' 
+		END stat
+		from t_student stu
+		LEFT JOIN t_route_operation ro on ro.ID = stu.route_operation_id
+		LEFT JOIN t_trip t on t.route_id = ro.route_id
+		LEFT JOIN t_guardian g on stu.main_guardian_id = g.ID
+		LEFT JOIN sys_user u on u.user_id = g.ID
+		left join t_leave tl on (stu.ID = tl.student_id and #{tripTime} = ANY(tl.bus_time) 
+		and CURRENT_DATE BETWEEN tl.leave_date_start and tl.leave_date_end)
+		where stu.ID not in (select att.student_id from t_stop_attendance att
+		LEFT JOIN t_trip t on t.ID = att.trip_id
+		LEFT JOIN t_route_operation ro on ro.route_id = t.route_id
+		where 1 = 1
+		and ro.bind_bus_teacher_id = #{busTeacherId}
+		and ro.deleted= false
+		and t.trip_time = #{tripTime}
+		and att.time = CURRENT_DATE
+		and att.type = #{type}
+		)
+		and ro.bind_bus_teacher_id = #{busTeacherId}
+		and ro.deleted= false
+		and t.trip_time = #{tripTime}
+	</select>
+	
+	<select id="findTripById" resultType="com.phlink.bus.api.route.domain.vo.TripStateVO">
+		select 
+		id tripId,
+		route_id routeId,
+		trip_time tripTime
+		from
+		t_trip
+		where 1 = 1
+		and id = #{tripId}
+		and deleted = false
+	</select>
+	<select id="getNowTripForStudent" resultType="com.phlink.bus.api.route.domain.Trip">
+		select t.*
+		from t_trip_log tl
+					left join t_trip t on tl.trip_id = t.id
+		where tl.route_id = any (
+			   select ro.route_id
+			   from t_student s
+			   left join t_route_operation ro on s.route_operation_id = ro.id
+			   where s.deleted = false and s.id = #{studentId}
+		  )
+		  and tl.state = '1'
+	</select>
+	<select id="getNowTripForRouteOperation" resultType="com.phlink.bus.api.route.domain.Trip">
+		select t.*
+		from t_trip_log tl
+					left join t_trip t on tl.trip_id = t.id
+		where tl.route_id = any (
+			   select ro.route_id
+			   from t_route_operation ro
+			   where ro.deleted = false and ro.id = #{routeOperationId}
+		  )
+		  and tl.state = '1'
+		  order by tl.time desc, tl.trip_begin_time desc
+		  limit 1
+	</select>
+	
+	<select id="getRouteIdByTeacher" resultType="com.phlink.bus.api.route.domain.Trip">
+		select 
+		route_id routeId
+		from t_route_operation
+		where bind_bus_teacher_id = #{userId}
+		and deleted = FALSE
+	</select>
+    <select id="listTripStopTimeDetail" resultType="com.phlink.bus.api.route.domain.TripStopTimeDetail">
+		select t.*,
+			s.stop_lon,
+			s.stop_lat,
+			s.stop_name,
+			s.route_id,
+			v.route_name,
+			v.start_time as trip_start_time,
+			v.end_time as trip_end_time
+		from t_stop_time t
+			left join t_stop s on t.stop_id = s.id
+			left join v_route_time v on t.trip_id = v.trip_id
+		where s.deleted = false
+			and t.deleted = false
+			<if test="now != null">
+			and v.start_time - interval '1800 second' &lt; #{now}
+			and v.end_time &gt; #{now}
+			</if>
+			<if test="routeId != null">
+			and v.route_id = #{routeId}
+			</if>
+			<if test="tripId != null">
+			and v.trip_id = #{tripId}
+			</if>
+			order by t.trip_id, t.stop_sequence * v.direction_id
+
+	</select>
+	<select id="listTripByRoute" resultType="com.phlink.bus.api.route.domain.Trip">
+		select *
+		from t_trip t
+		where t.deleted = false
+		and t.route_id = #{routeId}
+		order by t.trip_time
+	</select>
+	<select id="listStopTimeStudentDetailByTripId"
+			resultType="com.phlink.bus.api.route.domain.StopTimeStudentDetail">
+
+		select t.stop_time_id,
+			   t.stop_id,
+			   t.stop_name,
+			   t.arrival_time,
+			   t.stop_lon,
+			   t.stop_lat,
+			   t.stop_sequence*#{directionId}
+		from v_bindbus_stoptime_info t
+		where t.trip_id = #{tripId}
+		order by t.stop_sequence * #{directionId}
+	</select>
+	<select id="getTripTimeByTime" resultType="com.phlink.bus.api.route.domain.TripTime">
+		select v.*, t.bind_bus_id
+		from v_route_time v
+		left join t_route_operation t on v.route_id = t.route_id and t.deleted = false
+		where 1=1
+		<if test="busId != null">
+		and t.bind_bus_id = #{busId}
+		</if>
+		<if test="time != null">
+		and v.start_time - interval '1800 second' &lt; #{time}
+		and v.end_time &gt; #{now}
+		</if>
+	</select>
+	<select id="listTripTimeByRoute" resultType="com.phlink.bus.api.route.domain.TripTime">
+		select t.*
+		from v_route_time t
+		where t.route_id = #{routeId}
+		order by t.trip_time
+	</select>
+</mapper>

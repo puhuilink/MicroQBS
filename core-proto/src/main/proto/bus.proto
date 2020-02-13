@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+import "common.proto";
+
+option java_multiple_files = true;
+option java_package = "io.rpc.core.device";
+option java_outer_classname = "BusProto";
+option objc_class_prefix = "Bus";
+
+package device;
+
+service BusService {
+    // 保存一条车辆上传的数据
+    rpc save (BusInfo) returns (CommonReply) {}
+}
+
+message BusInfo {
+    // 设备号
+    string busId = 1;
+    // 时间戳
+    uint64 timestamp = 2;
+    // 经度
+    double latitude = 4;
+    // 纬度
+    double longitude = 5;
+    // 速度
+    uint32 speed = 6;
+    // 方向
+    uint32 direction = 7;
+}
+
+

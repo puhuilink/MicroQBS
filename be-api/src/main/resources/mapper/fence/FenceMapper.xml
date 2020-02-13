@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phlink.bus.api.fence.dao.FenceMapper">
+
+    <update id="appendJob">
+        update t_fence
+        set jobs=array_append(jobs, #{jobId})
+        where id = #{fenceId}
+    </update>
+
+    <update id="removeJob">
+        update t_fence
+        set jobs=array_remove(jobs, #{jobId})
+        where id = #{fenceId}
+    </update>
+
+    <select id="listStopFences" resultType="string">
+        select distinct f.fence_id
+        from t_fence f
+                 left join t_stop s on s.id = f.relation_id
+        where f.deleted = false
+          and f.stop_fence = true
+          and f.relation_type = '3'
+          and s.route_id = #{routeId}
+    </select>
+
+    <select id="listFecnce" resultType="com.phlink.bus.api.fence.domain.Fence">
+        select t.*,
+        s.school_name,
+        r.route_name,
+        r.id
+        from t_fence t
+        left join t_route r on r.id = t.relation_id and r.deleted = false
+        left join t_school s on (r.school_id = s.id or s.id = t.relation_id) and s.deleted = false
+        where t.deleted = false
+        <if test="fenceViewVO.relationType!=null">
+            and t.relation_type=#{fenceViewVO.relationType}
+        </if>
+        <if test="fenceViewVO.schoolName!=null and fenceViewVO.schoolName!=''">
+            and s.school_name like CONCAT('%', #{fenceViewVO.schoolName}, '%')
+        </if>
+        <if test="fenceViewVO.routeName!=null and fenceViewVO.routeName!=''">
+            and r.route_name like CONCAT('%', #{fenceViewVO.routeName}, '%')
+        </if>
+        order by t.id desc
+    </select>
+
+    <!--   <update id="modifyFenceEntitys">
+           update t_fence f set
+           where t.deleted=false and t.relation_type='2'
+       </update>-->
+
+    <select id="getFenceEntitys" resultType="com.phlink.bus.api.fence.domain.FenceEntitysVO">
+        select t.id, t.fence_id, t.entity_names
+        from t_fence t
+        where t.deleted = false
+          and t.relation_id = #{routeId}
+    </select>
+    <select id="listBusRouteFence" resultType="com.phlink.bus.api.alarm.domain.CodeFence">
+        select distinct t.bus_code as code, f.fence_id as fenceId
+        from t_bus t
+                 left join t_route r on r.bus_id = t.id
+                 left join t_fence f on f.relation_id = r.id
+        where t.deleted = false
+          and f.relation_type = '2'
+          and r.deleted = false
+          and f.deleted = false;
+    </select>
+    <select id="listBusStopFence" resultType="com.phlink.bus.api.alarm.domain.CodeFence">
+        select distinct t.bus_code as code, f.fence_id as fenceId
+        from t_bus t
+                 left join t_route r on r.bus_id = t.id
+                 left join t_stop s on r.id = s.route_id
+                 left join t_fence f on f.relation_id = r.id
+        where t.deleted = false
+          and f.relation_type = '3'
+          and r.deleted = false
+          and f.deleted = false
+          and s.deleted = false;
+    </select>
+    <select id="listSchoolFence" resultType="com.phlink.bus.api.alarm.domain.CodeFence">
+        select distinct t.device_code as code, f.fence_id as fenceId
+        from t_device t
+                 left join t_device_relation r on r.device_code = t.device_code
+                 left join t_student st on st.id = r.student_id
+                 left join t_school sc on sc.id = st.school_id
+                 left join t_fence f on f.relation_id = sc.id
+        where t.deleted = false
+          and st.deleted = false
+          and sc.deleted = false
+          and r.deleted = false
+          and f.deleted = false
+          and f.relation_type = '1';
+    </select>
+    <select id="listByIdsIncludeDelete" resultType="com.phlink.bus.api.fence.domain.Fence">
+        select *
+        from t_fence
+        where id =any(#{ids}::bigint[])
+    </select>
+</mapper>

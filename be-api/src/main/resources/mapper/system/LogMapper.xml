@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phlink.bus.api.system.dao.LogMapper">
+
+    <select id="listLogs" resultType="com.phlink.bus.api.system.domain.SysLog">
+        select t.*
+        from sys_log t
+          left join sys_user u on t.username = u.username
+        where 1=1
+        <if test="sysLog.username != null and sysLog.username != ''">
+            and (u.realname like CONCAT('%', #{sysLog.username}, '%') or u.username like CONCAT('%', #{sysLog.username}, '%') or u.mobile like CONCAT('%', #{sysLog.username}, '%'))
+        </if>
+        <if test="sysLog.operation != null and sysLog.operation != ''">
+            and t.operation like CONCAT('%', #{sysLog.operation}, '%')
+        </if>
+        <if test="sysLog.location != null and sysLog.location != ''">
+            and t.location like CONCAT('%', #{sysLog.location}, '%')
+        </if>
+        <if test="sysLog.createTimeFrom != null and sysLog.createTimeFrom != ''">
+            and t.create_time &gt;= to_date(#{sysLog.createTimeFrom}, 'YYYY-MM-DD')::timestamp
+        </if>
+        <if test="sysLog.createTimeTo != null and sysLog.createTimeTo != ''">
+            and t.create_time &lt; to_date(#{sysLog.createTimeTo}, 'YYYY-MM-DD')::timestamp + '1 day'
+
+        </if>
+    </select>
+</mapper>

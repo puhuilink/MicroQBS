@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phlink.bus.api.large.dao.LargeMapper">
+
+    <select id="getAlarmBus" resultType="com.phlink.bus.api.large.domain.AlarmList">
+ SELECT
+ number_plate,driver_mobile,alarm_level,alarm_type,driver_name,to_char(create_time,'yyyy-MM-dd hh24:mi:ss') as alarmTime
+FROM
+	t_alarm_bus
+WHERE
+	create_time >= CURRENT_DATE AND deleted='f' AND alarm_level in ('2','3')
+group by number_plate,driver_mobile,alarm_level,alarm_type,driver_name,to_char(create_time,'yyyy-MM-dd hh24:mi:ss')
+order by to_char(create_time,'yyyy-MM-dd hh24:mi:ss') desc
+    </select>
+
+    <select id="getBusAttendance" resultType="com.phlink.bus.api.large.domain.BusAttendanceTime">
+               SELECT
+                        *
+                    FROM
+                        (
+                    SELECT
+                        (
+                    SELECT COUNT
+                        ( * )
+                    FROM
+                        t_bus T
+                    WHERE
+                        to_char( create_time, 'yyyy-MM' ) &lt;=
+                    to_char( now() :: TIMESTAMP + '0 months', 'yyyy-MM' )
+                    AND deleted = 'f'
+                    ) AS zs,
+                    (
+                    SELECT COUNT
+                        (
+                        DISTINCT ( number_plate ))
+                    FROM
+                        t_bus_attendance
+                    WHERE
+                        to_char( create_time, 'yyyy-MM' ) &lt;=
+                    to_char( now() :: TIMESTAMP + '0 months', 'yyyy-MM' )
+                    AND deleted = 'f'
+                    ) AS cczs,
+                    to_char( create_time, 'yyyy-MM' ) AS months
+                    FROM
+                        t_bus
+                    WHERE
+                        to_char( create_time, 'yyyy-MM' ) = to_char( NOW() :: TIMESTAMP + '0 months', 'yyyy-MM' )
+                    GROUP BY
+                        zs,
+                        cczs,
+                        to_char( create_time, 'yyyy-MM' ) UNION
+                    SELECT
+                        (
+                    SELECT COUNT
+                        ( * )
+                    FROM
+                        t_bus T
+                    WHERE
+                        to_char( create_time, 'yyyy-MM' ) &lt;=
+                    to_char( now() :: TIMESTAMP + '-1 months', 'yyyy-MM' )
+                    AND deleted = 'f'
+                    ) AS zs,
+                    (
+                    SELECT COUNT
+                        (
+                        DISTINCT ( number_plate ))
+                    FROM
+                        t_bus_attendance
+                    WHERE
+                        to_char( create_time, 'yyyy-MM' ) &lt;=
+                    to_char( now() :: TIMESTAMP + '-1 months', 'yyyy-MM' )
+                    AND deleted = 'f'
+                    ) AS cczs,
+                    to_char( create_time, 'yyyy-MM' ) AS months
+                    FROM
+                        t_bus
+                    WHERE
+                        to_char( create_time, 'yyyy-MM' ) = to_char( now() :: TIMESTAMP + '-1 months', 'yyyy-MM' )
+                    GROUP BY
+                        zs,
+                        cczs,
+                        to_char( create_time, 'yyyy-MM' ) UNION
+                    SELECT
+                        (
+                    SELECT COUNT
+                        ( * )
+                    FROM
+                        t_bus T
+                    WHERE
+                        to_char( create_time, 'yyyy-MM' ) &lt;=
+                    to_char( now() :: TIMESTAMP + '-2 months', 'yyyy-MM' )
+                    AND deleted = 'f'
+                    ) AS zs,
+                    (
+                    SELECT COUNT
+                        (
+                        DISTINCT ( number_plate ))
+                    FROM
+                        t_bus_attendance
+                    WHERE
+                        to_char( create_time, 'yyyy-MM' ) &lt;=
+                    to_char( now() :: TIMESTAMP + '-2 months', 'yyyy-MM' )
+                    AND deleted = 'f'
+                    ) AS cczs,
+                    to_char( create_time, 'yyyy-MM' ) AS months
+                    FROM
+                        t_bus
+                    WHERE
+                        to_char( create_time, 'yyyy-MM' ) = to_char( now() :: TIMESTAMP + '-2 months', 'yyyy-MM' )
+                    GROUP BY
+                        zs,
+                        cczs,
+                        to_char( create_time, 'yyyy-MM' ) UNION
+                    SELECT
+                        (
+                    SELECT COUNT
+                        ( * )
+                    FROM
+                        t_bus T
+                    WHERE
+                        to_char( create_time, 'yyyy-MM' ) &lt;=
+                    to_char( now() :: TIMESTAMP + '-3 months', 'yyyy-MM' )
+                    AND deleted = 'f'
+                    ) AS zs,
+                    (
+                    SELECT COUNT
+                        (
+                        DISTINCT ( number_plate ))
+                    FROM
+                        t_bus_attendance
+                    WHERE
+                        to_char( create_time, 'yyyy-MM' ) &lt;=
+                    to_char( now() :: TIMESTAMP + '-3 months', 'yyyy-MM' )
+                    AND deleted = 'f'
+                    ) AS cczs,
+                    to_char( create_time, 'yyyy-MM' ) AS months
+                    FROM
+                        t_bus
+                    WHERE
+                        to_char( create_time, 'yyyy-MM' ) = to_char( now() :: TIMESTAMP + '-3 months', 'yyyy-MM' )
+                    GROUP BY
+                        zs,
+                        cczs,
+                        to_char( create_time, 'yyyy-MM' ) UNION
+                    SELECT
+                        (
+                    SELECT COUNT
+                        ( * )
+                    FROM
+                        t_bus T
+                    WHERE
+                        to_char( create_time, 'yyyy-MM' ) &lt;=
+                    to_char( now() :: TIMESTAMP + '-4 months', 'yyyy-MM' )
+                    AND deleted = 'f'
+                    ) AS zs,
+                    (
+                    SELECT COUNT
+                        (
+                        DISTINCT ( number_plate ))
+                    FROM
+                        t_bus_attendance
+                    WHERE
+                        to_char( create_time, 'yyyy-MM' ) &lt;=
+                    to_char( now() :: TIMESTAMP + '-4 months', 'yyyy-MM' )
+                    AND deleted = 'f'
+                    ) AS cczs,
+                    to_char( create_time, 'yyyy-MM' ) AS months
+                    FROM
+                        t_bus
+                    WHERE
+                        to_char( create_time, 'yyyy-MM' ) = to_char( now() :: TIMESTAMP + '-4 months', 'yyyy-MM' )
+                    GROUP BY
+                        zs,
+                        cczs,
+                        to_char( create_time, 'yyyy-MM' ) UNION
+                    SELECT
+                        (
+                    SELECT COUNT
+                        ( * )
+                    FROM
+                        t_bus T
+                    WHERE
+                        to_char( create_time, 'yyyy-MM' ) &lt;=
+                    to_char( now() :: TIMESTAMP + '-5 months', 'yyyy-MM' )
+                    AND deleted = 'f'
+                    ) AS zs,
+                    (
+                    SELECT COUNT
+                        (
+                        DISTINCT ( number_plate ))
+                    FROM
+                        t_bus_attendance
+                    WHERE
+                        to_char( create_time, 'yyyy-MM' ) &lt;=
+                    to_char( now() :: TIMESTAMP + '-5 months', 'yyyy-MM' )
+                    AND deleted = 'f'
+                    ) AS cczs,
+                    to_char( create_time, 'yyyy-MM' ) AS months
+                    FROM
+                        t_bus
+                    WHERE
+                        to_char( create_time, 'yyyy-MM' ) = to_char( now() :: TIMESTAMP + '-5 months', 'MM' )
+                    GROUP BY
+                        zs,
+                        cczs,
+                        to_char( create_time, 'yyyy-MM' )) t_count
+                    ORDER BY
+                        months
+    </select>
+
+    <select id="NumberConut" resultType="com.phlink.bus.api.large.domain.NumberCountYear">
+		SELECT
+	*
+FROM
+	(
+SELECT SUM
+	( enroll_num ) AS ydrs,
+	SUM ( ride_num ) AS sdrs,
+	to_char( now() :: TIMESTAMP + '-1 day', 'yyyy-MM-dd' ) AS months
+FROM
+	t_teacher_checkout_end
+WHERE
+	to_char( check_date, 'yyyy-MM-dd' ) = to_char( now() :: TIMESTAMP + '-1 day', 'yyyy-MM-dd' ) AND deleted='f'
+ UNION
+SELECT SUM
+	( enroll_num ) AS ydrs,
+	SUM ( ride_num ) AS sdrs,
+	to_char( now() :: TIMESTAMP + '-2 day', 'yyyy-MM-dd' ) AS months
+FROM
+	t_teacher_checkout_end
+WHERE
+	to_char( check_date, 'yyyy-MM-dd' ) = to_char( now() :: TIMESTAMP + '-2 day', 'yyyy-MM-dd' ) AND deleted='f'
+UNION
+SELECT SUM
+	( enroll_num ) AS ydrs,
+	SUM ( ride_num ) AS sdrs,
+	to_char( now() :: TIMESTAMP + '-3 day', 'yyyy-MM-dd' ) AS months
+FROM
+	t_teacher_checkout_end
+WHERE
+	to_char( check_date, 'yyyy-MM-dd' ) = to_char( now() :: TIMESTAMP + '-3 day', 'yyyy-MM-dd' ) AND deleted='f'
+ UNION
+SELECT SUM
+	( enroll_num ) AS ydrs,
+	SUM ( ride_num ) AS sdrs,
+	to_char( now() :: TIMESTAMP + '-4 day', 'yyyy-MM-dd' ) AS months
+FROM
+	t_teacher_checkout_end
+WHERE
+	to_char( check_date, 'yyyy-MM-dd' ) = to_char( now() :: TIMESTAMP + '-4 day', 'yyyy-MM-dd' ) AND deleted='f'
+UNION
+SELECT SUM
+	( enroll_num ) AS ydrs,
+	SUM ( ride_num ) AS sdrs,
+	to_char( now() :: TIMESTAMP + '-5 day', 'yyyy-MM-dd' ) AS months
+FROM
+	t_teacher_checkout_end
+WHERE
+	to_char( check_date, 'yyyy-MM-dd' ) = to_char( now() :: TIMESTAMP + '-5 day', 'yyyy-MM-dd' ) AND deleted='f'
+UNION
+SELECT SUM
+	( enroll_num ) AS ydrs,
+	SUM ( ride_num ) AS sdrs,
+	to_char( now() :: TIMESTAMP + '-6 day', 'yyyy-MM-dd' ) AS months
+FROM
+	t_teacher_checkout_end
+WHERE
+	to_char( check_date, 'yyyy-MM-dd' ) = to_char( now() :: TIMESTAMP + '-6 day', 'yyyy-MM-dd' ) AND deleted='f'
+	) A  order by months
+				 </select>
+
+    <select id="ListBusDetailLocationVO" resultType="com.phlink.bus.api.device.domain.VO.BusDetailLocationVO">
+ SELECT b.id,
+    b.number_plate,
+    b.model,
+    b.brand,
+    b.chassis,
+    b.engine_model,
+    b.power,
+    b.emission,
+    b.length,
+    b.width,
+    b.height,
+    b.seat,
+    b.fuel_tank,
+    b.dept_id,
+    b.create_time,
+    b.create_by,
+    b.modify_time,
+    b.modify_by,
+    b.deleted,
+    b.tid,
+    b.entity_name,
+    b.bus_code,
+    b.vin_code,
+    b.register_time,
+    b.check_time,
+    b.insure_time,
+    b.maintain_time,
+    d.dvr_code,
+    d.channel_number,
+    d.dvr_server_id,
+    d.online,
+    ro.route_id,
+    r.school_id,
+    r.route_name,
+    r.route_type,
+    ro.id AS route_operation_id,
+    ro.bind_driver_id,
+    u1.user_id,
+    u1.realname AS driver_name,
+    u1.mobile AS driver_mobile,
+    ro.bind_bus_teacher_id,
+    u2.realname AS bus_teacher_name,
+    u2.mobile AS bus_teacher_mobile,
+    r.trajectory_id AS  tirpId
+   FROM (((((t_bus b
+     LEFT JOIN t_route_operation ro ON (((b.id = ro.bind_bus_id) AND (ro.deleted = false))))
+     LEFT JOIN t_dvr d ON (((d.bus_id = b.id) AND (d.deleted = false))))
+     LEFT JOIN t_route r ON (((r.id = ro.route_id) AND (r.deleted = false))))
+     LEFT JOIN sys_user u1 ON ((u1.user_id = ro.bind_bus_teacher_id)))
+     LEFT JOIN sys_user u2 ON ((u2.user_id = ro.bind_driver_id)))
+  WHERE (b.deleted = false)
+    </select>
+
+
+    <select id="LineList" resultType="com.phlink.bus.api.large.domain.LineList">
+SELECT
+	h.realname as teachername,
+	h1.realname as driver_name,
+	f.direction_id,
+	c.student_num  AS ydrs,
+	 c.leave_num  AS qjrs,
+	 c.up_num  AS sdrs,
+	 a.bind_bus_id as bus_id,
+	 h.user_id,
+	 h.mobile as teachermobile,
+	 h1.mobile as drivermobile,
+	 c.trip_id,
+	 a.route_id,
+	 d.route_name,
+	 h.avatar as teacheravatar,
+	 h1.avatar as driveravatar,
+	 d.trajectory_id,
+	 c.driver_id,
+	 b.number_plate,
+	 ( SELECT stop_name FROM t_stop WHERE route_id = A.route_id AND deleted = 'f' AND stop_sequence = 1 ) AS standStop,
+	(
+SELECT
+	stop_name
+FROM
+	t_stop
+WHERE
+	route_id = A.route_id
+	AND deleted = 'f'
+	AND stop_sequence = ( SELECT MAX ( stop_sequence ) FROM t_stop WHERE route_id = A.route_id AND deleted = 'f' )) AS endStop
+FROM
+ t_route_operation a
+ left join sys_user h ON a.bind_bus_teacher_id=h.user_id
+ left join sys_user h1 ON a.bind_driver_id=h1.user_id
+
+ left join t_bus b on a.bind_bus_id=b."id"
+ LEFT JOIN t_route d ON A.route_id = d.ID
+ left join t_trip_log c on a.route_id=c.route_id
+  left join t_trip f on c.trip_id=f.id
+ where
+ c."time" = CURRENT_DATE
+ and a.deleted='f'
+ and b.deleted='f'
+ and d.deleted='f'
+ and c.deleted='f'
+ and f.deleted='f'
+ and	c."state" = '1'
+ group by h.realname,h1.realname,f.direction_id,c.student_num,c.leave_num,c.up_num,h.user_id,h.mobile,h1.mobile,c.trip_id,h.avatar,h1.avatar,c.driver_id,
+	 a.route_id, a.bind_bus_id,d.trajectory_id,b.number_plate,
+	 d.route_name
+    </select>
+
+    <select id="LineById" resultType="com.phlink.bus.api.large.domain.LineList" parameterType="java.lang.Long">
+SELECT
+	h.realname as teachername,
+	h1.realname as driver_name,
+	f.direction_id,
+	c.student_num  AS ydrs,
+	 c.leave_num  AS qjrs,
+	 c.up_num  AS sdrs,
+	 a.bind_bus_id as bus_id,
+	 h.user_id,
+	 h.mobile as teachermobile,
+	 h1.mobile as drivermobile,
+	 c.trip_id,
+	 a.route_id,
+	 d.route_name,
+	 h.avatar as teacheravatar,
+	 h1.avatar as driveravatar,
+	 d.trajectory_id,
+	 c.driver_id,
+	 b.number_plate,
+	 ( SELECT stop_name FROM t_stop WHERE route_id = A.route_id AND deleted = 'f' AND stop_sequence = 1 ) AS standStop,
+	(
+SELECT
+	stop_name
+FROM
+	t_stop
+WHERE
+	route_id = A.route_id
+	AND deleted = 'f'
+	AND stop_sequence = ( SELECT MAX ( stop_sequence ) FROM t_stop WHERE route_id = A.route_id AND deleted = 'f' )) AS endStop
+FROM
+ t_route_operation a
+ left join sys_user h ON a.bind_bus_teacher_id=h.user_id
+ left join sys_user h1 ON a.bind_driver_id=h1.user_id
+
+ left join t_bus b on a.bind_bus_id=b."id"
+ LEFT JOIN t_route d ON A.route_id = d.ID
+ left join t_trip_log c on a.route_id=c.route_id
+  left join t_trip f on c.trip_id=f.id
+ where
+ c."time" = CURRENT_DATE
+ and a.deleted='f'
+ and b.deleted='f'
+ and d.deleted='f'
+ and c.deleted='f'
+ and f.deleted='f'
+ and	c."state" = '1'
+ and  c.bus_id = #{busId}
+ group by h.realname,h1.realname,f.direction_id,c.student_num,c.leave_num,c.up_num,h.user_id,h.mobile,h1.mobile,c.trip_id,h.avatar,h1.avatar,c.driver_id,
+	 a.route_id, a.bind_bus_id,d.trajectory_id,b.number_plate,
+	 d.route_name
+    </select>
+
+</mapper>

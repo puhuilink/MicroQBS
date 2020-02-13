@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phlink.bus.api.serviceorg.dao.HomeworkMapper">
+
+		<select id="queryHomework" resultType="com.phlink.bus.api.serviceorg.domain.HomeWorkPage">
+			select c.class_name  className,
+					c.id  classId,
+					 downNum,
+					 browseNum,
+					 case when c.class_num is null then classNumHomework else c.class_num end  classNum, 
+					 hh.id homeworkId,
+					 homeworkClassStatus
+			from t_classes c left join 
+			
+			(select h.id id,
+					h.class_id,
+					h.down_Num downNum,
+					h.browse_Num browseNum,
+					h.class_num classNumHomework, 
+					h.homework_class_status homeworkClassStatus from 
+				t_homework h
+				where h.create_by= #{userId}
+						and h.homework_start_date &lt; to_date(#{createTime}, 'YYYY-MM-DD')::timestamp + '1 day'
+						and h.homework_end_date>= to_date(#{createTime},'yyyy-MM-dd')::timestamp) hh
+						on c.id= hh.class_id
+			where c.deleted=false and c.teacher_id   <![CDATA[ &&   ]]>ARRAY[ #{userId,jdbcType=BIGINT}]
+			
+		
+		</select>
+
+ 	<update id="updateHomeworkDownNumNumByID">
+ 	update t_homework set modify_by= #{modifyBy},
+		 	modify_time = #{modifyTime},
+		 	down_Num =down_Num+1 where id=#{homeworkId} and deleted=false
+ 	
+ 	</update>
+ 	
+ 	<update id="updateHomeworkBrowseNumByID">
+ 	update t_homework set modify_by= #{modifyBy},
+		 	modify_time = #{modifyTime},
+		 	browse_Num =browse_Num+1 where id=#{homeworkId} and deleted=false
+ 	
+ 	</update>
+</mapper>

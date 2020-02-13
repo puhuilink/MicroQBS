@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phlink.bus.api.alarm.dao.AlarmSchoolRulesMapper">
+
+    <update id="switchAlarmSchoolRules">
+        update t_alarm_school_rules
+        <trim prefix="set" suffixOverrides="," suffix="where id=#{schoolSwitchVO.id}">
+            <if test="schoolSwitchVO.deviceSwitch!=null">
+                device_switch=#{schoolSwitchVO.deviceSwitch},
+            </if>
+            <if test="schoolSwitchVO.weekendSwitch!=null">
+                weekend_switch=#{schoolSwitchVO.weekendSwitch},
+            </if>
+        </trim>
+    </update>
+
+    <update id="batchWeekendSwitch">
+        update t_alarm_school_rules
+        set weekend_switch = #{weekendSwitch}
+    </update>
+
+    <update id="batchInvalidDate">
+        update t_alarm_school_rules
+        set invalid_start_date = #{invalidDateVO.invalidStartDate},
+            invalid_end_date   = #{invalidDateVO.invalidEndDate}
+    </update>
+    <select id="listDeviceCode" resultType="com.phlink.bus.api.alarm.domain.CodeRule">
+        select r.device_code as code, rs.id
+        from t_device_relation r
+                 left join t_student ts on r.student_id = ts.id
+                 left join t_alarm_school_rules rs on rs.school_id = ts.school_id
+        where r.deleted = false
+          and ts.deleted = false
+    </select>
+    <select id="listAlarmSchoolRuless" resultType="com.phlink.bus.api.alarm.domain.AlarmSchoolRules">
+        select t.*,
+        s.school_name,
+        f.fence_name,
+        f.jobs,
+        (select json_agg(json_build_object('start', ft.start_time, 'end', ft.end_time)) from t_fence_time ft where ft.fence_id = t.fence_id group by ft.fence_id) effectiveTime
+        from t_alarm_school_rules t
+        left join t_fence f on t.fence_id = f.id and f.relation_type = '1' and f.deleted = false
+        left join t_school s on f.relation_id = s.id and s.deleted = false
+        where t.deleted = false
+        <if test="alarmSchoolRules.schoolName!=null and alarmSchoolRules.schoolName!=''">
+            and s.school_name=#{alarmSchoolRules.schoolName}
+        </if>
+    </select>
+    <select id="listRulesByDeviceId" resultType="com.phlink.bus.api.alarm.domain.AlarmSchoolRules">
+        select *
+        from t_alarm_school_rules r
+        where r.deleted = false
+        and r.school_id =any (select v.school_id from v_device_detailinfo v where v.device_code = #{deviceId})
+    </select>
+</mapper>

@@ -1,0 +1,25 @@
+server:
+  port: 9528
+
+grpc:
+  server:
+    port: 18084
+    address: 0.0.0.0
+
+
+spring:
+  application:
+    name: local-grpc-server
+  redis:
+    database: 1
+    host: 111.200.216.79
+    port: 10637
+    timeout: 0
+  rabbitmq:
+      host: 192.168.6.158
+      port: 5673
+      password: iotmq
+      username: iotmq
+      publisherConfirms: true
+      publisherReturns: true
+      virtualHost: iot

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phlink.bus.api.system.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.phlink.bus.api.system.domain.User">
+        <id column="USER_ID" jdbcType="DECIMAL" property="userId"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="PASSWORD" jdbcType="VARCHAR" property="password"/>
+        <result column="REALNAME" jdbcType="VARCHAR" property="realname"/>
+        <result column="DEPT_ID" jdbcType="DECIMAL" property="deptId"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+        <result column="MOBILE" jdbcType="VARCHAR" property="mobile"/>
+        <result column="STATUS" jdbcType="CHAR" property="status"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+        <result column="SSEX" jdbcType="CHAR" property="ssex"/>
+        <result column="AVATAR" jdbcType="VARCHAR" property="avatar"/>
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+        <result column="USER_TYPE" jdbcType="CHAR" property="userType"/>
+    </resultMap>
+    
+    <select id="findDetalByMobile" resultType="com.phlink.bus.api.system.domain.User">
+    	SELECT
+        u.user_id userId,
+        u.username,
+        u.password,
+        u.email,
+        u.mobile,
+        u.STATUS,
+        u.create_time createTime,
+        u.ssex,
+        u.realname,
+        u.AVATAR,
+        u.DESCRIPTION,
+        u.LAST_LOGIN_TIME lastLoginTime,
+        (select count(1) from sys_login_log log where log.username = u.username) as loginTime,
+        u.user_type userType
+        FROM
+        sys_user u
+        where u.mobile = #{mobile}
+    </select>
+
+    <select id="findUserDetail" resultType="com.phlink.bus.api.system.domain.User">
+        SELECT
+        u.user_id userId,
+        u.username,
+        u.password,
+        u.email,
+        u.mobile,
+        u.STATUS,
+        u.create_time createTime,
+        u.ssex,
+        u.realname,
+        d.dept_id deptId,
+        d.dept_name deptName,
+        u.AVATAR,
+        u.DESCRIPTION,
+        u.LAST_LOGIN_TIME lastLoginTime,
+        (select count(1) from sys_login_log log where log.username = u.username) as loginTime,
+        u.user_type userType,
+        array_to_string(array_agg(r.role_id), ',') roleId,
+        array_to_string(array_agg(r.ROLE_NAME), ',') roleName
+        FROM
+        sys_user u
+        LEFT JOIN sys_dept d ON (u.dept_id = d.dept_id)
+        LEFT JOIN sys_user_role ur ON (u.user_id = ur.user_id)
+        LEFT JOIN sys_role r ON r.role_id = ur.role_id
+        WHERE u.user_type = '0'
+        <if test="user.username != null and user.username != ''">
+            AND u.username like CONCAT('%', #{user.username}, '%')
+        </if>
+        <if test="user.realname != null and user.realname != ''">
+            AND u.realname like CONCAT('%', #{user.realname}, '%')
+        </if>
+        <if test="user.mobile != null and user.mobile != ''">
+            AND u.mobile like CONCAT('%', #{user.mobile}, '%')
+        </if>
+        <if test="user.deptId != null and user.deptId != ''">
+            AND d.dept_id IN (
+            with recursive subdept as (
+            select t.dept_id,
+            t.parent_id,
+            t.dept_name
+            from sys_dept t
+            where t.dept_id = #{user.deptId}::bigint
+            union all
+            select m.dept_id,
+            m.parent_id,
+            m.dept_name
+            from sys_dept m
+            inner join subdept s on s.dept_id = m.parent_id
+            )
+            select s.dept_id
+            from subdept s
+            )
+        </if>
+        <if test="user.createTimeFrom != null and user.createTimeFrom !=''">
+            And u.create_time::date &gt; #{user.createTimeFrom}::date
+        </if>
+        <if test="user.createTimeTo!= null and user.createTimeTo !=''">
+            And u.create_time::date &lt; #{user.createTimeTo}::date
+        </if>
+        <if test="user.ssex != null and user.ssex != ''">
+            AND u.ssex = #{user.ssex}
+        </if>
+        <if test="user.status != null and user.status != ''">
+            AND u.status = #{user.status}
+        </if>
+        <if test="user.roleId != null and user.roleId != ''">
+            AND r.role_id = #{user.roleId}::bigint
+        </if>
+        group by u.user_id, d.dept_id
+
+    </select>
+
+    <select id="listGuardianDetail" resultType="com.phlink.bus.api.system.domain.User">
+        SELECT distinct u.*,
+        case when s.id is not null then '主责人' else '监护人' end as roleName,
+        (select count(1)
+        from sys_login_log log
+        where log.username = u.username)                    as loginTime,
+        (select string_agg(st.name, ',' order by st.id asc)
+        from t_student st
+        where st.id = any (g.student_id)
+        and st.deleted = false)                           as studentName
+        FROM sys_user u
+        RIGHT JOIN t_guardian g on u.user_id = g.user_id and g.deleted = false
+        LEFT JOIN t_student s ON s.main_guardian_id = g.user_id and s.deleted = false
+        where u.user_id is not null
+        --  and g.student_id is not null and cardinality(g.student_id) > 0
+        <if test="user.username != null and user.username != ''">
+            AND u.username like CONCAT('%', #{user.username}, '%')
+        </if>
+        <if test="user.userId != null and user.userId != ''">
+            AND u.user_id::text like CONCAT('%', #{user.userId}, '%')
+        </if>
+        <if test="user.mobile != null and user.mobile != ''">
+            AND u.mobile like CONCAT('%', #{user.mobile}, '%')
+        </if>
+        <if test="user.createTimeFrom != null and user.createTimeFrom !=''">
+            And u.create_time::date &gt; #{user.createTimeFrom}::date
+        </if>
+        <if test="user.createTimeTo!= null and user.createTimeTo !=''">
+            And u.create_time::date &lt; #{user.createTimeTo}::date
+        </if>
+        <if test="user.ssex != null and user.ssex != ''">
+            AND u.ssex = #{user.ssex}
+        </if>
+        <if test="user.status != null and user.status != ''">
+            AND u.status = #{user.status}
+        </if>
+        <if test="user.realname != null and user.realname != ''">
+            AND u.realname like CONCAT('%', #{user.realname}, '%')
+        </if>
+        <if test="user.studentName != null and user.studentName != ''">
+            and g.id =any (select v.id from v_guardian_student v where v.student_name like CONCAT('%', #{user.studentName}, '%'))
+        </if>
+        order by u.user_id desc
+    </select>
+
+    <select id="listVisitorDetail" resultType="com.phlink.bus.api.system.domain.User">
+        SELECT u.*,
+        '游客'  roleName,
+        (select count(1) from sys_login_log log where log.username = u.username) as loginTime
+        FROM sys_user u
+        left join sys_user_role ur on u.user_id = ur.user_id
+        left join sys_role r on r.role_id = ur.role_id
+        where r.role_id = 10
+        <if test="user.username != null and user.username != ''">
+            AND u.username like CONCAT('%', #{user.username}, '%')
+        </if>
+        <if test="user.userId != null and user.userId != ''">
+            AND u.user_id::text like CONCAT('%', #{user.userId}, '%')
+        </if>
+        <if test="user.mobile != null and user.mobile != ''">
+            AND u.mobile like CONCAT('%', #{user.mobile}, '%')
+        </if>
+        <if test="user.createTimeFrom != null and user.createTimeFrom !=''">
+            And u.create_time::date &gt; #{user.createTimeFrom}::date
+        </if>
+        <if test="user.createTimeTo!= null and user.createTimeTo !=''">
+            And u.create_time::date &lt; #{user.createTimeTo}::date
+        </if>
+        <if test="user.ssex != null and user.ssex != ''">
+            AND u.ssex = #{user.ssex}
+        </if>
+        <if test="user.status != null and user.status != ''">
+            AND u.status = #{user.status}
+        </if>
+        <if test="user.realname != null and user.realname != ''">
+            AND u.realname like CONCAT('%', #{user.realname}, '%')
+        </if>
+        order by u.user_id desc
+    </select>
+
+    <select id="findDetail" resultType="com.phlink.bus.api.system.domain.User" parameterType="string">
+        SELECT
+        u.user_id userId,
+        u.username,
+        u.password,
+        u.email,
+        u.mobile,
+        u.STATUS,
+        u.realname,
+        u.create_time createTime,
+        u.ssex,
+        d.dept_id deptId,
+        d.dept_name deptName,
+        u.AVATAR,
+        u.DESCRIPTION,
+        u.LAST_LOGIN_TIME lastLoginTime,
+        u.user_type userType,
+        array_to_string(array_agg(r.role_id), ',') roleId,
+        array_to_string(array_agg(r.ROLE_NAME), ',') roleName
+        FROM
+        sys_user u
+        LEFT JOIN sys_dept d ON (u.dept_id = d.dept_id)
+        LEFT JOIN sys_user_role ur ON (u.user_id = ur.user_id)
+        LEFT JOIN sys_role r ON r.role_id = ur.role_id
+        WHERE  u.username = #{username}
+        group by u.user_id, d.dept_id
+    </select>
+    <select id="listByDeptList" resultType="com.phlink.bus.api.system.domain.User">
+        SELECT
+        u.user_id userId,
+        u.username,
+        u.password,
+        u.email,
+        u.mobile,
+        u.STATUS,
+        u.create_time createTime,
+        u.ssex,
+        d.dept_id deptId,
+        d.dept_name deptName,
+        u.AVATAR,
+        u.DESCRIPTION,
+        u.LAST_LOGIN_TIME lastLoginTime,
+        u.user_type userType,
+        array_to_string(array_agg(r.role_id), ',') roleId,
+        array_to_string(array_agg(r.ROLE_NAME), ',') roleName
+        FROM
+        sys_user u
+        LEFT JOIN sys_dept d ON (u.dept_id = d.dept_id)
+        LEFT JOIN sys_user_role ur ON (u.user_id = ur.user_id)
+        LEFT JOIN sys_role r ON r.role_id = ur.role_id
+        WHERE u.dept_id = any(#{deptIdList})
+        group by u.user_id, d.dept_id
+    </select>
+    <select id="listOnRouteByWorkerId" resultType="com.phlink.bus.api.system.domain.User">
+        select u.*
+        from sys_user u
+                    left join t_student s on s.main_guardian_id = u.user_id and s.deleted = false
+                    left join t_route_operation ro on ro.deleted = false and ro.id = s.route_operation_id
+        where ro.bind_bus_teacher_id = #{busTeacherId} or ro.bind_driver_id = #{busTeacherId}
+    </select>
+    <select id="listOnRouteByBusId" resultType="com.phlink.bus.api.system.domain.User">
+        select u.*
+        from sys_user u
+                    left join t_student s on s.main_guardian_id = u.user_id and s.deleted = false
+                    left join t_route_operation ro on ro.deleted = false and ro.id = s.route_operation_id
+        where ro.bind_bus_id = #{busId}
+    </select>
+    <select id="listBusLeaderByBus" resultType="com.phlink.bus.api.system.domain.User">
+        select u.*
+        from sys_user u
+        left join sys_user_role ur on u.user_id = ur.user_id
+        where u.dept_id = (select b.dept_id from t_bus b where b.bus_code = #{busCode} and b.deleted = false)
+        and ur.role_id = 4
+    </select>
+    <select id="getDriverByBusCode" resultType="com.phlink.bus.api.system.domain.User">
+        select u.*
+        from sys_user u
+        left join t_route_operation ro on u.user_id = ro.bind_driver_id and ro.deleted = false
+        where ro.bind_bus_id = (select b.id from t_bus b where b.bus_code = #{busCode} and b.deleted = false)
+    </select>
+    <select id="listGuardianByStudent" resultType="com.phlink.bus.api.system.domain.User">
+        select u.*
+        from sys_user u
+        where u.user_id = any (select g.user_id from t_guardian g where #{studentId} =any(g.student_id) and g.deleted = false)
+    </select>
+    <select id="listByRoleId" resultType="com.phlink.bus.api.system.domain.User">
+        select *
+        from sys_user t
+        where t.user_id =any(select user_id from sys_user_role where role_id = #{roleId})
+    </select>
+</mapper>

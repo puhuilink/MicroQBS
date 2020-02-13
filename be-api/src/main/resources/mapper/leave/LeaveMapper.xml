@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phlink.bus.api.leave.dao.LeaveMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.phlink.bus.api.leave.domain.Leave">
+        <result column="id" property="id"/>
+        <result column="deleted" property="deleted"/>
+        <result column="student_id" property="studentId"/>
+        <result column="reason" property="reason"/>
+        <result column="leave_date_start" property="leaveDateStart"/>
+        <result column="leave_date_end" property="leaveDateEnd"/>
+        <result column="trip_id" property="tripId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="apply_id" property="applyId"/>
+        <result column="bus_time" property="busTime"/>
+        <result column="sign_img" property="signImg"/>
+    </resultMap>
+    <select id="findIsLeaveBystudenId" resultMap="BaseResultMap">
+        SELECT l.*
+        FROM t_leave l
+        where 1 = 1
+          and l.student_id = #{studentId}
+          and l.bus_time &amp;&amp; #{busTime}::char[]
+          and ((#{leaveDateStart} BETWEEN leave_date_start and leave_date_end
+            or #{leaveDateEnd} BETWEEN leave_date_start and leave_date_end)
+            or (#{leaveDateStart} &lt;= leave_date_end and #{leaveDateEnd} &gt;= leave_date_start))
+    </select>
+    <select id="getLeaveList" resultType="com.phlink.bus.api.leave.domain.vo.LeaveDetailVO">
+        select distinct t.*,
+        sc.school_name            schoolName,
+        s.name                    studentName,
+        sy.realname               applyName,
+        sy.mobile                 applyMobile,
+        c.class_level,
+        c.grade,
+        c.degree,
+        c.enroll_year,
+        u.realname                busTeacherName,
+        u.mobile                  busTeacherMobile,
+        '1' = any (t.bus_time) as bustime1,
+        '2' = any (t.bus_time) as bustime2,
+        '3' = any (t.bus_time) as bustime3,
+        '4' = any (t.bus_time) as bustime4,
+        st.stop_name
+        from t_leave t
+        left join t_student s on t.student_id = s.id and s.deleted = false
+        left join t_stop st on st.id = s.stop_id and st.deleted = false
+        left join t_route_operation ro on s.route_operation_id = ro.id and ro.deleted = false
+        left join t_school sc on s.school_id = sc.id and sc.deleted = false
+        left join t_classes c on s.class_id = c.id and c.deleted = false
+        left join sys_user sy on sy.user_id = t.apply_id
+        left join sys_user u on u.user_id = ro.bind_bus_teacher_id
+        where t.deleted = false
+        and s.id is not null
+        <if test="leaveVO.studentId!=null">
+            and t.student_id=#{leaveVO.studentId}
+        </if>
+        <if test="leaveVO.schoolName!=null and leaveVO.schoolName!=''">
+            and sc.school_name like CONCAT('%', #{leaveVO.schoolName}, '%')
+        </if>
+        <if test="leaveVO.mobile!=null and leaveVO.mobile!=''">
+            and sy.mobile like CONCAT('%', #{leaveVO.mobile}, '%')
+        </if>
+        <if test="leaveVO.studentName!=null and leaveVO.studentName!=''">
+            and s.name like CONCAT('%', #{leaveVO.studentName}, '%')
+        </if>
+        order by id desc
+    </select>
+
+    <select id="listBusTimeInfo" resultType="com.phlink.bus.api.leave.domain.vo.StudentByDayLeaveInfoVO">
+        select distinct on(unnest(l.bus_time), l.student_id) unnest(l.bus_time) as bus_time, l.student_id, l.sign_img
+        from t_leave l
+        where l.deleted = false
+         and #{day} between l.leave_date_start and l.leave_date_end
+         and l.student_id = #{studentId};
+    </select>
+
+    <select id="listDay" resultType="com.phlink.bus.api.leave.domain.Leave">
+        select l.*
+        from t_leave l
+        where l.deleted = false
+         and (l.leave_date_start between #{start} and #{end}
+         or l.leave_date_end between #{start} and #{end})
+         and l.student_id = #{studentId};
+    </select>
+
+</mapper>

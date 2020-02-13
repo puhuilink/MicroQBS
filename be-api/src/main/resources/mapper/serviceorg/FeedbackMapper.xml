@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phlink.bus.api.serviceorg.dao.FeedbackMapper">
+
+    <select id="listFeedbacks" resultType="com.phlink.bus.api.serviceorg.domain.Feedback">
+        select t.*
+        from t_feedback as t
+        where t.deleted = false
+        <if test="feedback.mobile != null and feedback.mobile != ''">
+            and t.mobile like CONCAT('%', #{feedback.mobile}, '%')
+        </if>
+        <if test="feedback.createTimeFrom != null and feedback.createTimeFrom != ''">
+            and t.create_time::date &gt;= to_date(#{feedback.createTimeFrom}, 'YYYY-MM-DD')::timestamp
+        </if>
+        <if test="feedback.createTimeTo != null and feedback.createTimeTo != ''">
+            and t.create_time::date &lt; to_date(#{feedback.createTimeTo}, 'YYYY-MM-DD')::timestamp + '1 day'
+        </if>
+
+    </select>
+</mapper>

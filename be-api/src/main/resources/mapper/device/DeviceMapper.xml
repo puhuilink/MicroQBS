@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phlink.bus.api.device.dao.DeviceMapper">
+
+    <select id="listDevices" resultType="com.phlink.bus.api.device.domain.Device">
+        select d.*,
+        r.student_id,
+        s.name        as studentName,
+        r.create_time as bindingTime,
+        u.realname as mainGuardianName,
+        u.mobile as mainGuardianMobile
+        from t_device d
+        left join t_device_relation r on d.device_code = r.device_code and r.deleted = false
+        left join t_student s on r.student_id = s.id and s.deleted = false
+        left join sys_user u on s.main_guardian_id = u.user_id
+        where 1 = 1
+        and d.deleted = false
+        <if test="deviceViewVO.studentId != null">
+            and r.student_id::text like CONCAT('%', #{deviceViewVO.studentId}, '%')
+        </if>
+        <if test="deviceViewVO.deviceCode != null and deviceViewVO.deviceCode != ''">
+            and d.device_code like CONCAT('%', #{deviceViewVO.deviceCode}, '%')
+        </if>
+        <if test="deviceViewVO.bindingStatus != null">
+            and d.binding_status=#{deviceViewVO.bindingStatus}
+        </if>
+    </select>
+
+    <select id="getSchoolDevices" resultType="string">
+
+    </select>
+    <select id="getByStudentId" resultType="com.phlink.bus.api.device.domain.Device">
+        select d.*
+        from t_device d
+        left join t_device_relation dr on d.device_code = dr.device_code and dr.deleted = false
+        where dr.student_id = #{studentId} and d.deleted = false
+        limit 1
+    </select>
+    <select id="listByStudentInfo" resultType="com.phlink.bus.api.device.domain.Device">
+        select distinct d.*, s.name as studentName, sc.school_name, u.realname as mainGuardianName, u.mobile as mainGuardianMobile, u.idcard as mainGuardianIdcard
+        from t_device d
+        left join t_device_relation dr on d.device_code = dr.device_code and dr.deleted = false
+        left join t_student s on dr.student_id = s.id and s.deleted = false
+        left join t_school sc on sc.id = s.school_id and sc.deleted = false
+        left join sys_user u on u.user_id = s.main_guardian_id
+        left join v_bindbus_detail_info v on s.route_operation_id = v.route_operation_id
+        where d.deleted = false
+        and d.binding_status = true
+        <if test="studentId != null">
+            and s.id = #{studentId}
+        </if>
+        <if test="schoolName != null and schoolName != ''">
+            and s.school_name like CONCAT('%', #{schoolName}, '%')
+        </if>
+        <if test="studentName != null and studentName != ''">
+            and s.name like CONCAT('%', #{studentName}, '%')
+        </if>
+        <if test="numberPlate != null and numberPlate != ''">
+            and  v.number_plate like CONCAT('%', #{numberPlate}, '%')
+        </if>
+        <if test="busCode != null and busCode != ''">
+            and  v.bus_code like CONCAT('%', #{busCode}, '%')
+        </if>
+    </select>
+</mapper>
