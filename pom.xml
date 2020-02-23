@@ -3,21 +3,20 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <modules>
+        <module>web-domain</module>
+        <module>proto</module>
+    </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.0.RELEASE</version>
+        <version>2.1.12.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <modules>
-        <module>core-web</module>
-        <module>core-proto</module>
-        <module>msg</module>
-    </modules>
 
-    <groupId>com.phlink.common</groupId>
-    <artifactId>parent</artifactId>
+    <groupId>com.phlink.core</groupId>
+    <artifactId>phlink-common-framework</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -30,21 +29,11 @@
         <redisson.version>3.11.1</redisson.version>
         <swagger.version>2.9.2</swagger.version>
         <postgres.version>42.2.5</postgres.version>
-        <grpc.version>1.22.2</grpc.version>
+        <grpc.version>1.27.1</grpc.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>com.phlink.common</groupId>
-                <artifactId>core-common</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.phlink.common</groupId>
-                <artifactId>core-proto</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
             <!-- 动态数据源 -->
             <dependency>
                 <groupId>com.baomidou</groupId>
@@ -104,6 +93,23 @@
                 <artifactId>java-jwt</artifactId>
                 <version>3.4.1</version>
             </dependency>
+            <!-- grpc -->
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-netty-shaded</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-protobuf</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-stub</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
@@ -206,12 +212,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <repositories>
-        <repository>
-            <id>nexus-aliyun</id>
-            <name>Nexus aliyun</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
-        </repository>
-    </repositories>
 </project>
