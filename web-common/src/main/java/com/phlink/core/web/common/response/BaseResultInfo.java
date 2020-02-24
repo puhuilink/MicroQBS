@@ -1,6 +1,6 @@
-package com.phlink.core.web.base.exception;
+package com.phlink.core.web.common.response;
 
-public interface BaseErrorInfo {
+public interface BaseResultInfo {
     /** 错误码*/
     String getResultCode();
 

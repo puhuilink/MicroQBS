@@ -1,4 +1,4 @@
-package com.phlink.core.web.base.domain;
+package com.phlink.core.web.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

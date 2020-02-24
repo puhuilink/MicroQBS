@@ -1,6 +1,6 @@
-package com.phlink.core.web.base.exception;
+package com.phlink.core.web.common.response;
 
-public enum CommonEnum implements BaseErrorInfo {
+public enum CommonResultEnum implements BaseResultInfo {
     // 数据操作错误定义
     SUCCESS("200", "成功!"),
 
@@ -19,7 +19,7 @@ public enum CommonEnum implements BaseErrorInfo {
     /** 错误描述 */
     private String resultMsg;
 
-    CommonEnum(String resultCode, String resultMsg) {
+    CommonResultEnum(String resultCode, String resultMsg) {
         this.resultCode = resultCode;
         this.resultMsg = resultMsg;
     }

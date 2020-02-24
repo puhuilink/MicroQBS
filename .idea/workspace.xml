@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40fc5f2b-1507-4786-abc4-1e715c11fbd5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/domain/ResultBody.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/exception/CommonEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/exception/CommonEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/aspect/LimitAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/aspect/LimitAspect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/domain/ResultBody.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/entity/ResultBody.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/exception/BaseErrorInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/exception/BaseErrorInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/exception/BizException.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/exception/BizException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/exception/CommonEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/exception/CommonEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/exception/LimitAccessException.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/exception/LimitAccessException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +170,7 @@
       <workItem from="1582380899374" duration="3276000" />
       <workItem from="1582463368098" duration="6607000" />
       <workItem from="1582516346251" duration="2123000" />
-      <workItem from="1582522996718" duration="2424000" />
+      <workItem from="1582522996718" duration="2567000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1582381255690</created>
@@ -223,7 +228,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582525098482</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="基础面初始化">
+      <created>1582525459825</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1582525459825</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -248,14 +260,14 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="690" y="432" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582378660427" />
-    <state x="396" y="457" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1582517037644">
+    <state x="396" y="457" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1582525673466">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="396" y="457" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582517037644" />
-    <state x="165" y="125" key="CommitChangelistDialog2" timestamp="1582525098145">
+    <state x="396" y="457" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582525673466" />
+    <state x="165" y="125" key="CommitChangelistDialog2" timestamp="1582525459649">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="165" y="125" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1582525098145" />
+    <state x="165" y="125" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1582525459649" />
     <state x="378" y="187" key="Maven.ArtifactSearchDialog" timestamp="1582464712269">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
@@ -268,10 +280,10 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="349" y="164" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1582523062973" />
-    <state x="440" y="265" key="Vcs.Push.Dialog.v2" timestamp="1582525099547">
+    <state x="440" y="265" key="Vcs.Push.Dialog.v2" timestamp="1582525460790">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="440" y="265" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1582525099547" />
+    <state x="440" y="265" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1582525460790" />
     <state x="629" y="449" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1582515852055">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>

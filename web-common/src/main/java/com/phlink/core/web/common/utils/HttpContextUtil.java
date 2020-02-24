@@ -1,4 +1,4 @@
-package com.phlink.core.web.base.utils;
+package com.phlink.core.web.common.utils;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;

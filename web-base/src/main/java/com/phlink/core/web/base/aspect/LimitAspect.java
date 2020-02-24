@@ -1,8 +1,8 @@
 package com.phlink.core.web.base.aspect;
 
 import com.google.common.collect.ImmutableList;
-import com.phlink.core.web.base.exception.LimitAccessException;
-import com.phlink.core.web.base.utils.IPUtil;
+import com.phlink.core.web.common.exception.LimitAccessException;
+import com.phlink.core.web.common.utils.IPUtil;
 import com.phlink.core.web.common.annotation.Limit;
 import com.phlink.core.web.common.entity.LimitType;
 import lombok.extern.slf4j.Slf4j;

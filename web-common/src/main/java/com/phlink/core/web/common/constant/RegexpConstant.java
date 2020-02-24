@@ -1,4 +1,4 @@
-package com.phlink.core.web.base.constant;
+package com.phlink.core.web.common.constant;
 
 /**
  * 正则常量

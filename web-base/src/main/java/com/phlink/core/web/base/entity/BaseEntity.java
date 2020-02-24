@@ -1,4 +1,4 @@
-package com.phlink.core.web.base.domain;
+package com.phlink.core.web.base.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

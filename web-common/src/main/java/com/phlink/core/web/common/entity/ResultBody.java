@@ -1,8 +1,8 @@
-package com.phlink.core.web.base.domain;
+package com.phlink.core.web.common.entity;
 
 import com.alibaba.fastjson.JSONObject;
-import com.phlink.core.web.base.exception.BaseErrorInfo;
-import com.phlink.core.web.base.exception.CommonEnum;
+import com.phlink.core.web.common.response.BaseResultInfo;
+import com.phlink.core.web.common.response.CommonResultEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,7 +26,7 @@ public class ResultBody {
      */
     private Object data;
 
-    public ResultBody(BaseErrorInfo errorInfo) {
+    public ResultBody(BaseResultInfo errorInfo) {
         this.code = errorInfo.getResultCode();
         this.message = errorInfo.getResultMsg();
     }
@@ -48,8 +48,8 @@ public class ResultBody {
      */
     public static ResultBody success(Object data) {
         ResultBody rb = new ResultBody();
-        rb.setCode(CommonEnum.SUCCESS.getResultCode());
-        rb.setMessage(CommonEnum.SUCCESS.getResultMsg());
+        rb.setCode(CommonResultEnum.SUCCESS.getResultCode());
+        rb.setMessage(CommonResultEnum.SUCCESS.getResultMsg());
         rb.setData(data);
         return rb;
     }
@@ -57,7 +57,7 @@ public class ResultBody {
     /**
      * 失败
      */
-    public static ResultBody error(BaseErrorInfo errorInfo) {
+    public static ResultBody error(BaseResultInfo errorInfo) {
         ResultBody rb = new ResultBody();
         rb.setCode(errorInfo.getResultCode());
         rb.setMessage(errorInfo.getResultMsg());
@@ -81,7 +81,7 @@ public class ResultBody {
      */
     public static ResultBody error(String message) {
         ResultBody rb = new ResultBody();
-        rb.setCode(CommonEnum.FAIL.getResultCode());
+        rb.setCode(CommonResultEnum.FAIL.getResultCode());
         rb.setMessage(message);
         rb.setData(null);
         return rb;

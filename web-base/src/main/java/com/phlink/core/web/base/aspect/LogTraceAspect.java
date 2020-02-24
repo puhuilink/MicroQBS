@@ -1,12 +1,11 @@
 package com.phlink.core.web.base.aspect;
 
-import com.phlink.core.web.base.domain.SysLogTrace;
+import com.phlink.core.web.base.entity.SysLogTrace;
 import com.phlink.core.web.base.properties.PhlinkProperties;
 import com.phlink.core.web.base.service.LogTraceService;
-import com.phlink.core.web.base.utils.HttpContextUtil;
-import com.phlink.core.web.base.utils.IPUtil;
+import com.phlink.core.web.common.utils.HttpContextUtil;
+import com.phlink.core.web.common.utils.IPUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

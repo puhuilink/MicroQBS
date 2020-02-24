@@ -1,5 +1,6 @@
-package com.phlink.core.web.base.exception;
+package com.phlink.core.web.common.exception;
 
+import com.phlink.core.web.common.response.BaseResultInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,13 +18,13 @@ public class BizException extends RuntimeException {
      */
     protected String errorMsg;
 
-    public BizException(BaseErrorInfo errorInfo) {
+    public BizException(BaseResultInfo errorInfo) {
         super(errorInfo.getResultCode());
         this.errorCode = errorInfo.getResultCode();
         this.errorMsg = errorInfo.getResultMsg();
     }
 
-    public BizException(BaseErrorInfo errorInfo, Throwable cause) {
+    public BizException(BaseResultInfo errorInfo, Throwable cause) {
         super(errorInfo.getResultCode(), cause);
         this.errorCode = errorInfo.getResultCode();
         this.errorMsg = errorInfo.getResultMsg();

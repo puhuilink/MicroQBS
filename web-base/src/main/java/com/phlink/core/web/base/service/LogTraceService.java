@@ -1,6 +1,6 @@
 package com.phlink.core.web.base.service;
 
-import com.phlink.core.web.base.domain.SysLogTrace;
+import com.phlink.core.web.base.entity.SysLogTrace;
 import org.aspectj.lang.ProceedingJoinPoint;
 
 public interface LogTraceService {
