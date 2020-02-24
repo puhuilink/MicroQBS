@@ -2,8 +2,64 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40fc5f2b-1507-4786-abc4-1e715c11fbd5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_dataformat_jackson_dataformat_yaml_2_9_10.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_findbugs_jsr305_1_3_9.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_errorprone_error_prone_annotations_2_0_18.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__de_ruedigermoeller_fst_2_57.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_buffer_4_1_45_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_4_1_45_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_dns_4_1_45_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_common_4_1_45_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_handler_4_1_45_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_resolver_4_1_45_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_resolver_dns_4_1_45_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_4_1_45_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_projectreactor_reactor_core_3_2_14_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_reactivex_rxjava2_rxjava_2_2_17.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_cache_cache_api_1_1_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_16.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_9.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_mojo_animal_sniffer_annotations_1_14.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_javassist_javassist_3_21_0_GA.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jodd_jodd_bean_5_0_10.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jodd_jodd_core_5_0_10.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_objenesis_objenesis_2_5_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_reactivestreams_reactive_streams_1_0_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_redisson_redisson_3_11_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_redisson_redisson_spring_boot_starter_3_11_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_redisson_redisson_spring_data_21_3_11_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_log4j12_1_7_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_data_redis_2_1_12_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_commons_2_1_15_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_keyvalue_2_1_15_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_redis_2_1_15_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_support_5_1_13_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_oxm_5_1_13_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/aspect/LimitAspect.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/aspect/LogTraceAspect.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/domain/SysLogTrace.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/exception/BaseErrorInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/exception/BizException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/exception/CommonEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/exception/LimitAccessException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/mapper/LogTraceMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/properties/PhlinkProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/service/LogTraceService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/service/impl/LogTraceServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/utils/AddressUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/utils/HttpContextUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/utils/IPUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/annotation/Log.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/annotation/LogTrace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-domain/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-domain/src/main/java/com/phlink/core/web/domain/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/domain/BaseEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-domain/src/main/java/com/phlink/core/web/domain/PathTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/domain/PathTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-domain/src/main/java/com/phlink/core/web/domain/RegexpConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/constant/RegexpConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-domain/web-domain.iml" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/web-base.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +84,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -52,9 +109,10 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/annotation" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -70,11 +128,15 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.phlink.core.web.base.utils" />
+      <recent name="com.phlink.core.web.base.service.impl" />
       <recent name="com.phlink.core.web.common.entity" />
       <recent name="com.phlink.core.web.common.validation.validator" />
       <recent name="com.phlink.core.web.domain" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base" />
+      <recent name="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/aspect" />
       <recent name="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/annotation" />
       <recent name="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common" />
       <recent name="$PROJECT_DIR$/proto/src/main/proto" />
@@ -157,7 +219,8 @@
       <workItem from="1582380862214" duration="28000" />
       <workItem from="1582380899374" duration="3276000" />
       <workItem from="1582463368098" duration="6607000" />
-      <workItem from="1582516346251" duration="434000" />
+      <workItem from="1582516346251" duration="2123000" />
+      <workItem from="1582522996718" duration="2037000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1582381255690</created>
@@ -194,7 +257,21 @@
       <option name="project" value="LOCAL" />
       <updated>1582516783566</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="update">
+      <created>1582516805297</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1582516805297</updated>
+    </task>
+    <task id="LOCAL-00007" summary="update">
+      <created>1582516867733</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1582516867733</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -210,34 +287,38 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="440" y="190" key="#Project_Structure/0.0.1680.1050@0.0.1680.1050" timestamp="1582464385466" />
+    <state x="578" y="298" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog" timestamp="1582524744135">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="578" y="298" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582524744135" />
     <state x="690" y="432" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1582378660427">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="690" y="432" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582378660427" />
-    <state x="396" y="457" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1582378609030">
+    <state x="396" y="457" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1582517037644">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="396" y="457" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582378609030" />
-    <state x="165" y="125" key="CommitChangelistDialog2" timestamp="1582516805146">
+    <state x="396" y="457" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582517037644" />
+    <state x="165" y="125" key="CommitChangelistDialog2" timestamp="1582516867572">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="165" y="125" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1582516805146" />
+    <state x="165" y="125" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1582516867572" />
     <state x="378" y="187" key="Maven.ArtifactSearchDialog" timestamp="1582464712269">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="378" y="187" key="Maven.ArtifactSearchDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582464712269" />
-    <state x="490" y="283" key="NewModule_or_Project.wizard" timestamp="1582462220599">
+    <state x="490" y="283" key="NewModule_or_Project.wizard" timestamp="1582523050455">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="490" y="283" key="NewModule_or_Project.wizard/0.0.1680.1050@0.0.1680.1050" timestamp="1582462220599" />
-    <state x="349" y="164" key="SettingsEditor" timestamp="1582516843064">
+    <state x="490" y="283" key="NewModule_or_Project.wizard/0.0.1680.1050@0.0.1680.1050" timestamp="1582523050455" />
+    <state x="349" y="164" key="SettingsEditor" timestamp="1582523062973">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="349" y="164" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1582516843064" />
-    <state x="440" y="265" key="Vcs.Push.Dialog.v2" timestamp="1582516806331">
+    <state x="349" y="164" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1582523062973" />
+    <state x="440" y="265" key="Vcs.Push.Dialog.v2" timestamp="1582516868719">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="440" y="265" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1582516806331" />
+    <state x="440" y="265" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1582516868719" />
     <state x="629" y="449" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1582515852055">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
@@ -246,9 +327,9 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="506" y="282" width="816" height="550" key="find.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1582378937770" />
-    <state x="255" y="205" key="new project wizard" timestamp="1582464376864">
+    <state x="255" y="205" key="new project wizard" timestamp="1582523023656">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="255" y="205" key="new project wizard/0.0.1680.1050@0.0.1680.1050" timestamp="1582464376864" />
+    <state x="255" y="205" key="new project wizard/0.0.1680.1050@0.0.1680.1050" timestamp="1582523023656" />
   </component>
 </project>
