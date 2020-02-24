@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="40fc5f2b-1507-4786-abc4-1e715c11fbd5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1XxiX4rXajGtlibUsZfIbmue5Zh" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/annotation" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.phlink.core.web.common.entity" />
+      <recent name="com.phlink.core.web.common.validation.validator" />
+      <recent name="com.phlink.core.web.domain" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/annotation" />
+      <recent name="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common" />
+      <recent name="$PROJECT_DIR$/proto/src/main/proto" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.ApiApplication">
+    <configuration name="ApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="web" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.phlink.bus.api.ApiApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="IotdataApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="be-iot-data" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.phlink.bus.core.iotdata.IotdataApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LocalGrpcClientApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="iot-data-test" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.phlink.bus.iottest.LocalGrpcClientApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MessageApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="be-msg" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.phlink.biz.core.message.MessageApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MessageApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="msg" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.phlink.bus.message.MessageApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="40fc5f2b-1507-4786-abc4-1e715c11fbd5" name="Default Changelist" comment="" />
+      <created>1581994182211</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1581994182211</updated>
+      <workItem from="1581994186844" duration="431000" />
+      <workItem from="1582002789299" duration="683000" />
+      <workItem from="1582376578927" duration="827000" />
+      <workItem from="1582377561461" duration="194000" />
+      <workItem from="1582377800487" duration="1899000" />
+      <workItem from="1582380590303" duration="132000" />
+      <workItem from="1582380740213" duration="41000" />
+      <workItem from="1582380805958" duration="53000" />
+      <workItem from="1582380862214" duration="28000" />
+      <workItem from="1582380899374" duration="3276000" />
+      <workItem from="1582463368098" duration="6607000" />
+      <workItem from="1582516346251" duration="310000" />
+    </task>
+    <task id="LOCAL-00001" summary="update">
+      <created>1582381255690</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1582381255690</updated>
+    </task>
+    <task id="LOCAL-00002" summary="init">
+      <created>1582464169722</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1582464169722</updated>
+    </task>
+    <task id="LOCAL-00003" summary="update">
+      <created>1582515150969</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1582515150969</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="init" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="440" y="190" key="#Project_Structure" timestamp="1582464385466">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="440" y="190" key="#Project_Structure/0.0.1680.1050@0.0.1680.1050" timestamp="1582464385466" />
+    <state x="690" y="432" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1582378660427">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="690" y="432" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582378660427" />
+    <state x="396" y="457" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1582378609030">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="396" y="457" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582378609030" />
+    <state x="165" y="125" key="CommitChangelistDialog2" timestamp="1582516749514">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="165" y="125" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1582516749514" />
+    <state x="378" y="187" key="Maven.ArtifactSearchDialog" timestamp="1582464712269">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="378" y="187" key="Maven.ArtifactSearchDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582464712269" />
+    <state x="490" y="283" key="NewModule_or_Project.wizard" timestamp="1582462220599">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="490" y="283" key="NewModule_or_Project.wizard/0.0.1680.1050@0.0.1680.1050" timestamp="1582462220599" />
+    <state x="349" y="164" key="SettingsEditor" timestamp="1582463273100">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="349" y="164" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1582463273100" />
+    <state x="440" y="265" key="Vcs.Push.Dialog.v2" timestamp="1582516722959">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="440" y="265" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1582516722959" />
+    <state x="629" y="449" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1582515852055">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="629" y="449" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1680.1050@0.0.1680.1050" timestamp="1582515852055" />
+    <state x="506" y="282" width="816" height="550" key="find.popup" timestamp="1582378937770">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="506" y="282" width="816" height="550" key="find.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1582378937770" />
+    <state x="255" y="205" key="new project wizard" timestamp="1582464376864">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="255" y="205" key="new project wizard/0.0.1680.1050@0.0.1680.1050" timestamp="1582464376864" />
+  </component>
+</project>

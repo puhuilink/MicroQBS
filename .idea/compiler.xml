@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="web-domain" />
+        <module name="web-common" />
+        <module name="proto" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="core-common" target="1.8" />
+      <module name="core-proto" target="1.8" />
+      <module name="msg" target="1.8" />
+      <module name="parent" target="1.8" />
+      <module name="phlink-common-framework" target="1.8" />
+      <module name="proto" target="1.8" />
+      <module name="web-common" target="1.8" />
+      <module name="web-domain" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="core-common" options="-parameters" />
+      <module name="core-proto" options="-parameters" />
+      <module name="msg" options="-parameters" />
+      <module name="proto" options="-parameters" />
+      <module name="web-common" options="-parameters" />
+      <module name="web-domain" options="-parameters" />
+    </option>
+  </component>
+</project>

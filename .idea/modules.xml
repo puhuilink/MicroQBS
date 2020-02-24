@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/phlink-common-framework.iml" filepath="$PROJECT_DIR$/phlink-common-framework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/proto/proto.iml" filepath="$PROJECT_DIR$/proto/proto.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web-common/web-common.iml" filepath="$PROJECT_DIR$/web-common/web-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web-domain/web-domain.iml" filepath="$PROJECT_DIR$/web-domain/web-domain.iml" />
+    </modules>
+  </component>
+</project>
