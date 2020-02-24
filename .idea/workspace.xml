@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="40fc5f2b-1507-4786-abc4-1e715c11fbd5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +157,7 @@
       <workItem from="1582380862214" duration="28000" />
       <workItem from="1582380899374" duration="3276000" />
       <workItem from="1582463368098" duration="6607000" />
-      <workItem from="1582516346251" duration="310000" />
+      <workItem from="1582516346251" duration="434000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1582381255690</created>
@@ -179,7 +180,21 @@
       <option name="project" value="LOCAL" />
       <updated>1582515150969</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="update">
+      <created>1582516721929</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1582516721929</updated>
+    </task>
+    <task id="LOCAL-00005" summary="update">
+      <created>1582516783566</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1582516783566</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -203,10 +218,10 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="396" y="457" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582378609030" />
-    <state x="165" y="125" key="CommitChangelistDialog2" timestamp="1582516749514">
+    <state x="165" y="125" key="CommitChangelistDialog2" timestamp="1582516805146">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="165" y="125" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1582516749514" />
+    <state x="165" y="125" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1582516805146" />
     <state x="378" y="187" key="Maven.ArtifactSearchDialog" timestamp="1582464712269">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
@@ -215,14 +230,14 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="490" y="283" key="NewModule_or_Project.wizard/0.0.1680.1050@0.0.1680.1050" timestamp="1582462220599" />
-    <state x="349" y="164" key="SettingsEditor" timestamp="1582463273100">
+    <state x="349" y="164" key="SettingsEditor" timestamp="1582516843064">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="349" y="164" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1582463273100" />
-    <state x="440" y="265" key="Vcs.Push.Dialog.v2" timestamp="1582516722959">
+    <state x="349" y="164" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1582516843064" />
+    <state x="440" y="265" key="Vcs.Push.Dialog.v2" timestamp="1582516806331">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="440" y="265" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1582516722959" />
+    <state x="440" y="265" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1582516806331" />
     <state x="629" y="449" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1582515852055">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
