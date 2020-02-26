@@ -11,29 +11,29 @@ spring:
   # 数据源
   datasource:
     dynamic:
-    p6spy: true
-    hikari:
-      connection-timeout: 30000
-      max-lifetime: 1800000
-      max-pool-size: 100
-      min-idle: 5
-      connection-test-query: select 1
-      pool-name: BusApiHikariCP
-    # 配置默认数据源
-    primary: primary
-    datasource:
-      # 数据源-1，名称为 primary
-      primary:
-        username: postgres
-        password: postgres
-        driver-class-name: org.postgresql.Driver
-        url: jdbc:postgresql://127.0.0.1:5432/phlink_demo
+      p6spy: true
+      hikari:
+        connection-timeout: 30000
+        max-lifetime: 1800000
+        max-pool-size: 100
+        min-idle: 5
+        connection-test-query: select 1
+        pool-name: DemoHikariCP
+      # 配置默认数据源
+      primary: primary
+      datasource:
+        # 数据源-1，名称为 primary
+        primary:
+          username: postgres
+          password: postgres
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://localhost:5432/phlink_demo
       # 数据源-2，名称为 test
-  #        test:
-  #          username: root
-  #          password: 123456
-  #          driver-class-name: com.mysql.cj.jdbc.Driver
-  #          url: jdbc:mysql://127.0.0.1:3306/bus_test?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+#        test:
+#          username: root
+#          password: 123456
+#          driver-class-name: com.mysql.cj.jdbc.Driver
+#          url: jdbc:mysql://127.0.0.1:3306/bus_test?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
   # 文件大小上传配置
   messages:
     encoding: utf-8
