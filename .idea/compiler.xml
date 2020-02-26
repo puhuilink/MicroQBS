@@ -20,6 +20,7 @@
       <module name="proto" target="1.8" />
       <module name="web-base" target="1.8" />
       <module name="web-common" target="1.8" />
+      <module name="web-secure" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -30,6 +31,7 @@
       <module name="proto" options="-parameters" />
       <module name="web-base" options="-parameters" />
       <module name="web-common" options="-parameters" />
+      <module name="web-secure" options="-parameters" />
     </option>
   </component>
 </project>
