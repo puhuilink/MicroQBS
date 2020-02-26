@@ -1,3 +1,84 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+
+spring:
+  # 数据源
+  datasource:
+    dynamic:
+    p6spy: true
+      hikari:
+        connection-timeout: 30000
+        max-lifetime: 1800000
+        max-pool-size: 100
+        min-idle: 5
+        connection-test-query: select 1
+        pool-name: BusApiHikariCP
+      # 配置默认数据源
+      primary: primary
+      datasource:
+        # 数据源-1，名称为 primary
+        primary:
+          username: postgres
+          password: postgres
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://127.0.0.1:5432/phlink_demo
+        # 数据源-2，名称为 test
+    #        test:
+    #          username: root
+    #          password: 123456
+    #          driver-class-name: com.mysql.cj.jdbc.Driver
+    #          url: jdbc:mysql://127.0.0.1:3306/bus_test?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+  # 文件大小上传配置
+  messages:
+    encoding: utf-8
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      fail-on-empty-beans: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ['httptrace', 'metrics']
+
+javamelody:
+  # Enable JavaMelody auto-configuration (optional, default: true)
+  enabled: true
+  # Data source names to exclude from monitoring (optional, comma-separated)
+  excluded-datasources: secretSource,topSecretSource
+  # Enable monitoring of Spring services and controllers (optional, default: true)
+  spring-monitoring-enabled: true
+  # Initialization parameters for JavaMelody (optional)
+  # See: https://github.com/javamelody/javamelody/wiki/UserGuide#6-optional-parameters
+  init-parameters:
+    # log http requests:
+    log: false
+    # to exclude images, css, fonts and js urls from the monitoring:
+    url-exclude-pattern: (/webjars/.*|/css/.*|/images/.*|/fonts/.*|/js/.*)
+    # to aggregate digits in http requests:
+    #http-transform-pattern: \d+
+    # to add basic auth:
+    authorized-users: admin:admin
+    # to change the default storage directory:
+    storage-directory: /tmp/javamelody
+    # to change the default "/monitoring" path:
+    #monitoring-path: /admin/performance
+
+
 phlink:
   # 全局限流
   ratelimit:
@@ -33,6 +114,14 @@ phlink:
   logRecord:
     es: false
 
+fdfs:
+  so-timeout: 1501
+  connect-timeout: 601
+  thumb-image:             #缩略图生成参数
+    width: 150
+    height: 150
+  tracker-list:            #TrackerList参数,支持多个
+    - 127.0.0.1:22122
 
 # 需要验证码校验的接口路径 支持通配符 自动过滤拦截校验 无需开发人员再次校验
 captcha:
@@ -60,3 +149,31 @@ ignored:
     - /**/*.png
     - /**/*.ico
     - /phlink/test/**
+
+# Swagger界面内容配置
+swagger:
+  title: Phlink API接口文档
+  description: Phlink Api Documentation
+  version: 1.0.0
+  termsOfServiceUrl: http://puhuilink.com
+  contact:
+    name: wen wen
+    url: http://puhuilink.com
+    email: wenwen@puhuilink.com
+
+# Mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+
+# 日志
+logging:
+  # 输出级别
+  level:
+    root: info
+  file:
+    # 指定路径
+    path: phlink-logs
+    # 最大保存天数
+    max-history: 7
+    # 每个文件最大大小
+    max-size: 5MB
