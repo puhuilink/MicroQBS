@@ -19,3 +19,4 @@ log/**
 */.settings
 /.idea/
 .idea/workspace.xml
+*.iml
