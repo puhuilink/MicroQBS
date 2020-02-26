@@ -1,12 +1,20 @@
 package com.phlink.core.config.security.jwt;
 
+import cn.hutool.core.util.StrUtil;
+import com.google.gson.Gson;
+import com.phlink.core.common.annotation.SystemLogTrace;
+import com.phlink.core.common.constant.SecurityConstant;
+import com.phlink.core.common.enums.CommonResultInfo;
 import com.phlink.core.common.enums.LogType;
+import com.phlink.core.common.utils.IpInfoUtil;
 import com.phlink.core.common.utils.ResponseUtil;
 import com.phlink.core.common.vo.TokenUser;
+import com.phlink.core.config.properties.PhlinkTokenProperties;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -27,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     @Autowired
-    private XbootTokenProperties tokenProperties;
+    private PhlinkTokenProperties tokenProperties;
 
     @Autowired
     private IpInfoUtil ipInfoUtil;
@@ -36,7 +45,7 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
     private StringRedisTemplate redisTemplate;
 
     @Override
-    @SystemLog(description = "登录系统", type = LogType.LOGIN)
+    @SystemLogTrace(description = "登录系统", type = LogType.LOGIN)
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
         //用户选择保存登录状态几天
@@ -54,7 +63,6 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
         for(GrantedAuthority g : authorities){
             list.add(g.getAuthority());
         }
-        ipInfoUtil.getUrl(request);
         // 登陆成功生成token
         String token;
         if(tokenProperties.getRedis()){
@@ -97,6 +105,6 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
                     .compact();
         }
 
-        ResponseUtil.out(response, ResponseUtil.resultMap(true,200,"登录成功", token));
+        ResponseUtil.out(response, ResponseUtil.resultMap(true, CommonResultInfo.SUCCESS.getResultCode(),"登录成功", token));
     }
 }

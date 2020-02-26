@@ -1,6 +1,8 @@
 package com.phlink.core.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.phlink.core.entity.Department;
 import com.phlink.core.entity.Permission;
 import com.phlink.core.mapper.PermissionMapper;
 import com.phlink.core.service.PermissionService;
@@ -19,5 +21,47 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     public List<Permission> listByUserId(String userId) {
 
         return permissionMapper.listByUserId(userId);
+    }
+
+    @Override
+    public List<Permission> listByLevelOrderBySortOrder(Integer level) {
+
+        QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(Permission::getLevel, level);
+        queryWrapper.orderByDesc("id");
+        return this.list(queryWrapper);
+    }
+
+    @Override
+    public List<Permission> listByParentIdOrderBySortOrder(String parentId) {
+        QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(Permission::getParentId, parentId);
+        queryWrapper.orderByDesc("id");
+        return this.list(queryWrapper);
+    }
+
+    @Override
+    public List<Permission> listByTypeAndStatusOrderBySortOrder(Integer type, Integer status) {
+        QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(Permission::getType, type);
+        queryWrapper.lambda().eq(Permission::getStatus, status);
+        queryWrapper.orderByDesc("id");
+        return this.list(queryWrapper);
+    }
+
+    @Override
+    public List<Permission> listByTitle(String title) {
+        QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(Permission::getTitle, title);
+        queryWrapper.orderByDesc("id");
+        return this.list(queryWrapper);
+    }
+
+    @Override
+    public List<Permission> listByTitleLikeOrderBySortOrder(String title) {
+        QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().like(Permission::getTitle, title);
+        queryWrapper.orderByDesc("id");
+        return this.list(queryWrapper);
     }
 }

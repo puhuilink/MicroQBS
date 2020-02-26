@@ -1,8 +1,13 @@
 package com.phlink.core.config.security.permission;
 
+import cn.hutool.core.util.StrUtil;
+import com.phlink.core.common.constant.CommonConstant;
+import com.phlink.core.entity.Permission;
+import com.phlink.core.service.PermissionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Component;
@@ -33,7 +38,7 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
         Collection<ConfigAttribute> configAttributes;
         ConfigAttribute cfg;
         // 获取启用的权限操作请求
-        List<Permission> permissions = permissionService.findByTypeAndStatusOrderBySortOrder(CommonConstant.PERMISSION_OPERATION, CommonConstant.STATUS_NORMAL);
+        List<Permission> permissions = permissionService.listByTypeAndStatusOrderBySortOrder(CommonConstant.PERMISSION_OPERATION, CommonConstant.STATUS_NORMAL);
         for(Permission permission : permissions) {
             if(StrUtil.isNotBlank(permission.getTitle())&&StrUtil.isNotBlank(permission.getPath())){
                 configAttributes = new ArrayList<>();

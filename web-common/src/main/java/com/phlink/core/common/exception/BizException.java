@@ -24,6 +24,12 @@ public class BizException extends RuntimeException {
         this.errorMsg = errorInfo.getResultMsg();
     }
 
+    public BizException(BaseResultInfo errorInfo, String message) {
+        super(message);
+        this.errorCode = errorInfo.getResultCode();
+        this.errorMsg = message;
+    }
+
     public BizException(BaseResultInfo errorInfo, Throwable cause) {
         super(errorInfo.getResultCode(), cause);
         this.errorCode = errorInfo.getResultCode();
@@ -35,8 +41,8 @@ public class BizException extends RuntimeException {
         this.errorMsg = errorMsg;
     }
 
-    public BizException(String errorCode, String errorMsg, Throwable cause) {
-        super(errorCode, cause);
+    public BizException(BaseResultInfo errorInfo, String errorMsg, Throwable cause) {
+        super(errorInfo.getResultCode(), cause);
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;
     }

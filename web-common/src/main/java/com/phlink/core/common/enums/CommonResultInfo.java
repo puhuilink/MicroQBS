@@ -13,6 +13,7 @@ public enum CommonResultInfo implements BaseResultInfo {
     SERVER_BUSY("503","服务器正忙，请稍后再试!"),
     // 业务失败
     FAIL("-100", "操作失败!"),
+    LOGIN_FAIL_MANY_TIMES("-101", "登录失败次数过多!"),
     ;
 
     /** 错误码 */

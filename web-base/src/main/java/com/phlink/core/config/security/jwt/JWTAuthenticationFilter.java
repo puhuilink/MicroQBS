@@ -1,18 +1,26 @@
 package com.phlink.core.config.security.jwt;
 
+import cn.hutool.core.util.StrUtil;
 import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+import com.phlink.core.common.constant.SecurityConstant;
+import com.phlink.core.common.enums.CommonResultInfo;
 import com.phlink.core.common.utils.ResponseUtil;
 import com.phlink.core.common.vo.TokenUser;
+import com.phlink.core.config.properties.PhlinkTokenProperties;
+import com.phlink.core.util.SecurityUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.security.SecurityUtil;
+import org.redisson.api.RBucket;
+import org.redisson.api.RedissonClient;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -28,18 +36,18 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
-    private XbootTokenProperties tokenProperties;
+    private PhlinkTokenProperties tokenProperties;
 
-    private Redis redisTemplate;
+    private RedissonClient redissonClient;
 
     private SecurityUtil securityUtil;
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager,
-                                   XbootTokenProperties tokenProperties,
-                                   StringRedisTemplate redisTemplate, SecurityUtil securityUtil) {
+                                   PhlinkTokenProperties tokenProperties,
+                                   RedissonClient redissonClient, SecurityUtil securityUtil) {
         super(authenticationManager);
         this.tokenProperties = tokenProperties;
-        this.redisTemplate = redisTemplate;
+        this.redissonClient = redissonClient;
         this.securityUtil = securityUtil;
     }
 
@@ -51,7 +59,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         String header = request.getHeader(SecurityConstant.HEADER);
-        if(StrUtil.isBlank(header)){
+        if (StrUtil.isBlank(header)) {
             header = request.getParameter(SecurityConstant.HEADER);
         }
         Boolean notValid = StrUtil.isBlank(header) || (!tokenProperties.getRedis() && !header.startsWith(SecurityConstant.TOKEN_SPLIT));
@@ -62,7 +70,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         try {
             UsernamePasswordAuthenticationToken authentication = getAuthentication(header, response);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.toString();
         }
 
@@ -76,30 +84,36 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         // 权限
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        if(tokenProperties.getRedis()){
+        if (tokenProperties.getRedis()) {
             // redis
-            String v = redisTemplate.opsForValue().get(SecurityConstant.TOKEN_PRE + header);
-            if(StrUtil.isBlank(v)){
-                ResponseUtil.out(response, ResponseUtil.resultMap(false,401,"登录已失效，请重新登录"));
+            RBucket<String> bucket = redissonClient.getBucket(SecurityConstant.TOKEN_PRE + header);
+            if (bucket == null) {
+                ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.SIGNATURE_NOT_MATCH, "登录已失效，请重新登录"));
                 return null;
             }
+            String v = bucket.get();
             TokenUser user = new Gson().fromJson(v, TokenUser.class);
             username = user.getUsername();
-            if(tokenProperties.getStorePerms()){
+            if (tokenProperties.getStorePerms()) {
                 // 缓存了权限
-                for(String ga : user.getPermissions()){
+                for (String ga : user.getPermissions()) {
                     authorities.add(new SimpleGrantedAuthority(ga));
                 }
-            }else{
+            } else {
                 // 未缓存 读取权限数据
                 authorities = securityUtil.getCurrUserPerms(username);
             }
-            if(!user.getSaveLogin()){
+            if (!user.getSaveLogin()) {
                 // 若未保存登录状态重新设置失效时间
-                redisTemplate.opsForValue().set(SecurityConstant.USER_TOKEN + username, header, tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
-                redisTemplate.opsForValue().set(SecurityConstant.TOKEN_PRE + header, v, tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
+                RBucket<String> userTokenBucket = redissonClient.getBucket(SecurityConstant.USER_TOKEN + username);
+                userTokenBucket.set(header);
+                userTokenBucket.expire(tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
+
+                RBucket<String> tokenBucket = redissonClient.getBucket(SecurityConstant.TOKEN_PRE + header);
+                tokenBucket.set(v);
+                tokenBucket.expire(tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
             }
-        }else{
+        } else {
             // JWT
             try {
                 // 解析token
@@ -111,28 +125,29 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                 // 获取用户名
                 username = claims.getSubject();
                 // 获取权限
-                if(tokenProperties.getStorePerms()) {
+                if (tokenProperties.getStorePerms()) {
                     // 缓存了权限
                     String authority = claims.get(SecurityConstant.AUTHORITIES).toString();
-                    if(StrUtil.isNotBlank(authority)){
-                        List<String> list = new Gson().fromJson(authority, new TypeToken<List<String>>(){}.getType());
-                        for(String ga : list){
+                    if (StrUtil.isNotBlank(authority)) {
+                        List<String> list = new Gson().fromJson(authority, new TypeToken<List<String>>() {
+                        }.getType());
+                        for (String ga : list) {
                             authorities.add(new SimpleGrantedAuthority(ga));
                         }
                     }
-                }else{
+                } else {
                     // 未缓存 读取权限数据
                     authorities = securityUtil.getCurrUserPerms(username);
                 }
             } catch (ExpiredJwtException e) {
-                ResponseUtil.out(response, ResponseUtil.resultMap(false,401,"登录已失效，请重新登录"));
-            } catch (Exception e){
+                ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.FORBIDDEN, "登录已失效，请重新登录"));
+            } catch (Exception e) {
                 log.error(e.toString());
-                ResponseUtil.out(response, ResponseUtil.resultMap(false,500,"解析token错误"));
+                ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.INTERNAL_SERVER_ERROR, "解析token错误"));
             }
         }
 
-        if(StrUtil.isNotBlank(username)) {
+        if (StrUtil.isNotBlank(username)) {
             // 踩坑提醒 此处password不能为null
             User principal = new User(username, "", authorities);
             return new UsernamePasswordAuthenticationToken(principal, null, authorities);

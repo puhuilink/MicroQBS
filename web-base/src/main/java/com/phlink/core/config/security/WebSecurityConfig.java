@@ -1,5 +1,7 @@
 package com.phlink.core.config.security;
 
+import com.phlink.core.config.properties.IgnoredUrlsProperties;
+import com.phlink.core.config.properties.PhlinkTokenProperties;
 import com.phlink.core.config.security.jwt.AuthenticationFailHandler;
 import com.phlink.core.config.security.jwt.AuthenticationSuccessHandler;
 import com.phlink.core.config.security.jwt.JWTAuthenticationFilter;
@@ -8,6 +10,8 @@ import com.phlink.core.config.security.permission.MyFilterSecurityInterceptor;
 import com.phlink.core.config.security.validator.ImageValidateFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.security.SecurityUtil;
+import org.redisson.api.RedissonClient;
+import org.redisson.client.RedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -32,7 +36,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private XbootTokenProperties tokenProperties;
+    private PhlinkTokenProperties tokenProperties;
 
     @Autowired
     private IgnoredUrlsProperties ignoredUrlsProperties;
@@ -56,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private ImageValidateFilter imageValidateFilter;
 
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    private RedissonClient redissonClient;
 
     @Autowired
     private SecurityUtil securityUtil;
@@ -116,6 +120,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 添加自定义权限过滤器
                 .addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class)
                 // 添加JWT认证过滤器
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(), tokenProperties, redisTemplate, securityUtil));
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), tokenProperties, redissonClient, securityUtil));
     }
 }

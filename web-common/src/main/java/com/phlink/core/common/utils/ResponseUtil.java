@@ -1,6 +1,6 @@
 package com.phlink.core.common.utils;
 
-import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.phlink.core.common.enums.CommonResultInfo;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,7 +25,7 @@ public class ResponseUtil {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json;charset=UTF-8");
             out = response.getOutputStream();
-            out.write(JSON.toJSONBytes(resultMap));
+            out.write(new Gson().toJson(resultMap).getBytes());
         } catch (Exception e) {
             log.error(e + "输出JSON出错");
         } finally{

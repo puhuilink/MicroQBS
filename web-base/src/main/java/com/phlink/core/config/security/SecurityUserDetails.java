@@ -1,5 +1,10 @@
 package com.phlink.core.config.security;
 
+import cn.hutool.core.util.StrUtil;
+import com.phlink.core.common.constant.CommonConstant;
+import com.phlink.core.entity.Permission;
+import com.phlink.core.entity.Role;
+import com.phlink.core.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -38,7 +43,7 @@ public class SecurityUserDetails extends User implements UserDetails {
         if(permissions!=null&&permissions.size()>0){
             for (Permission permission : permissions) {
                 if(CommonConstant.PERMISSION_OPERATION.equals(permission.getType())
-                        &&StrUtil.isNotBlank(permission.getTitle())
+                        && StrUtil.isNotBlank(permission.getTitle())
                         &&StrUtil.isNotBlank(permission.getPath())) {
 
                     authorityList.add(new SimpleGrantedAuthority(permission.getTitle()));
@@ -48,7 +53,6 @@ public class SecurityUserDetails extends User implements UserDetails {
         // 添加角色
         List<Role> roles = this.getRoles();
         if(roles!=null&&roles.size()>0){
-            // lambda表达式
             roles.forEach(item -> {
                 if(StrUtil.isNotBlank(item.getName())){
                     authorityList.add(new SimpleGrantedAuthority(item.getName()));

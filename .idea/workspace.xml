@@ -2,121 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40fc5f2b-1507-4786-abc4-1e715c11fbd5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__cn_hutool_hutool_all_5_1_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_8_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_jsonwebtoken_jjwt_0_9_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_springfox_springfox_core_2_9_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_springfox_springfox_schema_2_9_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_springfox_springfox_spi_2_9_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_springfox_springfox_spring_web_2_9_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_springfox_springfox_swagger2_2_9_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_springfox_springfox_swagger_common_2_9_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_springfox_springfox_swagger_ui_2_9_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_swagger_swagger_annotations_1_5_20.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_swagger_swagger_models_1_5_20.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_lionsoul_ip2region_1_7_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mapstruct_mapstruct_1_2_0_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_security_2_1_12_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_plugin_spring_plugin_core_1_2_0_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_plugin_spring_plugin_metadata_1_2_0_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_config_5_1_7_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_core_5_1_7_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_web_5_1_7_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/aop/RedisLockAspect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/RedissonSpringDataConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/properties/CaptchaProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/properties/IgnoredUrlsProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/properties/PhlinkIpLimitProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/properties/PhlinkLimitProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/properties/PhlinkTokenProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/SecurityUserDetails.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/UserDetailsServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/WebSecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/jwt/AuthenticationFailHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/jwt/AuthenticationSuccessHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/jwt/JWTAuthenticationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/jwt/RestAccessDeniedHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/permission/MyAccessDecisionManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/permission/MyFilterSecurityInterceptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/permission/MySecurityMetadataSource.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/validator/ImageValidateFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/entity/Department.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/entity/DepartmentHeader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/entity/LogTrace.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/entity/Permission.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/entity/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/entity/RoleDepartment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/entity/RolePermission.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/entity/Setting.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/entity/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/entity/UserRole.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/mapper/DepartmentMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/mapper/LogTraceMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/mapper/PermissionMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/mapper/UserMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/mapper/UserRoleMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/LogTraceService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/PermissionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/UserRoleService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/impl/PermissionServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/impl/UserRoleServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/resources/cache-config.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/resources/mapper/PermissionMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/resources/mapper/UserRoleMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/annotation/DistributedLock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/constant/CommonConstant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/constant/SecurityConstant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/enums/LogType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/utils/Base64DecodeMultipartFile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/utils/CommonUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/utils/CreateVerifyCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/utils/IpInfoUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/utils/ObjectUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/utils/PageUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/utils/ResponseUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/utils/ResultUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/utils/SnowFlakeUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/utils/SpringContextUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/utils/ThreadPoolUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/vo/PageVo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/vo/SearchVo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/vo/TokenUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_alibaba_fastjson_1_2_58.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/DepartmentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/impl/DepartmentServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/util/SecurityUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/exception/LoginFailLimitException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web-base/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/aspect/LimitAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/aop/LimitAspect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/aspect/LogTraceAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/aop/SystemLogTraceAspect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/entity/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/base/PhlinkBaseEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/entity/SysLogTrace.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/mapper/LogTraceMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/properties/PhlinkProperties.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/service/LogTraceService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/web/base/service/impl/LogTraceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/impl/LogTraceServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/SecurityUserDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/SecurityUserDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/UserDetailsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/jwt/AuthenticationFailHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/jwt/AuthenticationFailHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/jwt/AuthenticationSuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/jwt/AuthenticationSuccessHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/jwt/JWTAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/jwt/JWTAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/permission/MySecurityMetadataSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/permission/MySecurityMetadataSource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/validator/ImageValidateFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/validator/ImageValidateFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/PermissionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/PermissionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/impl/PermissionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/impl/PermissionServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web-base/web-base.iml" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/web-base.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/annotation/Limit.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/annotation/Limit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/annotation/LogTrace.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/annotation/SystemLogTrace.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/constant/RegexpConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/constant/RegexpConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/entity/LimitType.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/entity/LimitType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/entity/PathTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/entity/PathTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/entity/ResultBody.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/vo/Result.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/exception/BizException.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/exception/BizException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/exception/LimitAccessException.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/exception/LimitAccessException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/response/BaseResultInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/enums/BaseResultInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/response/CommonResultEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/enums/CommonResultInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/utils/AddressUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/utils/HttpContextUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/utils/HttpContextUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/utils/IPUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/utils/IPUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/validation/tag/OnAdd.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/validation/tag/OnAdd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/validation/tag/OnCheckID.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/validation/tag/OnCheckID.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/web/common/validation/tag/OnUpdate.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/validation/tag/OnUpdate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/web-common.iml" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/web-common.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/enums/CommonResultInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/enums/CommonResultInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/exception/BizException.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/exception/BizException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/utils/ResponseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/utils/ResponseUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,11 +91,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.phlink.core.mapper" />
       <recent name="com.phlink.core.service.impl" />
       <recent name="com.phlink.core.service" />
+      <recent name="com.phlink.core.common.exception" />
+      <recent name="com.phlink.core.mapper" />
       <recent name="com.phlink.core.secure.config" />
-      <recent name="com.phlink.core.web.base.utils" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/web-base/src/main/resources/mapper" />
@@ -279,7 +184,7 @@
       <workItem from="1582463368098" duration="6607000" />
       <workItem from="1582516346251" duration="2123000" />
       <workItem from="1582522996718" duration="3584000" />
-      <workItem from="1582685675285" duration="14973000" />
+      <workItem from="1582685675285" duration="18336000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1582381255690</created>
@@ -351,7 +256,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582525801794</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="基础面初始化">
+      <created>1582707168002</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1582707168002</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -374,10 +286,10 @@
     </state>
     <state x="578" y="298" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582524744135" />
     <state x="578" y="314" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1582706297685" />
-    <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser" timestamp="1582705215125">
+    <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser" timestamp="1582710222860">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser/0.23.1680.1027@0.23.1680.1027" timestamp="1582705215125" />
+    <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser/0.23.1680.1027@0.23.1680.1027" timestamp="1582710222860" />
     <state x="690" y="432" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1582378660427">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
@@ -395,10 +307,11 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="578" y="290" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1582706053148" />
-    <state x="165" y="125" key="CommitChangelistDialog2" timestamp="1582525801476">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state x="165" y="145" key="CommitChangelistDialog2" timestamp="1582707167374">
+      <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="165" y="125" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1582525801476" />
+    <state x="165" y="145" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1582707167374" />
     <state x="378" y="187" key="Maven.ArtifactSearchDialog" timestamp="1582464712269">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
@@ -411,10 +324,11 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="349" y="164" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1582523062973" />
-    <state x="440" y="265" key="Vcs.Push.Dialog.v2" timestamp="1582525802836">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state x="440" y="282" key="Vcs.Push.Dialog.v2" timestamp="1582707169256">
+      <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="440" y="265" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1582525802836" />
+    <state x="440" y="282" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1582707169256" />
     <state x="629" y="449" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1582515852055">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
@@ -429,9 +343,9 @@
     </state>
     <state x="255" y="205" key="new project wizard/0.0.1680.1050@0.0.1680.1050" timestamp="1582523023656" />
     <state x="255" y="224" key="new project wizard/0.23.1680.1027@0.23.1680.1027" timestamp="1582688253899" />
-    <state x="505" y="187" width="670" height="676" key="search.everywhere.popup" timestamp="1582704073263">
+    <state x="505" y="187" width="670" height="676" key="search.everywhere.popup" timestamp="1582710395151">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="505" y="187" width="670" height="676" key="search.everywhere.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1582704073263" />
+    <state x="505" y="187" width="670" height="676" key="search.everywhere.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1582710395151" />
   </component>
 </project>

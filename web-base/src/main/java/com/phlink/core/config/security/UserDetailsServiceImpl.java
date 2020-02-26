@@ -1,5 +1,9 @@
 package com.phlink.core.config.security;
 
+import cn.hutool.core.util.StrUtil;
+import com.phlink.core.common.exception.LoginFailLimitException;
+import com.phlink.core.entity.User;
+import com.phlink.core.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -30,7 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             //超过限制次数
             throw new LoginFailLimitException("登录错误次数超过限制，请"+timeRest+"分钟后再试");
         }
-        User user = userService.findByUsername(username);
+        User user = userService.getByUsername(username);
         return new SecurityUserDetails(user);
     }
 }
