@@ -2,26 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40fc5f2b-1507-4786-abc4-1e715c11fbd5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/DepartmentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/impl/DepartmentServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/util/SecurityUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/exception/LoginFailLimitException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/SecurityUserDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/SecurityUserDetails.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/UserDetailsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/jwt/AuthenticationFailHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/jwt/AuthenticationFailHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/jwt/AuthenticationSuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/jwt/AuthenticationSuccessHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/jwt/JWTAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/jwt/JWTAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/permission/MySecurityMetadataSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/permission/MySecurityMetadataSource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/validator/ImageValidateFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/config/security/validator/ImageValidateFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/PermissionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/PermissionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/impl/PermissionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/src/main/java/com/phlink/core/service/impl/PermissionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-base/web-base.iml" beforeDir="false" afterPath="$PROJECT_DIR$/web-base/web-base.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/enums/CommonResultInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/enums/CommonResultInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/exception/BizException.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/exception/BizException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/utils/ResponseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-common/src/main/java/com/phlink/core/common/utils/ResponseUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-base/src/main/resources/redisson.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +165,7 @@
       <workItem from="1582463368098" duration="6607000" />
       <workItem from="1582516346251" duration="2123000" />
       <workItem from="1582522996718" duration="3584000" />
-      <workItem from="1582685675285" duration="18336000" />
+      <workItem from="1582685675285" duration="18374000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1582381255690</created>
@@ -263,7 +244,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582707168002</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="基础面初始化">
+      <created>1582710529101</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1582710529101</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -307,11 +295,11 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="578" y="290" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1582706053148" />
-    <state x="165" y="145" key="CommitChangelistDialog2" timestamp="1582707167374">
+    <state x="165" y="145" key="CommitChangelistDialog2" timestamp="1582710528809">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="165" y="125" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1582525801476" />
-    <state x="165" y="145" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1582707167374" />
+    <state x="165" y="145" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1582710528809" />
     <state x="378" y="187" key="Maven.ArtifactSearchDialog" timestamp="1582464712269">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
@@ -324,11 +312,11 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="349" y="164" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1582523062973" />
-    <state x="440" y="282" key="Vcs.Push.Dialog.v2" timestamp="1582707169256">
+    <state x="440" y="282" key="Vcs.Push.Dialog.v2" timestamp="1582710530090">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="440" y="265" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1582525802836" />
-    <state x="440" y="282" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1582707169256" />
+    <state x="440" y="282" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1582710530090" />
     <state x="629" y="449" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1582515852055">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
