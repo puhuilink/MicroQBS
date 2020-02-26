@@ -48,5 +48,5 @@ public class PhlinkBaseEntity {
     @JsonIgnore
     @TableLogic
     @ApiModelProperty(value = "删除标志 默认0")
-    private Integer deleted = CommonConstant.STATUS_NORMAL;
+    private Integer delFlag = CommonConstant.STATUS_NORMAL;
 }

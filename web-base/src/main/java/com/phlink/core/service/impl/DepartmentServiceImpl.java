@@ -49,7 +49,7 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
         if (depIds != null && !depIds.isEmpty()) {
             queryWrapper.lambda().in(Department::getId, depIds);
         }
-        queryWrapper.orderByDesc("id");
+        queryWrapper.orderByDesc("sort_order");
         return this.list(queryWrapper);
     }
 
@@ -59,7 +59,7 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
         if (depIds != null && !depIds.isEmpty()) {
             queryWrapper.lambda().in(Department::getId, depIds);
         }
-        queryWrapper.orderByDesc("id");
+        queryWrapper.orderByDesc("sort_order");
         return this.list(queryWrapper);
     }
 }

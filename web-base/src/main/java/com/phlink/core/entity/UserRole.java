@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@TableName("sys_user_role")
+@TableName("t_user_role")
 @ApiModel(value = "用户角色")
 public class UserRole extends PhlinkBaseEntity {
 

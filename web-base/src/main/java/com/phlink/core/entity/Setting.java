@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@TableName("sys_setting")
+@TableName("t_setting")
 @ApiModel(value = "配置")
 @NoArgsConstructor
 public class Setting extends PhlinkBaseEntity {

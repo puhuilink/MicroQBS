@@ -9,7 +9,7 @@ import lombok.Data;
 import java.util.Map;
 
 @Data
-@TableName("sys_log")
+@TableName("t_log")
 public class LogTrace extends PhlinkBaseEntity {
     @ApiModelProperty(value = "方法操作名称")
     private String name;

@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Data
-@TableName("sys_permission")
+@TableName("t_permission")
 @ApiModel(value = "菜单权限")
 public class Permission extends PhlinkBaseEntity {
 

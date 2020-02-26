@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Data
-@TableName("sys_department")
+@TableName("t_department")
 @ApiModel(value = "部门")
 public class Department extends PhlinkBaseEntity {
 

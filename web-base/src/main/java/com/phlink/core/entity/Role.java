@@ -11,7 +11,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@TableName("sys_role")
+@TableName("t_role")
 @ApiModel(value = "角色")
 public class Role extends PhlinkBaseEntity {
 

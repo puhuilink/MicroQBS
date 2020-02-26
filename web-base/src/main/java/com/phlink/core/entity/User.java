@@ -11,7 +11,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@TableName("sys_user")
+@TableName("t_user")
 @ApiModel(value = "用户")
 public class User extends PhlinkBaseEntity {
 

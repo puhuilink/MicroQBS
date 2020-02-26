@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@TableName("sys_department_header")
+@TableName("t_department_header")
 @ApiModel(value = "部门负责人")
 public class DepartmentHeader extends PhlinkBaseEntity {
 

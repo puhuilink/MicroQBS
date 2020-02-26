@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@TableName("sys_role_permission")
+@TableName("t_role_permission")
 @ApiModel(value = "角色权限")
 public class RolePermission extends PhlinkBaseEntity {
 
