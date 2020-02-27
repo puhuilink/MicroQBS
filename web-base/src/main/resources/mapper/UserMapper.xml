@@ -4,7 +4,7 @@
 
     <select id="getByUsername" resultType="com.phlink.core.entity.User">
         select *
-        from sys_user
+        from t_user
         where username = #{username}
         limit 1
     </select>

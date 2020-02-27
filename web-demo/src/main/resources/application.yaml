@@ -118,6 +118,7 @@ fdfs:
 captcha:
   # 图片验证码验证
   image:
+    - /img/login # 登录接口
     - /login # 登录接口
     - /oauth2/authorize # 认证接口
 

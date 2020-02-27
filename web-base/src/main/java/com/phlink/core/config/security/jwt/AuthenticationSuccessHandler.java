@@ -51,45 +51,45 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
         //用户选择保存登录状态几天
         String saveLogin = request.getParameter(SecurityConstant.SAVE_LOGIN);
         Boolean saved = false;
-        if(StrUtil.isNotBlank(saveLogin) && Boolean.valueOf(saveLogin)){
+        if (StrUtil.isNotBlank(saveLogin) && Boolean.valueOf(saveLogin)) {
             saved = true;
-            if(!tokenProperties.getRedis()){
+            if (!tokenProperties.getRedis()) {
                 tokenProperties.setTokenExpireTime(tokenProperties.getSaveLoginTime() * 60 * 24);
             }
         }
-        String username = ((UserDetails)authentication.getPrincipal()).getUsername();
-        List<GrantedAuthority> authorities = (List<GrantedAuthority>) ((UserDetails)authentication.getPrincipal()).getAuthorities();
+        String username = ((UserDetails) authentication.getPrincipal()).getUsername();
+        List<GrantedAuthority> authorities = (List<GrantedAuthority>) ((UserDetails) authentication.getPrincipal()).getAuthorities();
         List<String> list = new ArrayList<>();
-        for(GrantedAuthority g : authorities){
+        for (GrantedAuthority g : authorities) {
             list.add(g.getAuthority());
         }
         // 登陆成功生成token
         String token;
-        if(tokenProperties.getRedis()){
+        if (tokenProperties.getRedis()) {
             // redis
             token = UUID.randomUUID().toString().replace("-", "");
             TokenUser user = new TokenUser(username, list, saved);
             // 不缓存权限
-            if(!tokenProperties.getStorePerms()){
+            if (!tokenProperties.getStorePerms()) {
                 user.setPermissions(null);
             }
             // 单设备登录 之前的token失效
-            if(tokenProperties.getSdl()){
+            if (tokenProperties.getSdl()) {
                 String oldToken = redisTemplate.opsForValue().get(SecurityConstant.USER_TOKEN + username);
-                if(StrUtil.isNotBlank(oldToken)){
+                if (StrUtil.isNotBlank(oldToken)) {
                     redisTemplate.delete(SecurityConstant.TOKEN_PRE + oldToken);
                 }
             }
-            if(saved){
+            if (saved) {
                 redisTemplate.opsForValue().set(SecurityConstant.USER_TOKEN + username, token, tokenProperties.getSaveLoginTime(), TimeUnit.DAYS);
                 redisTemplate.opsForValue().set(SecurityConstant.TOKEN_PRE + token, new Gson().toJson(user), tokenProperties.getSaveLoginTime(), TimeUnit.DAYS);
-            }else{
+            } else {
                 redisTemplate.opsForValue().set(SecurityConstant.USER_TOKEN + username, token, tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
                 redisTemplate.opsForValue().set(SecurityConstant.TOKEN_PRE + token, new Gson().toJson(user), tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
             }
-        }else{
+        } else {
             // 不缓存权限
-            if(!tokenProperties.getStorePerms()){
+            if (!tokenProperties.getStorePerms()) {
                 list = null;
             }
             // jwt
@@ -105,6 +105,6 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
                     .compact();
         }
 
-        ResponseUtil.out(response, ResponseUtil.resultMap(true, CommonResultInfo.SUCCESS.getResultCode(),"登录成功", token));
+        ResponseUtil.out(response, ResponseUtil.resultMap(true, CommonResultInfo.SUCCESS.getResultCode(), "登录成功", token));
     }
 }
