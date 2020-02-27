@@ -75,7 +75,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 除配置文件忽略路径其它所有请求都需经过认证和授权
         for (String url : ignoredUrlsProperties.getUrls()) {
-            log.info("ignored URL ----> {}", url);
             registry.antMatchers(url).permitAll();
         }
 

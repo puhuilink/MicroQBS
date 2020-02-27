@@ -8,6 +8,7 @@ import com.phlink.core.config.properties.PhlinkTokenProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
+import org.redisson.client.codec.StringCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -39,7 +40,7 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
             String username = request.getParameter("username");
             recordLoginTime(username);
             String key = "loginTimeLimit:" + username;
-            RBucket<String> bucket = redissonClient.getBucket(key);
+            RBucket<String> bucket = redissonClient.getBucket(key, new StringCodec());
             String value = bucket.get();
             if (StrUtil.isBlank(value)) {
                 value = "0";
@@ -69,7 +70,7 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
 
         String key = "loginTimeLimit:" + username;
         String flagKey = "loginFailFlag:" + username;
-        RBucket<String> bucket = redissonClient.getBucket(key);
+        RBucket<String> bucket = redissonClient.getBucket(key, new StringCodec());
         String value = bucket.get();
         if (StrUtil.isBlank(value)) {
             value = "0";

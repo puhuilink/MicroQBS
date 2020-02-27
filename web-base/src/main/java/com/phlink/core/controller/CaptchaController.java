@@ -34,7 +34,7 @@ public class CaptchaController {
         String captchaId = UUID.randomUUID().toString().replace("-","");
         String code = new CreateVerifyCode().randomStr(4);
         // 缓存验证码
-        redisTemplate.opsForValue().set(captchaId, code,2L, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(captchaId, code,5L, TimeUnit.MINUTES);
         return ResultUtil.data(captchaId);
     }
 

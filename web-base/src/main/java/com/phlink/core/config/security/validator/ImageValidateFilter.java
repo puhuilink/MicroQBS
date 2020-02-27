@@ -7,6 +7,7 @@ import com.phlink.core.config.properties.CaptchaProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
+import org.redisson.client.codec.StringCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.AntPathMatcher;
@@ -55,17 +56,19 @@ public class ImageValidateFilter extends OncePerRequestFilter {
                 return;
             }
 
-            RBucket<String> bucket = redissonClient.getBucket(captchaId);
-            String redisCode = bucket.get();
-            if (StrUtil.isBlank(redisCode)) {
-                ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.INTERNAL_SERVER_ERROR, "验证码已过期，请重新获取"));
-                return;
-            }
+            RBucket<String> bucket = redissonClient.getBucket(captchaId, new StringCodec());
+            if(bucket != null) {
+                String redisCode = bucket.get();
+                if (StrUtil.isBlank(redisCode)) {
+                    ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.INTERNAL_SERVER_ERROR, "验证码已过期，请重新获取"));
+                    return;
+                }
 
-            if (!redisCode.toLowerCase().equals(code.toLowerCase())) {
-                log.info("验证码错误：code:" + code + "，redisCode:" + redisCode);
-                ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.INTERNAL_SERVER_ERROR, "图形验证码输入错误"));
-                return;
+                if (!redisCode.toLowerCase().equals(code.toLowerCase())) {
+                    log.info("验证码错误：code:" + code + "，redisCode:" + redisCode);
+                    ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.INTERNAL_SERVER_ERROR, "图形验证码输入错误"));
+                    return;
+                }
             }
             // 已验证清除key
             redissonClient.getKeys().delete(captchaId);
