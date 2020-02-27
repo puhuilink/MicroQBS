@@ -83,7 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/common/needLogin")
                 // 登录请求url
-                .loginProcessingUrl("/img/login")
+                .loginProcessingUrl("/login")
                 .permitAll()
                 // 成功处理类
                 .successHandler(successHandler)
