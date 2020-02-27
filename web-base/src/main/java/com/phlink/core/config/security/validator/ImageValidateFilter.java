@@ -56,7 +56,7 @@ public class ImageValidateFilter extends OncePerRequestFilter {
                 return;
             }
 
-            RBucket<String> bucket = redissonClient.getBucket(captchaId, new StringCodec());
+            RBucket<String> bucket = redissonClient.getBucket(captchaId);
             if(bucket != null) {
                 String redisCode = bucket.get();
                 if (StrUtil.isBlank(redisCode)) {

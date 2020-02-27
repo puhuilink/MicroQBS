@@ -1,10 +1,15 @@
 package com.phlink.core.controller;
 
+import cn.hutool.core.util.StrUtil;
+import com.phlink.core.common.enums.CommonResultInfo;
+import com.phlink.core.common.exception.BizException;
 import com.phlink.core.common.utils.CreateVerifyCode;
 import com.phlink.core.common.utils.ResultUtil;
 import com.phlink.core.common.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.redisson.api.RBucket;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,16 +30,16 @@ import java.util.concurrent.TimeUnit;
 public class CaptchaController {
 
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    private RedissonClient redissonClient;
 
-    @RequestMapping(value = "/init",method = RequestMethod.GET)
+    @RequestMapping(value = "/init", method = RequestMethod.GET)
     @ApiOperation(value = "初始化验证码")
     public Result<Object> initCaptcha() {
 
-        String captchaId = UUID.randomUUID().toString().replace("-","");
+        String captchaId = UUID.randomUUID().toString().replace("-", "");
         String code = new CreateVerifyCode().randomStr(4);
         // 缓存验证码
-        redisTemplate.opsForValue().set(captchaId, code,5L, TimeUnit.MINUTES);
+        redissonClient.getBucket(captchaId).set(code, 5L, TimeUnit.MINUTES);
         return ResultUtil.data(captchaId);
     }
 
@@ -43,8 +48,12 @@ public class CaptchaController {
     public void drawCaptcha(@PathVariable("captchaId") String captchaId, HttpServletResponse response) throws IOException {
 
         //得到验证码 生成指定验证码
-        String code=redisTemplate.opsForValue().get(captchaId);
-        CreateVerifyCode vCode = new CreateVerifyCode(116,36,4,10,code);
+        RBucket<String> bucket = redissonClient.getBucket(captchaId);
+        String code = bucket.get();
+        if(StrUtil.isBlank(code)) {
+            throw new BizException(CommonResultInfo.FAIL, "验证码ID失效");
+        }
+        CreateVerifyCode vCode = new CreateVerifyCode(116, 36, 4, 10, code);
         response.setContentType("image/png");
         vCode.write(response.getOutputStream());
     }

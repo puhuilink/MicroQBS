@@ -40,7 +40,7 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
             String username = request.getParameter("username");
             recordLoginTime(username);
             String key = "loginTimeLimit:" + username;
-            RBucket<String> bucket = redissonClient.getBucket(key, new StringCodec());
+            RBucket<String> bucket = redissonClient.getBucket(key);
             String value = bucket.get();
             if (StrUtil.isBlank(value)) {
                 value = "0";
@@ -70,7 +70,7 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
 
         String key = "loginTimeLimit:" + username;
         String flagKey = "loginFailFlag:" + username;
-        RBucket<String> bucket = redissonClient.getBucket(key, new StringCodec());
+        RBucket<String> bucket = redissonClient.getBucket(key);
         String value = bucket.get();
         if (StrUtil.isBlank(value)) {
             value = "0";

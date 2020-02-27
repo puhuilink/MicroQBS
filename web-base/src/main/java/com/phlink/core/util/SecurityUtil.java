@@ -85,7 +85,7 @@ public class SecurityUtil {
             TokenUser user = new TokenUser(u.getUsername(), list, saved);
             // 单设备登录 之前的token失效
             if(tokenProperties.getSdl()) {
-                RBucket<String> bucket = redissonClient.getBucket(SecurityConstant.USER_TOKEN + u.getUsername(), new StringCodec());
+                RBucket<String> bucket = redissonClient.getBucket(SecurityConstant.USER_TOKEN + u.getUsername());
                 if(bucket != null) {
                     String oldToken = bucket.get();
                     if (StrUtil.isNotBlank(oldToken)) {
@@ -135,7 +135,7 @@ public class SecurityUtil {
         User u = getCurrUser();
         // 读取缓存
         String key = "userRole::depIds:" + u.getId();
-        RBucket<String> bucket = redissonClient.getBucket(key, new StringCodec());
+        RBucket<String> bucket = redissonClient.getBucket(key);
         String v = bucket.get();
         if(StrUtil.isNotBlank(v)){
             deparmentIds = new Gson().fromJson(v, new TypeToken<List<String>>(){}.getType());
