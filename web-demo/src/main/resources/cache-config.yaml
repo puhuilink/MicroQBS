@@ -1,9 +1,3 @@
 testMap:
   ttl: 1440000
   maxIdleTime: 720000
-  localCacheOptions:
-    invalidationPolicy: "ON_CHANGE"
-    evictionPolicy: "NONE"
-    cacheSize: 0
-    timeToLiveInMillis: 0
-    maxIdleInMillis: 0

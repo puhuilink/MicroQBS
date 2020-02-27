@@ -1,0 +1,27 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.phlink.core.config.security.WebSecurityConfig,\
+  com.phlink.core.config.Swagger2Config,\
+  com.phlink.core.config.RedissonConfig,\
+  com.phlink.core.config.properties.PhlinkTokenProperties,\
+  com.phlink.core.config.properties.PhlinkIpLimitProperties,\
+  com.phlink.core.config.properties.PhlinkLimitProperties,\
+  com.phlink.core.config.properties.CaptchaProperties,\
+  com.phlink.core.config.properties.IgnoredUrlsProperties,\
+  com.phlink.core.config.security.UserDetailsServiceImpl,\
+  com.phlink.core.config.security.jwt.AuthenticationSuccessHandler,\
+  com.phlink.core.config.security.jwt.AuthenticationFailHandler,\
+  com.phlink.core.config.security.jwt.RestAccessDeniedHandler,\
+  com.phlink.core.config.security.permission.MyFilterSecurityInterceptor,\
+  com.phlink.core.config.security.permission.MyAccessDecisionManager,\
+  com.phlink.core.config.security.permission.MySecurityMetadataSource,\
+  com.phlink.core.config.security.validator.ImageValidateFilter,\
+  com.phlink.core.common.utils.IpInfoUtil,\
+  com.phlink.core.util.SecurityUtil,\
+  com.phlink.core.service.impl.UserServiceImpl,\
+  com.phlink.core.service.impl.DepartmentServiceImpl,\
+  com.phlink.core.service.impl.LogTraceServiceImpl,\
+  com.phlink.core.service.impl.PermissionServiceImpl,\
+  com.phlink.core.service.impl.UserRoleServiceImpl,\
+  com.phlink.core.controller.CaptchaController,\
+  com.phlink.core.controller.SecurityController
+  

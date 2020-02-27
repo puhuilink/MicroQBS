@@ -11,10 +11,8 @@ import com.phlink.core.config.security.validator.ImageValidateFilter;
 import com.phlink.core.util.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RedissonClient;
-import org.redisson.client.RedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,11 +26,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 /**
  * Security 核心配置类
  * 开启注解控制权限至Controller
- * @author Exrickx
  */
 @Slf4j
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -72,21 +69,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        log.info("SpringSecurity 初始化");
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http
                 .authorizeRequests();
 
         // 除配置文件忽略路径其它所有请求都需经过认证和授权
-        for(String url : ignoredUrlsProperties.getUrls()){
+        for (String url : ignoredUrlsProperties.getUrls()) {
+            log.info("ignored URL ----> {}", url);
             registry.antMatchers(url).permitAll();
         }
 
         registry.and()
                 // 表单登录方式
                 .formLogin()
-                .loginPage("/xboot/common/needLogin")
+                .loginPage("/common/needLogin")
                 // 登录请求url
-                .loginProcessingUrl("/xboot/login")
+                .loginProcessingUrl("/login")
                 .permitAll()
                 // 成功处理类
                 .successHandler(successHandler)
