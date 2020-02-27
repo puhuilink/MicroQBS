@@ -116,11 +116,9 @@ fdfs:
 
 # 需要验证码校验的接口路径 支持通配符 自动过滤拦截校验 无需开发人员再次校验
 captcha:
-  # 图片验证码验证
   image:
-    - /img/login # 登录接口
-    - /login # 登录接口
-    - /oauth2/authorize # 认证接口
+    - /login
+    - /oauth2/authorize
 
 # 忽略鉴权url
 ignored:

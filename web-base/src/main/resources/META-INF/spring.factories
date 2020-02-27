@@ -15,6 +15,7 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.config.security.permission.MyAccessDecisionManager,\
   com.phlink.core.config.security.permission.MySecurityMetadataSource,\
   com.phlink.core.config.security.validator.ImageValidateFilter,\
+  com.phlink.core.config.security.validator.EmailValidateFilter,\
   com.phlink.core.common.utils.IpInfoUtil,\
   com.phlink.core.util.SecurityUtil,\
   com.phlink.core.service.impl.UserServiceImpl,\
