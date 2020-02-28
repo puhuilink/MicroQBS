@@ -26,6 +26,9 @@ public class User extends PhlinkBaseEntity {
     @ApiModelProperty(value = "昵称")
     private String nickName;
 
+    @ApiModelProperty(value = "名字")
+    private String realname;
+
     @ApiModelProperty(value = "手机")
     private String mobile;
 

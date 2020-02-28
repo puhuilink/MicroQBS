@@ -1,6 +1,7 @@
 package com.phlink.core.config.security.jwt;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.google.gson.Gson;
 import com.phlink.core.common.annotation.SystemLogTrace;
 import com.phlink.core.common.constant.SecurityConstant;
@@ -13,8 +14,10 @@ import com.phlink.core.config.properties.PhlinkTokenProperties;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RBucket;
+import org.redisson.api.RedissonClient;
+import org.redisson.client.codec.StringCodec;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,7 +45,7 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
     private IpInfoUtil ipInfoUtil;
 
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    private RedissonClient redissonClient;
 
     @Override
     @SystemLogTrace(description = "登录系统", type = LogType.LOGIN)
@@ -75,17 +78,18 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
             }
             // 单设备登录 之前的token失效
             if (tokenProperties.getSdl()) {
-                String oldToken = redisTemplate.opsForValue().get(SecurityConstant.USER_TOKEN + username);
+                RBucket<String> bucket = redissonClient.getBucket(SecurityConstant.USER_TOKEN + username, new StringCodec());
+                String oldToken = bucket.get();
                 if (StrUtil.isNotBlank(oldToken)) {
-                    redisTemplate.delete(SecurityConstant.TOKEN_PRE + oldToken);
+                    redissonClient.getKeys().delete(SecurityConstant.TOKEN_PRE + oldToken);
                 }
             }
             if (saved) {
-                redisTemplate.opsForValue().set(SecurityConstant.USER_TOKEN + username, token, tokenProperties.getSaveLoginTime(), TimeUnit.DAYS);
-                redisTemplate.opsForValue().set(SecurityConstant.TOKEN_PRE + token, new Gson().toJson(user), tokenProperties.getSaveLoginTime(), TimeUnit.DAYS);
+                redissonClient.getBucket(SecurityConstant.USER_TOKEN + username, new StringCodec()).set(token, tokenProperties.getSaveLoginTime(), TimeUnit.DAYS);
+                redissonClient.getBucket(SecurityConstant.TOKEN_PRE + token, new StringCodec()).set(new Gson().toJson(user), tokenProperties.getSaveLoginTime(), TimeUnit.DAYS);
             } else {
-                redisTemplate.opsForValue().set(SecurityConstant.USER_TOKEN + username, token, tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
-                redisTemplate.opsForValue().set(SecurityConstant.TOKEN_PRE + token, new Gson().toJson(user), tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
+                redissonClient.getBucket(SecurityConstant.USER_TOKEN + username, new StringCodec()).set(token, tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
+                redissonClient.getBucket(SecurityConstant.TOKEN_PRE + token, new StringCodec()).set(new Gson().toJson(user), tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
             }
         } else {
             // 不缓存权限

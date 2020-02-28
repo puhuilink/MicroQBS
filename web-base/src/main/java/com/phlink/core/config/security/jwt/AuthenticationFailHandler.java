@@ -40,7 +40,7 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
             String username = request.getParameter("username");
             recordLoginTime(username);
             String key = "loginTimeLimit:" + username;
-            RBucket<String> bucket = redissonClient.getBucket(key);
+            RBucket<String> bucket = redissonClient.getBucket(key, new StringCodec());
             String value = bucket.get();
             if (StrUtil.isBlank(value)) {
                 value = "0";
@@ -70,16 +70,16 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
 
         String key = "loginTimeLimit:" + username;
         String flagKey = "loginFailFlag:" + username;
-        RBucket<String> bucket = redissonClient.getBucket(key);
+        RBucket<String> bucket = redissonClient.getBucket(key, new StringCodec());
         String value = bucket.get();
         if (StrUtil.isBlank(value)) {
             value = "0";
         }
         //获取已登录错误次数
         int loginFailTime = Integer.parseInt(value) + 1;
-        redissonClient.getBucket(key).set(String.valueOf(loginFailTime), tokenProperties.getLoginAfterTime(), TimeUnit.MINUTES);
+        redissonClient.getBucket(key, new StringCodec()).set(String.valueOf(loginFailTime), tokenProperties.getLoginAfterTime(), TimeUnit.MINUTES);
         if (loginFailTime >= tokenProperties.getLoginTimeLimit()) {
-            redissonClient.getBucket(flagKey).set("fail", tokenProperties.getLoginAfterTime(), TimeUnit.MINUTES);
+            redissonClient.getBucket(flagKey, new StringCodec()).set("fail", tokenProperties.getLoginAfterTime(), TimeUnit.MINUTES);
             return false;
         }
         return true;

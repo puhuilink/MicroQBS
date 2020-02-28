@@ -15,14 +15,18 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.config.security.permission.MyAccessDecisionManager,\
   com.phlink.core.config.security.permission.MySecurityMetadataSource,\
   com.phlink.core.config.security.validator.ImageValidateFilter,\
-  com.phlink.core.config.security.validator.EmailValidateFilter,\
   com.phlink.core.common.utils.IpInfoUtil,\
   com.phlink.core.util.SecurityUtil,\
+  com.phlink.core.aop.GlobalExceptionHandler,\
+  com.phlink.core.aop.GlobalResultHandler,\
+  com.phlink.core.aop.RedisLockAspect,\
+  com.phlink.core.aop.SystemLogTraceAspect,\
   com.phlink.core.service.impl.UserServiceImpl,\
   com.phlink.core.service.impl.DepartmentServiceImpl,\
   com.phlink.core.service.impl.LogTraceServiceImpl,\
   com.phlink.core.service.impl.PermissionServiceImpl,\
   com.phlink.core.service.impl.UserRoleServiceImpl,\
-  com.phlink.core.controller.CaptchaController,\
-  com.phlink.core.controller.SecurityController
-  
+  com.phlink.core.service.impl.RoleServiceImpl,\
+  com.phlink.core.controller.common.CaptchaController,\
+  com.phlink.core.controller.common.SecurityController,\
+  com.phlink.core.controller.manage.UserController

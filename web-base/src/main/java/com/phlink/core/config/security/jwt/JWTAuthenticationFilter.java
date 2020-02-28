@@ -87,7 +87,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
         if (tokenProperties.getRedis()) {
             // redis
-            RBucket<String> bucket = redissonClient.getBucket(SecurityConstant.TOKEN_PRE + header);
+            RBucket<String> bucket = redissonClient.getBucket(SecurityConstant.TOKEN_PRE + header, new StringCodec());
             if (bucket == null) {
                 ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.SIGNATURE_NOT_MATCH, "登录已失效，请重新登录"));
                 return null;
@@ -106,11 +106,11 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             }
             if (!user.getSaveLogin()) {
                 // 若未保存登录状态重新设置失效时间
-                RBucket<String> userTokenBucket = redissonClient.getBucket(SecurityConstant.USER_TOKEN + username);
+                RBucket<String> userTokenBucket = redissonClient.getBucket(SecurityConstant.USER_TOKEN + username, new StringCodec());
                 userTokenBucket.set(header);
                 userTokenBucket.expire(tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
 
-                RBucket<String> tokenBucket = redissonClient.getBucket(SecurityConstant.TOKEN_PRE + header);
+                RBucket<String> tokenBucket = redissonClient.getBucket(SecurityConstant.TOKEN_PRE + header, new StringCodec());
                 tokenBucket.set(v);
                 tokenBucket.expire(tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
             }

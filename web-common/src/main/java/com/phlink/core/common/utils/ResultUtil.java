@@ -42,10 +42,10 @@ public class ResultUtil<T> {
         return this.result;
     }
 
-    public Result<T> setErrorMsg(CommonResultInfo codeEnum, String msg){
+    public Result<T> setErrorMsg(String code, String msg){
         this.result.setSuccess(false);
         this.result.setMessage(msg);
-        this.result.setCode(codeEnum.getResultCode());
+        this.result.setCode(code);
         return this.result;
     }
 
@@ -72,7 +72,7 @@ public class ResultUtil<T> {
         return new ResultUtil<T>().setErrorMsg(msg);
     }
 
-    public static <T> Result<T> error(CommonResultInfo codeEnum, String msg){
-        return new ResultUtil<T>().setErrorMsg(codeEnum, msg);
+    public static <T> Result<T> error(String code, String msg){
+        return new ResultUtil<T>().setErrorMsg(code, msg);
     }
 }
