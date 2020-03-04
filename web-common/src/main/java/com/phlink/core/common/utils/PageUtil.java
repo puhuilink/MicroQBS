@@ -3,7 +3,7 @@ package com.phlink.core.common.utils;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.phlink.core.common.vo.PageVo;
+import com.phlink.core.common.vo.PageVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ public class PageUtil {
      * @param page
      * @return
      */
-    public static Page initMpPage(PageVo page){
+    public static Page initMpPage(PageVO page){
 
         Page p = null;
         int pageNumber = page.getPageNumber();
@@ -62,7 +62,7 @@ public class PageUtil {
      * @param list
      * @return
      */
-    public static List listToPage(PageVo page, List list) {
+    public static List listToPage(PageVO page, List list) {
 
         int pageNumber = page.getPageNumber() - 1;
         int pageSize = page.getPageSize();

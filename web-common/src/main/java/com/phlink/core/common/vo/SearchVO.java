@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class SearchVo implements Serializable {
+public class SearchVO implements Serializable {
 
     private String startDate;
 

@@ -4,13 +4,12 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.phlink.core.common.vo.SearchVo;
+import com.phlink.core.common.vo.SearchVO;
 import com.phlink.core.entity.*;
 import com.phlink.core.mapper.DepartmentMapper;
 import com.phlink.core.mapper.PermissionMapper;
 import com.phlink.core.mapper.UserMapper;
 import com.phlink.core.mapper.UserRoleMapper;
-import com.phlink.core.service.UserRoleService;
 import com.phlink.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,7 +65,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public IPage<User> listByCondition(User user, SearchVo searchVo) {
+    public IPage<User> listByCondition(User user, SearchVO searchVo) {
         return null;
     }
 

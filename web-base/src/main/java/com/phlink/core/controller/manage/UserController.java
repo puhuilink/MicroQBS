@@ -4,7 +4,7 @@ import com.phlink.core.common.constant.CommonConstant;
 import com.phlink.core.common.utils.ResultUtil;
 import com.phlink.core.common.validation.tag.OnAdd;
 import com.phlink.core.common.vo.Result;
-import com.phlink.core.controller.vo.UserRegistVo;
+import com.phlink.core.controller.vo.UserRegistVO;
 import com.phlink.core.entity.User;
 import com.phlink.core.service.DepartmentService;
 import com.phlink.core.service.RoleService;
@@ -44,7 +44,7 @@ public class UserController {
     @Validated({OnAdd.class})
     @PostMapping("/regist")
     @ApiOperation(value = "注册用户")
-    public User regist(@RequestBody @Valid @ApiParam(name = "用户注册表单", value = "传入json格式", required = true) UserRegistVo userRegistVo) {
+    public User regist(@RequestBody @Valid @ApiParam(name = "用户注册表单", value = "传入json格式", required = true) UserRegistVO userRegistVo) {
         User u = new User();
         String encryptPass = new BCryptPasswordEncoder().encode(u.getPassword());
         u.setPassword(encryptPass);

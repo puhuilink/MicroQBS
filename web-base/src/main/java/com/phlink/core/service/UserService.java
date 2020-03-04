@@ -2,10 +2,8 @@ package com.phlink.core.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.phlink.core.common.vo.SearchVo;
-import com.phlink.core.entity.Role;
+import com.phlink.core.common.vo.SearchVO;
 import com.phlink.core.entity.User;
-import com.phlink.core.entity.UserRole;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 
@@ -43,7 +41,7 @@ public interface UserService extends IService<User> {
      * @param pageable
      * @return
      */
-    IPage<User> listByCondition(User user, SearchVo searchVo);
+    IPage<User> listByCondition(User user, SearchVO searchVo);
 
     /**
      * 通过部门id获取

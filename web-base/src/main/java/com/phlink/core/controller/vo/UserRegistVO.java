@@ -8,7 +8,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Data
-public class UserRegistVo {
+public class UserRegistVO {
     @NotBlank(message = "{required}", groups = {OnAdd.class})
     private String username;
     private String email;
