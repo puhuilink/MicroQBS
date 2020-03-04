@@ -8,10 +8,13 @@ import com.phlink.core.mapper.PermissionMapper;
 import com.phlink.core.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permission> implements PermissionService {
 
     @Autowired
@@ -28,7 +31,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
 
         QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(Permission::getLevel, level);
-        queryWrapper.orderByDesc("id");
+        queryWrapper.orderByDesc("sort_order");
         return this.list(queryWrapper);
     }
 
@@ -36,7 +39,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     public List<Permission> listByParentIdOrderBySortOrder(String parentId) {
         QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(Permission::getParentId, parentId);
-        queryWrapper.orderByDesc("id");
+        queryWrapper.orderByDesc("sort_order");
         return this.list(queryWrapper);
     }
 
@@ -45,7 +48,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(Permission::getType, type);
         queryWrapper.lambda().eq(Permission::getStatus, status);
-        queryWrapper.orderByDesc("id");
+        queryWrapper.orderByDesc("sort_order");
         return this.list(queryWrapper);
     }
 
@@ -53,7 +56,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     public List<Permission> listByTitle(String title) {
         QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(Permission::getTitle, title);
-        queryWrapper.orderByDesc("id");
+        queryWrapper.orderByDesc("sort_order");
         return this.list(queryWrapper);
     }
 
@@ -61,7 +64,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     public List<Permission> listByTitleLikeOrderBySortOrder(String title) {
         QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().like(Permission::getTitle, title);
-        queryWrapper.orderByDesc("id");
+        queryWrapper.orderByDesc("sort_order");
         return this.list(queryWrapper);
     }
 }
