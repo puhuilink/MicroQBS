@@ -1,4 +1,4 @@
-package com.phlink.core.config.security.validator;
+package com.phlink.core.security.validator;
 
 import cn.hutool.core.util.StrUtil;
 import com.phlink.core.common.enums.CommonResultInfo;

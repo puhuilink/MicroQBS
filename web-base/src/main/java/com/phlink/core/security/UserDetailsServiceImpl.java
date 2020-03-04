@@ -1,4 +1,4 @@
-package com.phlink.core.config.security;
+package com.phlink.core.security;
 
 import cn.hutool.core.util.StrUtil;
 import com.phlink.core.common.exception.LoginFailLimitException;
@@ -9,14 +9,12 @@ import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.StringCodec;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.convert.Bucket;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component

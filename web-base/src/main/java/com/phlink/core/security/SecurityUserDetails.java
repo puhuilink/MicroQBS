@@ -1,4 +1,4 @@
-package com.phlink.core.config.security;
+package com.phlink.core.security;
 
 import cn.hutool.core.util.StrUtil;
 import com.phlink.core.common.constant.CommonConstant;

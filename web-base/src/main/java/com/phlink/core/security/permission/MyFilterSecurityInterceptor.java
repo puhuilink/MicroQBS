@@ -1,4 +1,4 @@
-package com.phlink.core.config.security.permission;
+package com.phlink.core.security.permission;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

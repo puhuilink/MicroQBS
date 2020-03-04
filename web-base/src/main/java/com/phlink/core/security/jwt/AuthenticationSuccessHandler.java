@@ -1,7 +1,6 @@
-package com.phlink.core.config.security.jwt;
+package com.phlink.core.security.jwt;
 
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.google.gson.Gson;
 import com.phlink.core.common.annotation.SystemLogTrace;
 import com.phlink.core.common.constant.SecurityConstant;

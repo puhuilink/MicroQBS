@@ -1,4 +1,4 @@
-package com.phlink.core.config.security.jwt;
+package com.phlink.core.security.jwt;
 
 import com.phlink.core.common.enums.CommonResultInfo;
 import com.phlink.core.common.utils.ResponseUtil;

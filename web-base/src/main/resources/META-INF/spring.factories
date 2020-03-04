@@ -7,14 +7,14 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.config.properties.PhlinkLimitProperties,\
   com.phlink.core.config.properties.CaptchaProperties,\
   com.phlink.core.config.properties.IgnoredUrlsProperties,\
-  com.phlink.core.config.security.UserDetailsServiceImpl,\
-  com.phlink.core.config.security.jwt.AuthenticationSuccessHandler,\
-  com.phlink.core.config.security.jwt.AuthenticationFailHandler,\
-  com.phlink.core.config.security.jwt.RestAccessDeniedHandler,\
-  com.phlink.core.config.security.permission.MyFilterSecurityInterceptor,\
-  com.phlink.core.config.security.permission.MyAccessDecisionManager,\
-  com.phlink.core.config.security.permission.MySecurityMetadataSource,\
-  com.phlink.core.config.security.validator.ImageValidateFilter,\
+  com.phlink.core.security.UserDetailsServiceImpl,\
+  com.phlink.core.security.jwt.AuthenticationSuccessHandler,\
+  com.phlink.core.security.jwt.AuthenticationFailHandler,\
+  com.phlink.core.security.jwt.RestAccessDeniedHandler,\
+  com.phlink.core.security.permission.MyFilterSecurityInterceptor,\
+  com.phlink.core.security.permission.MyAccessDecisionManager,\
+  com.phlink.core.security.permission.MySecurityMetadataSource,\
+  com.phlink.core.security.validator.ImageValidateFilter,\
   com.phlink.core.config.mybatis.MybatisPlusConfig,\
   com.phlink.core.config.mybatis.MyMetaObjectHandler,\
   com.phlink.core.common.utils.IpInfoUtil,\

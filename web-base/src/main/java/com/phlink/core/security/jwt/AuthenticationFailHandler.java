@@ -1,8 +1,7 @@
-package com.phlink.core.config.security.jwt;
+package com.phlink.core.security.jwt;
 
 import cn.hutool.core.util.StrUtil;
 import com.phlink.core.common.enums.CommonResultInfo;
-import com.phlink.core.common.exception.LoginFailLimitException;
 import com.phlink.core.common.utils.ResponseUtil;
 import com.phlink.core.config.properties.PhlinkTokenProperties;
 import lombok.extern.slf4j.Slf4j;

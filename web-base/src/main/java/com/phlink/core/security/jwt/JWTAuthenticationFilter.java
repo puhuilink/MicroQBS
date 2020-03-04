@@ -1,4 +1,4 @@
-package com.phlink.core.config.security.jwt;
+package com.phlink.core.security.jwt;
 
 import cn.hutool.core.util.StrUtil;
 import com.google.common.reflect.TypeToken;
