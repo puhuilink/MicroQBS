@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.phlink.file.service.impl.FdfsStorageServiceImpl\

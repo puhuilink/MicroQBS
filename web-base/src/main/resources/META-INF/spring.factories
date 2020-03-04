@@ -2,6 +2,9 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.config.security.WebSecurityConfig,\
   com.phlink.core.config.Swagger2Config,\
   com.phlink.core.config.RedissonConfig,\
+  com.phlink.core.config.JacksonConfig,\
+  com.phlink.core.config.httpclient.HttpClientConfig,\
+  com.phlink.core.config.httpclient.RestTemplateConfig,\
   com.phlink.core.config.properties.PhlinkTokenProperties,\
   com.phlink.core.config.properties.PhlinkIpLimitProperties,\
   com.phlink.core.config.properties.PhlinkLimitProperties,\
