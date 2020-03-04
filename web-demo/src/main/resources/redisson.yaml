@@ -1,7 +1,7 @@
 #Redisson配置
 singleServerConfig:
   address: "redis://127.0.0.1:6379"
-  password: null
+  password: qwe@123
   clientName: null
   database: 5
   idleConnectionTimeout: 10000
