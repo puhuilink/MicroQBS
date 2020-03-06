@@ -110,10 +110,10 @@ public interface CommonConstant {
     /**
      * 部门负责人类型 主负责人
      */
-    Integer HEADER_TYPE_MAIN = 0;
+    Integer MASTER_TYPE_MAIN = 0;
 
     /**
      * 部门负责人类型 副负责人
      */
-    Integer HEADER_TYPE_VICE = 1;
+    Integer MASTER_TYPE_VICE = 1;
 }

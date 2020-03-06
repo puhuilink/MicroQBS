@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 @Slf4j
-@RestControllerAdvice(basePackages = "com.phlink.bus.api")
+@RestControllerAdvice(basePackages = {"com.phlink"})
 public class GlobalResultHandler implements ResponseBodyAdvice {
 
     @Override
@@ -25,7 +25,7 @@ public class GlobalResultHandler implements ResponseBodyAdvice {
             return body;
         }
         if (body instanceof String) {
-            return ResultUtil.success((String) body);
+            return ResultUtil.data(body);
         }
         if (body == null) {
             if(returnType.getParameterType().equals(Result.class)) {

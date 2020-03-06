@@ -8,9 +8,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@TableName("t_department_header")
+@TableName("t_department_master")
 @ApiModel(value = "部门负责人")
-public class DepartmentHeader extends PhlinkBaseEntity {
+public class DepartmentMaster extends PhlinkBaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,5 +21,5 @@ public class DepartmentHeader extends PhlinkBaseEntity {
     private String userId;
 
     @ApiModelProperty(value = "负责人类型 默认0主要 1副职")
-    private Integer type = CommonConstant.HEADER_TYPE_MAIN;
+    private Integer type = CommonConstant.MASTER_TYPE_MAIN;
 }

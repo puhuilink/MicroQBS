@@ -18,6 +18,7 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ import javax.validation.Valid;
 @Api(tags = "User相关接口")
 @RequestMapping("/manage/user")
 @CacheConfig(cacheNames = "user")
+@Transactional
 public class UserController {
 
     @Autowired

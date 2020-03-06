@@ -1,7 +1,6 @@
 package com.phlink.demo.controller;
 
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
-import com.phlink.core.common.enums.BaseResultInfo;
 import com.phlink.core.common.enums.CommonResultInfo;
 import com.phlink.core.common.exception.BizException;
 import com.phlink.file.service.FdfsStorageService;
@@ -9,7 +8,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

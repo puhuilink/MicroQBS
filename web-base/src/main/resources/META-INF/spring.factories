@@ -3,6 +3,7 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.config.Swagger2Config,\
   com.phlink.core.config.RedissonConfig,\
   com.phlink.core.config.JacksonConfig,\
+  com.phlink.core.config.WebConfig,\
   com.phlink.core.config.httpclient.HttpClientConfig,\
   com.phlink.core.config.httpclient.RestTemplateConfig,\
   com.phlink.core.config.properties.PhlinkTokenProperties,\
@@ -32,6 +33,12 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.service.impl.PermissionServiceImpl,\
   com.phlink.core.service.impl.UserRoleServiceImpl,\
   com.phlink.core.service.impl.RoleServiceImpl,\
+  com.phlink.core.service.impl.RolePermissionServiceImpl,\
+  com.phlink.core.service.impl.RoleDepartmentServiceImpl,\
+  com.phlink.core.service.impl.DepartmentMasterServiceImpl,\
   com.phlink.core.controller.common.CaptchaController,\
   com.phlink.core.controller.common.SecurityController,\
+  com.phlink.core.controller.manage.PermissionController,\
+  com.phlink.core.controller.manage.DepartmentController,\
+  com.phlink.core.controller.manage.RoleController,\
   com.phlink.core.controller.manage.UserController

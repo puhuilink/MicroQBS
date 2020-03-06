@@ -39,9 +39,9 @@ public class Department extends PhlinkBaseEntity {
 
     @TableField(exist=false)
     @ApiModelProperty(value = "主负责人")
-    private List<String> mainHeader;
+    private List<String> mainMaster;
 
     @TableField(exist=false)
     @ApiModelProperty(value = "副负责人")
-    private List<String> viceHeader;
+    private List<String> viceMaster;
 }

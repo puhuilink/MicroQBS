@@ -34,13 +34,13 @@ public class CaptchaController {
 
     @RequestMapping(value = "/init", method = RequestMethod.GET)
     @ApiOperation(value = "初始化验证码")
-    public Result<Object> initCaptcha() {
+    public String initCaptcha() {
 
         String captchaId = UUID.randomUUID().toString().replace("-", "");
         String code = new CreateVerifyCode().randomStr(4);
         // 缓存验证码
         redissonClient.getBucket(captchaId, new StringCodec()).set(code, 5L, TimeUnit.MINUTES);
-        return ResultUtil.data(captchaId);
+        return captchaId;
     }
 
     @RequestMapping(value = "/draw/{captchaId}", method = RequestMethod.GET)
