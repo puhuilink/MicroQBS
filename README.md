@@ -23,3 +23,6 @@ web-base的使用示例
 
 ## 整体结构
 ![整体结构](https://github.com/Sevncz/phlink-common-framework/blob/master/doc/%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84.png)
+
+## 整体规划
+![整体规划](https://github.com/Sevncz/phlink-common-framework/blob/master/doc/%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84.png)
