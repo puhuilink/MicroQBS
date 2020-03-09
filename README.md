@@ -26,3 +26,10 @@ web-base的使用示例
 
 ## 整体规划
 ![整体规划](https://github.com/Sevncz/phlink-common-framework/blob/master/doc/base2.png)
+
+## 使用文档
+### TODO 初始化数据库
+待更新
+### TODO 配置修改
+待更新
+### TODO 配置修改
