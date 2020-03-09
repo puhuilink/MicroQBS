@@ -18,8 +18,6 @@ import java.util.TimeZone;
 @ConditionalOnClass(ObjectMapper.class)
 @AutoConfigureBefore(JacksonAutoConfiguration.class)
 public class JacksonConfig {
-
-
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer customizer() {
 
