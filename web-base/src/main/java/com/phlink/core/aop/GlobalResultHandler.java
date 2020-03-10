@@ -39,7 +39,7 @@ public class GlobalResultHandler implements ResponseBodyAdvice {
                 e.printStackTrace();
             }
         }
-        return body;
+        return ResultUtil.data(body);
     }
 
 }
