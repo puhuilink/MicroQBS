@@ -3,9 +3,14 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.config.Swagger2Config,\
   com.phlink.core.config.RedissonConfig,\
   com.phlink.core.config.jackson.JacksonConfig,\
+  com.phlink.core.config.jackson.JavaTimeModule,\
   com.phlink.core.config.WebConfig,\
   com.phlink.core.config.httpclient.HttpClientConfig,\
   com.phlink.core.config.httpclient.RestTemplateConfig,\
+  com.phlink.core.config.mybatis.DataScopeInterceptor,\
+  com.phlink.core.config.mybatis.MybatisPlusConfig,\
+  com.phlink.core.config.mybatis.MyMetaObjectHandler,\
+  com.phlink.core.config.mybatis.SqlFilterArgumentResolver,\
   com.phlink.core.config.properties.PhlinkTokenProperties,\
   com.phlink.core.config.properties.PhlinkIpLimitProperties,\
   com.phlink.core.config.properties.PhlinkLimitProperties,\
@@ -19,8 +24,6 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.security.permission.MyAccessDecisionManager,\
   com.phlink.core.security.permission.MySecurityMetadataSource,\
   com.phlink.core.security.validator.ImageValidateFilter,\
-  com.phlink.core.config.mybatis.MybatisPlusConfig,\
-  com.phlink.core.config.mybatis.MyMetaObjectHandler,\
   com.phlink.core.common.utils.IpInfoUtil,\
   com.phlink.core.util.SecurityUtil,\
   com.phlink.core.aop.GlobalExceptionHandler,\
