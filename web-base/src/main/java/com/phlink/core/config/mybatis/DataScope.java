@@ -15,7 +15,7 @@ public class DataScope extends HashMap {
 	/**
 	 * 限制范围的字段名称
 	 */
-	private String scopeName = "deptId";
+	private String scopeName = "departmentId";
 
 	/**
 	 * 具体的数据范围
