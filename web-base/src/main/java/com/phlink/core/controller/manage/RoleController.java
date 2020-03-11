@@ -18,7 +18,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,7 +47,7 @@ public class RoleController {
 
     @GetMapping(value = "/all")
     @ApiOperation(value = "获取全部角色")
-    public List<Role> roleGetAll() {
+    public List<Role> listAll() {
         return roleService.list();
     }
 
