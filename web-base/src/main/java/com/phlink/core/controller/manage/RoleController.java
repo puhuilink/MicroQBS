@@ -51,11 +51,11 @@ public class RoleController {
 
     @GetMapping(value = "/page")
     @ApiOperation(value = "分页获取角色")
-    public Page<Role> allPage(PageVO pageVo) {
+    public PageInfo<Role> allPage(PageVO pageVo) {
 
-        Page<Role> page = PageHelper.startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
-                .doSelectPage(() -> roleService.list());
-        for (Role role : page.getResult()) {
+        PageInfo<Role> page = PageHelper.startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
+                .doSelectPageInfo(() -> roleService.list());
+        for (Role role : page.getList()) {
             // 角色拥有权限
             List<RolePermission> permissions = rolePermissionService.listByRoleId(role.getId());
             role.setPermissions(permissions);

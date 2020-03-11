@@ -31,12 +31,12 @@ public class LogController {
 
     @GetMapping(value = "/page")
     @ApiOperation(value = "分页获取全部")
-    public Page<LogTrace> page(@RequestParam(required = false) Integer type,
+    public PageInfo<LogTrace> page(@RequestParam(required = false) Integer type,
                                    @RequestParam String key,
                                    SearchVO searchVo,
                                    PageVO pageVo) {
-        Page<LogTrace> page = PageHelper.startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
-                .doSelectPage(() -> logService.listByCondition(type, key, searchVo));
+        PageInfo<LogTrace> page = PageHelper.startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
+                .doSelectPageInfo(() -> logService.listByCondition(type, key, searchVo));
         return page;
     }
 

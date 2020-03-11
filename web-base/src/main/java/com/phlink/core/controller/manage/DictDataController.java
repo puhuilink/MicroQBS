@@ -39,10 +39,10 @@ public class DictDataController {
 
     @GetMapping(value = "/page")
     @ApiOperation(value = "多条件分页获取用户列表")
-    public Page<DictData> pageByCondition(DictData dictData,
+    public PageInfo<DictData> pageByCondition(DictData dictData,
                                               PageVO pageVo) {
-        Page<DictData> pageInfo = PageHelper.startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
-                .doSelectPage(() -> dictDataService.listByCondition(dictData));
+        PageInfo<DictData> pageInfo = PageHelper.startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
+                .doSelectPageInfo(() -> dictDataService.listByCondition(dictData));
         return pageInfo;
     }
 
