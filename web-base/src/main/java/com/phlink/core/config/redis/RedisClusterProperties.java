@@ -3,6 +3,8 @@ package com.phlink.core.config.redis;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.List;
+
 @Data
 @ToString
 public class RedisClusterProperties {
@@ -15,7 +17,7 @@ public class RedisClusterProperties {
     /**
      * 集群节点
      */
-    private String nodes;
+    private List<String> nodes;
 
     /**
      * 默认值： SLAVE（只在从服务节点里读取）设置读取操作选择节点的模式。 可用值为： SLAVE - 只在从服务节点里读取。

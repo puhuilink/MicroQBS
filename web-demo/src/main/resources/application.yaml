@@ -58,6 +58,9 @@ spring:
     cluster:
       scan-interval: 1000
       nodes:
+          - "redis://127.0.0.1:7004",
+          - "redis://127.0.0.1:7001",
+          - "redis://127.0.0.1:7000"
       read-mode: SLAVE
       retry-attempts: 3
       failed-attempts: 3
@@ -68,6 +71,9 @@ spring:
     sentinel:
       master: business-master
       nodes:
+        - "redis://127.0.0.1:7004",
+        - "redis://127.0.0.1:7001",
+        - "redis://127.0.0.1:7000"
       master-onlyWrite: true
       fail-max: 3
 
@@ -85,6 +91,7 @@ spring:
     time-zone: GMT+8
     serialization:
       fail-on-empty-beans: false
+
 
 management:
   endpoint:

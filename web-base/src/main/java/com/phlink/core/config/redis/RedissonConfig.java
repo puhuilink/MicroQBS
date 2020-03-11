@@ -21,6 +21,7 @@ import org.springframework.util.ClassUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Configuration
@@ -80,10 +81,7 @@ public class RedissonConfig {
             Codec codec = (Codec) ClassUtils.forName(redisProperties.getCodec(), ClassUtils.getDefaultClassLoader()).newInstance();
             config.setCodec(codec);
             config.setEventLoopGroup(new NioEventLoopGroup());
-            String[] nodes = redisProperties.getCluster().getNodes().split(",");
-            List<String> newNodes = new ArrayList(nodes.length);
-            Arrays.stream(nodes).forEach((index) -> newNodes.add(
-                    index.startsWith("redis://") ? index : "redis://" + index));
+            List<String> newNodes = redisProperties.getCluster().getNodes().stream().map( n -> n.startsWith("redis://") ? n : "redis://" + n).collect(Collectors.toList());
 
             ClusterServersConfig serverConfig = config.useClusterServers()
                     .addNodeAddress(newNodes.toArray(new String[0]))
@@ -131,16 +129,13 @@ public class RedissonConfig {
             Codec codec = (Codec) ClassUtils.forName(redisProperties.getCodec(), ClassUtils.getDefaultClassLoader()).newInstance();
             config.setCodec(codec);
             config.setEventLoopGroup(new NioEventLoopGroup());
-            String[] nodes = redisProperties.getSentinel().getNodes().split(",");
-            List<String> newNodes = new ArrayList(nodes.length);
-            Arrays.stream(nodes).forEach((index) -> newNodes.add(
-                    index.startsWith("redis://") ? index : "redis://" + index));
+            List<String> newNodes = redisProperties.getCluster().getNodes().stream().map( n -> n.startsWith("redis://") ? n : "redis://" + n).collect(Collectors.toList());
 
             SentinelServersConfig serverConfig = config.useSentinelServers()
                     .addSentinelAddress(newNodes.toArray(new String[0]))
                     .setMasterName(redisProperties.getSentinel().getMaster())
                     .setReadMode(ReadMode.SLAVE)
-                    .setFailedAttempts(redisProperties.getSentinel().getFailMax())
+                    .setFailedSlaveCheckInterval(redisProperties.getSentinel().getFailMax())
                     .setTimeout(redisProperties.getTimeout())
                     .setMasterConnectionPoolSize(redisProperties.getPool().getSize())
                     .setSlaveConnectionPoolSize(redisProperties.getPool().getSize());
