@@ -1,11 +1,11 @@
 package com.phlink.core.controller.manage;
 
+import com.github.pagehelper.ISelect;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.phlink.core.common.exception.BizException;
-import com.phlink.core.common.utils.ResultUtil;
 import com.phlink.core.common.vo.PageVO;
-import com.phlink.core.common.vo.Result;
 import com.phlink.core.entity.Dict;
 import com.phlink.core.entity.DictData;
 import com.phlink.core.service.DictDataService;
@@ -17,7 +17,6 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,11 +39,10 @@ public class DictDataController {
 
     @GetMapping(value = "/page")
     @ApiOperation(value = "多条件分页获取用户列表")
-    public PageInfo<DictData> pageByCondition(DictData dictData,
+    public Page<DictData> pageByCondition(DictData dictData,
                                               PageVO pageVo) {
-        PageHelper.startPage(pageVo.getPageNumber(), pageVo.getPageSize());
-        List<DictData> dictDataList = dictDataService.listByCondition(dictData);
-        PageInfo<DictData> pageInfo = new PageInfo(dictDataList);
+        Page<DictData> pageInfo = PageHelper.startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
+                .doSelectPage(() -> dictDataService.listByCondition(dictData));
         return pageInfo;
     }
 

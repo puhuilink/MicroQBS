@@ -25,7 +25,7 @@ import java.util.List;
 public class LogTraceServiceImpl extends ServiceImpl<LogTraceMapper, LogTrace> implements LogTraceService {
 
     @Override
-    public List<LogTrace> listByCondition(Integer type, String key, SearchVO searchVo, PageVO pageVo) {
+    public List<LogTrace> listByCondition(Integer type, String key, SearchVO searchVo) {
         LambdaQueryWrapper<LogTrace> wrapper = new LambdaQueryWrapper<>();
         if(StrUtil.isNotBlank(key)) {
             wrapper.or().like(LogTrace::getRequestUrl, key)

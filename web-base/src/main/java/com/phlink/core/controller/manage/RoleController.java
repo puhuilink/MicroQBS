@@ -1,14 +1,12 @@
 package com.phlink.core.controller.manage;
 
 import cn.hutool.core.convert.Convert;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.phlink.core.common.exception.BizException;
 import com.phlink.core.common.vo.PageVO;
-import com.phlink.core.entity.Role;
-import com.phlink.core.entity.RoleDepartment;
-import com.phlink.core.entity.RolePermission;
-import com.phlink.core.entity.UserRole;
+import com.phlink.core.entity.*;
 import com.phlink.core.service.RoleDepartmentService;
 import com.phlink.core.service.RolePermissionService;
 import com.phlink.core.service.RoleService;
@@ -53,11 +51,11 @@ public class RoleController {
 
     @GetMapping(value = "/page")
     @ApiOperation(value = "分页获取角色")
-    public PageInfo<Role> allPage(PageVO page) {
-        PageHelper.startPage(page.getPageNumber(), page.getPageSize());
-        List<Role> roleList = roleService.list();
-        PageInfo<Role> pageInfo = new PageInfo(roleList);
-        for (Role role : roleList) {
+    public Page<Role> allPage(PageVO pageVo) {
+
+        Page<Role> page = PageHelper.startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
+                .doSelectPage(() -> roleService.list());
+        for (Role role : page.getResult()) {
             // 角色拥有权限
             List<RolePermission> permissions = rolePermissionService.listByRoleId(role.getId());
             role.setPermissions(permissions);
@@ -65,7 +63,7 @@ public class RoleController {
             List<RoleDepartment> departments = roleDepartmentService.listByRoleId(role.getId());
             role.setDepartments(departments);
         }
-        return pageInfo;
+        return page;
     }
 
     @PostMapping(value = "/default")

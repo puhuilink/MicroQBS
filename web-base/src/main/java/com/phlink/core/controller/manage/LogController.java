@@ -1,5 +1,6 @@
 package com.phlink.core.controller.manage;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.phlink.core.common.utils.ResultUtil;
@@ -30,14 +31,13 @@ public class LogController {
 
     @GetMapping(value = "/page")
     @ApiOperation(value = "分页获取全部")
-    public PageInfo<LogTrace> page(@RequestParam(required = false) Integer type,
+    public Page<LogTrace> page(@RequestParam(required = false) Integer type,
                                    @RequestParam String key,
                                    SearchVO searchVo,
                                    PageVO pageVo) {
-        PageHelper.startPage(pageVo.getPageNumber(), pageVo.getPageSize());
-        List<LogTrace> logs = logService.listByCondition(type, key, searchVo, pageVo);
-        PageInfo<LogTrace> pageInfo = new PageInfo(logs);
-        return pageInfo;
+        Page<LogTrace> page = PageHelper.startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
+                .doSelectPage(() -> logService.listByCondition(type, key, searchVo));
+        return page;
     }
 
     @DeleteMapping(value = "/delete/{ids}")
