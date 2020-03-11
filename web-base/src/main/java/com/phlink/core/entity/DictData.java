@@ -10,7 +10,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-@TableName("t_dict")
+@TableName("t_dict_data")
 @ApiModel(value = "字典")
 public class DictData extends PhlinkBaseEntity {
 
