@@ -28,8 +28,31 @@ web-base的使用示例
 ![整体规划](https://github.com/Sevncz/phlink-common-framework/blob/master/doc/base2.png)
 
 ## 使用文档
-### TODO 初始化数据库
-待更新
+### 初始化数据库
+./doc 目录下 init.sql
 ### TODO 配置修改
-待更新
-### TODO 配置修改
+#### redisson.yaml
+修改以下两项为使用的redis服务
+```yaml
+address: "redis://host:port"
+password: password
+```
+#### application.yaml
+修改数据库配置
+```yaml
+datasource:
+    primary:
+      username: postgres
+      password: postgres
+      driver-class-name: org.postgresql.Driver
+      url: jdbc:postgresql://localhost:5432/phlink_demo
+```
+
+使用web-file-service时，修改fdfs
+```yaml
+fdfs:
+  tracker-list:            #TrackerList参数,支持多个
+    - 127.0.0.1:22122
+```
+
+### 基本约定
