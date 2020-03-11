@@ -44,4 +44,7 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.controller.manage.PermissionController,\
   com.phlink.core.controller.manage.DepartmentController,\
   com.phlink.core.controller.manage.RoleController,\
-  com.phlink.core.controller.manage.UserController
+  com.phlink.core.controller.manage.UserController,\
+  com.phlink.core.controller.manage.DictController,\
+  com.phlink.core.controller.manage.DictDataController,\
+  com.phlink.core.controller.manage.LogController
