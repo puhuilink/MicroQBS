@@ -3,6 +3,8 @@ package com.phlink.core.config.redis;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.List;
+
 @Data
 @ToString
 public class RedisSentinelProperties {
@@ -15,7 +17,7 @@ public class RedisSentinelProperties {
     /**
      * 哨兵节点
      */
-    private String nodes;
+    private List<String> nodes;
 
     /**
      * 哨兵配置
