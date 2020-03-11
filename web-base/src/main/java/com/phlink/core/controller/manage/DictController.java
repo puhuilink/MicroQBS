@@ -1,8 +1,6 @@
 package com.phlink.core.controller.manage;
 
 import com.phlink.core.common.exception.BizException;
-import com.phlink.core.common.utils.ResultUtil;
-import com.phlink.core.common.vo.Result;
 import com.phlink.core.entity.Dict;
 import com.phlink.core.service.DictDataService;
 import com.phlink.core.service.DictService;
