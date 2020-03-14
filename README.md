@@ -29,7 +29,7 @@ web-base的使用示例
 
 ## 使用文档
 ### 初始化数据库
-./doc 目录下 init.sql
+/doc/sql 目录下的sql文件初始化 
 ### 配置修改
 #### application.yaml
 修改数据库配置
