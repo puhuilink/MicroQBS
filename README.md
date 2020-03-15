@@ -88,3 +88,110 @@ fdfs:
 ```
 
 ### 基本约定
+#### 返回格式
+```json
+{
+    "success": true,
+    "message": "success",
+    "code": "200",
+    "timestamp": 1584251528246,
+    "result": {}
+}
+```
+
+#### HTTP 方法
+- GET: 资源查询接口
+- POST: 资源创建接口
+- PUT: 资源修改接口
+- DELETE: 资源删除接口
+
+#### request body 校验
+在需要校验的字段上加入
+- OnAdd
+- OnCheckID
+- OnUpdate
+用于Validated校验，可配置多个
+```java
+// 方法：
+@Validated(value = {OnAdd.class})
+@PostMapping
+public void example(@RequestBody @Valid SaveEntityVO entitVO){ 
+    service.save(entityVO);
+}
+
+// VO实体
+class SaveEntityVO {
+    @NotBlank(message = "{required}", groups = {OnAdd.class, OnUpdate.class})
+    private String name;
+}
+```
+
+#### MVC各层命名及结构
+Controller：xxxController
+Service: xxxService/xxxServiceImpl
+DAO: xxxMapper
+
+#### 实体基本字段
+所有实体对象都需要继承该BaseEntity类
+```java
+public class PhlinkBaseEntity {
+    @Id
+    @TableId
+    @NotNull(message = "{required}", groups = {OnCheckID.class})
+    @ApiModelProperty(value = "唯一标识")
+    private String id = String.valueOf(SnowFlakeUtil.getFlowIdInstance().nextId());
+
+    @ApiModelProperty(value = "创建者")
+    @TableField(fill = FieldFill.INSERT) // 自动填入创建用户
+    private String createBy;
+
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty(value = "创建时间")
+    @TableField(fill = FieldFill.INSERT) // 自动填入创建时间
+    private Date createTime;
+
+    @ApiModelProperty(value = "更新者")
+    @TableField(fill = FieldFill.UPDATE) // 自动填入更新用户
+    private String updateBy;
+
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty(value = "更新时间")
+    @TableField(fill = FieldFill.UPDATE) // 自动填入更新时间
+    private Date updateTime;
+
+    @JsonIgnore
+    @TableLogic
+    @ApiModelProperty(value = "删除标志 默认0")
+    private Integer delFlag = CommonConstant.STATUS_NORMAL;
+}
+```
+
+#### 异常处理
+在业务层显式抛出异常，由框架统一处理成标准返回结构
+默认异常Code：
+```
+SUCCESS("200", "成功!"),
+// 系统失败
+BODY_NOT_MATCH("400","请求的数据格式不符!"),
+SIGNATURE_NOT_MATCH("401","请求的数字签名不匹配!"),
+FORBIDDEN("403","抱歉，您没有访问权限!"),
+NOT_FOUND("404", "未找到该资源!"),
+TOO_MANY_REQUESTS("429", "接口访问超出频率限制!"),
+INTERNAL_SERVER_ERROR("500", "服务器内部错误!"),
+SERVER_BUSY("503","服务器正忙，请稍后再试!"),
+// 业务失败
+FAIL("-100", "操作失败!"),
+LOGIN_FAIL_MANY_TIMES("-101", "登录失败次数过多!"),
+```
+默认自定义异常：
+- BizException
+- CheckedException
+- LimitAccessException
+- LoginFailLimitException
+
+#### 基本VO
+- PageVO
+- Result
+- SearchVO
