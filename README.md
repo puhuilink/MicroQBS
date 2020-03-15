@@ -88,6 +88,15 @@ fdfs:
 ```
 
 ### 基本约定
+#### MVC各层命名及结构
+Controller：xxxController
+Service: xxxService/xxxServiceImpl
+DAO: xxxMapper
+
+#### Controller 注解
+使用@RestController，注意和@Controller的区别
+
+
 #### 返回格式
 ```json
 {
@@ -125,11 +134,6 @@ class SaveEntityVO {
     private String name;
 }
 ```
-
-#### MVC各层命名及结构
-Controller：xxxController
-Service: xxxService/xxxServiceImpl
-DAO: xxxMapper
 
 #### 实体基本字段
 所有实体对象都需要继承该BaseEntity类
