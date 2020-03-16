@@ -41,4 +41,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userService.getByUsername(username);
         return new SecurityUserDetails(user);
     }
+
+    public UserDetails loadUserByMobile(String mobile) throws UsernameNotFoundException {
+
+        String flagKey = "loginFailFlag:" + mobile;
+        RBucket<String> bucket = redissonClient.getBucket(flagKey, new StringCodec());
+        String value = bucket.get();
+        Long timeRest = bucket.remainTimeToLive();
+        if(StrUtil.isNotBlank(value)){
+            Duration duration = Duration.ofMillis(timeRest);
+            //超过限制次数
+            throw new LoginFailLimitException("登录错误次数超过限制，请"+duration.toMinutes()+"分钟后再试");
+        }
+        User user = userService.getByMobile(mobile);
+        return new SecurityUserDetails(user);
+    }
 }

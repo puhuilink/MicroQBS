@@ -32,6 +32,17 @@ public class CaptchaController {
     @Autowired
     private RedissonClient redissonClient;
 
+    @RequestMapping(value = "/initMobile/{mobile}", method = RequestMethod.GET)
+    @ApiOperation(value = "初始化手机验证码")
+    public String initMobileCaptcha(@PathVariable String mobile) {
+        Long codeL = System.nanoTime();
+        String codeStr = Long.toString(codeL);
+        String code = codeStr.substring(codeStr.length() - 6);
+        // 缓存验证码
+        redissonClient.getBucket(mobile, new StringCodec()).set(code, 5L, TimeUnit.MINUTES);
+        return code;
+    }
+
     @RequestMapping(value = "/init", method = RequestMethod.GET)
     @ApiOperation(value = "初始化验证码")
     public String initCaptcha() {

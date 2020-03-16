@@ -9,6 +9,7 @@ import com.phlink.core.security.jwt.JWTAuthenticationFilter;
 import com.phlink.core.security.jwt.RestAccessDeniedHandler;
 import com.phlink.core.security.permission.MyFilterSecurityInterceptor;
 import com.phlink.core.security.validator.ImageValidateFilter;
+import com.phlink.core.security.validator.sms.SmsValidateFilter;
 import com.phlink.core.util.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RedissonClient;
@@ -62,6 +63,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private SecurityUtil securityUtil;
+    @Autowired
+    private SmsValidateFilter smsValidateFilter;
+    @Autowired
+    private SmsAuthenticationConfig smsAuthenticationConfig;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -78,7 +83,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         for (String url : ignoredUrlsProperties.getUrls()) {
             registry.antMatchers(url).permitAll();
         }
-
         registry.and()
                 // 表单登录方式
                 .formLogin()
@@ -115,9 +119,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 // 图形验证码过滤器
                 .addFilterBefore(imageValidateFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(smsValidateFilter, UsernamePasswordAuthenticationFilter.class)
                 // 添加自定义权限过滤器
                 .addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class)
                 // 添加JWT认证过滤器
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(), tokenProperties, redissonClient, securityUtil));
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), tokenProperties, redissonClient, securityUtil))
+                .apply(smsAuthenticationConfig)
+        ;
     }
+
+
 }

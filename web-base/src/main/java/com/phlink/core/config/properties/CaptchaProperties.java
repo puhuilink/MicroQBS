@@ -12,11 +12,13 @@ import java.util.List;
 @ConfigurationProperties(prefix = "captcha")
 public class CaptchaProperties {
 
+    private List<String> username = new ArrayList<>();
+
+    private List<String> email = new ArrayList<>();
+
     private List<String> image = new ArrayList<>();
 
     private List<String> sms = new ArrayList<>();
 
     private List<String> vaptcha = new ArrayList<>();
-
-    private List<String> email = new ArrayList<>();
 }

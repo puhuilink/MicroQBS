@@ -162,6 +162,10 @@ captcha:
   image:
     - /login
     - /oauth2/authorize
+  username:
+    - /login/username
+  sms:
+    - /login/mobile
 
 # 忽略鉴权url
 ignored:

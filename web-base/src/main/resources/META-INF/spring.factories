@@ -1,5 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.config.security.WebSecurityConfig,\
+  com.phlink.core.config.security.SmsAuthenticationConfig,\
   com.phlink.core.config.Swagger2Config,\
   com.phlink.core.config.redis.RedissonConfig,\
   com.phlink.core.config.jackson.JacksonConfig,\
@@ -24,6 +25,7 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.security.permission.MyAccessDecisionManager,\
   com.phlink.core.security.permission.MySecurityMetadataSource,\
   com.phlink.core.security.validator.ImageValidateFilter,\
+  com.phlink.core.security.validator.sms.SmsValidateFilter,\
   com.phlink.core.common.utils.IpInfoUtil,\
   com.phlink.core.util.SecurityUtil,\
   com.phlink.core.aop.GlobalExceptionHandler,\
