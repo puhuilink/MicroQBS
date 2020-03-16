@@ -6,7 +6,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.util.Assert;
-import sun.security.util.SecurityConstants;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +14,6 @@ import java.io.IOException;
 
 /**
  * 短信登录过滤器
- *
  */
 public class SmsAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
@@ -69,16 +67,16 @@ public class SmsAuthenticationFilter extends AbstractAuthenticationProcessingFil
         authRequest.setDetails(authenticationDetailsSource.buildDetails(request));
     }
 
-    public void setMobileParameter(String usernameParameter) {
-        Assert.hasText(usernameParameter, "Mobile parameter must not be empty or null");
-        this.mobileParameter = usernameParameter;
-    }
-
     public void setPostOnly(boolean postOnly) {
         this.postOnly = postOnly;
     }
 
     public final String getMobileParameter() {
         return mobileParameter;
+    }
+
+    public void setMobileParameter(String usernameParameter) {
+        Assert.hasText(usernameParameter, "Mobile parameter must not be empty or null");
+        this.mobileParameter = usernameParameter;
     }
 }

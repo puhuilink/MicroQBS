@@ -1,6 +1,8 @@
 package com.phlink.core.security;
 
 import cn.hutool.core.util.StrUtil;
+import com.phlink.core.common.enums.CommonResultInfo;
+import com.phlink.core.common.exception.BizException;
 import com.phlink.core.common.exception.LoginFailLimitException;
 import com.phlink.core.entity.User;
 import com.phlink.core.service.UserService;
@@ -9,6 +11,7 @@ import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.StringCodec;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -42,7 +45,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new SecurityUserDetails(user);
     }
 
-    public UserDetails loadUserByMobile(String mobile) throws UsernameNotFoundException {
+    public UserDetails loadUserByMobile(String mobile) {
 
         String flagKey = "loginFailFlag:" + mobile;
         RBucket<String> bucket = redissonClient.getBucket(flagKey, new StringCodec());

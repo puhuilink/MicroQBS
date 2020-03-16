@@ -1,12 +1,17 @@
 package com.phlink.core.security.validator.sms;
 
+import cn.hutool.core.util.StrUtil;
 import com.phlink.core.security.UserDetailsServiceImpl;
 import lombok.Data;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import java.util.ArrayList;
 
 @Data
 public class SmsAuthenticationProvider implements AuthenticationProvider {
@@ -16,10 +21,9 @@ public class SmsAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         SmsAuthenticationToken smsAuthenticationToken = (SmsAuthenticationToken) authentication;
         UserDetails userDetails = userDetailsService.loadUserByMobile((String) smsAuthenticationToken.getPrincipal());
-        if (userDetails == null) {
-            throw new InternalAuthenticationServiceException("未找到与该手机对应的用户");
+        if (StrUtil.isBlank(userDetails.getUsername())) {
+            throw new UsernameNotFoundException("用户信息不存在");
         }
-
         SmsAuthenticationToken authenticationToken = new SmsAuthenticationToken(userDetails, userDetails.getAuthorities());
         authenticationToken.setDetails(smsAuthenticationToken.getDetails());
         return authenticationToken;
@@ -28,7 +32,7 @@ public class SmsAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return SmsAuthenticationToken.class.isAssignableFrom(authentication);
+        return authentication.equals(SmsAuthenticationToken.class);
     }
 
 }

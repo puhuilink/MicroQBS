@@ -119,6 +119,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 // 图形验证码过滤器
                 .addFilterBefore(imageValidateFilter, UsernamePasswordAuthenticationFilter.class)
+                // 短信过滤器
                 .addFilterBefore(smsValidateFilter, UsernamePasswordAuthenticationFilter.class)
                 // 添加自定义权限过滤器
                 .addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class)

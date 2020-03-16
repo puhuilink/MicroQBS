@@ -20,9 +20,10 @@ public class SecurityUserDetails extends User implements UserDetails {
     private static final long serialVersionUID = 1L;
 
     public SecurityUserDetails(User user) {
-
-        if(user!=null) {
+        if (user != null) {
             this.setUsername(user.getUsername());
+            this.setMobile(user.getMobile());
+            this.setEmail(user.getEmail());
             this.setPassword(user.getPassword());
             this.setStatus(user.getStatus());
             this.setRoles(user.getRoles());
@@ -32,6 +33,7 @@ public class SecurityUserDetails extends User implements UserDetails {
 
     /**
      * 添加用户拥有的权限和角色
+     *
      * @return
      */
     @Override
@@ -40,11 +42,11 @@ public class SecurityUserDetails extends User implements UserDetails {
         List<GrantedAuthority> authorityList = new ArrayList<>();
         List<Permission> permissions = this.getPermissions();
         // 添加请求权限
-        if(permissions!=null&&permissions.size()>0){
+        if (permissions != null && permissions.size() > 0) {
             for (Permission permission : permissions) {
-                if(CommonConstant.PERMISSION_OPERATION.equals(permission.getType())
+                if (CommonConstant.PERMISSION_OPERATION.equals(permission.getType())
                         && StrUtil.isNotBlank(permission.getTitle())
-                        &&StrUtil.isNotBlank(permission.getPath())) {
+                        && StrUtil.isNotBlank(permission.getPath())) {
 
                     authorityList.add(new SimpleGrantedAuthority(permission.getTitle()));
                 }
@@ -52,9 +54,9 @@ public class SecurityUserDetails extends User implements UserDetails {
         }
         // 添加角色
         List<Role> roles = this.getRoles();
-        if(roles!=null&&roles.size()>0){
+        if (roles != null && roles.size() > 0) {
             roles.forEach(item -> {
-                if(StrUtil.isNotBlank(item.getName())){
+                if (StrUtil.isNotBlank(item.getName())) {
                     authorityList.add(new SimpleGrantedAuthority(item.getName()));
                 }
             });
@@ -64,6 +66,7 @@ public class SecurityUserDetails extends User implements UserDetails {
 
     /**
      * 账户是否过期
+     *
      * @return
      */
     @Override
@@ -74,6 +77,7 @@ public class SecurityUserDetails extends User implements UserDetails {
 
     /**
      * 是否禁用
+     *
      * @return
      */
     @Override
@@ -84,6 +88,7 @@ public class SecurityUserDetails extends User implements UserDetails {
 
     /**
      * 密码是否过期
+     *
      * @return
      */
     @Override
@@ -94,6 +99,7 @@ public class SecurityUserDetails extends User implements UserDetails {
 
     /**
      * 是否启用
+     *
      * @return
      */
     @Override

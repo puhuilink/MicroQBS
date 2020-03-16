@@ -50,34 +50,27 @@ public class SmsValidateFilter extends OncePerRequestFilter {
             }
         }
         if (flag) {
-
-            try (InputStream is = request.getInputStream()) {
-                Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-                SmsValidateVO validateVO = new Gson().fromJson(reader, SmsValidateVO.class);
-
-                if (StrUtil.isBlank(validateVO.getMobile()) || StrUtil.isBlank(validateVO.getCode())) {
-                    ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.INTERNAL_SERVER_ERROR, "请输入手机号和验证码"));
-                    return;
-                }
-
-                RBucket<String> bucket = redissonClient.getBucket(validateVO.getMobile(), new StringCodec());
-                String redisCode = bucket.get();
-                if (StrUtil.isBlank(redisCode)) {
-                    ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.INTERNAL_SERVER_ERROR, "验证码已过期，请重新获取"));
-                    return;
-                }
-
-                if (!redisCode.toLowerCase().equals(validateVO.getCode().toLowerCase())) {
-                    log.info("验证码错误：code:" + validateVO.getCode() + "，redisCode:" + redisCode);
-                    ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.INTERNAL_SERVER_ERROR, "验证码输入错误"));
-                    return;
-                }
-                // 已验证清除key
-                redissonClient.getKeys().delete(validateVO.getMobile());
-                chain.doFilter(request, response);
-            } catch (IOException e) {
-                e.printStackTrace();
+            String mobile = request.getParameter("mobile");
+            String code = request.getParameter("code");
+            if (StrUtil.isBlank(mobile) || StrUtil.isBlank(code)) {
+                ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.BODY_NOT_MATCH, "请输入手机号和验证码"));
+                return;
             }
+
+            RBucket<String> bucket = redissonClient.getBucket(mobile, new StringCodec());
+            String redisCode = bucket.get();
+            if (StrUtil.isBlank(redisCode)) {
+                ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.INTERNAL_SERVER_ERROR, "验证码已过期，请重新获取"));
+                return;
+            }
+
+            if (!redisCode.toLowerCase().equals(code.toLowerCase())) {
+                log.info("验证码错误：code:" + code + "，redisCode:" + redisCode);
+                ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.INTERNAL_SERVER_ERROR, "验证码输入错误"));
+                return;
+            }
+            // 已验证清除key
+            redissonClient.getKeys().delete(mobile);
             chain.doFilter(request, response);
             return;
         }
