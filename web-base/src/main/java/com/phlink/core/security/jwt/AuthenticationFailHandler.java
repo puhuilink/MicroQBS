@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.phlink.core.common.enums.CommonResultInfo;
 import com.phlink.core.common.utils.ResponseUtil;
 import com.phlink.core.config.properties.PhlinkTokenProperties;
+import com.phlink.core.security.exception.LoginFailLimitException;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
@@ -11,6 +12,7 @@ import org.redisson.client.codec.StringCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -35,7 +37,7 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
 
-        if (e instanceof UsernameNotFoundException || e instanceof BadCredentialsException) {
+        if (e instanceof UsernameNotFoundException || e instanceof BadCredentialsException || e instanceof InternalAuthenticationServiceException) {
             String username = request.getParameter("username");
             recordLoginTime(username);
             String key = "loginTimeLimit:" + username;
