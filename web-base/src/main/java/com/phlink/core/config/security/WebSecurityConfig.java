@@ -8,7 +8,7 @@ import com.phlink.core.security.jwt.AuthenticationSuccessHandler;
 import com.phlink.core.security.jwt.JWTAuthenticationFilter;
 import com.phlink.core.security.jwt.RestAccessDeniedHandler;
 import com.phlink.core.security.permission.MyFilterSecurityInterceptor;
-import com.phlink.core.security.validator.ImageValidateFilter;
+import com.phlink.core.security.validator.image.ImageValidateFilter;
 import com.phlink.core.security.validator.sms.SmsValidateFilter;
 import com.phlink.core.util.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -67,6 +67,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private SmsValidateFilter smsValidateFilter;
     @Autowired
     private SmsAuthenticationConfig smsAuthenticationConfig;
+    @Autowired
+    private UsernameAuthenticationConfig usernameAuthenticationConfig;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -126,6 +128,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 添加JWT认证过滤器
                 .addFilter(new JWTAuthenticationFilter(authenticationManager(), tokenProperties, redissonClient, securityUtil))
                 .apply(smsAuthenticationConfig)
+                .and()
+                .apply(usernameAuthenticationConfig)
         ;
     }
 

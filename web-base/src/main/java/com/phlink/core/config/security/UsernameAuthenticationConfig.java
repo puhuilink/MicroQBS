@@ -3,8 +3,9 @@ package com.phlink.core.config.security;
 import com.phlink.core.security.UserDetailsServiceImpl;
 import com.phlink.core.security.jwt.AuthenticationFailHandler;
 import com.phlink.core.security.jwt.AuthenticationSuccessHandler;
-import com.phlink.core.security.validator.sms.SmsAuthenticationProvider;
 import com.phlink.core.security.validator.sms.SmsAuthenticationFilter;
+import com.phlink.core.security.validator.sms.SmsAuthenticationProvider;
+import com.phlink.core.security.validator.username.UsernameAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
@@ -14,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.stereotype.Component;
 
 @Component
-public class SmsAuthenticationConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
+public class UsernameAuthenticationConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
     @Autowired
     private AuthenticationSuccessHandler successHandler;
@@ -27,18 +28,14 @@ public class SmsAuthenticationConfig extends SecurityConfigurerAdapter<DefaultSe
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        SmsAuthenticationFilter smsAuthenticationFilter = new SmsAuthenticationFilter();
-        smsAuthenticationFilter.setAuthenticationSuccessHandler(successHandler);
-        smsAuthenticationFilter.setAuthenticationFailureHandler(failHandler);
-        smsAuthenticationFilter.setAuthenticationManager(http.getSharedObject(AuthenticationManager.class));
-        smsAuthenticationFilter.setFilterProcessesUrl("/login/mobile");
-        smsAuthenticationFilter.setPostOnly(true);
+        UsernameAuthenticationFilter filter = new UsernameAuthenticationFilter();
+        filter.setAuthenticationSuccessHandler(successHandler);
+        filter.setAuthenticationFailureHandler(failHandler);
+        filter.setAuthenticationManager(http.getSharedObject(AuthenticationManager.class));
+        filter.setFilterProcessesUrl("/login/username");
+        filter.setPostOnly(true);
 
-        SmsAuthenticationProvider smsAuthenticationProvider = new SmsAuthenticationProvider();
-        smsAuthenticationProvider.setUserDetailsService(userDetailsService);
-
-        http.authenticationProvider(smsAuthenticationProvider)
-                .addFilterAfter(smsAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class);
 
     }
 
