@@ -60,7 +60,7 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
         } else if (e instanceof DisabledException) {
             ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.FORBIDDEN, "账户被禁用，请联系管理员"));
         } else {
-            ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.INTERNAL_SERVER_ERROR, "登录失败，其他内部错误"));
+            ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.INTERNAL_SERVER_ERROR, e.getMessage()));
         }
     }
 
