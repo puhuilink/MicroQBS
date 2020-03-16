@@ -12,8 +12,12 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.redisson.api.RScript;
+import org.redisson.api.RedissonClient;
+import org.redisson.client.codec.StringCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
@@ -23,6 +27,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.lang.reflect.Method;
+import java.util.Collections;
 import java.util.Objects;
 
 
@@ -34,12 +39,10 @@ import java.util.Objects;
 @Component
 public class LimitAspect {
 
-    private final RedisTemplate<String, Serializable> limitRedisTemplate;
-
     @Autowired
-    public LimitAspect(RedisTemplate<String, Serializable> limitRedisTemplate) {
-        this.limitRedisTemplate = limitRedisTemplate;
-    }
+    private RedissonClient redissonClient;
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     @Pointcut("@annotation(com.phlink.core.common.annotation.Limit)")
     public void pointcut() {
@@ -69,12 +72,14 @@ public class LimitAspect {
             default:
                 key = StringUtils.upperCase(method.getName());
         }
-        ImmutableList<String> keys = ImmutableList.of(StringUtils.join(limitAnnotation.prefix() + "_", key, ip));
+        String keys = StringUtils.join(limitAnnotation.prefix() + "_", key, ip);
         String luaScript = buildLuaScript();
-        RedisScript<Number> redisScript = new DefaultRedisScript<>(luaScript, Number.class);
-        Number count = limitRedisTemplate.execute(redisScript, keys, limitCount, limitPeriod);
+        RScript script = redissonClient.getScript(StringCodec.INSTANCE);
+        Integer count = script.eval(RScript.Mode.READ_WRITE,
+                luaScript,
+                RScript.ReturnType.VALUE, Collections.singletonList(keys), limitCount, limitPeriod);
         log.info("IP:{} 第 {} 次访问key为 {}，描述为 [{}] 的接口", ip, count, keys, name);
-        if (count != null && count.intValue() <= limitCount) {
+        if (count != null && count <= limitCount) {
             return point.proceed();
         } else {
             throw new LimitAccessException();
