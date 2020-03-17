@@ -9,6 +9,8 @@
         <module>web-common</module>
         <module>web-demo</module>
         <module>web-file-service</module>
+        <module>sso-service</module>
+        <module>sso-client</module>
     </modules>
 
     <parent>
@@ -276,6 +278,11 @@
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
                 <version>4.5.11</version>
+            </dependency>
+            <dependency>
+                <groupId>org.keycloak</groupId>
+                <artifactId>keycloak-spring-boot-starter</artifactId>
+                <version>9.0.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
