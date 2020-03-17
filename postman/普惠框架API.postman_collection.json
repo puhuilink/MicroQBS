@@ -1,0 +1,709 @@
+{
+	"info": {
+		"_postman_id": "f3d2f5d0-7579-4caa-9b46-aaa2f23e9758",
+		"name": "快速开发框架测试",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "验证码第一步",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3d7ca32a-8fc6-44ef-98ed-338772d3dda0",
+						"exec": [
+							"var body = JSON.parse(responseBody);",
+							"if (body.result) {",
+							"  tests[\"存在验证码ID\"] = true;",
+							"  postman.setEnvironmentVariable(\"uuid\", body.result);",
+							"}",
+							"else {",
+							"  tests[\"存在验证码ID\"] = false;",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{local_url}}/common/captcha/init",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"common",
+						"captcha",
+						"init"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "画验证码",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local_url}}/common/captcha/draw/{{uuid}}",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"common",
+						"captcha",
+						"draw",
+						"{{uuid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "验证码登录",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ec3c0985-cf02-4e51-a343-1767ed714ecb",
+						"exec": [
+							"var body = JSON.parse(responseBody);",
+							"if (body.result) {",
+							"  tests[\"has accessToken\"] = true;",
+							"  postman.setEnvironmentVariable(\"accessToken\", body.result);",
+							"}",
+							"else {",
+							"  tests[\"has accessToken\"] = false;",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						},
+						{
+							"key": "code",
+							"value": "mqyx",
+							"type": "text"
+						},
+						{
+							"key": "captchaId",
+							"value": "{{uuid}}",
+							"type": "text"
+						},
+						{
+							"key": "saveLogin",
+							"value": "true",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local_url}}/login",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "用户名密码登录",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ec3c0985-cf02-4e51-a343-1767ed714ecb",
+						"exec": [
+							"var body = JSON.parse(responseBody);",
+							"if (body.result) {",
+							"  tests[\"has accessToken\"] = true;",
+							"  postman.setEnvironmentVariable(\"accessToken\", body.result);",
+							"}",
+							"else {",
+							"  tests[\"has accessToken\"] = false;",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"test\",\n\t\"password\": \"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local_url}}/login/username",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"login",
+						"username"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取手机验证码",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ec3c0985-cf02-4e51-a343-1767ed714ecb",
+						"exec": [
+							"var body = JSON.parse(responseBody);",
+							"if (body.result) {",
+							"  tests[\"has accessToken\"] = true;",
+							"  postman.setEnvironmentVariable(\"mobileCode\", body.result);",
+							"}",
+							"else {",
+							"  tests[\"has accessToken\"] = false;",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{local_url}}/common/captcha/initMobile/18782059038",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"common",
+						"captcha",
+						"initMobile",
+						"18782059038"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "手机验证码登录",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ec3c0985-cf02-4e51-a343-1767ed714ecb",
+						"exec": [
+							"var body = JSON.parse(responseBody);",
+							"if (body.result) {",
+							"  tests[\"has accessToken\"] = true;",
+							"  postman.setEnvironmentVariable(\"accessToken\", body.result);",
+							"}",
+							"else {",
+							"  tests[\"has accessToken\"] = false;",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "mobile",
+							"value": "18782059038",
+							"type": "text"
+						},
+						{
+							"key": "code",
+							"value": "{{mobileCode}}",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local_url}}/login/mobile",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"login",
+						"mobile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "用户名密码登录",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ec3c0985-cf02-4e51-a343-1767ed714ecb",
+						"exec": [
+							"var body = JSON.parse(responseBody);",
+							"if (body.result) {",
+							"  tests[\"has accessToken\"] = true;",
+							"  postman.setEnvironmentVariable(\"accessToken\", body.result);",
+							"}",
+							"else {",
+							"  tests[\"has accessToken\"] = false;",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local_url}}/login/username",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"login",
+						"username"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "登录用户信息",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "accessToken",
+						"value": "{{accessToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{local_url}}/manage/user/info",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"manage",
+						"user",
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "用户菜单",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "accessToken",
+						"type": "text",
+						"value": "{{accessToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{local_url}}/manage/permission/userList",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"manage",
+						"permission",
+						"userList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "所有菜单",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "accessToken",
+						"type": "text",
+						"value": "{{accessToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{local_url}}/manage/permission/allList",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"manage",
+						"permission",
+						"allList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "菜单添加",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "accessToken",
+						"type": "text",
+						"value": "{{accessToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{local_url}}/manage/permission/add",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"manage",
+						"permission",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "菜单编辑",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "accessToken",
+						"type": "text",
+						"value": "{{accessToken}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local_url}}/manage/permission/update",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"manage",
+						"permission",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "欢迎",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "accessToken",
+						"type": "text",
+						"value": "{{accessToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{local_url}}/welcome",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"welcome"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "字典列表",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "accessToken",
+						"type": "text",
+						"value": "{{accessToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{local_url}}/manage/dict/all",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"manage",
+						"dict",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "字典数据分页列表",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "accessToken",
+						"type": "text",
+						"value": "{{accessToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{local_url}}/manage/dictData/page?pageNumber=1&pageSize=2&sort=create_time&order=asc",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"manage",
+						"dictData",
+						"page"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "2"
+						},
+						{
+							"key": "sort",
+							"value": "create_time"
+						},
+						{
+							"key": "order",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "968a545a-7b1a-47db-8db0-aa6cc90fbe23",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "38db58ec-aec2-4428-9bf2-21eaef65e05e",
+				"type": "text/javascript",
+				"exec": [
+					"tests[\"Status code is 200\"] = responseCode.code === 200;",
+					"",
+					"var jsonData = JSON.parse(responseBody);",
+					"tests[\"API result code is 0\"] = jsonData.code === \"200\";",
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
