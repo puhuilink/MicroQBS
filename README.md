@@ -36,3 +36,6 @@ web-base的使用示例
 
 ## 整体规划
 ![整体规划](https://github.com/Sevncz/phlink-common-framework/blob/master/doc/base2.png)
+
+## 文档
+见wiki: https://github.com/Sevncz/phlink-common-framework/wiki
