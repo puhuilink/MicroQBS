@@ -3,6 +3,8 @@ package com.phlink.demo.controller;
 import com.google.gson.Gson;
 import com.phlink.demo.entity.MsgLog;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
