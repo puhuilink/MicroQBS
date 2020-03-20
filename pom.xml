@@ -9,8 +9,6 @@
         <module>web-common</module>
         <module>web-demo</module>
         <module>web-file-service</module>
-        <module>sso-service</module>
-        <module>sso-client</module>
     </modules>
 
     <parent>
