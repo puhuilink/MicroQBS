@@ -9,6 +9,7 @@
         <module>web-common</module>
         <module>web-demo</module>
         <module>web-file-service</module>
+        <module>demo-spark</module>
     </modules>
 
     <parent>
