@@ -32,7 +32,6 @@ public class RedisLockAspect {
         // do nothing
     }
 
-
     @Around("pointcut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
         Object result = null;
@@ -42,13 +41,13 @@ public class RedisLockAspect {
         DistributedLock distributedLockAnnotation = method.getAnnotation(DistributedLock.class);
         RLock lock = redissonClient.getLock(distributedLockAnnotation.key());
         try {
-            boolean islock = lock.tryLock(distributedLockAnnotation.sleep(), distributedLockAnnotation.expire()*1000, TimeUnit.MILLISECONDS);
-            if(islock) {
+            boolean islock = lock.tryLock(distributedLockAnnotation.sleep(), distributedLockAnnotation.expire() * 1000, TimeUnit.MILLISECONDS);
+            if (islock) {
                 result = point.proceed();
-            }else{
+            } else {
                 log.info("[RedisLock] 获取锁{}失败", distributedLockAnnotation.key());
             }
-        }finally {
+        } finally {
             lock.unlock();
         }
         return result;

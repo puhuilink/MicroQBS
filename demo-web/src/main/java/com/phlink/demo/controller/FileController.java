@@ -32,7 +32,7 @@ public class FileController {
         }
         //获取文件名称、后缀名、大小
         String fileName = file.getOriginalFilename();
-        if(StringUtils.isBlank(fileName)) {
+        if (StringUtils.isBlank(fileName)) {
             throw new BizException(ResultCode.BODY_NOT_MATCH, "文件名为空, 请检查!!");
         }
         String[] names = fileName.split("\\.");
@@ -55,7 +55,7 @@ public class FileController {
     public Boolean deleteFile(@RequestParam("path") String path) {
         try {
             fdfsStorageService.deleteFile(path);
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new BizException(ResultCode.INTERNAL_SERVER_ERROR, e.getMessage());
         }
         return true;

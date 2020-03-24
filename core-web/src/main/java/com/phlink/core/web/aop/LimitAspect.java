@@ -1,9 +1,9 @@
 package com.phlink.core.web.aop;
 
-import com.phlink.core.web.base.exception.LimitAccessException;
-import com.phlink.core.web.base.utils.IPUtil;
 import com.phlink.core.web.base.annotation.Limit;
 import com.phlink.core.web.base.entity.LimitType;
+import com.phlink.core.web.base.exception.LimitAccessException;
+import com.phlink.core.web.base.utils.IPUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -71,8 +71,8 @@ public class LimitAspect {
         String luaScript = buildLuaScript();
         RScript script = redissonClient.getScript(StringCodec.INSTANCE);
         Integer count = script.eval(RScript.Mode.READ_WRITE,
-                luaScript,
-                RScript.ReturnType.VALUE, Collections.singletonList(keys), limitCount, limitPeriod);
+            luaScript,
+            RScript.ReturnType.VALUE, Collections.singletonList(keys), limitCount, limitPeriod);
         log.info("IP:{} 第 {} 次访问key为 {}，描述为 [{}] 的接口", ip, count, keys, name);
         if (count != null && count <= limitCount) {
             return point.proceed();
@@ -89,15 +89,15 @@ public class LimitAspect {
      */
     private String buildLuaScript() {
         return "local c" +
-                "\nc = redis.call('get',KEYS[1])" +
-                "\nif c and tonumber(c) > tonumber(ARGV[1]) then" +
-                "\nreturn c;" +
-                "\nend" +
-                "\nc = redis.call('incr',KEYS[1])" +
-                "\nif tonumber(c) == 1 then" +
-                "\nredis.call('expire',KEYS[1],ARGV[2])" +
-                "\nend" +
-                "\nreturn c;";
+            "\nc = redis.call('get',KEYS[1])" +
+            "\nif c and tonumber(c) > tonumber(ARGV[1]) then" +
+            "\nreturn c;" +
+            "\nend" +
+            "\nc = redis.call('incr',KEYS[1])" +
+            "\nif tonumber(c) == 1 then" +
+            "\nredis.call('expire',KEYS[1],ARGV[2])" +
+            "\nend" +
+            "\nreturn c;";
     }
 
 }

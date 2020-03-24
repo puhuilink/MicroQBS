@@ -44,17 +44,17 @@ public class HttpClientConfig {
 
     // Determines the timeout in milliseconds until a connection is established.
     private static final int CONNECT_TIMEOUT = 30000;
-     
+
     // The timeout when requesting a connection from the connection manager.
     private static final int REQUEST_TIMEOUT = 30000;
-     
+
     // The timeout for waiting for data
     private static final int SOCKET_TIMEOUT = 60000;
- 
+
     private static final int MAX_TOTAL_CONNECTIONS = 50;
     private static final int DEFAULT_KEEP_ALIVE_TIME_MILLIS = 20 * 1000;
     private static final int CLOSE_IDLE_CONNECTION_WAIT_TIME_SECS = 30;
- 
+
     @Bean
     public PoolingHttpClientConnectionManager poolingConnectionManager() {
 
@@ -80,29 +80,29 @@ public class HttpClientConfig {
         } catch (KeyManagementException | NoSuchAlgorithmException e) {
             log.error("Pooling Connection Manager Initialisation failure because of " + e.getMessage(), e);
         }
- 
+
         Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder
-                .<ConnectionSocketFactory>create().register("https", sslsf)
-                .register("http", new PlainConnectionSocketFactory())
-                .build();
- 
+            .<ConnectionSocketFactory>create().register("https", sslsf)
+            .register("http", new PlainConnectionSocketFactory())
+            .build();
+
         PoolingHttpClientConnectionManager poolingConnectionManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
         poolingConnectionManager.setMaxTotal(MAX_TOTAL_CONNECTIONS);
         return poolingConnectionManager;
     }
- 
+
     @Bean
     public ConnectionKeepAliveStrategy connectionKeepAliveStrategy() {
         return new ConnectionKeepAliveStrategy() {
             @Override
             public long getKeepAliveDuration(HttpResponse response, HttpContext context) {
                 HeaderElementIterator it = new BasicHeaderElementIterator
-                        (response.headerIterator(HTTP.CONN_KEEP_ALIVE));
+                    (response.headerIterator(HTTP.CONN_KEEP_ALIVE));
                 while (it.hasNext()) {
                     HeaderElement he = it.nextElement();
                     String param = he.getName();
                     String value = he.getValue();
- 
+
                     if (value != null && param.equalsIgnoreCase("timeout")) {
                         return Long.parseLong(value) * 1000;
                     }
@@ -111,21 +111,21 @@ public class HttpClientConfig {
             }
         };
     }
- 
+
     @Bean
     public CloseableHttpClient httpClient() {
         RequestConfig requestConfig = RequestConfig.custom()
-                .setConnectionRequestTimeout(REQUEST_TIMEOUT)
-                .setConnectTimeout(CONNECT_TIMEOUT)
-                .setSocketTimeout(SOCKET_TIMEOUT).build();
- 
+            .setConnectionRequestTimeout(REQUEST_TIMEOUT)
+            .setConnectTimeout(CONNECT_TIMEOUT)
+            .setSocketTimeout(SOCKET_TIMEOUT).build();
+
         return HttpClients.custom()
-                .setDefaultRequestConfig(requestConfig)
-                .setConnectionManager(poolingConnectionManager())
-                .setKeepAliveStrategy(connectionKeepAliveStrategy())
-                .build();
+            .setDefaultRequestConfig(requestConfig)
+            .setConnectionManager(poolingConnectionManager())
+            .setKeepAliveStrategy(connectionKeepAliveStrategy())
+            .build();
     }
-     
+
     @Bean
     public Runnable idleConnectionMonitor(final PoolingHttpClientConnectionManager connectionManager) {
         return new Runnable() {

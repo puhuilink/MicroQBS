@@ -28,7 +28,7 @@ public class GlobalResultHandler implements ResponseBodyAdvice {
             return ResultUtil.data(body);
         }
         if (body == null) {
-            if(returnType.getParameterType().equals(Result.class)) {
+            if (returnType.getParameterType().equals(Result.class)) {
                 return ResultUtil.success("OK");
             }
             try {

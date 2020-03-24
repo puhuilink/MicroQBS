@@ -15,7 +15,7 @@ public final class JavaStructuredKafkaWordCount {
     public static void main(String[] args) throws Exception {
         if (args.length < ARGS_LENGTH) {
             System.err.println("Usage: JavaStructuredKafkaWordCount <bootstrap-servers> " +
-                    "<subscribe-type> <topics>");
+                "<subscribe-type> <topics>");
             System.exit(1);
         }
 
@@ -24,28 +24,28 @@ public final class JavaStructuredKafkaWordCount {
         String topics = args[2];
 
         SparkSession spark = SparkSession
-                .builder()
-                .appName("JavaStructuredKafkaWordCount")
-                .master("local[*]")
-                .getOrCreate();
+            .builder()
+            .appName("JavaStructuredKafkaWordCount")
+            .master("local[*]")
+            .getOrCreate();
 
         Dataset<String> lines = spark
-                .readStream()
-                .format("kafka")
-                .option("kafka.bootstrap.servers", bootstrapServers)
-                .option(subscribeType, topics)
-                .load()
-                .selectExpr("CAST(value AS STRING)")
-                .as(Encoders.STRING());
+            .readStream()
+            .format("kafka")
+            .option("kafka.bootstrap.servers", bootstrapServers)
+            .option(subscribeType, topics)
+            .load()
+            .selectExpr("CAST(value AS STRING)")
+            .as(Encoders.STRING());
 
         Dataset<Row> wordCounts = lines.flatMap(
-                (FlatMapFunction<String, String>) x -> Arrays.asList(x.split("\\s+")).iterator(),
-                Encoders.STRING()).groupBy("value").count();
+            (FlatMapFunction<String, String>) x -> Arrays.asList(x.split("\\s+")).iterator(),
+            Encoders.STRING()).groupBy("value").count();
 
         StreamingQuery query = wordCounts.writeStream()
-                .outputMode("complete")
-                .format("console")
-                .start();
+            .outputMode("complete")
+            .format("console")
+            .start();
 
         query.awaitTermination();
     }

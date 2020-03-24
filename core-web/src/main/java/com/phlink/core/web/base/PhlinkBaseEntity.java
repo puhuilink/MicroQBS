@@ -1,6 +1,9 @@
 package com.phlink.core.web.base;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -9,14 +12,14 @@ import com.phlink.core.web.base.utils.SnowFlakeUtil;
 import com.phlink.core.web.base.validation.tag.OnCheckID;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.springframework.data.annotation.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
-@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
 public class PhlinkBaseEntity {
     @Id
     @TableId

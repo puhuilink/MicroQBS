@@ -105,10 +105,10 @@ public class GlobalExceptionHandler {
         log.error("参数错误，{}", e.getMessage());
         //Get all errors
         List<String> errors = e.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .map(x -> x.getField() + x.getDefaultMessage())
-                .collect(Collectors.toList());
+            .getFieldErrors()
+            .stream()
+            .map(x -> x.getField() + x.getDefaultMessage())
+            .collect(Collectors.toList());
         return ResultUtil.error(ResultCode.BODY_NOT_MATCH.getCode(), String.join(";", errors));
     }
 

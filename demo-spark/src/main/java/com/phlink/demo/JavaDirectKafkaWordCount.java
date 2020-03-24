@@ -24,9 +24,9 @@ public class JavaDirectKafkaWordCount {
     public static void main(String[] args) throws InterruptedException {
         if (args.length < ARGS_LENGTH) {
             System.err.println("Usage: JavaDirectKafkaWordCount <brokers> <groupId> <topics>\n" +
-                    "  <brokers> is a list of one or more Kafka brokers\n" +
-                    "  <groupId> is a consumer group name to consume from topics\n" +
-                    "  <topics> is a list of one or more kafka topics to consume from\n\n");
+                "  <brokers> is a list of one or more Kafka brokers\n" +
+                "  <groupId> is a consumer group name to consume from topics\n" +
+                "  <topics> is a list of one or more kafka topics to consume from\n\n");
             System.exit(1);
         }
 
@@ -45,15 +45,15 @@ public class JavaDirectKafkaWordCount {
         kafkaParams.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 
         JavaInputDStream<ConsumerRecord<String, String>> messages = KafkaUtils.createDirectStream(
-                jssc,
-                LocationStrategies.PreferConsistent(),
-                ConsumerStrategies.Subscribe(topicsSet, kafkaParams));
+            jssc,
+            LocationStrategies.PreferConsistent(),
+            ConsumerStrategies.Subscribe(topicsSet, kafkaParams));
 
         JavaDStream<String> lines = messages.map(ConsumerRecord::value);
 
         JavaDStream<String> words = lines.flatMap(x -> Arrays.asList(SPACE.split(x)).iterator());
         JavaPairDStream<String, Integer> wordCounts = words.mapToPair(s -> new Tuple2<>(s, 1))
-                .reduceByKey((i1, i2) -> i1 + i2);
+            .reduceByKey((i1, i2) -> i1 + i2);
 
         wordCounts.print();
 
