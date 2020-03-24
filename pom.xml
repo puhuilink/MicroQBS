@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <modules>
-        <module>core-web</module>
         <module>core-base</module>
+        <module>core-web</module>
         <module>module-file</module>
         <module>module-proto</module>
         <module>service-code-generator</module>
@@ -17,7 +17,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.12.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
 
     <groupId>com.phlink.core</groupId>
@@ -30,12 +30,14 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <mybatis-plus.version>3.3.0</mybatis-plus.version>
+        <springboot.version>2.1.12.RELEASE</springboot.version>
         <netty-socketio.version>1.7.17</netty-socketio.version>
         <redisson.version>3.11.1</redisson.version>
         <swagger.version>2.9.2</swagger.version>
         <postgres.version>42.2.5</postgres.version>
         <grpc.version>1.27.1</grpc.version>
         <commons-lang3.version>3.9</commons-lang3.version>
+        <spring-admin.version>2.1.0</spring-admin.version>
     </properties>
 
     <dependencyManagement>
@@ -68,16 +70,17 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-actuator</artifactId>
+                <version>${springboot.version}</version>
             </dependency>
             <dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-starter-server</artifactId>
-                <version>2.1.0</version>
+                <version>${spring-admin.version}</version>
             </dependency>
             <dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-starter-client</artifactId>
-                <version>2.1.0</version>
+                <version>${spring-admin.version}</version>
             </dependency>
             <!-- 动态数据源 -->
             <dependency>
@@ -143,12 +146,6 @@
                 <artifactId>ip2region</artifactId>
                 <version>1.7.2</version>
             </dependency>
-            <!-- jwt
-            <dependency>
-                <groupId>com.auth0</groupId>
-                <artifactId>java-jwt</artifactId>
-                <version>3.4.1</version>
-            </dependency>-->
             <!-- JWT -->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
@@ -156,11 +153,11 @@
                 <version>0.9.1</version>
             </dependency>
             <!-- grpc -->
-            <dependency>
-                <groupId>io.grpc</groupId>
-                <artifactId>grpc-netty-shaded</artifactId>
-                <version>${grpc.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>io.grpc</groupId>-->
+<!--                <artifactId>grpc-netty-shaded</artifactId>-->
+<!--                <version>${grpc.version}</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>io.grpc</groupId>
                 <artifactId>grpc-protobuf</artifactId>
