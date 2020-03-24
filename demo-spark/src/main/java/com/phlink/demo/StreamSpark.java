@@ -2,7 +2,6 @@ package com.phlink.demo;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.StorageLevels;
-import org.apache.spark.streaming.Duration;
 import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaPairDStream;
@@ -14,12 +13,12 @@ import java.util.Arrays;
 import java.util.regex.Pattern;
 
 public class StreamSpark {
-    private static final Pattern SPACE = Pattern.compile(" ");
     public static final String appName = "JavaNetworkWordCount";
     public static final String master = "local[*]";
     public static final SparkConf conf;
     public static final JavaStreamingContext jssc;
     public static final String localFile = "/Users/wen/dev/phlink-common-framework/demo-spark/data/hello.txt";
+    private static final Pattern SPACE = Pattern.compile(" ");
 
     static {
         conf = new SparkConf().setAppName(appName).setMaster(master);
