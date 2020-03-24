@@ -36,8 +36,6 @@ public class LimitAspect {
 
     @Autowired
     private RedissonClient redissonClient;
-    @Autowired
-    private StringRedisTemplate redisTemplate;
 
     @Pointcut("@annotation(com.phlink.core.web.base.annotation.Limit)")
     public void pointcut() {
