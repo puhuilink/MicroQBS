@@ -11,5 +11,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SystemLogTrace {
     String description() default "";
+
     LogType type() default LogType.OPERATION;
 }

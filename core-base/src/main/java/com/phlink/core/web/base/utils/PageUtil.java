@@ -55,6 +55,7 @@ public class PageUtil {
 
     /**
      * List 手动分页
+     *
      * @param page
      * @param list
      * @return
@@ -64,22 +65,22 @@ public class PageUtil {
         int pageNumber = page.getPageNumber() - 1;
         int pageSize = page.getPageSize();
 
-        if(pageNumber<0){
+        if (pageNumber < 0) {
             pageNumber = 0;
         }
-        if(pageSize<1){
+        if (pageSize < 1) {
             pageSize = 10;
         }
-        if(pageSize>100){
+        if (pageSize > 100) {
             pageSize = 100;
         }
 
         int fromIndex = pageNumber * pageSize;
         int toIndex = pageNumber * pageSize + pageSize;
 
-        if(fromIndex > list.size()){
+        if (fromIndex > list.size()) {
             return new ArrayList();
-        } else if(toIndex >= list.size()) {
+        } else if (toIndex >= list.size()) {
             return list.subList(fromIndex, list.size());
         } else {
             return list.subList(fromIndex, toIndex);

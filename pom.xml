@@ -38,6 +38,11 @@
         <grpc.version>1.27.1</grpc.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <spring-admin.version>2.1.0</spring-admin.version>
+
+
+        <air.main.basedir>${project.basedir}</air.main.basedir>
+        <air.check.fail-checkstyle>true</air.check.fail-checkstyle>
+        <air.check.skip-checkstyle>false</air.check.skip-checkstyle>
     </properties>
 
     <dependencyManagement>
@@ -153,11 +158,11 @@
                 <version>0.9.1</version>
             </dependency>
             <!-- grpc -->
-<!--            <dependency>-->
-<!--                <groupId>io.grpc</groupId>-->
-<!--                <artifactId>grpc-netty-shaded</artifactId>-->
-<!--                <version>${grpc.version}</version>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>io.grpc</groupId>-->
+            <!--                <artifactId>grpc-netty-shaded</artifactId>-->
+            <!--                <version>${grpc.version}</version>-->
+            <!--            </dependency>-->
             <dependency>
                 <groupId>io.grpc</groupId>
                 <artifactId>grpc-protobuf</artifactId>

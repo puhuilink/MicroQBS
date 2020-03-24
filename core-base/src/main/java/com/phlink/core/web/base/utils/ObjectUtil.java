@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class ObjectUtil {
 
-    public static String mapToString(Map<String, String[]> paramMap){
+    public static String mapToString(Map<String, String[]> paramMap) {
 
         if (paramMap == null) {
             return "";
@@ -20,12 +20,12 @@ public class ObjectUtil {
             String key = param.getKey();
             String paramValue = (param.getValue() != null && param.getValue().length > 0 ? param.getValue()[0] : "");
             String obj = StrUtil.endWithIgnoreCase(param.getKey(), "password") ? "******" : paramValue;
-            params.put(key,obj);
+            params.put(key, obj);
         }
         return new Gson().toJson(params);
     }
 
-    public static String mapToStringAll(Map<String, String[]> paramMap){
+    public static String mapToStringAll(Map<String, String[]> paramMap) {
 
         if (paramMap == null) {
             return "";
@@ -45,7 +45,7 @@ public class ObjectUtil {
         if (bean != null) {
             BeanMap beanMap = BeanMap.create(bean);
             for (Object key : beanMap.keySet()) {
-                map.put(key+"", beanMap.get(key));
+                map.put(key + "", beanMap.get(key));
             }
         }
         return map;

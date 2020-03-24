@@ -47,7 +47,8 @@ public class DateFormatUtil {
 
     /**
      * 将日期格式的字符串转换成指定格式的日期
-     * @param pattern 日期格式
+     *
+     * @param pattern    日期格式
      * @param dateString 日期字符串
      * @return
      * @throws ParseException
@@ -58,6 +59,7 @@ public class DateFormatUtil {
 
     /**
      * 将日期格式的字符串根据正则转换成相应格式的日期
+     *
      * @param dateString 日期字符串
      * @return
      * @throws ParseException
@@ -65,22 +67,22 @@ public class DateFormatUtil {
     public static Date pareDate(@NotNull String dateString) throws ParseException {
         String source = dateString.trim();
         if (StringUtils.isNotBlank(source)) {
-            if(source.matches(DATE_REGEX_YYYYMM)){
+            if (source.matches(DATE_REGEX_YYYYMM)) {
                 return ISO_ON_MONTH_FORMAT.parse(source);
-            }else if(source.matches(DATE_REGEX_YYYYMMDD)){
+            } else if (source.matches(DATE_REGEX_YYYYMMDD)) {
                 return ISO_ON_DATE_FORMAT.parse(source);
-            }else if(source.matches(DATE_REGEX_YYYYMMDDHHMM)){
+            } else if (source.matches(DATE_REGEX_YYYYMMDDHHMM)) {
                 return DEFAULT_ON_MINUTE_FORMAT.parse(source);
-            }else if(source.matches(DATE_REGEX_YYYYMMDDHHMMSS)){
+            } else if (source.matches(DATE_REGEX_YYYYMMDDHHMMSS)) {
                 return DEFAULT_ON_SECOND_FORMAT.parse(source);
-            }else if(source.matches(DATE_REGEX_YYYYMMDD_T_HHMMSS_Z)){
+            } else if (source.matches(DATE_REGEX_YYYYMMDD_T_HHMMSS_Z)) {
                 return ISO_ON_SECOND_FORMAT.parse(source);
-            }else if(source.matches(DATE_REGEX_YYYYMMDD_T_HHMMSS_SSS_Z)){
+            } else if (source.matches(DATE_REGEX_YYYYMMDD_T_HHMMSS_SSS_Z)) {
                 return ISO_FORMAT.parse(source);
-            }else if(source.matches(DATE_REGEX_SECOND_DOT_NANOSECOND)){
+            } else if (source.matches(DATE_REGEX_SECOND_DOT_NANOSECOND)) {
                 String[] split = source.split(SYMBOL_DOT);
                 return Date.from(Instant.ofEpochSecond(Long.parseLong(split[0]), Long.parseLong(split[1])));
-            }else {
+            } else {
                 throw new IllegalArgumentException("Invalid date value '" + source + "'");
             }
         }
