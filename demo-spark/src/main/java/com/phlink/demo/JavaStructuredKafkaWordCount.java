@@ -38,7 +38,7 @@ public final class JavaStructuredKafkaWordCount {
       .as(Encoders.STRING());
 
     Dataset<Row> wordCounts = lines.flatMap(
-        (FlatMapFunction<String, String>) x -> Arrays.asList(x.split(" ")).iterator(),
+        (FlatMapFunction<String, String>) x -> Arrays.asList(x.split("\\s+")).iterator(),
         Encoders.STRING()).groupBy("value").count();
 
     StreamingQuery query = wordCounts.writeStream()
