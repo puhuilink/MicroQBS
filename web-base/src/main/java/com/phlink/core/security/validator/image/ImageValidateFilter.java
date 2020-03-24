@@ -1,7 +1,7 @@
 package com.phlink.core.security.validator.image;
 
 import cn.hutool.core.util.StrUtil;
-import com.phlink.core.common.enums.CommonResultInfo;
+import com.phlink.core.common.enums.ResultCode;
 import com.phlink.core.common.utils.ResponseUtil;
 import com.phlink.core.config.properties.CaptchaProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -51,20 +51,20 @@ public class ImageValidateFilter extends OncePerRequestFilter {
             String captchaId = request.getParameter("captchaId");
             String code = request.getParameter("code");
             if (StrUtil.isBlank(captchaId) || StrUtil.isBlank(code)) {
-                ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.INTERNAL_SERVER_ERROR, "请传入图形验证码所需参数captchaId或code"));
+                ResponseUtil.out(response, ResponseUtil.resultMap(false, ResultCode.INTERNAL_SERVER_ERROR, "请传入图形验证码所需参数captchaId或code"));
                 return;
             }
 
             RBucket<String> bucket = redissonClient.getBucket(captchaId, new StringCodec());
             String redisCode = bucket.get();
             if (StrUtil.isBlank(redisCode)) {
-                ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.INTERNAL_SERVER_ERROR, "验证码已过期，请重新获取"));
+                ResponseUtil.out(response, ResponseUtil.resultMap(false, ResultCode.INTERNAL_SERVER_ERROR, "验证码已过期，请重新获取"));
                 return;
             }
 
             if (!redisCode.toLowerCase().equals(code.toLowerCase())) {
                 log.info("验证码错误：code:" + code + "，redisCode:" + redisCode);
-                ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.INTERNAL_SERVER_ERROR, "图形验证码输入错误"));
+                ResponseUtil.out(response, ResponseUtil.resultMap(false, ResultCode.INTERNAL_SERVER_ERROR, "图形验证码输入错误"));
                 return;
             }
             // 已验证清除key

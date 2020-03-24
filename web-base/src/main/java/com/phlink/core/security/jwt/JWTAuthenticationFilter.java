@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.phlink.core.common.constant.SecurityConstant;
-import com.phlink.core.common.enums.CommonResultInfo;
+import com.phlink.core.common.enums.ResultCode;
 import com.phlink.core.common.utils.ResponseUtil;
 import com.phlink.core.common.vo.TokenUser;
 import com.phlink.core.config.properties.PhlinkTokenProperties;
@@ -89,7 +89,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             // redis
             RBucket<String> bucket = redissonClient.getBucket(SecurityConstant.TOKEN_PRE + header, new StringCodec());
             if (bucket == null) {
-                ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.SIGNATURE_NOT_MATCH, "登录已失效，请重新登录"));
+                ResponseUtil.out(response, ResponseUtil.resultMap(false, ResultCode.SIGNATURE_NOT_MATCH, "登录已失效，请重新登录"));
                 return null;
             }
             String v = bucket.get();
@@ -141,10 +141,10 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                     authorities = securityUtil.getCurrUserPerms(username);
                 }
             } catch (ExpiredJwtException e) {
-                ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.FORBIDDEN, "登录已失效，请重新登录"));
+                ResponseUtil.out(response, ResponseUtil.resultMap(false, ResultCode.FORBIDDEN, "登录已失效，请重新登录"));
             } catch (Exception e) {
                 log.error(e.toString());
-                ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.INTERNAL_SERVER_ERROR, "解析token错误"));
+                ResponseUtil.out(response, ResponseUtil.resultMap(false, ResultCode.INTERNAL_SERVER_ERROR, "解析token错误"));
             }
         }
 

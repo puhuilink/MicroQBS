@@ -1,7 +1,7 @@
 package com.phlink.demo.controller;
 
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
-import com.phlink.core.common.enums.CommonResultInfo;
+import com.phlink.core.common.enums.ResultCode;
 import com.phlink.core.common.exception.BizException;
 import com.phlink.file.service.FdfsStorageService;
 import io.swagger.annotations.ApiOperation;
@@ -28,12 +28,12 @@ public class FileController {
     @ApiOperation(value = "上传一个文件", notes = "上传一个文件", httpMethod = "POST")
     public String singleFile(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws BizException {
         if (file.isEmpty()) {
-            throw new BizException(CommonResultInfo.BODY_NOT_MATCH, "上传的文件大小为空,请检查!!");
+            throw new BizException(ResultCode.BODY_NOT_MATCH, "上传的文件大小为空,请检查!!");
         }
         //获取文件名称、后缀名、大小
         String fileName = file.getOriginalFilename();
         if(StringUtils.isBlank(fileName)) {
-            throw new BizException(CommonResultInfo.BODY_NOT_MATCH, "文件名为空, 请检查!!");
+            throw new BizException(ResultCode.BODY_NOT_MATCH, "文件名为空, 请检查!!");
         }
         String[] names = fileName.split("\\.");
         String suffixName = names[names.length - 1];
@@ -45,7 +45,7 @@ public class FileController {
             path = storePath.getFullPath();
         } catch (IOException e) {
             log.error("上传的文件异常", e);
-            throw new BizException(CommonResultInfo.INTERNAL_SERVER_ERROR, "上传的文件异常!!");
+            throw new BizException(ResultCode.INTERNAL_SERVER_ERROR, "上传的文件异常!!");
         }
         return path;
     }
@@ -56,7 +56,7 @@ public class FileController {
         try {
             fdfsStorageService.deleteFile(path);
         }catch (Exception e) {
-            throw new BizException(CommonResultInfo.INTERNAL_SERVER_ERROR, e.getMessage());
+            throw new BizException(ResultCode.INTERNAL_SERVER_ERROR, e.getMessage());
         }
         return true;
     }

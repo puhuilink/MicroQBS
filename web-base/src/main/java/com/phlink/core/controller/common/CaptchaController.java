@@ -1,11 +1,9 @@
 package com.phlink.core.controller.common;
 
 import cn.hutool.core.util.StrUtil;
-import com.phlink.core.common.enums.CommonResultInfo;
+import com.phlink.core.common.enums.ResultCode;
 import com.phlink.core.common.exception.BizException;
 import com.phlink.core.common.utils.CreateVerifyCode;
-import com.phlink.core.common.utils.ResultUtil;
-import com.phlink.core.common.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.redisson.api.RBucket;
@@ -62,7 +60,7 @@ public class CaptchaController {
         RBucket<String> bucket = redissonClient.getBucket(captchaId, new StringCodec());
         String code = bucket.get();
         if(StrUtil.isBlank(code)) {
-            throw new BizException(CommonResultInfo.FAIL, "验证码ID失效");
+            throw new BizException(ResultCode.FAIL, "验证码ID失效");
         }
         CreateVerifyCode vCode = new CreateVerifyCode(116, 36, 4, 10, code);
         response.setContentType("image/png");

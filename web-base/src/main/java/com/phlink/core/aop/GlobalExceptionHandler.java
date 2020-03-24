@@ -1,14 +1,13 @@
 package com.phlink.core.aop;
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
-import com.phlink.core.common.enums.CommonResultInfo;
+import com.phlink.core.common.enums.ResultCode;
 import com.phlink.core.common.exception.BizException;
 import com.phlink.core.common.exception.LimitAccessException;
 import com.phlink.core.common.utils.ResultUtil;
 import com.phlink.core.common.vo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.redisson.client.RedisTimeoutException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -62,7 +61,7 @@ public class GlobalExceptionHandler {
             message.append(error.getField()).append(error.getDefaultMessage()).append(StringPool.COMMA);
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
-        return ResultUtil.error(CommonResultInfo.BODY_NOT_MATCH.getResultCode(), message.toString());
+        return ResultUtil.error(ResultCode.BODY_NOT_MATCH.getCode(), message.toString());
 
     }
 
@@ -83,13 +82,13 @@ public class GlobalExceptionHandler {
             message.append(pathArr[pathArr.length - 1]).append(violation.getMessage()).append(StringPool.COMMA);
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
-        return ResultUtil.error(CommonResultInfo.BODY_NOT_MATCH.getResultCode(), message.toString());
+        return ResultUtil.error(ResultCode.BODY_NOT_MATCH.getCode(), message.toString());
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<Object> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        return ResultUtil.error(CommonResultInfo.BODY_NOT_MATCH.getResultCode(), e.getMessage());
+        return ResultUtil.error(ResultCode.BODY_NOT_MATCH.getCode(), e.getMessage());
 
     }
 
@@ -110,13 +109,13 @@ public class GlobalExceptionHandler {
                 .stream()
                 .map(x -> x.getField() + x.getDefaultMessage())
                 .collect(Collectors.toList());
-        return ResultUtil.error(CommonResultInfo.BODY_NOT_MATCH.getResultCode(), String.join(";", errors));
+        return ResultUtil.error(ResultCode.BODY_NOT_MATCH.getCode(), String.join(";", errors));
     }
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<Object> handleHttpMessageNotReadableException(MethodArgumentNotValidException e) {
         log.error("参数格式错误，{}", e.getMessage());
-        return ResultUtil.error(CommonResultInfo.BODY_NOT_MATCH.getResultCode(), "参数格式错误");
+        return ResultUtil.error(ResultCode.BODY_NOT_MATCH.getCode(), "参数格式错误");
     }
 }

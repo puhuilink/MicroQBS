@@ -1,6 +1,6 @@
 package com.phlink.core.security.jwt;
 
-import com.phlink.core.common.enums.CommonResultInfo;
+import com.phlink.core.common.enums.ResultCode;
 import com.phlink.core.common.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
@@ -20,7 +20,7 @@ public class RestAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException)
             throws IOException, ServletException {
 
-        ResponseUtil.out(response, ResponseUtil.resultMap(false, CommonResultInfo.FORBIDDEN));
+        ResponseUtil.out(response, ResponseUtil.resultMap(false, ResultCode.FORBIDDEN));
     }
 
 }

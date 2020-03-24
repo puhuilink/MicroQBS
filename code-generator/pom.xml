@@ -12,6 +12,10 @@
     <artifactId>code-generator</artifactId>
     <dependencies>
         <dependency>
+            <groupId>com.phlink.core</groupId>
+            <artifactId>web-common</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
         </dependency>

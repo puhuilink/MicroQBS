@@ -1,6 +1,6 @@
 package com.phlink.core.common.exception;
 
-import com.phlink.core.common.enums.BaseResultInfo;
+import com.phlink.core.common.enums.IResultCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,22 +18,22 @@ public class BizException extends RuntimeException {
      */
     protected String errorMsg;
 
-    public BizException(BaseResultInfo errorInfo) {
-        super(errorInfo.getResultCode());
-        this.errorCode = errorInfo.getResultCode();
-        this.errorMsg = errorInfo.getResultMsg();
+    public BizException(IResultCode resultCode) {
+        super(resultCode.getCode());
+        this.errorCode = resultCode.getCode();
+        this.errorMsg = resultCode.getMsg();
     }
 
-    public BizException(BaseResultInfo errorInfo, String message) {
+    public BizException(IResultCode resultCode, String message) {
         super(message);
-        this.errorCode = errorInfo.getResultCode();
+        this.errorCode = resultCode.getCode();
         this.errorMsg = message;
     }
 
-    public BizException(BaseResultInfo errorInfo, Throwable cause) {
-        super(errorInfo.getResultCode(), cause);
-        this.errorCode = errorInfo.getResultCode();
-        this.errorMsg = errorInfo.getResultMsg();
+    public BizException(IResultCode resultCode, Throwable cause) {
+        super(resultCode.getCode(), cause);
+        this.errorCode = resultCode.getCode();
+        this.errorMsg = resultCode.getMsg();
     }
 
     public BizException(String errorMsg) {
@@ -41,8 +41,8 @@ public class BizException extends RuntimeException {
         this.errorMsg = errorMsg;
     }
 
-    public BizException(BaseResultInfo errorInfo, String errorMsg, Throwable cause) {
-        super(errorInfo.getResultCode(), cause);
+    public BizException(IResultCode resultCode, String errorMsg, Throwable cause) {
+        super(resultCode.getCode(), cause);
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;
     }

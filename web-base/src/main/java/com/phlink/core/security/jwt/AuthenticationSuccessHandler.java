@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.google.gson.Gson;
 import com.phlink.core.common.annotation.SystemLogTrace;
 import com.phlink.core.common.constant.SecurityConstant;
-import com.phlink.core.common.enums.CommonResultInfo;
+import com.phlink.core.common.enums.ResultCode;
 import com.phlink.core.common.enums.LogType;
 import com.phlink.core.common.utils.IpInfoUtil;
 import com.phlink.core.common.utils.ResponseUtil;
@@ -108,6 +108,6 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
                     .compact();
         }
 
-        ResponseUtil.out(response, ResponseUtil.resultMap(true, CommonResultInfo.SUCCESS.getResultCode(), "登录成功", token));
+        ResponseUtil.out(response, ResponseUtil.resultMap(true, ResultCode.SUCCESS.getCode(), "登录成功", token));
     }
 }

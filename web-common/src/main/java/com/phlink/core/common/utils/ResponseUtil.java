@@ -1,7 +1,7 @@
 package com.phlink.core.common.utils;
 
 import com.google.gson.Gson;
-import com.phlink.core.common.enums.CommonResultInfo;
+import com.phlink.core.common.enums.ResultCode;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.ServletOutputStream;
@@ -41,14 +41,14 @@ public class ResponseUtil {
         }
     }
 
-    public static Map<String, Object> resultMap(boolean flag, CommonResultInfo resultInfo, String msg) {
+    public static Map<String, Object> resultMap(boolean flag, ResultCode resultInfo, String msg) {
 
-        return resultMap(flag, resultInfo.getResultCode(), msg, null);
+        return resultMap(flag, resultInfo.getCode(), msg, null);
     }
 
-    public static Map<String, Object> resultMap(boolean flag, CommonResultInfo resultInfo) {
+    public static Map<String, Object> resultMap(boolean flag, ResultCode resultInfo) {
 
-        return resultMap(flag, resultInfo.getResultCode(), resultInfo.getResultMsg(), null);
+        return resultMap(flag, resultInfo.getCode(), resultInfo.getMsg(), null);
     }
 
     public static Map<String, Object> resultMap(boolean flag, String code, String msg, Object data) {

@@ -1,6 +1,6 @@
 package com.phlink.core.common.utils;
 
-import com.phlink.core.common.enums.CommonResultInfo;
+import com.phlink.core.common.enums.ResultCode;
 import com.phlink.core.common.vo.Result;
 
 public class ResultUtil<T> {
@@ -11,26 +11,26 @@ public class ResultUtil<T> {
         result=new Result<>();
         result.setSuccess(true);
         result.setMessage("success");
-        result.setCode(CommonResultInfo.SUCCESS.getResultCode());
+        result.setCode(ResultCode.SUCCESS.getCode());
     }
 
     public Result<T> setData(T t){
         this.result.setResult(t);
-        this.result.setCode(CommonResultInfo.SUCCESS.getResultCode());
+        this.result.setCode(ResultCode.SUCCESS.getCode());
         return this.result;
     }
 
     public Result<T> setSuccessMsg(String msg){
         this.result.setSuccess(true);
         this.result.setMessage(msg);
-        this.result.setCode(CommonResultInfo.SUCCESS.getResultCode());
+        this.result.setCode(ResultCode.SUCCESS.getCode());
         this.result.setResult(null);
         return this.result;
     }
 
     public Result<T> setData(T t, String msg){
         this.result.setResult(t);
-        this.result.setCode(CommonResultInfo.SUCCESS.getResultCode());
+        this.result.setCode(ResultCode.SUCCESS.getCode());
         this.result.setMessage(msg);
         return this.result;
     }
@@ -38,7 +38,7 @@ public class ResultUtil<T> {
     public Result<T> setErrorMsg(String msg){
         this.result.setSuccess(false);
         this.result.setMessage(msg);
-        this.result.setCode(CommonResultInfo.FAIL.getResultCode());
+        this.result.setCode(ResultCode.FAIL.getCode());
         return this.result;
     }
 
@@ -49,10 +49,10 @@ public class ResultUtil<T> {
         return this.result;
     }
 
-    public Result<T> setErrorMsg(CommonResultInfo codeEnum){
+    public Result<T> setErrorMsg(ResultCode codeEnum){
         this.result.setSuccess(false);
-        this.result.setMessage(codeEnum.getResultMsg());
-        this.result.setCode(codeEnum.getResultCode());
+        this.result.setMessage(codeEnum.getMsg());
+        this.result.setCode(codeEnum.getCode());
         return this.result;
     }
 

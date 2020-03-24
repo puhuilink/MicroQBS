@@ -1,13 +1,12 @@
 package com.phlink.core.controller.common;
 
 import cn.hutool.http.HttpUtil;
-import com.phlink.core.common.enums.CommonResultInfo;
+import com.phlink.core.common.enums.ResultCode;
 import com.phlink.core.common.exception.BizException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +24,7 @@ public class SecurityController {
     @GetMapping(value = "/needLogin")
     @ApiOperation(value = "没有登录")
     public void needLogin() {
-        throw new BizException(CommonResultInfo.SIGNATURE_NOT_MATCH);
+        throw new BizException(ResultCode.SIGNATURE_NOT_MATCH);
     }
 
     @GetMapping(value = "/swagger/login")

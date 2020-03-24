@@ -1,6 +1,6 @@
 package com.phlink.core.common.enums;
 
-public enum CommonResultInfo implements BaseResultInfo {
+public enum ResultCode implements IResultCode {
     // 数据操作错误定义
     SUCCESS("200", "成功!"),
     // 系统失败
@@ -17,24 +17,24 @@ public enum CommonResultInfo implements BaseResultInfo {
     ;
 
     /** 错误码 */
-    private String resultCode;
+    private String code;
 
     /** 错误描述 */
-    private String resultMsg;
+    private String msg;
 
-    CommonResultInfo(String resultCode, String resultMsg) {
-        this.resultCode = resultCode;
-        this.resultMsg = resultMsg;
+    ResultCode(String code, String msg) {
+        this.code = code;
+        this.msg = msg;
     }
 
     @Override
-    public String getResultCode() {
-        return resultCode;
+    public String getCode() {
+        return code;
     }
 
     @Override
-    public String getResultMsg() {
-        return resultMsg;
+    public String getMsg() {
+        return msg;
     }
 
 }

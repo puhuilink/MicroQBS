@@ -8,6 +8,7 @@
 - Postgres
 - Redisson
 - 分页使用 pagehelper
+- Freemark（代码生成模版，邮件模版等）
 
 ## 模块说明
 ### web-common
@@ -26,6 +27,8 @@ web 模块的基础模块，需要开发业务，直接引入该模块即可
 - 缓存
 ### web-file-service
 文件服务模块，提供文件上传，文件删除等服务，基于fastdfs
+### code-generator
+代码生成模块，计划提供相关接口实现在线动态生成代码
 ### proto
 提供 grpc 接口描述
 ### web-demo
