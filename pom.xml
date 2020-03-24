@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <modules>
-        <module>proto</module>
-        <module>web-base</module>
-        <module>web-common</module>
-        <module>web-demo</module>
-        <module>web-file-service</module>
+        <module>core-web</module>
+        <module>core-base</module>
+        <module>module-file</module>
+        <module>module-proto</module>
+        <module>service-code-generator</module>
+        <module>demo-web</module>
         <module>demo-spark</module>
-        <module>code-generator</module>
     </modules>
 
     <parent>
@@ -42,22 +42,27 @@
         <dependencies>
             <dependency>
                 <groupId>com.phlink.core</groupId>
-                <artifactId>web-common</artifactId>
+                <artifactId>core-base</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.phlink.core</groupId>
-                <artifactId>web-base</artifactId>
+                <artifactId>core-web</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.phlink.core</groupId>
-                <artifactId>web-file-service</artifactId>
+                <artifactId>module-file</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.phlink.core</groupId>
-                <artifactId>code-generator</artifactId>
+                <artifactId>module-proto</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.phlink.core</groupId>
+                <artifactId>service-code-generator</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
@@ -73,11 +78,6 @@
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-starter-client</artifactId>
                 <version>2.1.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.phlink.core</groupId>
-                <artifactId>proto</artifactId>
-                <version>1.0-SNAPSHOT</version>
             </dependency>
             <!-- 动态数据源 -->
             <dependency>

@@ -10,11 +10,23 @@
 - 分页使用 pagehelper
 - Freemark（代码生成模版，邮件模版等）
 
+## 名词说明
+### core、module和service
+#### core
+基础核心包，用于支撑module和service
+包名以com.phlink.core开头
+#### module
+扩展包，扩展web服务的功能
+包名以com.phlink.module开头
+#### serivce
+服务包，可单独部署为服务，依赖core-web的支持
+包名以com.phlink.serivce开头
+ 
 ## 模块说明
-### web-common
-web 模块的通用模块
-### web-base
-web 模块的基础模块，需要开发业务，直接引入该模块即可
+### core-base
+基础模块
+### core-web
+web 的核型模块，需要开发业务，直接引入该模块即可
 - 登录：
     - 支持用户名登录
     - 支持验证码登录
@@ -25,14 +37,12 @@ web 模块的基础模块，需要开发业务，直接引入该模块即可
 - 字典
 - 限流
 - 缓存
-### web-file-service
+### module-file
 文件服务模块，提供文件上传，文件删除等服务，基于fastdfs
-### code-generator
+### module-code-generator
 代码生成模块，计划提供相关接口实现在线动态生成代码
-### proto
+### module-proto
 提供 grpc 接口描述
-### web-demo
-web-base的使用示例
 
 ## 整体结构
 ![整体结构](https://github.com/Sevncz/phlink-common-framework/blob/master/doc/base1.png)
