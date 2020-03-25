@@ -45,10 +45,10 @@ web 的核型模块，需要开发业务，直接引入该模块即可
 提供 grpc 接口描述
 
 ## 整体结构
-![整体结构](https://github.com/Sevncz/phlink-common-framework/blob/master/doc/base1.png)
+![整体结构](http://ww1.sinaimg.cn/large/7bc111b9ly1gd6astegf9j21e60nyjuj.jpg)
 
 ## 整体规划
-![整体规划](https://github.com/Sevncz/phlink-common-framework/blob/master/doc/base2.png)
+![整体规划](http://ww1.sinaimg.cn/large/7bc111b9ly1gd6at6ecdtj21e80kltbb.jpg)
 
 ## 文档
 见wiki: https://github.com/Sevncz/phlink-common-framework/wiki
