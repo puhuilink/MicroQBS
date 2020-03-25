@@ -33,6 +33,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author wen
+ */
 @Slf4j
 @Component
 public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {

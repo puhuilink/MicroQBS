@@ -15,6 +15,7 @@ import java.io.IOException;
 
 /**
  * 短信登录过滤器
+ * @author wen
  */
 public class UsernameAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 

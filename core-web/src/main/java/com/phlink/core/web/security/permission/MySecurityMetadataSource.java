@@ -19,6 +19,7 @@ import java.util.*;
 /**
  * 权限资源管理器
  * 为权限决断器提供支持
+ * @author wen
  */
 @Slf4j
 @Component

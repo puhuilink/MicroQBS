@@ -36,6 +36,7 @@
         <swagger.version>2.9.2</swagger.version>
         <postgres.version>42.2.5</postgres.version>
         <grpc.version>1.27.1</grpc.version>
+        <protobuf.version>3.11.4</protobuf.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <spring-admin.version>2.1.0</spring-admin.version>
 
@@ -158,11 +159,16 @@
                 <version>0.9.1</version>
             </dependency>
             <!-- grpc -->
-            <!--            <dependency>-->
-            <!--                <groupId>io.grpc</groupId>-->
-            <!--                <artifactId>grpc-netty-shaded</artifactId>-->
-            <!--                <version>${grpc.version}</version>-->
-            <!--            </dependency>-->
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+                <version>${protobuf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-netty</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
             <dependency>
                 <groupId>io.grpc</groupId>
                 <artifactId>grpc-protobuf</artifactId>
@@ -171,6 +177,21 @@
             <dependency>
                 <groupId>io.grpc</groupId>
                 <artifactId>grpc-stub</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-alts</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-auth</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-api</artifactId>
                 <version>${grpc.version}</version>
             </dependency>
 

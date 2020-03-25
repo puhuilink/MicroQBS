@@ -34,6 +34,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author wen
+ */
 @Slf4j
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 

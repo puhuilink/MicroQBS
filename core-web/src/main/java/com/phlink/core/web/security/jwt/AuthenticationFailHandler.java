@@ -23,6 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author wen
+ */
 @Slf4j
 @Component
 public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHandler {

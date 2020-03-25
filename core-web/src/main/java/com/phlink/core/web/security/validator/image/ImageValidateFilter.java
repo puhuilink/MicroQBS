@@ -23,6 +23,7 @@ import java.io.IOException;
 /**
  * 图形验证码过滤器
  *
+ * @author wen
  */
 @Slf4j
 @Configuration
