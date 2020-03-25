@@ -1,10 +1,181 @@
 {
 	"info": {
 		"_postman_id": "f3d2f5d0-7579-4caa-9b46-aaa2f23e9758",
-		"name": "快速开发框架测试",
+		"name": "普惠框架API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "demo",
+			"item": [
+				{
+					"name": "欢迎",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "accessToken",
+								"type": "text",
+								"value": "{{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{local_url}}/welcome",
+							"host": [
+								"{{local_url}}"
+							],
+							"path": [
+								"welcome"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "kafka生成数据",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "accessToken",
+								"type": "text",
+								"value": "{{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{local_url}}/send/world world world world   world world  v world v v 121 121 121 121",
+							"host": [
+								"{{local_url}}"
+							],
+							"path": [
+								"send",
+								"world world world world   world world  v world v v 121 121 121 121"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "行政区域",
+			"item": [
+				{
+					"name": "省级列表",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accessToken",
+								"value": "{{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local_url}}/common/region/province",
+							"host": [
+								"{{local_url}}"
+							],
+							"path": [
+								"common",
+								"region",
+								"province"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "市级列表",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accessToken",
+								"value": "{{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local_url}}/common/region/city?provinceId=130000000000",
+							"host": [
+								"{{local_url}}"
+							],
+							"path": [
+								"common",
+								"region",
+								"city"
+							],
+							"query": [
+								{
+									"key": "provinceId",
+									"value": "130000000000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "县区列表",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accessToken",
+								"value": "{{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local_url}}/common/region/country?cityId=130100000000",
+							"host": [
+								"{{local_url}}"
+							],
+							"path": [
+								"common",
+								"region",
+								"country"
+							],
+							"query": [
+								{
+									"key": "cityId",
+									"value": "130100000000"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
 		{
 			"name": "验证码第一步",
 			"event": [
@@ -210,8 +381,19 @@
 					}
 				],
 				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"username\": \"test\",\n\t\"password\": \"123456\"\n}",
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					],
 					"options": {
 						"raw": {
 							"language": "json"
@@ -437,6 +619,38 @@
 			"response": []
 		},
 		{
+			"name": "用户excel导出",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "accessToken",
+						"type": "text",
+						"value": "{{accessToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{local_url}}/manage/user/excel/download",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"manage",
+						"user",
+						"excel",
+						"download"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "用户菜单",
 			"request": {
 				"method": "GET",
@@ -564,35 +778,6 @@
 						"manage",
 						"permission",
 						"update"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "欢迎",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					},
-					{
-						"key": "accessToken",
-						"type": "text",
-						"value": "{{accessToken}}"
-					}
-				],
-				"url": {
-					"raw": "{{local_url}}/welcome",
-					"host": [
-						"{{local_url}}"
-					],
-					"path": [
-						"welcome"
 					]
 				}
 			},
