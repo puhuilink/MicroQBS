@@ -42,11 +42,11 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
         </dependency>
-        <!-- kafka -->
+        <!-- kafka
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
-        </dependency>
+        </dependency> -->
     </dependencies>
     <build>
         <plugins>

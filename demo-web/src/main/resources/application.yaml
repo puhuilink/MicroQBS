@@ -76,20 +76,20 @@ spring:
         - "redis://127.0.0.1:7000"
       master-onlyWrite: true
       fail-max: 3
-  kafka:
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-    bootstrap-servers:
-      - 10.1.8.177:9092
-      - 10.1.8.177:9093
-    consumer:
-      enable-auto-commit: true
-      group-id: kaDemo
-      auto-offset-reset: latest
-      bootstrap-servers:
-        - 10.1.8.177:9092
-        - 10.1.8.177:9093
+#  kafka:
+#    producer:
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#    bootstrap-servers:
+#      - 10.1.8.177:9092
+#      - 10.1.8.177:9093
+#    consumer:
+#      enable-auto-commit: true
+#      group-id: kaDemo
+#      auto-offset-reset: latest
+#      bootstrap-servers:
+#        - 10.1.8.177:9092
+#        - 10.1.8.177:9093
 
 
   # 文件大小上传配置
