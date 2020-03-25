@@ -7,6 +7,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * @author wen
+ */
 @Data
 @TableName("t_setting")
 @ApiModel(value = "配置")

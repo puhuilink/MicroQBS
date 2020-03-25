@@ -3,7 +3,11 @@ package com.phlink.core.web.util;
 import cn.hutool.core.bean.BeanUtil;
 import com.phlink.core.web.controller.vo.MenuVO;
 import com.phlink.core.web.entity.Permission;
+import org.apache.poi.ss.formula.functions.T;
 
+/**
+ * @author wen
+ */
 public class VoUtil {
 
     public static MenuVO permissionToMenuVO(Permission p){

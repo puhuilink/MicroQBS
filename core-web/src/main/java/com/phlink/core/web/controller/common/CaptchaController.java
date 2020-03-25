@@ -21,6 +21,9 @@ import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author wen
+ */
 @Api(tags = "验证码接口")
 @RequestMapping("/common/captcha")
 @RestController

@@ -6,6 +6,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+/**
+ * @author wen
+ */
 @Data
 @TableName("t_role_permission")
 @ApiModel(value = "角色权限")

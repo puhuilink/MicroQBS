@@ -3,6 +3,7 @@ package com.phlink.core.web.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.phlink.core.web.base.vo.SearchVO;
+import com.phlink.core.web.controller.vo.UserData;
 import com.phlink.core.web.entity.User;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -38,7 +39,6 @@ public interface UserService extends IService<User> {
      * 多条件分页获取用户
      * @param user
      * @param searchVo
-     * @param pageable
      * @return
      */
     IPage<User> listByCondition(User user, SearchVO searchVo);
@@ -57,4 +57,8 @@ public interface UserService extends IService<User> {
      * @return
      */
     List<User> listByUsernameLikeAndStatus(String username, Integer status);
+
+    List<UserData> listUserData();
+
+    void saveBatch(List<UserData> dataList);
 }

@@ -12,6 +12,7 @@ import java.util.Map;
 
 /**
  * restTemplate 封装get post 等请求
+ * @author wen
  */
 @Slf4j
 @Component

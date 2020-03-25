@@ -44,8 +44,12 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.web.service.impl.DepartmentMasterServiceImpl,\
   com.phlink.core.web.service.impl.DictDataServiceImpl,\
   com.phlink.core.web.service.impl.DictServiceImpl,\
+  com.phlink.core.web.service.impl.CityServiceImpl,\
+  com.phlink.core.web.service.impl.ProvinceServiceImpl,\
+  com.phlink.core.web.service.impl.CountryServiceImpl,\
   com.phlink.core.web.controller.common.CaptchaController,\
   com.phlink.core.web.controller.common.SecurityController,\
+  com.phlink.core.web.controller.common.RegionController,\
   com.phlink.core.web.controller.manage.PermissionController,\
   com.phlink.core.web.controller.manage.DepartmentController,\
   com.phlink.core.web.controller.manage.RoleController,\

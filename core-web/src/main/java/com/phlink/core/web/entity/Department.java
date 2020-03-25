@@ -11,6 +11,9 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * @author wen
+ */
 @Data
 @TableName("t_department")
 @ApiModel(value = "部门")

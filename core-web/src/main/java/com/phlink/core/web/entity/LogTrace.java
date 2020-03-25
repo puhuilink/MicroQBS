@@ -8,6 +8,9 @@ import lombok.Data;
 
 import java.util.Map;
 
+/**
+ * @author wen
+ */
 @Data
 @TableName("t_log")
 public class LogTrace extends PhlinkBaseEntity {

@@ -8,6 +8,9 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 
+/**
+ * @author wen
+ */
 @Data
 @TableName("t_dict")
 @ApiModel(value = "字典数据")

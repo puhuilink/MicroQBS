@@ -11,6 +11,9 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * @author wen
+ */
 @Data
 @TableName("t_permission")
 @ApiModel(value = "菜单权限")

@@ -10,6 +10,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * @author wen
+ */
 @Data
 @TableName("t_role")
 @ApiModel(value = "角色")

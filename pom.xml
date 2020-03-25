@@ -291,6 +291,12 @@
                 <artifactId>keycloak-spring-boot-starter</artifactId>
                 <version>9.0.0</version>
             </dependency>
+            <!-- excel 支持 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>2.1.6</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

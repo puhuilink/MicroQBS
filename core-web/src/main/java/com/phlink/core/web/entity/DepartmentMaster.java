@@ -7,6 +7,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+/**
+ * @author wen
+ */
 @Data
 @TableName("t_department_master")
 @ApiModel(value = "部门负责人")

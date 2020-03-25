@@ -1,9 +1,11 @@
 package com.phlink.core.web.controller.manage;
 
+import com.alibaba.excel.EasyExcel;
 import com.phlink.core.web.base.constant.CommonConstant;
 import com.phlink.core.web.base.utils.ResultUtil;
 import com.phlink.core.web.base.validation.tag.OnAdd;
 import com.phlink.core.web.base.vo.Result;
+import com.phlink.core.web.controller.vo.UserData;
 import com.phlink.core.web.controller.vo.UserRegistVO;
 import com.phlink.core.web.entity.User;
 import com.phlink.core.web.service.DepartmentService;
@@ -22,8 +24,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.net.URLEncoder;
 
+/**
+ * @author wen
+ */
 @Slf4j
 @RestController
 @Api(tags = "User相关接口")
@@ -79,4 +87,12 @@ public class UserController {
         return ResultUtil.success("操作成功");
     }
 
+    @GetMapping("/excel/download")
+    public void download(HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode("系统用户列表", "UTF-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+        EasyExcel.write(response.getOutputStream(), UserData.class).sheet("用户信息").doWrite(userService.listUserData());
+    }
 }

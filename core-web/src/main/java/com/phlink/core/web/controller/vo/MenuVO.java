@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * @author wen
+ */
 @Data
 public class MenuVO {
     @ApiModelProperty(value = "id")

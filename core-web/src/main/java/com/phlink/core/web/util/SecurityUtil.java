@@ -30,6 +30,9 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author wen
+ */
 @Component
 public class SecurityUtil {
 
