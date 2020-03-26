@@ -1,7 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.phlink.core.web.config.security.WebSecurityConfig,\
-  com.phlink.core.web.config.security.SmsAuthenticationConfig,\
-  com.phlink.core.web.config.security.UsernameAuthenticationConfig,\
+  com.phlink.core.web.config.WebSecurityConfig,\
   com.phlink.core.web.config.Swagger2Config,\
   com.phlink.core.web.config.redis.RedissonConfig,\
   com.phlink.core.web.config.jackson.JacksonConfig,\
@@ -18,10 +16,14 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.web.config.properties.PhlinkLimitProperties,\
   com.phlink.core.web.config.properties.CaptchaProperties,\
   com.phlink.core.web.config.properties.IgnoredUrlsProperties,\
-  com.phlink.core.web.security.UserDetailsServiceImpl,\
-  com.phlink.core.web.security.jwt.AuthenticationSuccessHandler,\
-  com.phlink.core.web.security.jwt.AuthenticationFailHandler,\
-  com.phlink.core.web.security.jwt.RestAccessDeniedHandler,\
+  com.phlink.core.web.security.auth.jwt.AuthenticationSuccessHandler,\
+  com.phlink.core.web.security.auth.jwt.AuthenticationFailHandler,\
+  com.phlink.core.web.security.auth.jwt.RestAccessDeniedHandler,\
+  com.phlink.core.web.security.auth.jwt.extractor.JwtHeaderTokenExtractor,\
+  com.phlink.core.web.security.auth.jwt.extractor.JwtQueryTokenExtractor,\
+  com.phlink.core.web.security.auth.jwt.JwtAuthenticationProvider,\
+  com.phlink.core.web.security.auth.rest.RestAuthenticationProvider,\
+  com.phlink.core.web.security.model.token.JwtTokenFactory,\
   com.phlink.core.web.security.permission.MyFilterSecurityInterceptor,\
   com.phlink.core.web.security.permission.MyAccessDecisionManager,\
   com.phlink.core.web.security.permission.MySecurityMetadataSource,\
@@ -56,4 +58,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.web.controller.manage.UserController,\
   com.phlink.core.web.controller.manage.DictController,\
   com.phlink.core.web.controller.manage.DictDataController,\
-  com.phlink.core.web.controller.manage.LogController
+  com.phlink.core.web.controller.manage.LogController,\
+  org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder

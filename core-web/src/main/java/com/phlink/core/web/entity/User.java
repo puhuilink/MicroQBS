@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.phlink.core.web.base.PhlinkBaseEntity;
 import com.phlink.core.web.base.constant.CommonConstant;
+import com.phlink.core.web.security.model.Authority;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -80,4 +81,19 @@ public class User extends PhlinkBaseEntity {
     @TableField(exist=false)
     @ApiModelProperty(value = "导入数据时使用")
     private Integer defaultRole;
+
+    private Authority authority;
+
+    public User(User user) {
+        this.setId(user.getId());
+        this.username = user.getUsername();
+        this.email = user.getEmail();
+        this.mobile = user.getMobile();
+        this.departmentId = user.getDepartmentId();
+    }
+
+    public User() {
+
+    }
+
 }

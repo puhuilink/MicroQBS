@@ -1,12 +1,14 @@
 package com.phlink.core.web.aop;
 
-import cn.hutool.core.thread.threadlocal.NamedThreadLocal;
 import com.phlink.core.web.base.annotation.SystemLogTrace;
+import com.phlink.core.web.base.utils.InheritableThreadLocalUtil;
 import com.phlink.core.web.base.utils.IpInfoUtil;
 import com.phlink.core.web.base.utils.ThreadPoolUtil;
 import com.phlink.core.web.entity.LogTrace;
+import com.phlink.core.web.security.model.SecurityUser;
 import com.phlink.core.web.service.LogTraceService;
 import com.phlink.core.web.service.UserService;
+import com.phlink.core.web.util.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -34,12 +36,12 @@ import java.util.Map;
 @Component
 public class SystemLogTraceAspect {
 
-    private static final ThreadLocal<Date> beginTimeThreadLocal = new NamedThreadLocal<Date>("ThreadLocal beginTime");
-
     @Autowired
     private LogTraceService logTraceService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private SecurityUtil securityUtil;
     @Autowired(required = false)
     private HttpServletRequest request;
 
@@ -100,7 +102,7 @@ public class SystemLogTraceAspect {
 
         //线程绑定变量（该数据只有当前请求的线程可见）
         Date beginTime = new Date();
-        beginTimeThreadLocal.set(beginTime);
+        InheritableThreadLocalUtil.put(beginTime);
     }
 
     @AfterReturning("controllerAspect()")
@@ -115,7 +117,7 @@ public class SystemLogTraceAspect {
                 return;
             }
             if (!"anonymousUser".equals(principal)) {
-                UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                SecurityUser user = securityUtil.getSecurityUser();
                 username = user.getUsername();
             }
             if (description.contains("短信登录")) {
@@ -144,7 +146,7 @@ public class SystemLogTraceAspect {
             //IP地址
             logTrace.setIpInfo(IpInfoUtil.getIpCity(ip));
             //请求开始时间
-            long beginTime = beginTimeThreadLocal.get().getTime();
+            long beginTime = InheritableThreadLocalUtil.get(Date.class).getTime();
             long endTime = System.currentTimeMillis();
             //请求耗时
             Long logElapsedTime = endTime - beginTime;

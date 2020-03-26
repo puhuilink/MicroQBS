@@ -1,4 +1,4 @@
-package com.phlink.core.web.security.jwt;
+package com.phlink.core.web.security.auth.jwt;
 
 import com.phlink.core.web.base.enums.ResultCode;
 import com.phlink.core.web.base.utils.ResponseUtil;

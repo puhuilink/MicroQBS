@@ -1,9 +1,11 @@
-package com.phlink.core.web.security.jwt;
+package com.phlink.core.web.security.auth.jwt;
 
 import cn.hutool.core.util.StrUtil;
 import com.phlink.core.web.base.enums.ResultCode;
+import com.phlink.core.web.base.utils.InheritableThreadLocalUtil;
 import com.phlink.core.web.base.utils.ResponseUtil;
 import com.phlink.core.web.config.properties.PhlinkTokenProperties;
+import com.phlink.core.web.security.auth.rest.LoginRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
@@ -38,10 +40,14 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-
+        LoginRequest loginRequest = InheritableThreadLocalUtil.get(LoginRequest.class);
         if (e instanceof UsernameNotFoundException || e instanceof BadCredentialsException || e instanceof InternalAuthenticationServiceException) {
-            String username = request.getParameter("username");
-            recordLoginTime(username);
+            if(loginRequest == null) {
+                ResponseUtil.out(response, ResponseUtil.resultMap(false, ResultCode.JWT_TOKEN_EXPIRED, e.getMessage()));
+                return;
+            }
+            recordLoginTime(loginRequest.getUsername());
+            String username = loginRequest.getUsername();
             String key = "loginTimeLimit:" + username;
             RBucket<String> bucket = redissonClient.getBucket(key, new StringCodec());
             String value = bucket.get();

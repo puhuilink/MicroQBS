@@ -172,16 +172,6 @@ fdfs:
   tracker-list:            #TrackerList参数,支持多个
     - 127.0.0.1:22122
 
-# 需要验证码校验的接口路径 支持通配符 自动过滤拦截校验 无需开发人员再次校验
-captcha:
-  image:
-    - /login
-    - /oauth2/authorize
-  username:
-    - /login/username
-  sms:
-    - /login/mobile
-
 # 忽略鉴权url
 ignored:
   urls:
@@ -215,6 +205,7 @@ swagger:
 # Mybatis-plus
 mybatis-plus:
   mapper-locations: classpath*:mapper/*.xml
+  type-enums-package: com.phlink.core.*
 
 # 日志
 logging:

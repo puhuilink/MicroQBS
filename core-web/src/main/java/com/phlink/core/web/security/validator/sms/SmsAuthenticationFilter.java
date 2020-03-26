@@ -38,7 +38,7 @@ public class SmsAuthenticationFilter extends AbstractAuthenticationProcessingFil
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
         //判断是是不是post请求
         if (postOnly && !request.getMethod().equals("POST")) {
-            throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
+            throw new AuthenticationServiceException("请求方法不支持: " + request.getMethod());
         }
         //从请求中获取手机号码
         String mobile = obtainMobile(request);

@@ -12,10 +12,16 @@ public interface SecurityConstant {
      */
     String JWT_SIGN_KEY = "phlink";
 
+    String TOKEN_ISSUER = "SYSTEM";
+
     /**
      * token参数头
      */
-    String HEADER = "accessToken";
+    String HEADER_PARAM = "accessToken";
+    /**
+     * 参数中的token
+     */
+    String QUERY_PARAM = "token";
 
     /**
      * 权限参数头

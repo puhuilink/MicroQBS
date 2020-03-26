@@ -3,10 +3,13 @@ package com.phlink.core.web.base.utils;
 import com.google.gson.Gson;
 import com.phlink.core.web.base.enums.ResultCode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,8 +26,9 @@ public class ResponseUtil {
 
         ServletOutputStream out = null;
         try {
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("application/json;charset=UTF-8");
+            response.setStatus(HttpStatus.OK.value());
+            response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             out = response.getOutputStream();
             out.write(new Gson().toJson(resultMap).getBytes());
         } catch (Exception e) {
@@ -41,14 +45,14 @@ public class ResponseUtil {
         }
     }
 
-    public static Map<String, Object> resultMap(boolean flag, ResultCode resultInfo, String msg) {
+    public static Map<String, Object> resultMap(boolean flag, ResultCode resultCode, String msg) {
 
-        return resultMap(flag, resultInfo.getCode(), msg, null);
+        return resultMap(flag, resultCode.getCode(), msg, null);
     }
 
-    public static Map<String, Object> resultMap(boolean flag, ResultCode resultInfo) {
+    public static Map<String, Object> resultMap(boolean flag, ResultCode resultCode) {
 
-        return resultMap(flag, resultInfo.getCode(), resultInfo.getMsg(), null);
+        return resultMap(flag, resultCode.getCode(), resultCode.getMsg(), null);
     }
 
     public static Map<String, Object> resultMap(boolean flag, String code, String msg, Object data) {
