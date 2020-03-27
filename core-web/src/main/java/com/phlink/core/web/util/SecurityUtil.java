@@ -19,7 +19,10 @@ import com.phlink.core.web.security.model.token.RawAccessJwtToken;
 import com.phlink.core.web.service.DepartmentService;
 import com.phlink.core.web.service.UserRoleService;
 import com.phlink.core.web.service.UserService;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
@@ -79,8 +82,8 @@ public class SecurityUtil {
         if (tokenProperties.getStorePerms()) {
             for (Permission p : u.getPermissions()) {
                 if (CommonConstant.PERMISSION_OPERATION.equals(p.getType())
-                        && StrUtil.isNotBlank(p.getTitle())
-                        && StrUtil.isNotBlank(p.getPath())) {
+                    && StrUtil.isNotBlank(p.getTitle())
+                    && StrUtil.isNotBlank(p.getPath())) {
                     list.add(p.getTitle());
                 }
             }
@@ -114,15 +117,15 @@ public class SecurityUtil {
         } else {
             // jwt
             token = SecurityConstant.TOKEN_SPLIT + Jwts.builder()
-                    //主题 放入用户名
-                    .setSubject(u.getUsername())
-                    //自定义属性 放入用户拥有请求权限
-                    .claim(SecurityConstant.AUTHORITIES, new Gson().toJson(list))
-                    //失效时间
-                    .setExpiration(new Date(System.currentTimeMillis() + tokenProperties.getTokenExpireTime() * 60 * 1000))
-                    //签名算法和密钥
-                    .signWith(SignatureAlgorithm.HS512, SecurityConstant.JWT_SIGN_KEY)
-                    .compact();
+                //主题 放入用户名
+                .setSubject(u.getUsername())
+                //自定义属性 放入用户拥有请求权限
+                .claim(SecurityConstant.AUTHORITIES, new Gson().toJson(list))
+                //失效时间
+                .setExpiration(new Date(System.currentTimeMillis() + tokenProperties.getTokenExpireTime() * 60 * 1000))
+                //签名算法和密钥
+                .signWith(SignatureAlgorithm.HS512, SecurityConstant.JWT_SIGN_KEY)
+                .compact();
         }
         return token;
     }
@@ -259,8 +262,8 @@ public class SecurityUtil {
                 throw new BadCredentialsException("登录已失效，请重新登录");
             }
             String v = bucket.get();
-            if(StrUtil.isBlank(v)) {
-                throw new BadCredentialsException( "登录已失效，请重新登录");
+            if (StrUtil.isBlank(v)) {
+                throw new BadCredentialsException("登录已失效，请重新登录");
             }
             TokenUser user = new Gson().fromJson(v, TokenUser.class);
             username = user.getUsername();

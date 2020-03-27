@@ -8,6 +8,7 @@
         <module>core-web</module>
         <module>module-file</module>
         <module>module-proto</module>
+        <module>module-workflow</module>
         <module>service-code-generator</module>
         <module>demo-web</module>
         <module>demo-spark</module>
@@ -39,7 +40,7 @@
         <protobuf.version>3.11.4</protobuf.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <spring-admin.version>2.1.0</spring-admin.version>
-
+        <flowable.version>6.4.2</flowable.version>
 
         <air.main.basedir>${project.basedir}</air.main.basedir>
         <air.check.fail-checkstyle>true</air.check.fail-checkstyle>
@@ -323,6 +324,33 @@
                 <artifactId>uap-java</artifactId>
                 <version>1.4.3</version>
             </dependency>
+            <!-- flowable-modeler 核心 -->
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-spring-boot-starter</artifactId>
+                <version>${flowable-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-spring-boot-starter-process-rest</artifactId>
+                <version>${flowable-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-ui-modeler-conf</artifactId>
+                <version>${flowable-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-ui-modeler-rest</artifactId>
+                <version>${flowable-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-ui-modeler-logic</artifactId>
+                <version>${flowable-version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 </project>
