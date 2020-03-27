@@ -20,3 +20,9 @@ log/**
 /.idea/
 .idea/workspace.xml
 *.iml
+.project
+.history
+.vscode
+.classpath
+.factorypath
+org.eclipse*
