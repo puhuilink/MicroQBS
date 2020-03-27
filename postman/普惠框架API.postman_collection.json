@@ -177,312 +177,332 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "验证码第一步",
-			"event": [
+			"name": "登录接口",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"id": "3d7ca32a-8fc6-44ef-98ed-338772d3dda0",
-						"exec": [
-							"var body = JSON.parse(responseBody);",
-							"if (body.result) {",
-							"  tests[\"存在验证码ID\"] = true;",
-							"  postman.setEnvironmentVariable(\"uuid\", body.result);",
-							"}",
-							"else {",
-							"  tests[\"存在验证码ID\"] = false;",
-							"}"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"url": {
-					"raw": "{{local_url}}/api/noauth/captcha/init",
-					"host": [
-						"{{local_url}}"
-					],
-					"path": [
-						"api",
-						"noauth",
-						"captcha",
-						"init"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "画验证码",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
+					"name": "图片验证码登录",
+					"item": [
 						{
-							"key": "username",
-							"value": "test",
-							"type": "text"
+							"name": "验证码第一步",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3d7ca32a-8fc6-44ef-98ed-338772d3dda0",
+										"exec": [
+											"var body = JSON.parse(responseBody);",
+											"if (body.result) {",
+											"  tests[\"存在验证码ID\"] = true;",
+											"  postman.setEnvironmentVariable(\"uuid\", body.result);",
+											"}",
+											"else {",
+											"  tests[\"存在验证码ID\"] = false;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{local_url}}/api/noauth/captcha/init",
+									"host": [
+										"{{local_url}}"
+									],
+									"path": [
+										"api",
+										"noauth",
+										"captcha",
+										"init"
+									]
+								}
+							},
+							"response": []
 						},
 						{
-							"key": "password",
-							"value": "123456",
-							"type": "text"
+							"name": "画验证码",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "test",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "123456",
+											"type": "text"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local_url}}/api/noauth/captcha/draw/{{uuid}}",
+									"host": [
+										"{{local_url}}"
+									],
+									"path": [
+										"api",
+										"noauth",
+										"captcha",
+										"draw",
+										"{{uuid}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "验证码登录",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ec3c0985-cf02-4e51-a343-1767ed714ecb",
+										"exec": [
+											"var body = JSON.parse(responseBody);",
+											"if (body.result) {",
+											"  tests[\"has accessToken\"] = true;",
+											"  postman.setEnvironmentVariable(\"accessToken\", body.result);",
+											"}",
+											"else {",
+											"  tests[\"has accessToken\"] = false;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"username\": \"test\",\n\t\"password\": \"123456\",\n\t\"code\": \"xpjv\",\n\t\"captchaId\": \"33058213413e43159223911de2ed2a88\",\n\t\"saveLogin\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local_url}}/api/auth/login/image",
+									"host": [
+										"{{local_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login",
+										"image"
+									]
+								}
+							},
+							"response": []
 						}
 					],
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				},
-				"url": {
-					"raw": "{{local_url}}/api/noauth/captcha/draw/{{uuid}}",
-					"host": [
-						"{{local_url}}"
-					],
-					"path": [
-						"api",
-						"noauth",
-						"captcha",
-						"draw",
-						"{{uuid}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "验证码登录",
-			"event": [
 				{
-					"listen": "test",
-					"script": {
-						"id": "ec3c0985-cf02-4e51-a343-1767ed714ecb",
-						"exec": [
-							"var body = JSON.parse(responseBody);",
-							"if (body.result) {",
-							"  tests[\"has accessToken\"] = true;",
-							"  postman.setEnvironmentVariable(\"accessToken\", body.result);",
-							"}",
-							"else {",
-							"  tests[\"has accessToken\"] = false;",
-							"}"
+					"name": "手机验证码登录",
+					"item": [
+						{
+							"name": "获取手机验证码",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ec3c0985-cf02-4e51-a343-1767ed714ecb",
+										"exec": [
+											"var body = JSON.parse(responseBody);",
+											"if (body.result) {",
+											"  tests[\"has accessToken\"] = true;",
+											"  postman.setEnvironmentVariable(\"mobileCode\", body.result);",
+											"}",
+											"else {",
+											"  tests[\"has accessToken\"] = false;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{local_url}}/api/noauth/captcha/init-mobile/18782059038",
+									"host": [
+										"{{local_url}}"
+									],
+									"path": [
+										"api",
+										"noauth",
+										"captcha",
+										"init-mobile",
+										"18782059038"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "手机验证码登录",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ec3c0985-cf02-4e51-a343-1767ed714ecb",
+										"exec": [
+											"var body = JSON.parse(responseBody);",
+											"if (body.result) {",
+											"  tests[\"has accessToken\"] = true;",
+											"  postman.setEnvironmentVariable(\"accessToken\", body.result);",
+											"}",
+											"else {",
+											"  tests[\"has accessToken\"] = false;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"mobile\": \"18782059038\",\n\t\"code\": \"943530\",\n\t\"saveLogin\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local_url}}/api/auth/login/mobile",
+									"host": [
+										"{{local_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login",
+										"mobile"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "用户名密码登录",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ec3c0985-cf02-4e51-a343-1767ed714ecb",
+								"exec": [
+									"var body = JSON.parse(responseBody);",
+									"if (body.result) {",
+									"  tests[\"has accessToken\"] = true;",
+									"  postman.setEnvironmentVariable(\"accessToken\", body.result.accessToken);",
+									"}",
+									"else {",
+									"  tests[\"has accessToken\"] = false;",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
 						],
-						"type": "text/javascript"
-					}
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"test\",\n\t\"password\": \"123456\",\n\t\"saveLogin\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local_url}}/api/auth/login",
+							"host": [
+								"{{local_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
 				}
 			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"username\": \"test\",\n\t\"password\": \"123456\",\n\t\"code\": \"xpjv\",\n\t\"captchaId\": \"33058213413e43159223911de2ed2a88\",\n\t\"saveLogin\": true\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{local_url}}/api/auth/login/image",
-					"host": [
-						"{{local_url}}"
-					],
-					"path": [
-						"api",
-						"auth",
-						"login",
-						"image"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "获取手机验证码",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "ec3c0985-cf02-4e51-a343-1767ed714ecb",
-						"exec": [
-							"var body = JSON.parse(responseBody);",
-							"if (body.result) {",
-							"  tests[\"has accessToken\"] = true;",
-							"  postman.setEnvironmentVariable(\"mobileCode\", body.result);",
-							"}",
-							"else {",
-							"  tests[\"has accessToken\"] = false;",
-							"}"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"url": {
-					"raw": "{{local_url}}/api/noauth/captcha/init-mobile/18782059038",
-					"host": [
-						"{{local_url}}"
-					],
-					"path": [
-						"api",
-						"noauth",
-						"captcha",
-						"init-mobile",
-						"18782059038"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "手机验证码登录",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "ec3c0985-cf02-4e51-a343-1767ed714ecb",
-						"exec": [
-							"var body = JSON.parse(responseBody);",
-							"if (body.result) {",
-							"  tests[\"has accessToken\"] = true;",
-							"  postman.setEnvironmentVariable(\"accessToken\", body.result);",
-							"}",
-							"else {",
-							"  tests[\"has accessToken\"] = false;",
-							"}"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"mobile\": \"18782059038\",\n\t\"code\": \"943530\",\n\t\"saveLogin\": true\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{local_url}}/api/auth/login/mobile",
-					"host": [
-						"{{local_url}}"
-					],
-					"path": [
-						"api",
-						"auth",
-						"login",
-						"mobile"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "用户名密码登录",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "ec3c0985-cf02-4e51-a343-1767ed714ecb",
-						"exec": [
-							"var body = JSON.parse(responseBody);",
-							"if (body.result) {",
-							"  tests[\"has accessToken\"] = true;",
-							"  postman.setEnvironmentVariable(\"accessToken\", body.result.accessToken);",
-							"}",
-							"else {",
-							"  tests[\"has accessToken\"] = false;",
-							"}"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"username\": \"test\",\n\t\"password\": \"123456\",\n\t\"saveLogin\": true\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{local_url}}/api/auth/login",
-					"host": [
-						"{{local_url}}"
-					],
-					"path": [
-						"api",
-						"auth",
-						"login"
-					]
-				}
-			},
-			"response": []
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "登录用户信息",
