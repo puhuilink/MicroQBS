@@ -50,8 +50,7 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
             return authenticateByUsernameAndPassword(authentication, userPrincipal, username, password);
         } else {
             String mobile = userPrincipal.getValue();
-            String code = (String) authentication.getCredentials();
-            return authenticateByMobile(authentication, userPrincipal, mobile, code);
+            return authenticateByMobile(authentication, userPrincipal, mobile);
         }
     }
 
@@ -69,19 +68,19 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
                 throw new InsufficientAuthenticationException("您没有权限进入系统");
             }
 
-            SecurityUser securityUser = new SecurityUser(user, true, userPrincipal);
+            SecurityUser securityUser = new SecurityUser(user, userPrincipal);
             return new UsernamePasswordAuthenticationToken(securityUser, null, securityUser.getAuthorities());
         } catch (Exception e) {
             throw e;
         }
     }
 
-    private Authentication authenticateByMobile(Authentication authentication, UserPrincipal userPrincipal, String mobile, String code) {
+    private Authentication authenticateByMobile(Authentication authentication, UserPrincipal userPrincipal, String mobile) {
         User user = userService.getByMobile(mobile);
         if (user == null) {
             throw new UsernameNotFoundException("手机号不存在");
         }
-        SecurityUser securityUser = new SecurityUser(user, true, userPrincipal);
+        SecurityUser securityUser = new SecurityUser(user, userPrincipal);
 
         return new UsernamePasswordAuthenticationToken(securityUser, null, securityUser.getAuthorities());
     }

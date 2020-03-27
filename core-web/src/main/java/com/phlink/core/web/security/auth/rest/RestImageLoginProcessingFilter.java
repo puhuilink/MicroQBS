@@ -66,7 +66,7 @@ public class RestImageLoginProcessingFilter extends AbstractAuthenticationProces
             throw new AuthenticationServiceException("请提供用户名和密码");
         }
         if (StringUtils.isBlank(loginRequest.getCaptchaId()) || StringUtils.isBlank(loginRequest.getCode())) {
-            throw new AuthenticationServiceException("请提供验证码");
+            throw new BadCredentialsException("请提供验证码");
         }
 
         RBucket<String> bucket = redissonClient.getBucket(loginRequest.getCaptchaId(), new StringCodec());

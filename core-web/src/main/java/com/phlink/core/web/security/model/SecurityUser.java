@@ -15,22 +15,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * @author wen
+ */
 @Data
 public class SecurityUser extends User {
 
     private static final long serialVersionUID = -797397440703066079L;
 
     private Collection<GrantedAuthority> authorities;
-    private boolean enabled;
     private UserPrincipal userPrincipal;
 
     public SecurityUser() {
         super();
     }
 
-    public SecurityUser(User user, boolean enabled, UserPrincipal userPrincipal) {
+    public SecurityUser(User user, UserPrincipal userPrincipal) {
         super(user);
-        this.enabled = enabled;
         this.userPrincipal = userPrincipal;
     }
 
@@ -65,20 +66,51 @@ public class SecurityUser extends User {
         return this.authorities;
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
     public UserPrincipal getUserPrincipal() {
         return userPrincipal;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 
     public void setUserPrincipal(UserPrincipal userPrincipal) {
         this.userPrincipal = userPrincipal;
     }
 
+    /**
+     * 账户是否过期
+     *
+     * @return
+     */
+    public boolean isAccountNonExpired() {
+
+        return true;
+    }
+
+    /**
+     * 是否禁用
+     *
+     * @return
+     */
+    public boolean isAccountNonLocked() {
+
+        return CommonConstant.USER_STATUS_LOCK.equals(this.getStatus()) ? false : true;
+    }
+
+    /**
+     * 密码是否过期
+     *
+     * @return
+     */
+    public boolean isCredentialsNonExpired() {
+
+        return true;
+    }
+
+    /**
+     * 是否启用
+     *
+     * @return
+     */
+    public boolean isEnabled() {
+
+        return CommonConstant.USER_STATUS_NORMAL.equals(this.getStatus()) ? true : false;
+    }
 }

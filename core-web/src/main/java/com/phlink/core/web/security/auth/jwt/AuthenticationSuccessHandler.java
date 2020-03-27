@@ -3,14 +3,11 @@ package com.phlink.core.web.security.auth.jwt;
 import com.phlink.core.web.base.annotation.SystemLogTrace;
 import com.phlink.core.web.base.enums.LogType;
 import com.phlink.core.web.base.enums.ResultCode;
-import com.phlink.core.web.base.utils.IpInfoUtil;
 import com.phlink.core.web.base.utils.ResponseUtil;
-import com.phlink.core.web.config.properties.PhlinkTokenProperties;
 import com.phlink.core.web.security.model.SecurityUser;
 import com.phlink.core.web.security.model.token.AccessJwtToken;
 import com.phlink.core.web.util.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -41,7 +38,7 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token = securityUtil.getToken(securityUser.getUsername(), securityUser.isEnabled());
+        String token = securityUtil.getAccessJwtToken(securityUser.getUsername(), securityUser.isEnabled());
         AccessJwtToken accessToken = new AccessJwtToken(token);
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("accessToken", accessToken.getToken());

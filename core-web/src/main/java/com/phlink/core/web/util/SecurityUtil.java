@@ -8,17 +8,13 @@ import com.phlink.core.web.base.constant.SecurityConstant;
 import com.phlink.core.web.base.enums.ResultCode;
 import com.phlink.core.web.base.exception.BizException;
 import com.phlink.core.web.base.utils.IpInfoUtil;
-import com.phlink.core.web.base.utils.ResponseUtil;
 import com.phlink.core.web.base.vo.TokenUser;
 import com.phlink.core.web.config.properties.PhlinkTokenProperties;
 import com.phlink.core.web.entity.Department;
 import com.phlink.core.web.entity.Permission;
 import com.phlink.core.web.entity.Role;
 import com.phlink.core.web.entity.User;
-import com.phlink.core.web.security.model.Authority;
 import com.phlink.core.web.security.model.SecurityUser;
-import com.phlink.core.web.security.model.UserPrincipal;
-import com.phlink.core.web.security.model.token.JwtTokenFactory;
 import com.phlink.core.web.security.model.token.RawAccessJwtToken;
 import com.phlink.core.web.service.DepartmentService;
 import com.phlink.core.web.service.UserRoleService;
@@ -30,13 +26,10 @@ import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.StringCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -67,10 +60,7 @@ public class SecurityUtil {
     @Autowired
     private RedissonClient redissonClient;
 
-    @Autowired
-    private JwtTokenFactory jwtTokenFactory;
-
-    public String getToken(String username, Boolean saveLogin) {
+    public String getAccessJwtToken(String username, Boolean saveLogin) {
 
         if (StrUtil.isBlank(username)) {
             throw new BizException("username不能为空");

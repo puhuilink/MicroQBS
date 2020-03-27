@@ -23,7 +23,6 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.web.security.auth.jwt.extractor.JwtQueryTokenExtractor,\
   com.phlink.core.web.security.auth.jwt.JwtAuthenticationProvider,\
   com.phlink.core.web.security.auth.rest.RestAuthenticationProvider,\
-  com.phlink.core.web.security.model.token.JwtTokenFactory,\
   com.phlink.core.web.security.permission.MyFilterSecurityInterceptor,\
   com.phlink.core.web.security.permission.MyAccessDecisionManager,\
   com.phlink.core.web.security.permission.MySecurityMetadataSource,\

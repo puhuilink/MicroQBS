@@ -2,7 +2,6 @@ package com.phlink.core.web.security.auth.jwt;
 
 import com.phlink.core.web.security.JwtAuthenticationToken;
 import com.phlink.core.web.security.model.SecurityUser;
-import com.phlink.core.web.security.model.token.JwtTokenFactory;
 import com.phlink.core.web.security.model.token.RawAccessJwtToken;
 import com.phlink.core.web.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,10 @@ import org.springframework.stereotype.Component;
 @SuppressWarnings("unchecked")
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 
-    private final JwtTokenFactory tokenFactory;
     private final SecurityUtil securityUtil;
 
     @Autowired
-    public JwtAuthenticationProvider(JwtTokenFactory tokenFactory, SecurityUtil securityUtil) {
-        this.tokenFactory = tokenFactory;
+    public JwtAuthenticationProvider(SecurityUtil securityUtil) {
         this.securityUtil = securityUtil;
     }
 
