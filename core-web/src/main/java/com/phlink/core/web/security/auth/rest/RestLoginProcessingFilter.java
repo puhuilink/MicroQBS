@@ -23,6 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author wen
+ */
 @Slf4j
 public class RestLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
 

@@ -3,6 +3,9 @@ package com.phlink.core.web.security.exception;
 import com.phlink.core.web.security.model.token.JwtToken;
 import org.springframework.security.core.AuthenticationException;
 
+/**
+ * @author wen
+ */
 public class JwtExpiredTokenException extends AuthenticationException {
     private static final long serialVersionUID = -5959543783324224864L;
 

@@ -40,6 +40,11 @@ public class PhlinkTokenProperties {
     private Integer loginTimeLimit = 10;
 
     /**
+     * 登陆错误剩余提醒
+     */
+    private Integer loginTimeNotify = 5;
+
+    /**
      * 错误超过次数后多少分钟后才能继续登录（分钟）
      */
     private Integer loginAfterTime = 10;

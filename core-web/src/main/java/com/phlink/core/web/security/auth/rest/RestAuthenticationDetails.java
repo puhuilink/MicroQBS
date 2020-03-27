@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
 
+/**
+ * @author wen
+ */
 @Data
 public class RestAuthenticationDetails implements Serializable {
 

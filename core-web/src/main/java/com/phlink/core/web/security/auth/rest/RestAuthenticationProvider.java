@@ -1,14 +1,10 @@
 package com.phlink.core.web.security.auth.rest;
 
-import cn.hutool.core.util.StrUtil;
 import com.phlink.core.web.entity.User;
 import com.phlink.core.web.security.model.SecurityUser;
 import com.phlink.core.web.security.model.UserPrincipal;
 import com.phlink.core.web.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RBucket;
-import org.redisson.api.RedissonClient;
-import org.redisson.client.codec.StringCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,6 +17,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+/**
+ * @author wen
+ */
 @Component
 @Slf4j
 public class RestAuthenticationProvider implements AuthenticationProvider {

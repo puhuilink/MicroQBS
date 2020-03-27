@@ -4,6 +4,9 @@ import org.springframework.security.authentication.AuthenticationDetailsSource;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author wen
+ */
 public class RestAuthenticationDetailsSource implements AuthenticationDetailsSource<HttpServletRequest, RestAuthenticationDetails> {
 
     @Override

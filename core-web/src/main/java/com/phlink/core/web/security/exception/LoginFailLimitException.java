@@ -4,6 +4,7 @@ import org.springframework.security.core.AuthenticationException;
 
 /**
  * 限流异常
+ * @author wen
  */
 public class LoginFailLimitException extends AuthenticationException {
 

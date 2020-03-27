@@ -58,7 +58,7 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
             int loginFailTime = Integer.parseInt(value);
             int restLoginTime = tokenProperties.getLoginTimeLimit() - loginFailTime;
             log.info("用户" + username + "登录失败，还有" + restLoginTime + "次机会");
-            if (restLoginTime <= 3 && restLoginTime > 0) {
+            if (restLoginTime <= tokenProperties.getLoginTimeNotify() && restLoginTime > 0) {
                 ResponseUtil.out(response, ResponseUtil.resultMap(false, ResultCode.INTERNAL_SERVER_ERROR, "用户名或密码错误，还有" + restLoginTime + "次尝试机会"));
             } else if (restLoginTime <= 0) {
                 ResponseUtil.out(response, ResponseUtil.resultMap(false, ResultCode.LOGIN_FAIL_MANY_TIMES, "登录错误次数超过限制，请" + tokenProperties.getLoginAfterTime() + "分钟后再试"));
