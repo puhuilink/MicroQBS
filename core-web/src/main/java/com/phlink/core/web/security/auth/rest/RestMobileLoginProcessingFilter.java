@@ -76,7 +76,7 @@ public class RestMobileLoginProcessingFilter extends AbstractAuthenticationProce
         // 已验证清除key
         redissonClient.getKeys().delete(loginRequest.getMobile());
 
-        UserPrincipal principal = new UserPrincipal(UserPrincipal.Type.MOBILE, loginRequest.getMobile());
+        UserPrincipal principal = new UserPrincipal(UserPrincipal.Type.MOBILE, loginRequest.getMobile(), loginRequest.getSaveLogin());
 
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(principal, loginRequest.getCode());
         token.setDetails(authenticationDetailsSource.buildDetails(request));

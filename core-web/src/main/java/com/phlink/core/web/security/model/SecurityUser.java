@@ -12,8 +12,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author wen
@@ -25,6 +23,7 @@ public class SecurityUser extends User {
 
     private Collection<GrantedAuthority> authorities;
     private UserPrincipal userPrincipal;
+    private Boolean saveLogin;
 
     public SecurityUser() {
         super();
@@ -33,6 +32,7 @@ public class SecurityUser extends User {
     public SecurityUser(User user, UserPrincipal userPrincipal) {
         super(user);
         this.userPrincipal = userPrincipal;
+        this.saveLogin = userPrincipal.getSaveLogin();
     }
 
     public SecurityUser(User user) {

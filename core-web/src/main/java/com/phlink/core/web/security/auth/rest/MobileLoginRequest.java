@@ -8,11 +8,15 @@ import lombok.Data;
 public class MobileLoginRequest {
     private String mobile;
     private String code;
+    private Boolean saveLogin;
 
     @JsonCreator
-    public MobileLoginRequest(@JsonProperty("mobile") String mobile, @JsonProperty("code") String code) {
+    public MobileLoginRequest(@JsonProperty("mobile") String mobile,
+                              @JsonProperty("code") String code,
+                              @JsonProperty("saveLogin") Boolean saveLogin) {
         this.mobile = mobile;
         this.code = code;
+        this.saveLogin = saveLogin;
     }
 
 }

@@ -2,8 +2,6 @@ package com.phlink.core.web.security.auth.rest;
 
 import cn.hutool.core.util.StrUtil;
 import com.google.gson.Gson;
-import com.phlink.core.web.base.enums.ResultCode;
-import com.phlink.core.web.base.utils.ResponseUtil;
 import com.phlink.core.web.security.exception.AuthMethodNotSupportedException;
 import com.phlink.core.web.security.model.UserPrincipal;
 import lombok.extern.slf4j.Slf4j;
@@ -82,7 +80,7 @@ public class RestImageLoginProcessingFilter extends AbstractAuthenticationProces
         // 已验证清除key
         redissonClient.getKeys().delete(loginRequest.getCaptchaId());
 
-        UserPrincipal principal = new UserPrincipal(UserPrincipal.Type.USER_NAME, loginRequest.getUsername());
+        UserPrincipal principal = new UserPrincipal(UserPrincipal.Type.USER_NAME, loginRequest.getUsername(), loginRequest.getSaveLogin());
 
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(principal, loginRequest.getPassword());
         token.setDetails(authenticationDetailsSource.buildDetails(request));

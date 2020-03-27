@@ -65,7 +65,7 @@ public class SecurityUtil {
         if (StrUtil.isBlank(username)) {
             throw new BizException("username不能为空");
         }
-        Boolean saved = false;
+        boolean saved = false;
         if (saveLogin == null || saveLogin) {
             saved = true;
             if (!tokenProperties.getRedis()) {

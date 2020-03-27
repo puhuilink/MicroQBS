@@ -38,7 +38,7 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token = securityUtil.getAccessJwtToken(securityUser.getUsername(), securityUser.isEnabled());
+        String token = securityUtil.getAccessJwtToken(securityUser.getUsername(), securityUser.getSaveLogin());
         AccessJwtToken accessToken = new AccessJwtToken(token);
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("accessToken", accessToken.getToken());

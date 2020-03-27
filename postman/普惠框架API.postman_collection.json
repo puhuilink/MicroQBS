@@ -208,12 +208,13 @@
 					}
 				],
 				"url": {
-					"raw": "{{local_url}}/common/captcha/init",
+					"raw": "{{local_url}}/api/noauth/captcha/init",
 					"host": [
 						"{{local_url}}"
 					],
 					"path": [
-						"common",
+						"api",
+						"noauth",
 						"captcha",
 						"init"
 					]
@@ -257,12 +258,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{local_url}}/common/captcha/draw/{{uuid}}",
+					"raw": "{{local_url}}/api/noauth/captcha/draw/{{uuid}}",
 					"host": [
 						"{{local_url}}"
 					],
 					"path": [
-						"common",
+						"api",
+						"noauth",
 						"captcha",
 						"draw",
 						"{{uuid}}"
@@ -303,34 +305,8 @@
 					}
 				],
 				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "username",
-							"value": "test",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "123456",
-							"type": "text"
-						},
-						{
-							"key": "code",
-							"value": "mqyx",
-							"type": "text"
-						},
-						{
-							"key": "captchaId",
-							"value": "{{uuid}}",
-							"type": "text"
-						},
-						{
-							"key": "saveLogin",
-							"value": "true",
-							"type": "text"
-						}
-					],
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"test\",\n\t\"password\": \"123456\",\n\t\"code\": \"xpjv\",\n\t\"captchaId\": \"33058213413e43159223911de2ed2a88\",\n\t\"saveLogin\": true\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -338,76 +314,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{local_url}}/login",
+					"raw": "{{local_url}}/api/auth/login/image",
 					"host": [
 						"{{local_url}}"
 					],
 					"path": [
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "用户名密码登录",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "ec3c0985-cf02-4e51-a343-1767ed714ecb",
-						"exec": [
-							"var body = JSON.parse(responseBody);",
-							"if (body.result) {",
-							"  tests[\"has accessToken\"] = true;",
-							"  postman.setEnvironmentVariable(\"accessToken\", body.result);",
-							"}",
-							"else {",
-							"  tests[\"has accessToken\"] = false;",
-							"}"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "username",
-							"value": "test",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "123456",
-							"type": "text"
-						}
-					],
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{local_url}}/login/username",
-					"host": [
-						"{{local_url}}"
-					],
-					"path": [
+						"api",
+						"auth",
 						"login",
-						"username"
+						"image"
 					]
 				}
 			},
@@ -445,14 +360,15 @@
 					}
 				],
 				"url": {
-					"raw": "{{local_url}}/common/captcha/initMobile/18782059038",
+					"raw": "{{local_url}}/api/noauth/captcha/init-mobile/18782059038",
 					"host": [
 						"{{local_url}}"
 					],
 					"path": [
-						"common",
+						"api",
+						"noauth",
 						"captcha",
-						"initMobile",
+						"init-mobile",
 						"18782059038"
 					]
 				}
@@ -491,19 +407,8 @@
 					}
 				],
 				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "mobile",
-							"value": "18782059038",
-							"type": "text"
-						},
-						{
-							"key": "code",
-							"value": "{{mobileCode}}",
-							"type": "text"
-						}
-					],
+					"mode": "raw",
+					"raw": "{\n\t\"mobile\": \"18782059038\",\n\t\"code\": \"943530\",\n\t\"saveLogin\": true\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -511,11 +416,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{local_url}}/login/mobile",
+					"raw": "{{local_url}}/api/auth/login/mobile",
 					"host": [
 						"{{local_url}}"
 					],
 					"path": [
+						"api",
+						"auth",
 						"login",
 						"mobile"
 					]
@@ -534,7 +441,7 @@
 							"var body = JSON.parse(responseBody);",
 							"if (body.result) {",
 							"  tests[\"has accessToken\"] = true;",
-							"  postman.setEnvironmentVariable(\"accessToken\", body.result);",
+							"  postman.setEnvironmentVariable(\"accessToken\", body.result.accessToken);",
 							"}",
 							"else {",
 							"  tests[\"has accessToken\"] = false;",
@@ -555,19 +462,8 @@
 					}
 				],
 				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "123456",
-							"type": "text"
-						}
-					],
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"test\",\n\t\"password\": \"123456\",\n\t\"saveLogin\": true\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -575,13 +471,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{local_url}}/login/username",
+					"raw": "{{local_url}}/api/auth/login",
 					"host": [
 						"{{local_url}}"
 					],
 					"path": [
-						"login",
-						"username"
+						"api",
+						"auth",
+						"login"
 					]
 				}
 			},
