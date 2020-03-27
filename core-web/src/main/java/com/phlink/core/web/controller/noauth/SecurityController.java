@@ -1,4 +1,4 @@
-package com.phlink.core.web.controller.common;
+package com.phlink.core.web.controller.noauth;
 
 import cn.hutool.http.HttpUtil;
 import com.phlink.core.web.base.enums.ResultCode;
@@ -21,14 +21,8 @@ import java.util.Map;
 @Slf4j
 @RestController
 @Api(tags = "Security相关接口")
-@RequestMapping("/common")
+@RequestMapping("/api/noauth")
 public class SecurityController {
-
-    @GetMapping(value = "/needLogin")
-    @ApiOperation(value = "没有登录")
-    public void needLogin() {
-        throw new BizException(ResultCode.SIGNATURE_NOT_MATCH);
-    }
 
     @GetMapping(value = "/swagger/login")
     @ApiOperation(value = "Swagger接口文档专用登录接口 方便测试")

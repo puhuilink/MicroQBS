@@ -1,12 +1,8 @@
-package com.phlink.core.web.controller.common;
+package com.phlink.core.web.controller.noauth;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.phlink.core.web.entity.City;
 import com.phlink.core.web.entity.Country;
 import com.phlink.core.web.entity.Province;
-import com.phlink.core.web.mapper.CityMapper;
-import com.phlink.core.web.mapper.CountryMapper;
-import com.phlink.core.web.mapper.ProvinceMapper;
 import com.phlink.core.web.service.CityService;
 import com.phlink.core.web.service.CountryService;
 import com.phlink.core.web.service.ProvinceService;
@@ -15,7 +11,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +24,7 @@ import java.util.List;
  * @author wen
  */
 @Api(tags = "行政区域接口")
-@RequestMapping("/common/region")
+@RequestMapping("/api/noauth/region")
 @RestController
 @Transactional
 @Slf4j

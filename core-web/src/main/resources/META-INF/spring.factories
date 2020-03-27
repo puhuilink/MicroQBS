@@ -27,8 +27,6 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.web.security.permission.MyFilterSecurityInterceptor,\
   com.phlink.core.web.security.permission.MyAccessDecisionManager,\
   com.phlink.core.web.security.permission.MySecurityMetadataSource,\
-  com.phlink.core.web.security.validator.image.ImageValidateFilter,\
-  com.phlink.core.web.security.validator.sms.SmsValidateFilter,\
   com.phlink.core.web.base.utils.IpInfoUtil,\
   com.phlink.core.web.util.SecurityUtil,\
   com.phlink.core.web.aop.GlobalExceptionHandler,\
@@ -49,9 +47,9 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.web.service.impl.CityServiceImpl,\
   com.phlink.core.web.service.impl.ProvinceServiceImpl,\
   com.phlink.core.web.service.impl.CountryServiceImpl,\
-  com.phlink.core.web.controller.common.CaptchaController,\
-  com.phlink.core.web.controller.common.SecurityController,\
-  com.phlink.core.web.controller.common.RegionController,\
+  com.phlink.core.web.controller.noauth.CaptchaController,\
+  com.phlink.core.web.controller.noauth.SecurityController,\
+  com.phlink.core.web.controller.noauth.RegionController,\
   com.phlink.core.web.controller.manage.PermissionController,\
   com.phlink.core.web.controller.manage.DepartmentController,\
   com.phlink.core.web.controller.manage.RoleController,\

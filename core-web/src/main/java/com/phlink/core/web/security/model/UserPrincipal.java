@@ -38,6 +38,7 @@ public class UserPrincipal implements Serializable {
     public enum Type {
         USER_NAME,
         MOBILE,
+        IMAGE,
         EMAIL
     }
 

@@ -1,4 +1,4 @@
-package com.phlink.core.web.controller.common;
+package com.phlink.core.web.controller.noauth;
 
 import cn.hutool.core.util.StrUtil;
 import com.phlink.core.web.base.enums.ResultCode;
@@ -24,8 +24,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author wen
  */
-@Api(tags = "验证码接口")
-@RequestMapping("/common/captcha")
+@Api(tags = "验证码相关接口")
+@RequestMapping("/api/noauth/captcha")
 @RestController
 @Transactional
 public class CaptchaController {
@@ -33,7 +33,7 @@ public class CaptchaController {
     @Autowired
     private RedissonClient redissonClient;
 
-    @RequestMapping(value = "/initMobile/{mobile}", method = RequestMethod.GET)
+    @RequestMapping(value = "/init-mobile/{mobile}", method = RequestMethod.GET)
     @ApiOperation(value = "初始化手机验证码")
     public String initMobileCaptcha(@PathVariable String mobile) {
         Long codeL = System.nanoTime();

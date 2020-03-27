@@ -1,4 +1,4 @@
-package com.phlink.core.web.controller.common;
+package com.phlink.core.web.controller.noauth;
 
 import com.google.gson.Gson;
 import com.phlink.core.web.base.vo.Result;

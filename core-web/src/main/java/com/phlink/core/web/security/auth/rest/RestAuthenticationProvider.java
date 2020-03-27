@@ -1,10 +1,14 @@
 package com.phlink.core.web.security.auth.rest;
 
+import cn.hutool.core.util.StrUtil;
 import com.phlink.core.web.entity.User;
 import com.phlink.core.web.security.model.SecurityUser;
 import com.phlink.core.web.security.model.UserPrincipal;
 import com.phlink.core.web.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RBucket;
+import org.redisson.api.RedissonClient;
+import org.redisson.client.codec.StringCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -46,7 +50,8 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
             return authenticateByUsernameAndPassword(authentication, userPrincipal, username, password);
         } else {
             String mobile = userPrincipal.getValue();
-            return authenticateByMobile(userPrincipal, mobile);
+            String code = (String) authentication.getCredentials();
+            return authenticateByMobile(authentication, userPrincipal, mobile, code);
         }
     }
 
@@ -71,10 +76,10 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
         }
     }
 
-    private Authentication authenticateByMobile(UserPrincipal userPrincipal, String mobile) {
+    private Authentication authenticateByMobile(Authentication authentication, UserPrincipal userPrincipal, String mobile, String code) {
         User user = userService.getByMobile(mobile);
         if (user == null) {
-            throw new UsernameNotFoundException("User not found: " + mobile);
+            throw new UsernameNotFoundException("手机号不存在");
         }
         SecurityUser securityUser = new SecurityUser(user, true, userPrincipal);
 
