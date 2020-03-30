@@ -52,3 +52,17 @@ web 的核型模块，需要开发业务，直接引入该模块即可
 
 ## 文档
 见wiki: https://github.com/Sevncz/phlink-common-framework/wiki
+
+
+## QA
+### VSCODE
+修改module之后Springboot-dashboard无法渲染
+```
+Try closing vscode and cleaning your workspace storage:
+
+On linux: $HOME/.config/Code/User/workspaceStorage
+On mac: $HOME/Library/Application Support/Code/User/workspaceStorage
+On windows: %APPDATA%\Code\User\workspaceStorage
+In case it did't help, if you have the VScodeVim extension, try disabling it and restarting vscode. This might be helpful.
+
+```
