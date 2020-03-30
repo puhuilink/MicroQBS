@@ -1,6 +1,7 @@
 package com.phlink.core.web.base.exception;
 
 import com.phlink.core.web.base.enums.IResultCode;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BizException extends RuntimeException {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     /**
      * 错误码
      */

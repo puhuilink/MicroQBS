@@ -1,12 +1,20 @@
 package com.phlink.core.web.aop;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Path;
+
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.phlink.core.web.base.enums.ResultCode;
 import com.phlink.core.web.base.exception.BizException;
 import com.phlink.core.web.base.exception.LimitAccessException;
 import com.phlink.core.web.base.utils.ResultUtil;
 import com.phlink.core.web.base.vo.Result;
-import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -20,12 +28,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Path;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestControllerAdvice
@@ -35,14 +38,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<String> handleException(Exception e) {
-        log.error("系统内部异常，异常信息：", e);
+        log.error("系统内部异常，未知异常信息：", e);
         return ResultUtil.error("系统内部异常");
     }
 
     @ExceptionHandler(value = BizException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<Object> handleParamsInvalidException(BizException e) {
-        log.error("系统内部异常，异常信息：", e);
+        log.error("系统内部异常，业务异常信息：", e);
         return ResultUtil.error(e.getErrorCode(), e.getErrorMsg());
     }
 
@@ -55,6 +58,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<Object> validExceptionHandler(BindException e) {
+        log.warn("参数错误：", e);
         StringBuilder message = new StringBuilder();
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         for (FieldError error : fieldErrors) {
@@ -74,6 +78,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<Object> handleConstraintViolationException(ConstraintViolationException e) {
+        log.warn("参数错误：", e);
         StringBuilder message = new StringBuilder();
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
         for (ConstraintViolation<?> violation : violations) {
@@ -88,6 +93,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<Object> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+        log.warn("请求错误", e);
         return ResultUtil.error(ResultCode.BODY_NOT_MATCH.getCode(), e.getMessage());
 
     }
@@ -95,7 +101,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = LimitAccessException.class)
     @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
     public Result<Object> handleLimitAccessException(LimitAccessException e) {
-        log.error(e.getMessage());
+        log.error("请求次数过多", e.getMessage());
         return ResultUtil.error(e.getErrorCode(), e.getErrorMsg());
     }
 

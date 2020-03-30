@@ -27,7 +27,6 @@ import java.util.List;
 @RequestMapping("/api/noauth/region")
 @RestController
 @Transactional
-@Slf4j
 public class RegionController {
     @Autowired
     private ProvinceService provinceService;

@@ -18,7 +18,6 @@ import java.util.Map;
 /**
  * @author wen
  */
-@Slf4j
 @RestController
 @Api(tags = "Security相关接口")
 @RequestMapping("/api/noauth")
