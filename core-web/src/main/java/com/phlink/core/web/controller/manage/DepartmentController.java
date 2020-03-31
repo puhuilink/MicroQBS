@@ -1,6 +1,9 @@
 package com.phlink.core.web.controller.manage;
 
-import cn.hutool.core.util.StrUtil;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.phlink.core.web.base.constant.CommonConstant;
@@ -16,20 +19,27 @@ import com.phlink.core.web.service.DepartmentService;
 import com.phlink.core.web.service.RoleDepartmentService;
 import com.phlink.core.web.service.UserService;
 import com.phlink.core.web.util.SecurityUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import lombok.extern.slf4j.Slf4j;
+
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import cn.hutool.core.util.StrUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author wen
@@ -85,10 +95,8 @@ public class DepartmentController {
     @PostMapping(value = "/add")
     @ApiOperation(value = "添加")
     public Result<Object> add(Department department) {
-
-        departmentService.save(department);
         // 同步该节点缓存
-        User u = securityUtil.getCurrUser();
+        departmentService.save(department);
         redissonClient.getKeys().deleteByPattern("department::" + department.getParentId() + ":*");
 
         // 如果不是添加的一级 判断设置上级为父节点标识

@@ -1,15 +1,16 @@
 package com.phlink.core.web.entity;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.phlink.core.web.base.PhlinkBaseEntity;
 import com.phlink.core.web.base.constant.CommonConstant;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * @author wen
@@ -18,8 +19,6 @@ import java.util.List;
 @TableName("t_department")
 @ApiModel(value = "部门")
 public class Department extends PhlinkBaseEntity {
-
-    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "部门名称")
     private String title;

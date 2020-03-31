@@ -1,10 +1,10 @@
 package com.phlink.core.web.config.mybatis;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
 import java.util.HashMap;
 import java.util.List;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 数据权限查询参数
@@ -13,8 +13,13 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class DataScope extends HashMap {
 	/**
-	 * 限制范围的字段名称
-	 */
+     *
+     */
+    private static final long serialVersionUID = 5528100842169903358L;
+
+    /**
+     * 限制范围的字段名称
+     */
 	private String scopeName = "departmentId";
 
 	/**

@@ -1,5 +1,12 @@
 package com.phlink.core.web.aop;
 
+import java.lang.reflect.Method;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import com.phlink.core.web.base.annotation.SystemLogTrace;
 import com.phlink.core.web.base.utils.InheritableThreadLocalUtil;
 import com.phlink.core.web.base.utils.IpInfoUtil;
@@ -9,7 +16,7 @@ import com.phlink.core.web.security.model.SecurityUser;
 import com.phlink.core.web.service.LogTraceService;
 import com.phlink.core.web.service.UserService;
 import com.phlink.core.web.util.SecurityUtil;
-import lombok.extern.slf4j.Slf4j;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -17,14 +24,9 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Method;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * AOP 记录用户操作日志

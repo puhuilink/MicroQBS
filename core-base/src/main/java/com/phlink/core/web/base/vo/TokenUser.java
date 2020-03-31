@@ -1,14 +1,19 @@
 package com.phlink.core.web.base.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.List;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Data
 @AllArgsConstructor
 public class TokenUser implements Serializable {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = -4234898740994855314L;
 
     private String username;
 

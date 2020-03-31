@@ -1,13 +1,14 @@
 package com.phlink.core.web.aop;
 
-import com.phlink.core.web.base.utils.InheritableThreadLocalUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.lang.Nullable;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.phlink.core.web.base.utils.InheritableThreadLocalUtil;
+
+import org.springframework.lang.Nullable;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author wen
