@@ -61,8 +61,23 @@ web 的核型模块，需要开发业务，直接引入该模块即可
 Try closing vscode and cleaning your workspace storage:
 
 On linux: $HOME/.config/Code/User/workspaceStorage
-On mac: $HOME/Library/Application Support/Code/User/workspaceStorage
+On mac: $HOME/Library/Application\ Support/Code/User/workspaceStorage
 On windows: %APPDATA%\Code\User\workspaceStorage
 In case it did't help, if you have the VScodeVim extension, try disabling it and restarting vscode. This might be helpful.
 
+```
+
+### maven模版使用
+```
+# 进入到生成的archetype目录
+cd target\generated-sources\archetype
+
+# 将archetype安装到本地
+mvn install
+
+# 执行下面操作更新本地的archetype-catalog.xml
+mvn archetype:crawl
+
+新建项目时：
+mvn archetype:generate -DarchetypeCatalog=local 
 ```

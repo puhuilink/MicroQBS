@@ -9,8 +9,6 @@ import com.google.gson.reflect.TypeToken;
 import com.phlink.core.web.base.constant.CommonConstant;
 import com.phlink.core.web.base.exception.BizException;
 import com.phlink.core.web.base.utils.CommonUtil;
-import com.phlink.core.web.base.utils.ResultUtil;
-import com.phlink.core.web.base.vo.Result;
 import com.phlink.core.web.entity.Department;
 import com.phlink.core.web.entity.DepartmentMaster;
 import com.phlink.core.web.entity.User;
@@ -94,7 +92,7 @@ public class DepartmentController {
 
     @PostMapping(value = "/add")
     @ApiOperation(value = "添加")
-    public Result<Object> add(Department department) {
+    public String add(Department department) {
         // 同步该节点缓存
         departmentService.save(department);
         redissonClient.getKeys().deleteByPattern("department::" + department.getParentId() + ":*");
@@ -109,7 +107,7 @@ public class DepartmentController {
                 redissonClient.getKeys().deleteByPattern("department::" + parent.getParentId() + ":*");
             }
         }
-        return ResultUtil.success("添加成功");
+        return "添加成功";
     }
 
     @PutMapping(value = "/edit")

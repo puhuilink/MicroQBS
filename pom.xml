@@ -11,6 +11,7 @@
     <module>service-code-generator</module>
     <module>demo-web</module>
     <module>demo-spark</module>
+    <module>demo-transfer</module>
   </modules>
 
   <parent>
