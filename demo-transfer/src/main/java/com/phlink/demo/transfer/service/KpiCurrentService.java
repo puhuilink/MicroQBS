@@ -9,6 +9,7 @@ package com.phlink.demo.transfer.service;
 import java.util.List;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.phlink.core.web.base.vo.PageVO;
 import com.phlink.core.web.base.vo.SearchVO;
 import com.phlink.demo.transfer.entity.KpiCurrent;
 
@@ -18,5 +19,7 @@ import com.phlink.demo.transfer.entity.KpiCurrent;
 public interface KpiCurrentService extends IService<KpiCurrent> {
 
 	List<KpiCurrent> listByCondition(SearchVO searchVo);
+
+	List<KpiCurrent> listByOffset(PageVO pageVo);
 
 }

@@ -19,6 +19,12 @@
     <dependency>
       <groupId>com.phlink.core</groupId>
       <artifactId>core-base</artifactId>
+      <exclusions>
+        <exclusion>
+            <artifactId>jackson-databind</artifactId>
+            <groupId>com.fasterxml.jackson.core</groupId>
+        </exclusion>
+    </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -65,7 +71,6 @@
       <groupId>com.github.ua-parser</groupId>
       <artifactId>uap-java</artifactId>
     </dependency>
-
   </dependencies>
 
 </project>

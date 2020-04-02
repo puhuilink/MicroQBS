@@ -2,8 +2,6 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.web.config.WebSecurityConfig,\
   com.phlink.core.web.config.Swagger2Config,\
   com.phlink.core.web.config.redis.RedissonConfig,\
-  com.phlink.core.web.config.jackson.JacksonConfig,\
-  com.phlink.core.web.config.jackson.JavaTimeModule,\
   com.phlink.core.web.config.WebConfig,\
   com.phlink.core.web.config.httpclient.HttpClientConfig,\
   com.phlink.core.web.config.httpclient.RestTemplateConfig,\

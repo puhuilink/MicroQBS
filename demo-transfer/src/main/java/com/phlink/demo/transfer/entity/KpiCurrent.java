@@ -1,8 +1,8 @@
 /*
  * @Author: sevncz.wen
  * @Date: 2020-04-01 18:18:24
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-04-01 18:18:24
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-04-02 15:32:05
  */
 package com.phlink.demo.transfer.entity;
 
@@ -22,10 +22,10 @@ import lombok.NoArgsConstructor;
 @ApiModel(value = "KPI")
 public class KpiCurrent {
 
-    private Integer kpiCode;
-    private Integer ciId;
+    private Long kpiCode;
+    private Long ciId;
     private String instanceId;
-    private Integer taskId;
+    private Long taskId;
     private Integer arisingIndex;
     private Integer kpiValueNum;
     private String kpiValueTxt;

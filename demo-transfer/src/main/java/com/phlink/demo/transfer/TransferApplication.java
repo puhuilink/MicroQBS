@@ -1,8 +1,8 @@
 /*
  * @Author: sevncz.wen
  * @Date: 2020-04-01 18:18:19
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-04-01 18:18:19
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-04-02 14:55:11
  */
 package com.phlink.demo.transfer;
 
@@ -21,7 +21,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @SpringBootApplication
 @EnableTransactionManagement
-//启用自带定时任务
+// 启用自带定时任务
 @EnableScheduling
 @EnableAsync
 @EnableMBeanExport(registration = RegistrationPolicy.IGNORE_EXISTING)
@@ -31,8 +31,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class TransferApplication {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(TransferApplication.class)
-                .run(args);
+        new SpringApplicationBuilder(TransferApplication.class).run(args);
     }
 
 }
