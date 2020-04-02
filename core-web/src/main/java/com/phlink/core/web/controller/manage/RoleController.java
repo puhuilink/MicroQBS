@@ -1,24 +1,36 @@
 package com.phlink.core.web.controller.manage;
 
-import cn.hutool.core.convert.Convert;
+import java.util.List;
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.phlink.core.web.base.exception.BizException;
 import com.phlink.core.web.base.vo.PageVO;
-import com.phlink.core.web.entity.*;
+import com.phlink.core.web.entity.Role;
+import com.phlink.core.web.entity.RoleDepartment;
+import com.phlink.core.web.entity.RolePermission;
+import com.phlink.core.web.entity.UserRole;
 import com.phlink.core.web.service.RoleDepartmentService;
 import com.phlink.core.web.service.RolePermissionService;
 import com.phlink.core.web.service.RoleService;
 import com.phlink.core.web.service.UserRoleService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import cn.hutool.core.convert.Convert;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author wen
@@ -45,7 +57,7 @@ public class RoleController {
     @Autowired
     private RedissonClient redissonClient;
 
-    @GetMapping(value = "/all")
+    @GetMapping(value = "")
     @ApiOperation(value = "获取全部角色")
     public List<Role> listAll() {
         return roleService.list();
@@ -82,7 +94,7 @@ public class RoleController {
         return "设置成功";
     }
 
-    @PutMapping(value = "/update/rolePermission")
+    @PutMapping(value = "/role-permission")
     @ApiOperation(value = "编辑角色分配菜单权限")
     public String updateRolePermission(@RequestParam String roleId,
                                        @RequestParam(required = false) String[] permIds) {
@@ -105,7 +117,7 @@ public class RoleController {
         return "编辑成功";
     }
 
-    @PutMapping(value = "/update/roleDepartment")
+    @PutMapping(value = "/role-department")
     @ApiOperation(value = "编辑角色分配数据权限")
     public String updateRoleDep(@RequestParam String roleId,
                                 @RequestParam Integer dataType,
@@ -130,14 +142,14 @@ public class RoleController {
         return "编辑成功";
     }
 
-    @PostMapping(value = "/save")
+    @PostMapping(value = "")
     @ApiOperation(value = "保存数据")
     public Role save(Role role) {
         roleService.save(role);
         return role;
     }
 
-    @PutMapping(value = "/update")
+    @PutMapping(value = "")
     @ApiOperation(value = "更新数据")
     public Role update(Role entity) {
 
@@ -149,7 +161,7 @@ public class RoleController {
         return entity;
     }
 
-    @DeleteMapping(value = "/delete/{ids}")
+    @DeleteMapping(value = "/{ids}")
     @ApiOperation(value = "批量通过ids删除")
     public String delByIds(@PathVariable String[] ids) {
 

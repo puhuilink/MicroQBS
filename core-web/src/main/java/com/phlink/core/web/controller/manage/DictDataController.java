@@ -34,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @Api(tags = "字典数据管理接口")
-@RequestMapping("/manage/dictData")
+@RequestMapping("/manage/dict-data")
 @CacheConfig(cacheNames = "dictData")
 @Transactional
 public class DictDataController {
@@ -67,7 +67,7 @@ public class DictDataController {
         return dictDataService.listByDictId(dict.getId());
     }
 
-    @PostMapping(value = "/save")
+    @PostMapping(value = "")
     @ApiOperation(value = "保存")
     public String save(DictData dictData) {
 
@@ -81,7 +81,7 @@ public class DictDataController {
         return "添加成功";
     }
 
-    @PutMapping(value = "/update")
+    @PutMapping(value = "")
     @ApiOperation(value = "编辑")
     public String update(DictData dictData) {
         dictDataService.updateById(dictData);
@@ -91,7 +91,7 @@ public class DictDataController {
         return "编辑成功";
     }
 
-    @DeleteMapping(value = "/delete/{ids}")
+    @DeleteMapping(value = "/{ids}")
     @ApiOperation(value = "批量通过id删除")
     public String delByIds(@PathVariable String[] ids) {
 

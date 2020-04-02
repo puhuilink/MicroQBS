@@ -1,6 +1,9 @@
 package com.phlink.core.web.controller.manage;
 
-import cn.hutool.core.util.StrUtil;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.phlink.core.web.base.constant.CommonConstant;
@@ -14,9 +17,7 @@ import com.phlink.core.web.service.PermissionService;
 import com.phlink.core.web.service.RolePermissionService;
 import com.phlink.core.web.util.SecurityUtil;
 import com.phlink.core.web.util.VoUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,19 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import cn.hutool.core.util.StrUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author wen
@@ -56,7 +65,7 @@ public class PermissionController {
     @Autowired
     private RedissonClient redissonClient;
 
-    @GetMapping(value = "/userList")
+    @GetMapping(value = "/user")
     @ApiOperation(value = "获取用户页面菜单数据")
     public List<MenuVO> getAllMenuList() {
 
@@ -139,7 +148,7 @@ public class PermissionController {
         return menuList;
     }
 
-    @RequestMapping(value = "/allList", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ApiOperation(value = "获取权限菜单树")
     @Cacheable(key = "'allList'")
     public List<Permission> listAll() {
@@ -164,7 +173,7 @@ public class PermissionController {
         return list0;
     }
 
-    @PostMapping(value = "/add")
+    @PostMapping(value = "")
     @ApiOperation(value = "添加")
     @CacheEvict(key = "'menuList'")
     public Permission add(Permission permission) {
@@ -184,7 +193,7 @@ public class PermissionController {
         return permission;
     }
 
-    @PutMapping(value = "/update")
+    @PutMapping(value = "")
     @ApiOperation(value = "编辑")
     public Permission update(Permission permission) {
 
@@ -210,7 +219,7 @@ public class PermissionController {
         return permission;
     }
 
-    @RequestMapping(value = "/delete/{ids}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{ids}", method = RequestMethod.DELETE)
     @ApiOperation(value = "批量通过id删除")
     @CacheEvict(key = "'menuList'")
     public String deleteByIds(@PathVariable String[] ids) {

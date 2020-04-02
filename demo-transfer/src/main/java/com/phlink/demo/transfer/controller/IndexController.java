@@ -36,7 +36,7 @@ public class IndexController {
     }
 
     @GetMapping("/page")
-    @ApiOperation(value = "欢迎", notes = "欢迎", httpMethod = "GET")
+    @ApiOperation(value = "kpi分页列表", notes = "kpi分页列表", httpMethod = "GET")
     public PageInfo<KpiCurrent> page(SearchVO searchVo, PageVO pageVo) {
         PageInfo<KpiCurrent> page = PageHelper
                 .startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())

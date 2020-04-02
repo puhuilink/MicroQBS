@@ -1,18 +1,27 @@
 package com.phlink.core.web.controller.manage;
 
+import java.util.List;
+
 import com.phlink.core.web.base.exception.BizException;
 import com.phlink.core.web.entity.Dict;
 import com.phlink.core.web.service.DictDataService;
 import com.phlink.core.web.service.DictService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author wen
@@ -35,11 +44,11 @@ public class DictController {
 
     @GetMapping(value = "/all")
     @ApiOperation(value = "获取全部数据")
-    public List<Dict> getAll() {
+    public List<Dict> listAll() {
         return dictService.listAllOrderBySortOrder();
     }
 
-    @PostMapping(value = "/save")
+    @PostMapping(value = "")
     @ApiOperation(value = "添加")
     public String save(Dict dict) {
 
@@ -50,7 +59,7 @@ public class DictController {
         return "添加成功";
     }
 
-    @PutMapping(value = "/update")
+    @PutMapping(value = "")
     @ApiOperation(value = "编辑")
     public String update(Dict dict) {
 
@@ -63,7 +72,7 @@ public class DictController {
         return "编辑成功";
     }
 
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/{id}")
     @ApiOperation(value = "通过id删除")
     public String delAllByIds(@PathVariable String id) {
 

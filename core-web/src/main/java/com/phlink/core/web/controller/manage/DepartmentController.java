@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -68,7 +67,7 @@ public class DepartmentController {
     @Autowired
     private SecurityUtil securityUtil;
 
-    @GetMapping(value = "/list/parentId/{parentId}")
+    @GetMapping(value = "/parent/{parentId}")
     @ApiOperation(value = "通过parentId获取")
     public List<Department> listByParentId(@PathVariable String parentId,
                                           @ApiParam("是否开始数据权限过滤") @RequestParam(required = false, defaultValue = "true") Boolean openDataFilter) {
@@ -90,7 +89,7 @@ public class DepartmentController {
         return list;
     }
 
-    @PostMapping(value = "/add")
+    @PostMapping(value = "")
     @ApiOperation(value = "添加")
     public String add(Department department) {
         // 同步该节点缓存
@@ -110,7 +109,7 @@ public class DepartmentController {
         return "添加成功";
     }
 
-    @PutMapping(value = "/edit")
+    @PutMapping(value = "")
     @ApiOperation(value = "编辑")
     public String edit(Department department,
                                @RequestParam(required = false) String[] mainHeader,
@@ -140,7 +139,7 @@ public class DepartmentController {
         return "编辑成功";
     }
 
-    @DeleteMapping(value = "/delByIds/{ids}")
+    @DeleteMapping(value = "/{ids}")
     @ApiOperation(value = "批量通过id删除")
     public String delByIds(@PathVariable String[] ids) {
 
@@ -189,7 +188,7 @@ public class DepartmentController {
         }
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @GetMapping(value = "/search")
     @ApiOperation(value = "部门名模糊搜索")
     public List<Department> searchByTitle(@RequestParam String title,
                                                   @ApiParam("是否开始数据权限过滤") @RequestParam(required = false, defaultValue = "true") Boolean openDataFilter) {
