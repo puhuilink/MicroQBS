@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-04-02 18:44:41
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-04-02 18:44:41
+ */
 package com.phlink.core.web.config.gson;
 
 import java.lang.reflect.Type;
