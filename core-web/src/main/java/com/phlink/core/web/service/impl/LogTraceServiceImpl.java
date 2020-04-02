@@ -1,7 +1,8 @@
 package com.phlink.core.web.service.impl;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.StrUtil;
+import java.util.Date;
+import java.util.List;
+
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -9,13 +10,14 @@ import com.phlink.core.web.base.vo.SearchVO;
 import com.phlink.core.web.entity.LogTrace;
 import com.phlink.core.web.mapper.LogTraceMapper;
 import com.phlink.core.web.service.LogTraceService;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author wen
@@ -28,15 +30,14 @@ public class LogTraceServiceImpl extends ServiceImpl<LogTraceMapper, LogTrace> i
     @Override
     public List<LogTrace> listByCondition(Integer type, String key, SearchVO searchVo) {
         LambdaQueryWrapper<LogTrace> wrapper = new LambdaQueryWrapper<>();
-        if(StrUtil.isNotBlank(key)) {
-            wrapper.or().like(LogTrace::getRequestUrl, key)
-                    .like(LogTrace::getLogType, key)
-                    .like(LogTrace::getRequestParam, key)
-                    .like(LogTrace::getUsername, key)
-                    .like(LogTrace::getIpInfo, key)
-                    .like(LogTrace::getName, key);
+        if (type != null) {
+            wrapper.eq(LogTrace::getLogType, type);
         }
-        if(StrUtil.isNotBlank(searchVo.getStartDate())&&StrUtil.isNotBlank(searchVo.getEndDate())) {
+        if (StrUtil.isNotBlank(key)) {
+            wrapper.or().like(LogTrace::getRequestUrl, key).like(LogTrace::getRequestParam, key)
+                    .like(LogTrace::getUsername, key).like(LogTrace::getIpInfo, key).like(LogTrace::getName, key);
+        }
+        if (StrUtil.isNotBlank(searchVo.getStartDate()) && StrUtil.isNotBlank(searchVo.getEndDate())) {
             Date start = DateUtil.parse(searchVo.getStartDate());
             Date end = DateUtil.parse(searchVo.getEndDate());
             wrapper.between(LogTrace::getCreateTime, start, end);
@@ -50,5 +51,3 @@ public class LogTraceServiceImpl extends ServiceImpl<LogTraceMapper, LogTrace> i
         baseMapper.delete(wrapper);
     }
 }
-
-

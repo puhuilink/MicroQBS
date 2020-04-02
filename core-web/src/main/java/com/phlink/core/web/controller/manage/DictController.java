@@ -42,7 +42,7 @@ public class DictController {
     @Autowired
     private RedissonClient redissonClient;
 
-    @GetMapping(value = "/all")
+    @GetMapping(value = "")
     @ApiOperation(value = "获取全部数据")
     public List<Dict> listAll() {
         return dictService.listAllOrderBySortOrder();

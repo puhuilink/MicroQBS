@@ -107,7 +107,6 @@ spring:
     serialization:
       fail-on-empty-beans: false
 
-
 management:
   endpoint:
     health:
