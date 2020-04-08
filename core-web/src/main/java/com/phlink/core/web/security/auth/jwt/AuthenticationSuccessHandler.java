@@ -1,12 +1,12 @@
 package com.phlink.core.web.security.auth.jwt;
 
-import com.phlink.core.web.base.annotation.SystemLogTrace;
-import com.phlink.core.web.base.enums.LogType;
-import com.phlink.core.web.base.enums.ResultCode;
-import com.phlink.core.web.base.utils.ResponseUtil;
+import com.phlink.core.base.annotation.SystemLogTrace;
+import com.phlink.core.base.enums.LogType;
+import com.phlink.core.base.enums.ResultCode;
+import com.phlink.core.web.utils.ResponseUtil;
 import com.phlink.core.web.security.model.SecurityUser;
 import com.phlink.core.web.security.model.token.AccessJwtToken;
-import com.phlink.core.web.util.SecurityUtil;
+import com.phlink.core.web.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

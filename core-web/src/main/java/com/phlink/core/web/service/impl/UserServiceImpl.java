@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.phlink.core.web.base.vo.SearchVO;
+import com.phlink.core.base.vo.SearchVO;
 import com.phlink.core.web.controller.vo.UserData;
 import com.phlink.core.web.entity.*;
 import com.phlink.core.web.mapper.DepartmentMapper;

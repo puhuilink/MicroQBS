@@ -1,7 +1,7 @@
 package com.phlink.core.web.aop;
 
 
-import com.phlink.core.web.base.annotation.DistributedLock;
+import com.phlink.core.base.annotation.DistributedLock;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -27,7 +27,7 @@ public class RedisLockAspect {
     @Autowired
     private RedissonClient redissonClient;
 
-    @Pointcut("@annotation(com.phlink.core.web.base.annotation.DistributedLock)")
+    @Pointcut("@annotation(com.phlink.core.base.annotation.DistributedLock)")
     public void pointcut() {
         // do nothing
     }

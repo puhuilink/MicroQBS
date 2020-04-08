@@ -1,17 +1,17 @@
 package com.phlink.core.web.controller.manage;
 
 import com.alibaba.excel.EasyExcel;
-import com.phlink.core.web.base.constant.CommonConstant;
-import com.phlink.core.web.base.utils.ResultUtil;
-import com.phlink.core.web.base.validation.tag.OnAdd;
-import com.phlink.core.web.base.vo.Result;
+import com.phlink.core.base.constant.CommonConstant;
+import com.phlink.core.base.utils.ResultUtil;
+import com.phlink.core.base.validation.tag.OnAdd;
+import com.phlink.core.base.vo.Result;
 import com.phlink.core.web.controller.vo.UserData;
 import com.phlink.core.web.controller.vo.UserRegistVO;
 import com.phlink.core.web.entity.User;
 import com.phlink.core.web.service.DepartmentService;
 import com.phlink.core.web.service.RoleService;
 import com.phlink.core.web.service.UserService;
-import com.phlink.core.web.util.SecurityUtil;
+import com.phlink.core.web.utils.SecurityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

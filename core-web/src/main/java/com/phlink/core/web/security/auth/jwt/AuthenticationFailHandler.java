@@ -1,9 +1,9 @@
 package com.phlink.core.web.security.auth.jwt;
 
 import cn.hutool.core.util.StrUtil;
-import com.phlink.core.web.base.enums.ResultCode;
-import com.phlink.core.web.base.utils.InheritableThreadLocalUtil;
-import com.phlink.core.web.base.utils.ResponseUtil;
+import com.phlink.core.base.enums.ResultCode;
+import com.phlink.core.base.utils.InheritableThreadLocalUtil;
+import com.phlink.core.web.utils.ResponseUtil;
 import com.phlink.core.web.config.properties.PhlinkTokenProperties;
 import com.phlink.core.web.security.auth.rest.LoginRequest;
 import lombok.extern.slf4j.Slf4j;

@@ -7,15 +7,15 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.phlink.core.web.base.annotation.SystemLogTrace;
-import com.phlink.core.web.base.utils.InheritableThreadLocalUtil;
-import com.phlink.core.web.base.utils.IpInfoUtil;
-import com.phlink.core.web.base.utils.ThreadPoolUtil;
+import com.phlink.core.base.annotation.SystemLogTrace;
+import com.phlink.core.base.utils.InheritableThreadLocalUtil;
+import com.phlink.core.web.utils.IpInfoUtil;
+import com.phlink.core.base.utils.ThreadPoolUtil;
 import com.phlink.core.web.entity.LogTrace;
 import com.phlink.core.web.security.model.SecurityUser;
 import com.phlink.core.web.service.LogTraceService;
 import com.phlink.core.web.service.UserService;
-import com.phlink.core.web.util.SecurityUtil;
+import com.phlink.core.web.utils.SecurityUtil;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -88,7 +88,7 @@ public class SystemLogTraceAspect {
         return map;
     }
 
-    @Pointcut("@annotation(com.phlink.core.web.base.annotation.SystemLogTrace)")
+    @Pointcut("@annotation(com.phlink.core.base.annotation.SystemLogTrace)")
     public void controllerAspect() {
 
     }

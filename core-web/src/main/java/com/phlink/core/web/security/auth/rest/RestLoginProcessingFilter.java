@@ -1,7 +1,7 @@
 package com.phlink.core.web.security.auth.rest;
 
 import com.google.gson.Gson;
-import com.phlink.core.web.base.utils.InheritableThreadLocalUtil;
+import com.phlink.core.base.utils.InheritableThreadLocalUtil;
 import com.phlink.core.web.security.exception.AuthMethodNotSupportedException;
 import com.phlink.core.web.security.model.UserPrincipal;
 import lombok.extern.slf4j.Slf4j;

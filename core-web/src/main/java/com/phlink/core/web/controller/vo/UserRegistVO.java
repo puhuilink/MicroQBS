@@ -1,6 +1,6 @@
 package com.phlink.core.web.controller.vo;
 
-import com.phlink.core.web.base.validation.tag.OnAdd;
+import com.phlink.core.base.validation.tag.OnAdd;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;

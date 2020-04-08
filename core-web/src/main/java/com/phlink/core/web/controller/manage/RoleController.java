@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.phlink.core.web.base.exception.BizException;
-import com.phlink.core.web.base.vo.PageVO;
+import com.phlink.core.base.exception.BizException;
+import com.phlink.core.base.vo.PageVO;
 import com.phlink.core.web.entity.Role;
 import com.phlink.core.web.entity.RoleDepartment;
 import com.phlink.core.web.entity.RolePermission;

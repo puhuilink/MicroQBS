@@ -3,7 +3,7 @@ package com.phlink.core.web.security.auth.jwt;
 import com.phlink.core.web.security.JwtAuthenticationToken;
 import com.phlink.core.web.security.model.SecurityUser;
 import com.phlink.core.web.security.model.token.RawAccessJwtToken;
-import com.phlink.core.web.util.SecurityUtil;
+import com.phlink.core.web.utils.SecurityUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;

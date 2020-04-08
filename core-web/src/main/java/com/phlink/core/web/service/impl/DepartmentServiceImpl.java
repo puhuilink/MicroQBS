@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.phlink.core.web.entity.Department;
 import com.phlink.core.web.mapper.DepartmentMapper;
 import com.phlink.core.web.service.DepartmentService;
-import com.phlink.core.web.util.SecurityUtil;
+import com.phlink.core.web.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

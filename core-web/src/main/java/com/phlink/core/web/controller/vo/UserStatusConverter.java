@@ -5,7 +5,7 @@ import com.alibaba.excel.enums.CellDataTypeEnum;
 import com.alibaba.excel.metadata.CellData;
 import com.alibaba.excel.metadata.GlobalConfiguration;
 import com.alibaba.excel.metadata.property.ExcelContentProperty;
-import com.phlink.core.web.base.constant.CommonConstant;
+import com.phlink.core.base.constant.CommonConstant;
 
 /**
  * @author wen

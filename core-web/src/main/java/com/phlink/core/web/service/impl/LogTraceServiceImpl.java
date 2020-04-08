@@ -6,7 +6,7 @@ import java.util.List;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.phlink.core.web.base.vo.SearchVO;
+import com.phlink.core.base.vo.SearchVO;
 import com.phlink.core.web.entity.LogTrace;
 import com.phlink.core.web.mapper.LogTraceMapper;
 import com.phlink.core.web.service.LogTraceService;

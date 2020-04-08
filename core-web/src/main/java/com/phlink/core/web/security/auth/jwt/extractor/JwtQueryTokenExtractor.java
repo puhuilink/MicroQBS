@@ -1,6 +1,6 @@
 package com.phlink.core.web.security.auth.jwt.extractor;
 
-import com.phlink.core.web.base.constant.SecurityConstant;
+import com.phlink.core.base.constant.SecurityConstant;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.stereotype.Component;

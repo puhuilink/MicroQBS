@@ -6,9 +6,9 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.phlink.core.web.base.constant.CommonConstant;
-import com.phlink.core.web.base.exception.BizException;
-import com.phlink.core.web.base.utils.CommonUtil;
+import com.phlink.core.base.constant.CommonConstant;
+import com.phlink.core.base.exception.BizException;
+import com.phlink.core.base.utils.CommonUtil;
 import com.phlink.core.web.entity.Department;
 import com.phlink.core.web.entity.DepartmentMaster;
 import com.phlink.core.web.entity.User;
@@ -16,7 +16,7 @@ import com.phlink.core.web.service.DepartmentMasterService;
 import com.phlink.core.web.service.DepartmentService;
 import com.phlink.core.web.service.RoleDepartmentService;
 import com.phlink.core.web.service.UserService;
-import com.phlink.core.web.util.SecurityUtil;
+import com.phlink.core.web.utils.SecurityUtil;
 
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;

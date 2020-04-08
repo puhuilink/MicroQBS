@@ -1,8 +1,8 @@
 package com.phlink.core.web.controller.noauth;
 
 import cn.hutool.http.HttpUtil;
-import com.phlink.core.web.base.enums.ResultCode;
-import com.phlink.core.web.base.exception.BizException;
+import com.phlink.core.base.enums.ResultCode;
+import com.phlink.core.base.exception.BizException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

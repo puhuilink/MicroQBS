@@ -2,8 +2,8 @@ package com.phlink.core.web.controller.manage;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.phlink.core.web.base.vo.PageVO;
-import com.phlink.core.web.base.vo.SearchVO;
+import com.phlink.core.base.vo.PageVO;
+import com.phlink.core.base.vo.SearchVO;
 import com.phlink.core.web.entity.LogTrace;
 import com.phlink.core.web.service.LogTraceService;
 

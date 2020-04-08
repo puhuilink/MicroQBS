@@ -1,7 +1,7 @@
 package com.phlink.demo.controller;
 
 import com.phlink.core.web.entity.User;
-import com.phlink.core.web.util.SecurityUtil;
+import com.phlink.core.web.utils.SecurityUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;

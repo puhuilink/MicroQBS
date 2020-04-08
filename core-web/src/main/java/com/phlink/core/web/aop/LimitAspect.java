@@ -1,9 +1,9 @@
 package com.phlink.core.web.aop;
 
-import com.phlink.core.web.base.annotation.Limit;
-import com.phlink.core.web.base.entity.LimitType;
-import com.phlink.core.web.base.exception.LimitAccessException;
-import com.phlink.core.web.base.utils.IPUtil;
+import com.phlink.core.base.annotation.Limit;
+import com.phlink.core.base.entity.LimitType;
+import com.phlink.core.base.exception.LimitAccessException;
+import com.phlink.core.web.utils.IPUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -37,7 +37,7 @@ public class LimitAspect {
     @Autowired
     private RedissonClient redissonClient;
 
-    @Pointcut("@annotation(com.phlink.core.web.base.annotation.Limit)")
+    @Pointcut("@annotation(com.phlink.core.base.annotation.Limit)")
     public void pointcut() {
         // do nothing
     }

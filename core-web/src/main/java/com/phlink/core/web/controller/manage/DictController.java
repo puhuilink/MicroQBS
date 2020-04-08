@@ -2,7 +2,7 @@ package com.phlink.core.web.controller.manage;
 
 import java.util.List;
 
-import com.phlink.core.web.base.exception.BizException;
+import com.phlink.core.base.exception.BizException;
 import com.phlink.core.web.entity.Dict;
 import com.phlink.core.web.service.DictDataService;
 import com.phlink.core.web.service.DictService;

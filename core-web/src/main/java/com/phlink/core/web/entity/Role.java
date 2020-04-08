@@ -3,7 +3,7 @@ package com.phlink.core.web.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.phlink.core.web.base.PhlinkBaseEntity;
-import com.phlink.core.web.base.constant.CommonConstant;
+import com.phlink.core.base.constant.CommonConstant;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

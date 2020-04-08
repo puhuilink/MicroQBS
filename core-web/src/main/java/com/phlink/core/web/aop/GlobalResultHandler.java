@@ -1,7 +1,7 @@
 package com.phlink.core.web.aop;
 
-import com.phlink.core.web.base.utils.ResultUtil;
-import com.phlink.core.web.base.vo.Result;
+import com.phlink.core.base.utils.ResultUtil;
+import com.phlink.core.base.vo.Result;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.core.io.Resource;

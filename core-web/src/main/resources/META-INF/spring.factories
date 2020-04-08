@@ -24,8 +24,8 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.phlink.core.web.security.permission.MyFilterSecurityInterceptor,\
   com.phlink.core.web.security.permission.MyAccessDecisionManager,\
   com.phlink.core.web.security.permission.MySecurityMetadataSource,\
-  com.phlink.core.web.base.utils.IpInfoUtil,\
-  com.phlink.core.web.util.SecurityUtil,\
+  com.phlink.core.web.utils.IpInfoUtil,\
+  com.phlink.core.web.utils.SecurityUtil,\
   com.phlink.core.web.aop.GlobalExceptionHandler,\
   com.phlink.core.web.aop.GlobalResultHandler,\
   com.phlink.core.web.aop.RedisLockAspect,\

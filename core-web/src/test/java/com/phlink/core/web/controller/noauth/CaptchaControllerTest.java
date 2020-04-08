@@ -1,7 +1,7 @@
 package com.phlink.core.web.controller.noauth;
 
 import com.google.gson.Gson;
-import com.phlink.core.web.base.vo.Result;
+import com.phlink.core.base.vo.Result;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

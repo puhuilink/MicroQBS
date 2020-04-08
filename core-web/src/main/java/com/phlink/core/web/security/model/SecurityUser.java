@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.phlink.core.web.base.constant.CommonConstant;
+import com.phlink.core.base.constant.CommonConstant;
 import com.phlink.core.web.entity.Permission;
 import com.phlink.core.web.entity.Role;
 import com.phlink.core.web.entity.User;

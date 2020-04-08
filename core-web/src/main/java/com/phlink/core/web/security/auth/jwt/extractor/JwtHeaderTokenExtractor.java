@@ -2,7 +2,7 @@ package com.phlink.core.web.security.auth.jwt.extractor;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.phlink.core.web.base.constant.SecurityConstant;
+import com.phlink.core.base.constant.SecurityConstant;
 import com.phlink.core.web.config.properties.PhlinkTokenProperties;
 
 import org.springframework.beans.factory.annotation.Autowired;

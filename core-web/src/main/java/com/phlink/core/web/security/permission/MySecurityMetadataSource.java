@@ -1,7 +1,7 @@
 package com.phlink.core.web.security.permission;
 
 import cn.hutool.core.util.StrUtil;
-import com.phlink.core.web.base.constant.CommonConstant;
+import com.phlink.core.base.constant.CommonConstant;
 import com.phlink.core.web.entity.Permission;
 import com.phlink.core.web.service.PermissionService;
 import lombok.extern.slf4j.Slf4j;

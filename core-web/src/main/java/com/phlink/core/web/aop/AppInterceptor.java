@@ -3,7 +3,7 @@ package com.phlink.core.web.aop;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.phlink.core.web.base.utils.InheritableThreadLocalUtil;
+import com.phlink.core.base.utils.InheritableThreadLocalUtil;
 
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
