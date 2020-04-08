@@ -1,14 +1,20 @@
 package com.phlink.core.web.security.model.token;
 
 import com.phlink.core.web.security.exception.JwtExpiredTokenException;
-import io.jsonwebtoken.*;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.authentication.BadCredentialsException;
 
-import java.io.Serializable;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class RawAccessJwtToken implements JwtToken, Serializable {
+public class RawAccessJwtToken implements JwtToken {
 
     private static final long serialVersionUID = -797397445703066079L;
 

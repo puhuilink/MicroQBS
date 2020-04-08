@@ -1,20 +1,20 @@
 package com.phlink.core.web.security;
 
-import cn.hutool.core.util.StrUtil;
-import com.phlink.core.web.base.constant.CommonConstant;
-import com.phlink.core.web.entity.Permission;
-import com.phlink.core.web.entity.Role;
-import com.phlink.core.web.entity.User;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Slf4j
+import com.phlink.core.web.base.constant.CommonConstant;
+import com.phlink.core.web.entity.Permission;
+import com.phlink.core.web.entity.Role;
+import com.phlink.core.web.entity.User;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import cn.hutool.core.util.StrUtil;
+
 public class SecurityUserDetails extends User implements UserDetails {
 
     private static final long serialVersionUID = 1L;

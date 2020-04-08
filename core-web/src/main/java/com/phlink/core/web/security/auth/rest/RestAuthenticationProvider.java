@@ -4,7 +4,7 @@ import com.phlink.core.web.entity.User;
 import com.phlink.core.web.security.model.SecurityUser;
 import com.phlink.core.web.security.model.UserPrincipal;
 import com.phlink.core.web.service.UserService;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author wen
@@ -56,14 +58,17 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
     private Authentication authenticateByUsernameAndPassword(Authentication authentication, UserPrincipal userPrincipal, String username, String password) {
         User user = userService.getByUsername(username);
         if (user == null) {
+            log.info("用户{}不存在", username);
             throw new UsernameNotFoundException("用户不存在");
         }
 
         try {
             if (!encoder.matches(password, user.getPassword())) {
+                log.info("用户名密码错误{}", username);
                 throw new BadCredentialsException("用户名密码错误");
             }
             if (user.getAuthority() == null) {
+                log.info("您没有权限进入系统{}", username);
                 throw new InsufficientAuthenticationException("您没有权限进入系统");
             }
 
@@ -77,6 +82,7 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
     private Authentication authenticateByMobile(Authentication authentication, UserPrincipal userPrincipal, String mobile) {
         User user = userService.getByMobile(mobile);
         if (user == null) {
+            log.info("用户{}不存在", mobile);
             throw new UsernameNotFoundException("手机号不存在");
         }
         SecurityUser securityUser = new SecurityUser(user, userPrincipal);
@@ -88,53 +94,4 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
     public boolean supports(Class<?> authentication) {
         return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
     }
-
-//    private void logLoginAction(User user, Authentication authentication, ActionType actionType, Exception e) {
-//        String clientAddress = "Unknown";
-//        String browser = "Unknown";
-//        String os = "Unknown";
-//        String device = "Unknown";
-//        if (authentication != null && authentication.getDetails() != null) {
-//            if (authentication.getDetails() instanceof RestAuthenticationDetails) {
-//                RestAuthenticationDetails details = (RestAuthenticationDetails)authentication.getDetails();
-//                clientAddress = details.getClientAddress();
-//                if (details.getUserAgent() != null) {
-//                    Client userAgent = details.getUserAgent();
-//                    if (userAgent.userAgent != null) {
-//                        browser = userAgent.userAgent.family;
-//                        if (userAgent.userAgent.major != null) {
-//                            browser += " " + userAgent.userAgent.major;
-//                            if (userAgent.userAgent.minor != null) {
-//                                browser += "." + userAgent.userAgent.minor;
-//                                if (userAgent.userAgent.patch != null) {
-//                                    browser += "." + userAgent.userAgent.patch;
-//                                }
-//                            }
-//                        }
-//                    }
-//                    if (userAgent.os != null) {
-//                        os = userAgent.os.family;
-//                        if (userAgent.os.major != null) {
-//                            os += " " + userAgent.os.major;
-//                            if (userAgent.os.minor != null) {
-//                                os += "." + userAgent.os.minor;
-//                                if (userAgent.os.patch != null) {
-//                                    os += "." + userAgent.os.patch;
-//                                    if (userAgent.os.patchMinor != null) {
-//                                        os += "." + userAgent.os.patchMinor;
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                    if (userAgent.device != null) {
-//                        device = userAgent.device.family;
-//                    }
-//                }
-//            }
-//        }
-//        auditLogService.logEntityAction(
-//                user.getTenantId(), user.getCustomerId(), user.getId(),
-//                user.getName(), user.getId(), null, actionType, e, clientAddress, browser, os, device);
-//    }
 }

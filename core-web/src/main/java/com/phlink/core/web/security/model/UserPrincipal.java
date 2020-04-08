@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class UserPrincipal implements Serializable {
 
+    private static final long serialVersionUID = 6797321032949823369L;
     private final Type type;
     private final String value;
     private final Boolean saveLogin;

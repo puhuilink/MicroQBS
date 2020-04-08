@@ -1,8 +1,10 @@
 package com.phlink.core.web.aop;
 
+import com.phlink.core.web.base.utils.ResultUtil;
 import com.phlink.core.web.base.vo.Result;
 
 import org.springframework.core.MethodParameter;
+import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -22,7 +24,19 @@ public class GlobalResultHandler implements ResponseBodyAdvice {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        return body;
+        if (body instanceof Result) {
+            return body;
+        }
+        if (body instanceof String) {
+            return ResultUtil.data(body);
+        }
+        if (body == null) {
+            return ResultUtil.success("OK");
+        }
+        if (body instanceof Resource) {
+            return body;
+        }
+        return ResultUtil.data(body);
     }
 
 }

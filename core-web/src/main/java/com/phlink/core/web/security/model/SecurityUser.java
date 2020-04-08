@@ -1,25 +1,25 @@
 package com.phlink.core.web.security.model;
 
-import cn.hutool.core.util.StrUtil;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import com.phlink.core.web.base.constant.CommonConstant;
 import com.phlink.core.web.entity.Permission;
 import com.phlink.core.web.entity.Role;
 import com.phlink.core.web.entity.User;
-import lombok.Data;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import cn.hutool.core.util.StrUtil;
+import lombok.Data;
 
 /**
  * @author wen
  */
 @Data
 public class SecurityUser extends User {
-
-    private static final long serialVersionUID = -797397440703066079L;
 
     private Collection<GrantedAuthority> authorities;
     private UserPrincipal userPrincipal;
@@ -47,8 +47,7 @@ public class SecurityUser extends User {
         if (permissions != null && permissions.size() > 0) {
             for (Permission permission : permissions) {
                 if (CommonConstant.PERMISSION_OPERATION.equals(permission.getType())
-                    && StrUtil.isNotBlank(permission.getTitle())
-                    && StrUtil.isNotBlank(permission.getPath())) {
+                        && StrUtil.isNotBlank(permission.getTitle()) && StrUtil.isNotBlank(permission.getPath())) {
 
                     this.authorities.add(new SimpleGrantedAuthority(permission.getTitle()));
                 }

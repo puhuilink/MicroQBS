@@ -1,20 +1,19 @@
 package com.phlink.core.web.service.impl;
 
+import java.util.List;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.phlink.core.web.entity.Dict;
 import com.phlink.core.web.mapper.DictMapper;
 import com.phlink.core.web.service.DictService;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * @author wen
  */
-@Slf4j
 @Service
 @Transactional
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {

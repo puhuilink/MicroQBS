@@ -17,6 +17,7 @@ import com.phlink.core.web.config.gson.LocalDateTimeSerializer;
 import com.phlink.core.web.config.gson.LocalTimeDeserializer;
 import com.phlink.core.web.config.gson.LocalTimeSerializer;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.ResourceHttpMessageConverter;
@@ -27,8 +28,8 @@ import cn.hutool.core.date.DatePattern;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+    @Bean
+    public Gson buildGson() {
         Gson gson = new GsonBuilder()
         .setDateFormat(DatePattern.NORM_DATETIME_PATTERN)
         .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
@@ -43,6 +44,12 @@ public class WebConfig implements WebMvcConfigurer {
         .disableHtmlEscaping()
         .serializeNulls()
         .create();
+        return gson;
+    }
+
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        Gson gson = buildGson();
         CustomGsonHttpMessageConverter gsonHttpMessageConverter = new CustomGsonHttpMessageConverter();
         gsonHttpMessageConverter.setGson(gson);
         converters.add(0, gsonHttpMessageConverter);
