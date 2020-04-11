@@ -26,3 +26,4 @@ log/**
 .classpath
 .factorypath
 org.eclipse*
+.DS_Store
