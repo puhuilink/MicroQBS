@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.phlink.core.base.constant.CommonConstant;
@@ -23,6 +24,7 @@ import com.phlink.core.web.security.model.token.RawAccessJwtToken;
 import com.phlink.core.web.service.DepartmentService;
 import com.phlink.core.web.service.UserRoleService;
 import com.phlink.core.web.service.UserService;
+
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.StringCodec;
@@ -33,6 +35,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+
 import cn.hutool.core.util.StrUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -79,9 +82,12 @@ public class SecurityUtil {
         }
         // 生成token
         User u = userService.getByUsername(username);
+        if(u == null) {
+            log.info("匿名登录");
+        }
         List<String> list = new ArrayList<>();
         // 缓存权限
-        if (tokenProperties.getStorePerms()) {
+        if (tokenProperties.getStorePerms() && u != null) {
             for (Permission p : u.getPermissions()) {
                 if (CommonConstant.PERMISSION_OPERATION.equals(p.getType())
                     && StrUtil.isNotBlank(p.getTitle())
@@ -98,10 +104,10 @@ public class SecurityUtil {
         if (tokenProperties.getRedis()) {
             // redis
             token = UUID.randomUUID().toString().replace("-", "");
-            TokenUser user = new TokenUser(u.getUsername(), list, saved);
+            TokenUser user = new TokenUser(username, list, saved);
             // 单设备登录 之前的token失效
             if (tokenProperties.getSdl()) {
-                RBucket<String> bucket = redissonClient.getBucket(SecurityConstant.USER_TOKEN + u.getUsername(), new StringCodec());
+                RBucket<String> bucket = redissonClient.getBucket(SecurityConstant.USER_TOKEN + username, new StringCodec());
                 if (bucket != null) {
                     String oldToken = bucket.get();
                     if (StrUtil.isNotBlank(oldToken)) {
@@ -110,17 +116,17 @@ public class SecurityUtil {
                 }
             }
             if (saved) {
-                redissonClient.getBucket(SecurityConstant.USER_TOKEN + u.getUsername(), new StringCodec()).set(token, tokenProperties.getSaveLoginTime(), TimeUnit.DAYS);
+                redissonClient.getBucket(SecurityConstant.USER_TOKEN + username, new StringCodec()).set(token, tokenProperties.getSaveLoginTime(), TimeUnit.DAYS);
                 redissonClient.getBucket(SecurityConstant.TOKEN_PRE + token, new StringCodec()).set(new Gson().toJson(user), tokenProperties.getSaveLoginTime(), TimeUnit.DAYS);
             } else {
-                redissonClient.getBucket(SecurityConstant.USER_TOKEN + u.getUsername(), new StringCodec()).set(token, tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
+                redissonClient.getBucket(SecurityConstant.USER_TOKEN + username, new StringCodec()).set(token, tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
                 redissonClient.getBucket(SecurityConstant.TOKEN_PRE + token, new StringCodec()).set(new Gson().toJson(user), tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
             }
         } else {
             // jwt
             token = SecurityConstant.TOKEN_SPLIT + Jwts.builder()
                 //主题 放入用户名
-                .setSubject(u.getUsername())
+                .setSubject(username)
                 //自定义属性 放入用户拥有请求权限
                 .claim(SecurityConstant.AUTHORITIES, new Gson().toJson(list))
                 //失效时间

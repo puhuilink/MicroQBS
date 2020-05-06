@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 10:25:23
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 10:25:23
+ */
 package com.phlink.core.web.security.auth.rest;
 
 import com.phlink.core.web.entity.User;
@@ -19,9 +25,6 @@ import org.springframework.util.Assert;
 
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author wen
- */
 @Component
 @Slf4j
 public class RestAuthenticationProvider implements AuthenticationProvider {

@@ -9,9 +9,7 @@ import com.phlink.core.web.service.LogTraceService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @Api(tags = "日志管理接口")
-@RequestMapping("/manage/log")
+@RequestMapping("/api/manage/log")
 @Transactional
 public class LogController {
 
@@ -44,20 +42,20 @@ public class LogController {
         return page;
     }
 
-    @DeleteMapping(value = "/{ids}")
-    @ApiOperation(value = "批量删除")
-    public String delByIds(@PathVariable String[] ids) {
+    // @DeleteMapping(value = "/{ids}")
+    // @ApiOperation(value = "批量删除")
+    // public String delByIds(@PathVariable String[] ids) {
 
-        for (String id : ids) {
-            logService.removeById(id);
-        }
-        return "删除成功";
-    }
+    //     for (String id : ids) {
+    //         logService.removeById(id);
+    //     }
+    //     return "删除成功";
+    // }
 
-    @DeleteMapping(value = "/all")
-    @ApiOperation(value = "全部删除")
-    public String deleteAll() {
-        logService.removeAll();
-        return "删除成功";
-    }
+    // @DeleteMapping(value = "/all")
+    // @ApiOperation(value = "全部删除")
+    // public String deleteAll() {
+    //     logService.removeAll();
+    //     return "删除成功";
+    // }
 }

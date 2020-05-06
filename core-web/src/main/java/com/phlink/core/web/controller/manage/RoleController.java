@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.phlink.core.base.annotation.SystemLogTrace;
+import com.phlink.core.base.enums.LogType;
 import com.phlink.core.base.exception.BizException;
 import com.phlink.core.base.vo.PageVO;
 import com.phlink.core.web.entity.Role;
@@ -38,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @Api(tags = "角色管理接口")
-@RequestMapping("/manage/role")
+@RequestMapping("/api/manage/role")
 @Transactional
 public class RoleController {
 
@@ -82,6 +84,7 @@ public class RoleController {
 
     @PostMapping(value = "/default")
     @ApiOperation(value = "设置或取消默认角色")
+    @SystemLogTrace(description = "设置或取消默认角色", type = LogType.OPERATION)
     public String setDefault(@RequestParam String id,
                              @RequestParam Boolean isDefault) {
 
@@ -96,6 +99,7 @@ public class RoleController {
 
     @PutMapping(value = "/role-permission")
     @ApiOperation(value = "编辑角色分配菜单权限")
+    @SystemLogTrace(description = "编辑角色分配菜单权限", type = LogType.OPERATION)
     public String updateRolePermission(@RequestParam String roleId,
                                        @RequestParam(required = false) String[] permIds) {
 
@@ -119,6 +123,7 @@ public class RoleController {
 
     @PutMapping(value = "/role-department")
     @ApiOperation(value = "编辑角色分配数据权限")
+    @SystemLogTrace(description = "编辑角色分配数据权限", type = LogType.OPERATION)
     public String updateRoleDep(@RequestParam String roleId,
                                 @RequestParam Integer dataType,
                                 @RequestParam(required = false) String[] depIds) {
@@ -144,6 +149,7 @@ public class RoleController {
 
     @PostMapping(value = "")
     @ApiOperation(value = "保存数据")
+    @SystemLogTrace(description = "保存角色数据", type = LogType.OPERATION)
     public Role save(Role role) {
         roleService.save(role);
         return role;
@@ -151,6 +157,7 @@ public class RoleController {
 
     @PutMapping(value = "")
     @ApiOperation(value = "更新数据")
+    @SystemLogTrace(description = "更新角色数据", type = LogType.OPERATION)
     public Role update(Role entity) {
 
         roleService.updateById(entity);
@@ -163,6 +170,7 @@ public class RoleController {
 
     @DeleteMapping(value = "/{ids}")
     @ApiOperation(value = "批量通过ids删除")
+    @SystemLogTrace(description = "批量删除角色数据", type = LogType.OPERATION)
     public String delByIds(@PathVariable String[] ids) {
 
         List<UserRole> list = userRoleService.listByIds(Convert.toList(String.class, ids));

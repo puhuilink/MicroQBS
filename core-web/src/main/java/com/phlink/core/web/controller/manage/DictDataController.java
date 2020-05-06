@@ -34,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @Api(tags = "字典数据管理接口")
-@RequestMapping("/manage/dict-data")
+@RequestMapping("/api/manage/dict-data")
 @CacheConfig(cacheNames = "dictData")
 @Transactional
 public class DictDataController {

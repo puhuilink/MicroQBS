@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 11:03:59
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-06 13:39:29
+ */
 package com.phlink.core.web.config;
 
 import java.util.List;
@@ -42,7 +48,7 @@ import lombok.extern.slf4j.Slf4j;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static final String WEBJARS_ENTRY_POINT = "/webjars/**";
-    public static final String FORM_BASED_LOGIN_ENTRY_POINT = "/api/auth/login";
+    public static final String USERNAME_LOGIN_ENTRY_POINT = "/api/auth/login";
     public static final String MOBILE_LOGIN_ENTRY_POINT = "/api/auth/login/mobile";
     public static final String IMAGE_LOGIN_ENTRY_POINT = "/api/auth/login/image";
     public static final String TOKEN_REFRESH_ENTRY_POINT = "/api/auth/token";
@@ -85,7 +91,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     protected RestLoginProcessingFilter buildRestLoginProcessingFilter() throws Exception {
-        RestLoginProcessingFilter filter = new RestLoginProcessingFilter(FORM_BASED_LOGIN_ENTRY_POINT, successHandler,
+        RestLoginProcessingFilter filter = new RestLoginProcessingFilter(USERNAME_LOGIN_ENTRY_POINT, successHandler,
                 failureHandler);
         filter.setAuthenticationManager(this.authenticationManager);
         return filter;
@@ -111,7 +117,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter() throws Exception {
         List<String> pathsToSkip = CollUtil.newArrayList(NON_TOKEN_BASED_AUTH_ENTRY_POINTS);
         pathsToSkip.addAll(CollUtil.newArrayList(WS_TOKEN_BASED_AUTH_ENTRY_POINT, TOKEN_REFRESH_ENTRY_POINT,
-                FORM_BASED_LOGIN_ENTRY_POINT, MOBILE_LOGIN_ENTRY_POINT, IMAGE_LOGIN_ENTRY_POINT, WEBJARS_ENTRY_POINT,
+                USERNAME_LOGIN_ENTRY_POINT, MOBILE_LOGIN_ENTRY_POINT, IMAGE_LOGIN_ENTRY_POINT, WEBJARS_ENTRY_POINT,
                 NOAUTH_ENTRY_POINT));
         pathsToSkip.addAll(ignoredUrlsProperties.getUrls());
         SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, TOKEN_BASED_AUTH_ENTRY_POINT);
@@ -139,22 +145,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         log.info("SpringSecurity 初始化");
-        http.headers().cacheControl().and().frameOptions().disable().and().cors().and().csrf().disable()
-                .exceptionHandling().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().authorizeRequests().antMatchers(WEBJARS_ENTRY_POINT).permitAll()
-                .antMatchers(FORM_BASED_LOGIN_ENTRY_POINT).permitAll().antMatchers(MOBILE_LOGIN_ENTRY_POINT).permitAll()
-                .antMatchers(IMAGE_LOGIN_ENTRY_POINT).permitAll().antMatchers(TOKEN_REFRESH_ENTRY_POINT).permitAll()
-                .antMatchers(NON_TOKEN_BASED_AUTH_ENTRY_POINTS).permitAll().and().authorizeRequests()
-                .antMatchers(WS_TOKEN_BASED_AUTH_ENTRY_POINT).authenticated().antMatchers(TOKEN_BASED_AUTH_ENTRY_POINT)
-                .authenticated().and().exceptionHandling().accessDeniedHandler(restAccessDeniedHandler).and()
+        http.headers()
+                .cacheControl()
+                .and()
+                .frameOptions().disable()
+                .and()
+                .cors()
+                .and()
+                .csrf().disable()
+                .exceptionHandling()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers(WEBJARS_ENTRY_POINT).permitAll()
+                .antMatchers(USERNAME_LOGIN_ENTRY_POINT).permitAll()
+                .antMatchers(MOBILE_LOGIN_ENTRY_POINT).permitAll()
+                .antMatchers(IMAGE_LOGIN_ENTRY_POINT).permitAll()
+                .antMatchers(TOKEN_REFRESH_ENTRY_POINT).permitAll()
+                .antMatchers(NON_TOKEN_BASED_AUTH_ENTRY_POINTS).permitAll()
+                .antMatchers(ignoredUrlsProperties.getUrls().toArray(new String[0])).permitAll()
+                .and()
+                .authorizeRequests()
+                .antMatchers(WS_TOKEN_BASED_AUTH_ENTRY_POINT).authenticated()
+                .antMatchers(TOKEN_BASED_AUTH_ENTRY_POINT).authenticated()
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(restAccessDeniedHandler)
+                .and()
                 .addFilterBefore(buildRestLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(buildRestPublicLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(),
-                        UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(buildWsJwtTokenAuthenticationProcessingFilter(),
-                        UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(buildWsJwtTokenAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
                 // 添加自定义权限过滤器
                 .addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);
     }
-
 }

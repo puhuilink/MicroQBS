@@ -3,6 +3,7 @@ package com.phlink.core.web.config.mybatis;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.phlink.core.web.security.model.SecurityUser;
 
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.security.core.Authentication;
@@ -21,8 +22,17 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
-            UserDetails user = (UserDetails) authentication.getPrincipal();
-            this.setFieldValByName("createBy", user.getUsername(), metaObject);
+            String username = "";
+            if(authentication.getPrincipal() instanceof SecurityUser) {
+                SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+                username = securityUser.getUsername();
+            }
+            if(authentication.getPrincipal() instanceof String) {
+                username = (String) authentication.getPrincipal();
+            }
+            // UserDetails user = (UserDetails) authentication.getPrincipal();
+            // String username = (String) authentication.getPrincipal();
+            this.setFieldValByName("createBy", username, metaObject);
         }
         this.setFieldValByName("createTime", new Date(), metaObject);
     }

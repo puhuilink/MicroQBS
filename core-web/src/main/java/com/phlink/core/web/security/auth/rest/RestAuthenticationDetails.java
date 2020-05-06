@@ -1,16 +1,20 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 10:25:11
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 10:25:11
+ */
 package com.phlink.core.web.security.auth.rest;
+
+import java.io.IOException;
+import java.io.Serializable;
+
+import javax.servlet.http.HttpServletRequest;
 
 import lombok.Data;
 import ua_parser.Client;
 import ua_parser.Parser;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.Serializable;
-
-/**
- * @author wen
- */
 @Data
 public class RestAuthenticationDetails implements Serializable {
 

@@ -1,15 +1,16 @@
 package com.phlink.core.web.entity;
 
+import java.util.List;
+
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.phlink.core.web.base.PhlinkBaseEntity;
 import com.phlink.core.base.constant.CommonConstant;
+import com.phlink.core.web.base.PhlinkBaseEntity;
 import com.phlink.core.web.security.model.Authority;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.util.List;
 
 /**
  * @author wen
@@ -66,30 +67,32 @@ public class User extends PhlinkBaseEntity {
     @ApiModelProperty(value = "所属部门id")
     private String departmentId;
 
-    @TableField(exist=false)
+    @TableField(exist = false)
     @ApiModelProperty(value = "所属部门名称")
     private String departmentTitle;
 
-    @TableField(exist=false)
+    @TableField(exist = false)
     @ApiModelProperty(value = "用户拥有角色")
     private List<Role> roles;
 
-    @TableField(exist=false)
+    @TableField(exist = false)
     @ApiModelProperty(value = "用户拥有的权限")
     private List<Permission> permissions;
 
-    @TableField(exist=false)
+    @TableField(exist = false)
     @ApiModelProperty(value = "导入数据时使用")
     private Integer defaultRole;
 
     private Authority authority;
 
     public User(User user) {
-        this.setId(user.getId());
-        this.username = user.getUsername();
-        this.email = user.getEmail();
-        this.mobile = user.getMobile();
-        this.departmentId = user.getDepartmentId();
+        if (user != null) {
+            this.setId(user.getId());
+            this.username = user.getUsername();
+            this.email = user.getEmail();
+            this.mobile = user.getMobile();
+            this.departmentId = user.getDepartmentId();
+        }
     }
 
     public User() {

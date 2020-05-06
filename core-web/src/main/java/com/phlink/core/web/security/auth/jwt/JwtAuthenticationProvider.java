@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 10:24:09
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 10:24:09
+ */
 package com.phlink.core.web.security.auth.jwt;
 
 import com.phlink.core.web.security.JwtAuthenticationToken;
@@ -11,9 +17,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
-/**
- * @author wen
- */
 @Component
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 

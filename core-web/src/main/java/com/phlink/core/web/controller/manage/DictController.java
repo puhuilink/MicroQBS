@@ -2,6 +2,8 @@ package com.phlink.core.web.controller.manage;
 
 import java.util.List;
 
+import com.phlink.core.base.annotation.SystemLogTrace;
+import com.phlink.core.base.enums.LogType;
 import com.phlink.core.base.exception.BizException;
 import com.phlink.core.web.entity.Dict;
 import com.phlink.core.web.service.DictDataService;
@@ -29,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @Api(tags = "字典管理接口")
-@RequestMapping("/manage/dict")
+@RequestMapping("/api/manage/dict")
 @Transactional
 public class DictController {
 
@@ -50,6 +52,7 @@ public class DictController {
 
     @PostMapping(value = "")
     @ApiOperation(value = "添加")
+    @SystemLogTrace(description = "添加字典", type = LogType.OPERATION)
     public String save(Dict dict) {
 
         if (dictService.getByType(dict.getType()) != null) {
@@ -61,6 +64,7 @@ public class DictController {
 
     @PutMapping(value = "")
     @ApiOperation(value = "编辑")
+    @SystemLogTrace(description = "编辑字典", type = LogType.OPERATION)
     public String update(Dict dict) {
 
         Dict old = dictService.getById(dict.getId());
@@ -74,6 +78,7 @@ public class DictController {
 
     @DeleteMapping(value = "/{id}")
     @ApiOperation(value = "通过id删除")
+    @SystemLogTrace(description = "删除字典", type = LogType.OPERATION)
     public String delAllByIds(@PathVariable String id) {
 
 

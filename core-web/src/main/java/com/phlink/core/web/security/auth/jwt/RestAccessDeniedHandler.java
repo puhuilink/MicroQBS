@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 10:24:41
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 10:24:41
+ */
 package com.phlink.core.web.security.auth.jwt;
 
 import java.io.IOException;
@@ -15,9 +21,6 @@ import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author wen
- */
 @Component
 @Slf4j
 public class RestAccessDeniedHandler implements AccessDeniedHandler {

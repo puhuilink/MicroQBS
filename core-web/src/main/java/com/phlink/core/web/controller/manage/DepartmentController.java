@@ -6,7 +6,9 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.phlink.core.base.annotation.SystemLogTrace;
 import com.phlink.core.base.constant.CommonConstant;
+import com.phlink.core.base.enums.LogType;
 import com.phlink.core.base.exception.BizException;
 import com.phlink.core.base.utils.CommonUtil;
 import com.phlink.core.web.entity.Department;
@@ -44,7 +46,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @Api(tags = "部门管理接口")
-@RequestMapping("/manage/department")
+@RequestMapping("/api/manage/department")
 @CacheConfig(cacheNames = "department")
 @Transactional
 public class DepartmentController {
@@ -70,7 +72,7 @@ public class DepartmentController {
     @GetMapping(value = "/parent/{parentId}")
     @ApiOperation(value = "通过parentId获取")
     public List<Department> listByParentId(@PathVariable String parentId,
-                                          @ApiParam("是否开始数据权限过滤") @RequestParam(required = false, defaultValue = "true") Boolean openDataFilter) {
+            @ApiParam("是否开始数据权限过滤") @RequestParam(required = false, defaultValue = "true") Boolean openDataFilter) {
 
         List<Department> list = new ArrayList<>();
         User u = securityUtil.getCurrUser();
@@ -91,6 +93,7 @@ public class DepartmentController {
 
     @PostMapping(value = "")
     @ApiOperation(value = "添加")
+    @SystemLogTrace(description = "添加部门", type = LogType.OPERATION)
     public String add(Department department) {
         // 同步该节点缓存
         departmentService.save(department);
@@ -111,9 +114,9 @@ public class DepartmentController {
 
     @PutMapping(value = "")
     @ApiOperation(value = "编辑")
-    public String edit(Department department,
-                               @RequestParam(required = false) String[] mainHeader,
-                               @RequestParam(required = false) String[] viceHeader) {
+    @SystemLogTrace(description = "编辑部门", type = LogType.OPERATION)
+    public String edit(Department department, @RequestParam(required = false) String[] mainHeader,
+            @RequestParam(required = false) String[] viceHeader) {
 
         departmentService.updateById(department);
         // 先删除原数据
@@ -141,6 +144,7 @@ public class DepartmentController {
 
     @DeleteMapping(value = "/{ids}")
     @ApiOperation(value = "批量通过id删除")
+    @SystemLogTrace(description = "批量删除部门", type = LogType.OPERATION)
     public String delByIds(@PathVariable String[] ids) {
 
         for (String id : ids) {
@@ -191,9 +195,9 @@ public class DepartmentController {
     @GetMapping(value = "/search")
     @ApiOperation(value = "部门名模糊搜索")
     public List<Department> searchByTitle(@RequestParam String title,
-                                                  @ApiParam("是否开始数据权限过滤") @RequestParam(required = false, defaultValue = "true") Boolean openDataFilter) {
+            @ApiParam("是否开始数据权限过滤") @RequestParam(required = false, defaultValue = "true") Boolean openDataFilter) {
 
-        List<Department> list = departmentService.listByTitleLikeOrderBySortOrder("%" + title + "%", openDataFilter);
+        List<Department> list = departmentService.listByTitleLikeOrderBySortOrder(title, openDataFilter);
         list = setInfo(list);
         return list;
     }
@@ -209,8 +213,10 @@ public class DepartmentController {
                 item.setParentTitle("一级部门");
             }
             // 设置负责人
-            item.setMainMaster(departmentMasterService.listMasterByDepartmentId(item.getId(), CommonConstant.MASTER_TYPE_MAIN));
-            item.setViceMaster(departmentMasterService.listMasterByDepartmentId(item.getId(), CommonConstant.MASTER_TYPE_VICE));
+            item.setMainMaster(
+                    departmentMasterService.listMasterByDepartmentId(item.getId(), CommonConstant.MASTER_TYPE_MAIN));
+            item.setViceMaster(
+                    departmentMasterService.listMasterByDepartmentId(item.getId(), CommonConstant.MASTER_TYPE_VICE));
         });
         return list;
     }

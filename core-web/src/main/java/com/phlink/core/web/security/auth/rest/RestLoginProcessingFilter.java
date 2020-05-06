@@ -1,10 +1,23 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 10:25:36
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 10:25:36
+ */
 package com.phlink.core.web.security.auth.rest;
+
+import java.io.IOException;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.phlink.core.base.utils.InheritableThreadLocalUtil;
 import com.phlink.core.web.security.exception.AuthMethodNotSupportedException;
 import com.phlink.core.web.security.model.UserPrincipal;
-import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
@@ -17,15 +30,8 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author wen
- */
 @Slf4j
 public class RestLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
 

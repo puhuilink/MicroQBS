@@ -1,12 +1,15 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 10:25:18
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 10:25:18
+ */
 package com.phlink.core.web.security.auth.rest;
-
-import org.springframework.security.authentication.AuthenticationDetailsSource;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * @author wen
- */
+import org.springframework.security.authentication.AuthenticationDetailsSource;
+
 public class RestAuthenticationDetailsSource implements AuthenticationDetailsSource<HttpServletRequest, RestAuthenticationDetails> {
 
     @Override

@@ -177,12 +177,8 @@ fdfs:
 # 忽略鉴权url
 ignored:
   urls:
-    - /oauth2/**
     - /actuator/**
-    - /admin/**
     - /dictData/getByType/**
-    - /user/regist
-    - /common/**
     - /swagger-ui.html
     - /swagger-resources/**
     - /swagger/**

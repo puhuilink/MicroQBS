@@ -6,7 +6,9 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.phlink.core.base.annotation.SystemLogTrace;
 import com.phlink.core.base.constant.CommonConstant;
+import com.phlink.core.base.enums.LogType;
 import com.phlink.core.base.exception.BizException;
 import com.phlink.core.web.controller.vo.MenuVO;
 import com.phlink.core.web.entity.Permission;
@@ -45,7 +47,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @Api(tags = "菜单/权限管理接口")
-@RequestMapping("/manage/permission")
+@RequestMapping("/api/manage/permission")
 @CacheConfig(cacheNames = "permission")
 @Transactional
 public class PermissionController {
@@ -176,6 +178,7 @@ public class PermissionController {
     @PostMapping(value = "")
     @ApiOperation(value = "添加")
     @CacheEvict(key = "'menuList'")
+    @SystemLogTrace(description = "添加权限", type = LogType.OPERATION)
     public Permission add(Permission permission) {
 
         // 判断拦截请求的操作权限按钮名是否已存在
@@ -195,6 +198,7 @@ public class PermissionController {
 
     @PutMapping(value = "")
     @ApiOperation(value = "编辑")
+    @SystemLogTrace(description = "编辑权限", type = LogType.OPERATION)
     public Permission update(Permission permission) {
 
         // 判断拦截请求的操作权限按钮名是否已存在
@@ -222,6 +226,7 @@ public class PermissionController {
     @RequestMapping(value = "/{ids}", method = RequestMethod.DELETE)
     @ApiOperation(value = "批量通过id删除")
     @CacheEvict(key = "'menuList'")
+    @SystemLogTrace(description = "批量删除权限", type = LogType.OPERATION)
     public String deleteByIds(@PathVariable String[] ids) {
 
         for (String id : ids) {

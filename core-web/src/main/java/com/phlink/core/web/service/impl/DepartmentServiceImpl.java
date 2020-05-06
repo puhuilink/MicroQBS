@@ -1,18 +1,19 @@
 package com.phlink.core.web.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.phlink.core.web.entity.Department;
 import com.phlink.core.web.mapper.DepartmentMapper;
 import com.phlink.core.web.service.DepartmentService;
 import com.phlink.core.web.utils.SecurityUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author wen
@@ -61,7 +62,7 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
 
     private List<Department> listByTitleLikeAndIdInOrderBySortOrder(String title, List<String> depIds) {
         QueryWrapper<Department> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(Department::getTitle, title);
+        queryWrapper.lambda().like(Department::getTitle, title);
         if (depIds != null && !depIds.isEmpty()) {
             queryWrapper.lambda().in(Department::getId, depIds);
         }

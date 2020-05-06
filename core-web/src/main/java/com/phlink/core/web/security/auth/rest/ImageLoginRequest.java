@@ -1,12 +1,16 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 10:24:49
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 10:24:49
+ */
 package com.phlink.core.web.security.auth.rest;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 
-/**
- * @author wen
- */
 @Data
 public class ImageLoginRequest {
     private String username;
