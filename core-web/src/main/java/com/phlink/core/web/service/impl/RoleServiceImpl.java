@@ -1,15 +1,22 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 14:52:54
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 14:52:54
+ */
 package com.phlink.core.web.service.impl;
+
+import java.util.List;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.phlink.core.web.entity.Role;
 import com.phlink.core.web.mapper.RoleMapper;
 import com.phlink.core.web.service.RoleService;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * @author wen

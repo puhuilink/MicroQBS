@@ -1,6 +1,14 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 14:51:51
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 14:51:51
+ */
 package com.phlink.core.web.security.permission;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.Collection;
+import java.util.Iterator;
+
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -9,15 +17,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.Iterator;
-
 /**
  * 权限管理决断器
  * 判断用户拥有的权限或角色是否有资源访问权限
  * @author wen
  */
-@Slf4j
 @Component
 public class MyAccessDecisionManager implements AccessDecisionManager {
 

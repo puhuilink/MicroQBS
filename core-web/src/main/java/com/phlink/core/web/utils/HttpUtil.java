@@ -1,14 +1,27 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 14:53:15
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 14:53:15
+ */
 package com.phlink.core.web.utils;
 
+import java.util.Map;
+
 import com.google.gson.Gson;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * restTemplate 封装get post 等请求

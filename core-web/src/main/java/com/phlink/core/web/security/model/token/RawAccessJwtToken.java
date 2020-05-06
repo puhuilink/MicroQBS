@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 14:51:20
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 14:51:20
+ */
 package com.phlink.core.web.security.model.token;
 
 import com.phlink.core.web.security.exception.JwtExpiredTokenException;

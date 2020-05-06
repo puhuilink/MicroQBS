@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 14:52:33
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 14:52:33
+ */
 package com.phlink.core.web.service.impl;
 
 import java.util.Date;
@@ -17,12 +23,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author wen
  */
-@Slf4j
 @Service("logService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class LogTraceServiceImpl extends ServiceImpl<LogTraceMapper, LogTrace> implements LogTraceService {

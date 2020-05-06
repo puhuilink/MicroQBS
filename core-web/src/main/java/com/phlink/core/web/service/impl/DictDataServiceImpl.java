@@ -1,22 +1,28 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 14:52:25
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 14:52:25
+ */
 package com.phlink.core.web.service.impl;
 
-import cn.hutool.core.util.StrUtil;
+import java.util.List;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.phlink.core.web.entity.DictData;
 import com.phlink.core.web.mapper.DictDataMapper;
 import com.phlink.core.web.service.DictDataService;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author wen
  */
-@Slf4j
 @Service
 @Transactional
 public class DictDataServiceImpl extends ServiceImpl<DictDataMapper, DictData> implements DictDataService {

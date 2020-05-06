@@ -1,25 +1,36 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 14:53:00
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 14:53:00
+ */
 package com.phlink.core.web.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.StrUtil;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.phlink.core.base.vo.SearchVO;
 import com.phlink.core.web.controller.vo.UserData;
-import com.phlink.core.web.entity.*;
+import com.phlink.core.web.entity.Department;
+import com.phlink.core.web.entity.Permission;
+import com.phlink.core.web.entity.Role;
+import com.phlink.core.web.entity.User;
 import com.phlink.core.web.mapper.DepartmentMapper;
 import com.phlink.core.web.mapper.PermissionMapper;
 import com.phlink.core.web.mapper.UserMapper;
 import com.phlink.core.web.mapper.UserRoleMapper;
 import com.phlink.core.web.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author wen

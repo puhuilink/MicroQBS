@@ -1,10 +1,13 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 14:53:29
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 14:53:29
+ */
 package com.phlink.core.web.utils;
-
-import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Slf4j
 public class IPUtil {
 
     private static final String UNKNOWN = "unknown";

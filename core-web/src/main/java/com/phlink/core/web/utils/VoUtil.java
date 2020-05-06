@@ -1,9 +1,15 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 14:53:51
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 14:53:51
+ */
 package com.phlink.core.web.utils;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.phlink.core.web.controller.vo.MenuVO;
 import com.phlink.core.web.entity.Permission;
-import org.apache.poi.ss.formula.functions.T;
+
+import cn.hutool.core.bean.BeanUtil;
 
 /**
  * @author wen

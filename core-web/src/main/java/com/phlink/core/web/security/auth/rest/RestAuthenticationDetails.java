@@ -1,8 +1,8 @@
 /*
  * @Author: sevncz.wen
  * @Date: 2020-05-06 10:25:11
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-06 10:25:11
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-06 14:50:50
  */
 package com.phlink.core.web.security.auth.rest;
 
@@ -18,6 +18,10 @@ import ua_parser.Parser;
 @Data
 public class RestAuthenticationDetails implements Serializable {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private final String clientAddress;
     private final Client userAgent;
 

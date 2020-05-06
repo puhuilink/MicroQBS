@@ -1,10 +1,22 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 14:52:01
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 14:52:01
+ */
 package com.phlink.core.web.security.permission;
 
-import cn.hutool.core.util.StrUtil;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import com.phlink.core.base.constant.CommonConstant;
 import com.phlink.core.web.entity.Permission;
 import com.phlink.core.web.service.PermissionService;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -14,14 +26,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
-import java.util.*;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * 权限资源管理器
  * 为权限决断器提供支持
  * @author wen
  */
-@Slf4j
 @Component
 public class MySecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 

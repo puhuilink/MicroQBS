@@ -1,4 +1,12 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 14:52:46
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 14:52:46
+ */
 package com.phlink.core.web.service.impl;
+
+import java.util.List;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
@@ -6,11 +14,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.phlink.core.web.entity.RoleDepartment;
 import com.phlink.core.web.mapper.RoleDepartmentMapper;
 import com.phlink.core.web.service.RoleDepartmentService;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * @author wen

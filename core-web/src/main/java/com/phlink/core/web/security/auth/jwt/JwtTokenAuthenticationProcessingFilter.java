@@ -2,7 +2,7 @@
  * @Author: sevncz.wen
  * @Date: 2020-05-06 10:23:47
  * @Last Modified by: sevncz.wen
- * @Last Modified time: 2020-05-06 14:38:31
+ * @Last Modified time: 2020-05-06 14:50:59
  */
 package com.phlink.core.web.security.auth.jwt;
 
@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.phlink.core.web.security.JwtAuthenticationToken;
 import com.phlink.core.web.security.auth.jwt.extractor.TokenExtractor;
 import com.phlink.core.web.security.model.token.RawAccessJwtToken;
-import com.phlink.core.web.utils.SecurityUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -33,9 +32,6 @@ import lombok.extern.slf4j.Slf4j;
 public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticationProcessingFilter {
     private final AuthenticationFailureHandler failureHandler;
     private final TokenExtractor tokenExtractor;
-
-    @Autowired
-    private SecurityUtil securityUtil;
 
     @Autowired
     public JwtTokenAuthenticationProcessingFilter(AuthenticationFailureHandler failureHandler,

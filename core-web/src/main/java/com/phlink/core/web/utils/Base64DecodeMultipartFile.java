@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 14:53:09
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 14:53:09
+ */
 package com.phlink.core.web.utils;
 
 import java.io.ByteArrayInputStream;
@@ -6,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
+
 import org.springframework.web.multipart.MultipartFile;
 
 /**

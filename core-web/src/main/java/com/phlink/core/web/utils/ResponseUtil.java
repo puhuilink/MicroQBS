@@ -1,15 +1,25 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-06 14:53:41
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-06 14:53:41
+ */
 package com.phlink.core.web.utils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+
 import com.google.gson.Gson;
 import com.phlink.core.base.enums.ResultCode;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
