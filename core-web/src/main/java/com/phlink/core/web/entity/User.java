@@ -20,8 +20,6 @@ import lombok.Data;
 @ApiModel(value = "用户")
 public class User extends PhlinkBaseEntity {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "用户名")
     private String username;
 

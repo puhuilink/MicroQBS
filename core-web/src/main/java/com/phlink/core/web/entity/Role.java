@@ -1,14 +1,15 @@
 package com.phlink.core.web.entity;
 
+import java.util.List;
+
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.phlink.core.web.base.PhlinkBaseEntity;
 import com.phlink.core.base.constant.CommonConstant;
+import com.phlink.core.web.base.PhlinkBaseEntity;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.util.List;
 
 /**
  * @author wen
@@ -17,8 +18,6 @@ import java.util.List;
 @TableName("t_role")
 @ApiModel(value = "角色")
 public class Role extends PhlinkBaseEntity {
-
-    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "角色名 以ROLE_开头")
     private String name;

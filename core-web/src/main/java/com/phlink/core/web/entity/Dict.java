@@ -1,12 +1,13 @@
 package com.phlink.core.web.entity;
 
+import java.math.BigDecimal;
+
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.phlink.core.web.base.PhlinkBaseEntity;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.math.BigDecimal;
 
 /**
  * @author wen
@@ -15,8 +16,6 @@ import java.math.BigDecimal;
 @TableName("t_dict")
 @ApiModel(value = "字典数据")
 public class Dict extends PhlinkBaseEntity {
-
-    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "字典名称")
     private String title;

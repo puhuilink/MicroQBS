@@ -2,10 +2,12 @@ package com.phlink.core.web.entity;
 
 import java.math.BigDecimal;
 import java.util.List;
+
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.phlink.core.base.constant.CommonConstant;
 import com.phlink.core.web.base.PhlinkBaseEntity;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,8 +19,6 @@ import lombok.Data;
 @TableName("t_permission")
 @ApiModel(value = "菜单权限")
 public class Permission extends PhlinkBaseEntity {
-
-    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "菜单/权限名称")
     private String name;
