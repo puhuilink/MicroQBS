@@ -1,4 +1,4 @@
-package com.phlink.core.web.controller.noauth;
+package com.phlink.core.web.controller.auth;
 
 import java.util.List;
 
