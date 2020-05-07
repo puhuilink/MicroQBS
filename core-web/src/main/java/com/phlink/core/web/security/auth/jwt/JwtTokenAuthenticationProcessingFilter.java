@@ -1,7 +1,10 @@
 /*
  * @Author: sevncz.wen
+ *
  * @Date: 2020-05-06 10:23:47
+ *
  * @Last Modified by: sevncz.wen
+ *
  * @Last Modified time: 2020-05-06 14:50:59
  */
 package com.phlink.core.web.security.auth.jwt;
@@ -44,7 +47,6 @@ public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticati
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException, IOException, ServletException {
-        log.info(request.getRequestURI());
         RawAccessJwtToken token = new RawAccessJwtToken(tokenExtractor.extract(request));
         return getAuthenticationManager().authenticate(new JwtAuthenticationToken(token));
     }

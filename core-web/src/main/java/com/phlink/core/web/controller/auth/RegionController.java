@@ -1,14 +1,17 @@
 package com.phlink.core.web.controller.noauth;
 
+import java.util.List;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+
 import com.phlink.core.web.entity.City;
 import com.phlink.core.web.entity.Country;
 import com.phlink.core.web.entity.Province;
 import com.phlink.core.web.service.CityService;
 import com.phlink.core.web.service.CountryService;
 import com.phlink.core.web.service.ProvinceService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,15 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import java.util.List;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * @author wen
  */
 @Api(tags = "行政区域接口")
-@RequestMapping("/api/noauth/region")
+@RequestMapping("/api/auth/region")
 @RestController
 @Transactional
 public class RegionController {

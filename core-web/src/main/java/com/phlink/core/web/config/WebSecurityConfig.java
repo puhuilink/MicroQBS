@@ -54,9 +54,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static final String TOKEN_REFRESH_ENTRY_POINT = "/api/auth/token";
     public static final String TOKEN_BASED_AUTH_ENTRY_POINT = "/**";
     public static final String WS_TOKEN_BASED_AUTH_ENTRY_POINT = "/api/ws/**";
-    public static final String NOAUTH_ENTRY_POINT = "/api/noauth/**";
+    public static final String NOAUTH_ENTRY_POINT = "/api/auth/**";
     protected static final String[] NON_TOKEN_BASED_AUTH_ENTRY_POINTS = new String[] { "/index.html", "/static/**",
-            "/api/noauth/**", "/webjars/**" };
+            "/api/auth/**", "/webjars/**" };
 
     @Autowired
     private IgnoredUrlsProperties ignoredUrlsProperties;
@@ -80,6 +80,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private MyFilterSecurityInterceptor myFilterSecurityInterceptor;
     @Autowired
     private RedissonClient redissonClient;
+
+
+    private SkipPathRequestMatcher buildSkipPathRequestMatcher(){
+        List<String> pathsToSkip = CollUtil.newArrayList(NON_TOKEN_BASED_AUTH_ENTRY_POINTS);
+        pathsToSkip.addAll(CollUtil.newArrayList(WS_TOKEN_BASED_AUTH_ENTRY_POINT, TOKEN_REFRESH_ENTRY_POINT,
+                USERNAME_LOGIN_ENTRY_POINT, MOBILE_LOGIN_ENTRY_POINT, IMAGE_LOGIN_ENTRY_POINT, WEBJARS_ENTRY_POINT,
+                NOAUTH_ENTRY_POINT));
+        pathsToSkip.addAll(ignoredUrlsProperties.getUrls());
+        SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, TOKEN_BASED_AUTH_ENTRY_POINT);
+        return matcher;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -115,12 +126,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     protected JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter() throws Exception {
-        List<String> pathsToSkip = CollUtil.newArrayList(NON_TOKEN_BASED_AUTH_ENTRY_POINTS);
-        pathsToSkip.addAll(CollUtil.newArrayList(WS_TOKEN_BASED_AUTH_ENTRY_POINT, TOKEN_REFRESH_ENTRY_POINT,
-                USERNAME_LOGIN_ENTRY_POINT, MOBILE_LOGIN_ENTRY_POINT, IMAGE_LOGIN_ENTRY_POINT, WEBJARS_ENTRY_POINT,
-                NOAUTH_ENTRY_POINT));
-        pathsToSkip.addAll(ignoredUrlsProperties.getUrls());
-        SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, TOKEN_BASED_AUTH_ENTRY_POINT);
+        SkipPathRequestMatcher matcher = buildSkipPathRequestMatcher();
         JwtTokenAuthenticationProcessingFilter filter = new JwtTokenAuthenticationProcessingFilter(failureHandler,
                 jwtHeaderTokenExtractor, matcher);
         filter.setAuthenticationManager(this.authenticationManager);
@@ -165,10 +171,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(TOKEN_REFRESH_ENTRY_POINT).permitAll()
                 .antMatchers(NON_TOKEN_BASED_AUTH_ENTRY_POINTS).permitAll()
                 .antMatchers(ignoredUrlsProperties.getUrls().toArray(new String[0])).permitAll()
-                .and()
-                .authorizeRequests()
                 .antMatchers(WS_TOKEN_BASED_AUTH_ENTRY_POINT).authenticated()
                 .antMatchers(TOKEN_BASED_AUTH_ENTRY_POINT).authenticated()
+                .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(restAccessDeniedHandler)

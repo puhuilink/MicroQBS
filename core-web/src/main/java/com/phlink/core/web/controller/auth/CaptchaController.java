@@ -1,11 +1,15 @@
 package com.phlink.core.web.controller.noauth;
 
-import cn.hutool.core.util.StrUtil;
+import java.io.IOException;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
+import javax.servlet.http.HttpServletResponse;
+
 import com.phlink.core.base.enums.ResultCode;
 import com.phlink.core.base.exception.BizException;
 import com.phlink.core.base.utils.CreateVerifyCode;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.StringCodec;
@@ -16,16 +20,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
+import cn.hutool.core.util.StrUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * @author wen
  */
 @Api(tags = "验证码相关接口")
-@RequestMapping("/api/noauth/captcha")
+@RequestMapping("/api/auth/captcha")
 @RestController
 @Transactional
 public class CaptchaController {
