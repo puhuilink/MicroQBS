@@ -8,9 +8,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * @author wen
- */
 @Data
 @TableName("t_setting")
 @ApiModel(value = "配置")
@@ -20,7 +17,7 @@ public class Setting extends PhlinkBaseEntity {
     @ApiModelProperty(value = "配置值value")
     private String value;
 
-    public Setting(String id){
+    public Setting(String id) {
 
         super.setId(id);
     }

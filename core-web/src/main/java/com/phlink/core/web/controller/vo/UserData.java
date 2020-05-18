@@ -1,5 +1,7 @@
 package com.phlink.core.web.controller.vo;
 
+import java.util.List;
+
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
@@ -8,14 +10,10 @@ import com.alibaba.excel.annotation.write.style.HeadRowHeight;
 import com.phlink.core.base.constant.CommonConstant;
 import com.phlink.core.web.entity.Permission;
 import com.phlink.core.web.entity.Role;
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.util.List;
-
-/**
- * @author wen
- */
 @ColumnWidth(30)
 @HeadRowHeight(15)
 @ContentRowHeight(20)

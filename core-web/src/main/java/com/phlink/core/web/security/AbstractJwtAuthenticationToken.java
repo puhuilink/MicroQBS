@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:12:39
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:12:39
+ */
 package com.phlink.core.web.security;
 
 import com.phlink.core.web.security.model.SecurityUser;

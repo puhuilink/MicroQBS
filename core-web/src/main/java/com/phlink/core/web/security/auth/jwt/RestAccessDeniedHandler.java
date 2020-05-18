@@ -1,8 +1,8 @@
 /*
  * @Author: sevncz.wen
  * @Date: 2020-05-06 10:24:41
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-06 10:24:41
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:10:23
  */
 package com.phlink.core.web.security.auth.jwt;
 
@@ -26,8 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 public class RestAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException)
-            throws IOException, ServletException {
+    public void handle(HttpServletRequest request, HttpServletResponse response,
+            AccessDeniedException accessDeniedException) throws IOException, ServletException {
         log.info("用户信息校验失败，禁止访问系统");
         ResponseUtil.out(response, ResponseUtil.resultMap(false, ResultCode.FORBIDDEN));
     }

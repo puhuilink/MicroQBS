@@ -11,9 +11,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-/**
- * @author wen
- */
 @Data
 @TableName("t_role")
 @ApiModel(value = "角色")
@@ -31,11 +28,11 @@ public class Role extends PhlinkBaseEntity {
     @ApiModelProperty(value = "备注")
     private String description;
 
-    @TableField(exist=false)
+    @TableField(exist = false)
     @ApiModelProperty(value = "拥有权限")
     private List<RolePermission> permissions;
 
-    @TableField(exist=false)
+    @TableField(exist = false)
     @ApiModelProperty(value = "拥有数据权限")
     private List<RoleDepartment> departments;
 }

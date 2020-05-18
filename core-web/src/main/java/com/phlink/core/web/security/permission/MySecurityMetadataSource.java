@@ -1,8 +1,8 @@
 /*
  * @Author: sevncz.wen
  * @Date: 2020-05-06 14:52:01
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-06 14:52:01
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:12:28
  */
 package com.phlink.core.web.security.permission;
 
@@ -29,8 +29,8 @@ import org.springframework.util.PathMatcher;
 import cn.hutool.core.util.StrUtil;
 
 /**
- * 权限资源管理器
- * 为权限决断器提供支持
+ * 权限资源管理器 为权限决断器提供支持
+ *
  * @author wen
  */
 @Component
@@ -50,23 +50,22 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
         Collection<ConfigAttribute> configAttributes;
         ConfigAttribute cfg;
         // 获取启用的权限操作请求
-        List<Permission> permissions = permissionService.listByTypeAndStatusOrderBySortOrder(CommonConstant.PERMISSION_OPERATION, CommonConstant.STATUS_NORMAL);
+        List<Permission> permissions = permissionService
+                .listByTypeAndStatusOrderBySortOrder(CommonConstant.PERMISSION_OPERATION, CommonConstant.STATUS_NORMAL);
         for (Permission permission : permissions) {
             if (StrUtil.isNotBlank(permission.getTitle()) && StrUtil.isNotBlank(permission.getPath())) {
                 configAttributes = new ArrayList<>();
                 cfg = new SecurityConfig(permission.getTitle());
-                //作为MyAccessDecisionManager类的decide的第三个参数
+                // 作为MyAccessDecisionManager类的decide的第三个参数
                 configAttributes.add(cfg);
-                //用权限的path作为map的key，用ConfigAttribute的集合作为value
+                // 用权限的path作为map的key，用ConfigAttribute的集合作为value
                 map.put(permission.getPath(), configAttributes);
             }
         }
     }
 
     /**
-     * 判定用户请求的url是否在权限表中
-     * 如果在权限表中，则返回给decide方法，用来判定用户是否有此权限
-     * 如果不在权限表中则放行
+     * 判定用户请求的url是否在权限表中 如果在权限表中，则返回给decide方法，用来判定用户是否有此权限 如果不在权限表中则放行
      *
      * @param o
      * @return
@@ -78,7 +77,7 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
         if (map == null) {
             loadResourceDefine();
         }
-        //Object中包含用户请求request
+        // Object中包含用户请求request
         String url = ((FilterInvocation) o).getRequestUrl();
         PathMatcher pathMatcher = new AntPathMatcher();
         Iterator<String> iterator = map.keySet().iterator();

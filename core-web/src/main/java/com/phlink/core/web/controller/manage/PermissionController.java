@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:05:05
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:07:54
+ */
 package com.phlink.core.web.controller.manage;
 
 import java.util.ArrayList;
@@ -41,9 +47,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author wen
- */
 @Slf4j
 @RestController
 @Api(tags = "菜单/权限管理接口")
@@ -109,7 +112,8 @@ public class PermissionController {
         // 筛选二级页面拥有的按钮权限
         List<MenuVO> buttonPermissions = new ArrayList<>();
         for (Permission p : list) {
-            if (CommonConstant.PERMISSION_OPERATION.equals(p.getType()) && CommonConstant.LEVEL_THREE.equals(p.getLevel())) {
+            if (CommonConstant.PERMISSION_OPERATION.equals(p.getType())
+                    && CommonConstant.LEVEL_THREE.equals(p.getLevel())) {
                 buttonPermissions.add(VoUtil.permissionToMenuVO(p));
             }
         }
@@ -189,9 +193,9 @@ public class PermissionController {
             }
         }
         permissionService.save(permission);
-        //重新加载权限
+        // 重新加载权限
         mySecurityMetadataSource.loadResourceDefine();
-        //手动删除缓存
+        // 手动删除缓存
         redissonClient.getKeys().delete("permission::allList");
         return permission;
     }
@@ -213,9 +217,9 @@ public class PermissionController {
             }
         }
         permissionService.updateById(permission);
-        //重新加载权限
+        // 重新加载权限
         mySecurityMetadataSource.loadResourceDefine();
-        //手动批量删除缓存
+        // 手动批量删除缓存
         redissonClient.getKeys().deleteByPattern("userPermission:" + "*");
         redissonClient.getKeys().deleteByPattern("user:" + "*");
         redissonClient.getKeys().deleteByPattern("permission::userMenuList:*");
@@ -238,9 +242,9 @@ public class PermissionController {
         for (String id : ids) {
             permissionService.removeById(id);
         }
-        //重新加载权限
+        // 重新加载权限
         mySecurityMetadataSource.loadResourceDefine();
-        //手动删除缓存
+        // 手动删除缓存
         redissonClient.getKeys().delete("permission::allList");
         return "批量通过id删除数据成功";
     }

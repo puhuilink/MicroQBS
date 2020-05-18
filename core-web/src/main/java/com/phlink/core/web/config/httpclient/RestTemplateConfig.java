@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:16:28
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:16:28
+ */
 package com.phlink.core.web.config.httpclient;
 
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -8,7 +14,6 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.client.RestTemplate;
-
 
 /**
  * RestTemplate配置

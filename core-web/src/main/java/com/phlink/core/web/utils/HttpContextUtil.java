@@ -1,8 +1,8 @@
 /*
  * @Author: sevncz.wen
  * @Date: 2020-05-06 14:53:12
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-06 14:53:12
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:14:00
  */
 package com.phlink.core.web.utils;
 
@@ -20,6 +20,7 @@ public class HttpContextUtil {
     }
 
     public static HttpServletRequest getHttpServletRequest() {
-        return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes()))
+                .getRequest();
     }
 }

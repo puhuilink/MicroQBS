@@ -7,9 +7,6 @@ import com.alibaba.excel.metadata.GlobalConfiguration;
 import com.alibaba.excel.metadata.property.ExcelContentProperty;
 import com.phlink.core.base.constant.CommonConstant;
 
-/**
- * @author wen
- */
 public class UserStatusConverter implements Converter<Integer> {
     @Override
     public Class supportJavaTypeKey() {
@@ -22,17 +19,19 @@ public class UserStatusConverter implements Converter<Integer> {
     }
 
     @Override
-    public Integer convertToJavaData(CellData cellData, ExcelContentProperty excelContentProperty, GlobalConfiguration globalConfiguration) throws Exception {
+    public Integer convertToJavaData(CellData cellData, ExcelContentProperty excelContentProperty,
+            GlobalConfiguration globalConfiguration) throws Exception {
         String value = cellData.getStringValue();
-        if("管理员".equals(value)) {
+        if ("管理员".equals(value)) {
             return CommonConstant.USER_TYPE_ADMIN;
         }
         return CommonConstant.USER_TYPE_NORMAL;
     }
 
     @Override
-    public CellData convertToExcelData(Integer value, ExcelContentProperty excelContentProperty, GlobalConfiguration globalConfiguration) throws Exception {
-        if(CommonConstant.USER_TYPE_ADMIN.equals(value)) {
+    public CellData convertToExcelData(Integer value, ExcelContentProperty excelContentProperty,
+            GlobalConfiguration globalConfiguration) throws Exception {
+        if (CommonConstant.USER_TYPE_ADMIN.equals(value)) {
             return new CellData("管理员");
         }
         return new CellData("普通用户");

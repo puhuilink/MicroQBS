@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:12:48
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:12:48
+ */
 package com.phlink.core.web.security;
 
 import java.util.ArrayList;
@@ -42,8 +48,7 @@ public class SecurityUserDetails extends User implements UserDetails {
         if (permissions != null && permissions.size() > 0) {
             for (Permission permission : permissions) {
                 if (CommonConstant.PERMISSION_OPERATION.equals(permission.getType())
-                        && StrUtil.isNotBlank(permission.getTitle())
-                        && StrUtil.isNotBlank(permission.getPath())) {
+                        && StrUtil.isNotBlank(permission.getTitle()) && StrUtil.isNotBlank(permission.getPath())) {
 
                     authorityList.add(new SimpleGrantedAuthority(permission.getTitle()));
                 }

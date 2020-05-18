@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:15:02
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:15:02
+ */
 package com.phlink.core.web.config.redis;
 
 import lombok.Data;
@@ -20,8 +26,8 @@ public class RedisClusterProperties {
     private List<String> nodes;
 
     /**
-     * 默认值： SLAVE（只在从服务节点里读取）设置读取操作选择节点的模式。 可用值为： SLAVE - 只在从服务节点里读取。
-     * MASTER - 只在主服务节点里读取。 MASTER_SLAVE - 在主从服务节点里都可以读取
+     * 默认值： SLAVE（只在从服务节点里读取）设置读取操作选择节点的模式。 可用值为： SLAVE - 只在从服务节点里读取。 MASTER -
+     * 只在主服务节点里读取。 MASTER_SLAVE - 在主从服务节点里都可以读取
      */
     private String readMode;
     /**
@@ -39,7 +45,7 @@ public class RedisClusterProperties {
     private int retryAttempts;
 
     /**
-     *命令重试发送时间间隔，单位：毫秒 默认值：1500
+     * 命令重试发送时间间隔，单位：毫秒 默认值：1500
      */
     private int retryInterval;
 

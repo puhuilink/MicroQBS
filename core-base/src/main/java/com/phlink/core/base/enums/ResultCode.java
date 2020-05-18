@@ -1,8 +1,6 @@
 package com.phlink.core.base.enums;
 
-/**
- * @author wen
- */
+
 public enum ResultCode implements IResultCode {
     // 数据操作错误定义
     SUCCESS("0", "成功!"),

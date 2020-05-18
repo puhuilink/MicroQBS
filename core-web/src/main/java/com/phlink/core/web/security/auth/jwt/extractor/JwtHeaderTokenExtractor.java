@@ -17,9 +17,7 @@ import org.springframework.stereotype.Component;
 
 import cn.hutool.core.util.StrUtil;
 
-/**
- * @author wen
- */
+
 @Component(value="jwtHeaderTokenExtractor")
 public class JwtHeaderTokenExtractor implements TokenExtractor {
     @Autowired

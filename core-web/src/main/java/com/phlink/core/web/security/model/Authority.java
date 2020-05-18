@@ -1,16 +1,16 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:12:00
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:12:00
+ */
 package com.phlink.core.web.security.model;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 
-/**
- * @author wen
- */
 public enum Authority {
 
-    SYS_ADMIN(0),
-    TENANT_ADMIN(1),
-    CUSTOMER_USER(2),
-    REFRESH_TOKEN(10);
+    SYS_ADMIN(0), TENANT_ADMIN(1), CUSTOMER_USER(2), REFRESH_TOKEN(10);
 
     @EnumValue
     private int code;

@@ -8,10 +8,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Data;
 
-
-/**
- * @author wen
- */
 @Data
 @TableName("t_province")
 public class Province implements Serializable {

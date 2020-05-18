@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:16:37
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:16:37
+ */
 package com.phlink.core.web.base;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
@@ -19,11 +25,11 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
-@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler", "fieldHandler" })
 public class PhlinkBaseEntity {
     @Id
     @TableId
-    @NotNull(message = "{required}", groups = {OnCheckID.class})
+    @NotNull(message = "{required}", groups = { OnCheckID.class })
     @ApiModelProperty(value = "唯一标识")
     private String id = String.valueOf(SnowFlakeUtil.getFlowIdInstance().nextId());
 

@@ -1,8 +1,8 @@
 /*
  * @Author: sevncz.wen
  * @Date: 2020-05-06 10:25:36
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-06 10:25:36
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:11:11
  */
 package com.phlink.core.web.security.auth.rest;
 
@@ -41,16 +41,17 @@ public class RestLoginProcessingFilter extends AbstractAuthenticationProcessingF
     private final AuthenticationFailureHandler failureHandler;
 
     public RestLoginProcessingFilter(String defaultFilterProcessesUrl, AuthenticationSuccessHandler successHandler,
-                                        AuthenticationFailureHandler failureHandler) {
+            AuthenticationFailureHandler failureHandler) {
         super(defaultFilterProcessesUrl);
         this.successHandler = successHandler;
         this.failureHandler = failureHandler;
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse httpServletResponse) throws AuthenticationException, IOException, ServletException {
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse httpServletResponse)
+            throws AuthenticationException, IOException, ServletException {
         if (!HttpMethod.POST.name().equals(request.getMethod())) {
-            if(log.isDebugEnabled()) {
+            if (log.isDebugEnabled()) {
                 log.debug("请求方法不支持. Request method: " + request.getMethod());
             }
             throw new AuthMethodNotSupportedException("请求方法不支持");
@@ -68,22 +69,24 @@ public class RestLoginProcessingFilter extends AbstractAuthenticationProcessingF
             throw new AuthenticationServiceException("请提供用户名和密码");
         }
 
-        UserPrincipal principal = new UserPrincipal(UserPrincipal.Type.USER_NAME, loginRequest.getUsername(), loginRequest.getSaveLogin());
+        UserPrincipal principal = new UserPrincipal(UserPrincipal.Type.USER_NAME, loginRequest.getUsername(),
+                loginRequest.getSaveLogin());
 
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(principal, loginRequest.getPassword());
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(principal,
+                loginRequest.getPassword());
         token.setDetails(authenticationDetailsSource.buildDetails(request));
         return this.getAuthenticationManager().authenticate(token);
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-                                            Authentication authResult) throws IOException, ServletException {
+            Authentication authResult) throws IOException, ServletException {
         successHandler.onAuthenticationSuccess(request, response, authResult);
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-                                              AuthenticationException failed) throws IOException, ServletException {
+            AuthenticationException failed) throws IOException, ServletException {
         SecurityContextHolder.clearContext();
         failureHandler.onAuthenticationFailure(request, response, failed);
     }

@@ -2,17 +2,16 @@ package com.phlink.core.web.entity;
 
 import java.math.BigDecimal;
 import java.util.List;
+
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.phlink.core.base.constant.CommonConstant;
 import com.phlink.core.web.base.PhlinkBaseEntity;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-/**
- * @author wen
- */
 @Data
 @TableName("t_department")
 @ApiModel(value = "部门")
@@ -33,15 +32,15 @@ public class Department extends PhlinkBaseEntity {
     @ApiModelProperty(value = "是否启用 0启用 -1禁用")
     private Integer status = CommonConstant.STATUS_NORMAL;
 
-    @TableField(exist=false)
+    @TableField(exist = false)
     @ApiModelProperty(value = "父节点名称")
     private String parentTitle;
 
-    @TableField(exist=false)
+    @TableField(exist = false)
     @ApiModelProperty(value = "主负责人")
     private List<String> mainMaster;
 
-    @TableField(exist=false)
+    @TableField(exist = false)
     @ApiModelProperty(value = "副负责人")
     private List<String> viceMaster;
 }

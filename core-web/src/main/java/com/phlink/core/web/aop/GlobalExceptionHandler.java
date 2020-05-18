@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:16:50
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:16:50
+ */
 package com.phlink.core.web.aop;
 
 import java.util.List;
@@ -109,12 +115,9 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error("参数错误，{}", e.getMessage());
-        //Get all errors
-        List<String> errors = e.getBindingResult()
-            .getFieldErrors()
-            .stream()
-            .map(x -> x.getField() + x.getDefaultMessage())
-            .collect(Collectors.toList());
+        // Get all errors
+        List<String> errors = e.getBindingResult().getFieldErrors().stream()
+                .map(x -> x.getField() + x.getDefaultMessage()).collect(Collectors.toList());
         return ResultUtil.error(ResultCode.BODY_NOT_MATCH.getCode(), String.join(";", errors));
     }
 

@@ -1,8 +1,8 @@
 /*
  * @Author: sevncz.wen
  * @Date: 2020-05-06 10:25:05
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-06 10:25:05
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:10:49
  */
 package com.phlink.core.web.security.auth.rest;
 
@@ -18,9 +18,8 @@ public class MobileLoginRequest {
     private Boolean saveLogin;
 
     @JsonCreator
-    public MobileLoginRequest(@JsonProperty("mobile") String mobile,
-                              @JsonProperty("code") String code,
-                              @JsonProperty("saveLogin") Boolean saveLogin) {
+    public MobileLoginRequest(@JsonProperty("mobile") String mobile, @JsonProperty("code") String code,
+            @JsonProperty("saveLogin") Boolean saveLogin) {
         this.mobile = mobile;
         this.code = code;
         this.saveLogin = saveLogin;

@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:17:07
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:17:07
+ */
 package com.phlink.core.web.aop;
 
 import java.lang.reflect.Method;
@@ -57,15 +63,15 @@ public class SystemLogTraceAspect {
     public static Map<String, Object> getControllerMethodInfo(JoinPoint joinPoint) throws Exception {
 
         Map<String, Object> map = new HashMap<String, Object>(16);
-        //获取目标类名
+        // 获取目标类名
         String targetName = joinPoint.getTarget().getClass().getName();
-        //获取方法名
+        // 获取方法名
         String methodName = joinPoint.getSignature().getName();
-        //获取相关参数
+        // 获取相关参数
         Object[] arguments = joinPoint.getArgs();
-        //生成类对象
+        // 生成类对象
         Class targetClass = Class.forName(targetName);
-        //获取该类中的方法
+        // 获取该类中的方法
         Method[] methods = targetClass.getMethods();
 
         String description = "";
@@ -77,7 +83,7 @@ public class SystemLogTraceAspect {
             }
             Class[] clazzs = method.getParameterTypes();
             if (clazzs.length != arguments.length) {
-                //比较方法中参数个数与从切点中获取的参数个数是否相同，原因是方法可以重载哦
+                // 比较方法中参数个数与从切点中获取的参数个数是否相同，原因是方法可以重载哦
                 continue;
             }
             description = method.getAnnotation(SystemLogTrace.class).description();
@@ -102,7 +108,7 @@ public class SystemLogTraceAspect {
     @Before("controllerAspect()")
     public void doBefore(JoinPoint joinPoint) throws InterruptedException {
 
-        //线程绑定变量（该数据只有当前请求的线程可见）
+        // 线程绑定变量（该数据只有当前请求的线程可见）
         Date beginTime = new Date();
         InheritableThreadLocalUtil.put(beginTime);
     }
@@ -130,31 +136,31 @@ public class SystemLogTraceAspect {
             }
             LogTrace logTrace = new LogTrace();
 
-            //请求用户
+            // 请求用户
             logTrace.setUsername(username);
-            //日志标题
+            // 日志标题
             logTrace.setName(description);
-            //日志类型
+            // 日志类型
             logTrace.setLogType((int) getControllerMethodInfo(joinPoint).get("type"));
-            //日志请求url
+            // 日志请求url
             logTrace.setRequestUrl(request.getRequestURI());
-            //请求方式
+            // 请求方式
             logTrace.setRequestType(request.getMethod());
-            //请求参数
+            // 请求参数
             logTrace.setMapToParams(logParams);
-            //请求IP
+            // 请求IP
             String ip = IpInfoUtil.getIpAddr(request);
             logTrace.setIp(ip);
-            //IP地址
+            // IP地址
             logTrace.setIpInfo(IpInfoUtil.getIpCity(ip));
-            //请求开始时间
+            // 请求开始时间
             long beginTime = InheritableThreadLocalUtil.get(Date.class).getTime();
             long endTime = System.currentTimeMillis();
-            //请求耗时
+            // 请求耗时
             Long logElapsedTime = endTime - beginTime;
             logTrace.setCostTime(logElapsedTime.intValue());
 
-            //调用线程保存至ES
+            // 调用线程保存至ES
             ThreadPoolUtil.getPool().execute(new SaveSystemLogThread(logTrace, logTraceService));
         } catch (Exception e) {
             log.error("AOP后置通知异常", e);

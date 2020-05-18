@@ -1,8 +1,8 @@
 /*
  * @Author: sevncz.wen
  * @Date: 2020-05-06 10:24:49
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-06 10:24:49
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:10:35
  */
 package com.phlink.core.web.security.auth.rest;
 
@@ -20,12 +20,9 @@ public class ImageLoginRequest {
     private Boolean saveLogin;
 
     @JsonCreator
-    public ImageLoginRequest(@JsonProperty("username") String username,
-                             @JsonProperty("password") String password,
-                             @JsonProperty("code") String code,
-                             @JsonProperty("captchaId") String captchaId,
-                             @JsonProperty("saveLogin") Boolean saveLogin
-                             ) {
+    public ImageLoginRequest(@JsonProperty("username") String username, @JsonProperty("password") String password,
+            @JsonProperty("code") String code, @JsonProperty("captchaId") String captchaId,
+            @JsonProperty("saveLogin") Boolean saveLogin) {
         this.username = username;
         this.password = password;
         this.code = code;

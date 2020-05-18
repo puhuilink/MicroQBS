@@ -1,13 +1,10 @@
 package com.phlink.core.web.controller.vo;
 
+import java.util.List;
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.util.List;
-
-/**
- * @author wen
- */
 @Data
 public class MenuVO {
     @ApiModelProperty(value = "id")

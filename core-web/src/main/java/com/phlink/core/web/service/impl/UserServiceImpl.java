@@ -1,8 +1,8 @@
 /*
  * @Author: sevncz.wen
  * @Date: 2020-05-06 14:53:00
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-06 14:53:00
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:13:46
  */
 package com.phlink.core.web.service.impl;
 
@@ -32,9 +32,6 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 
-/**
- * @author wen
- */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
@@ -49,13 +46,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public User getByUsername(String username) {
         User user = baseMapper.getByUsername(username);
-        if(user==null){
+        if (user == null) {
             return null;
         }
         // 关联部门
-        if(StrUtil.isNotBlank(user.getDepartmentId())){
+        if (StrUtil.isNotBlank(user.getDepartmentId())) {
             Department department = departmentMapper.selectById(user.getDepartmentId());
-            if(department!=null){
+            if (department != null) {
                 user.setDepartmentTitle(department.getTitle());
             }
         }
@@ -105,7 +102,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public List<UserData> listUserData() {
         List<User> users = list();
 
-        return users.stream().map( u -> {
+        return users.stream().map(u -> {
             UserData ud = new UserData();
             BeanUtil.copyProperties(u, ud);
             return ud;
@@ -114,7 +111,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public void saveBatch(List<UserData> dataList) {
-        List<User> users = dataList.stream().map( ud -> {
+        List<User> users = dataList.stream().map(ud -> {
             User u = new User();
             BeanUtil.copyProperties(ud, u);
             return u;

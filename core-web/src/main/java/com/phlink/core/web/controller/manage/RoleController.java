@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:05:09
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:07:57
+ */
 package com.phlink.core.web.controller.manage;
 
 import java.util.List;
@@ -34,9 +40,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author wen
- */
 @Slf4j
 @RestController
 @Api(tags = "角色管理接口")
@@ -69,7 +72,8 @@ public class RoleController {
     @ApiOperation(value = "分页获取角色")
     public PageInfo<Role> allPage(PageVO pageVo) {
 
-        PageInfo<Role> page = PageHelper.startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
+        PageInfo<Role> page = PageHelper
+                .startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
                 .doSelectPageInfo(() -> roleService.list());
         for (Role role : page.getList()) {
             // 角色拥有权限
@@ -85,8 +89,7 @@ public class RoleController {
     @PostMapping(value = "/default")
     @ApiOperation(value = "设置或取消默认角色")
     @SystemLogTrace(description = "设置或取消默认角色", type = LogType.OPERATION)
-    public String setDefault(@RequestParam String id,
-                             @RequestParam Boolean isDefault) {
+    public String setDefault(@RequestParam String id, @RequestParam Boolean isDefault) {
 
         Role role = roleService.getById(id);
         if (role == null) {
@@ -100,19 +103,18 @@ public class RoleController {
     @PutMapping(value = "/role-permission")
     @ApiOperation(value = "编辑角色分配菜单权限")
     @SystemLogTrace(description = "编辑角色分配菜单权限", type = LogType.OPERATION)
-    public String updateRolePermission(@RequestParam String roleId,
-                                       @RequestParam(required = false) String[] permIds) {
+    public String updateRolePermission(@RequestParam String roleId, @RequestParam(required = false) String[] permIds) {
 
-        //删除其关联权限
+        // 删除其关联权限
         rolePermissionService.deleteByRoleId(roleId);
-        //分配新权限
+        // 分配新权限
         for (String permId : permIds) {
             RolePermission rolePermission = new RolePermission();
             rolePermission.setRoleId(roleId);
             rolePermission.setPermissionId(permId);
             rolePermissionService.save(rolePermission);
         }
-        //手动批量删除缓存
+        // 手动批量删除缓存
         redissonClient.getKeys().deleteByPattern("user:" + "*");
         redissonClient.getKeys().deleteByPattern("userRole:" + "*");
         redissonClient.getKeys().deleteByPattern("userPermission:" + "*");
@@ -124,9 +126,8 @@ public class RoleController {
     @PutMapping(value = "/role-department")
     @ApiOperation(value = "编辑角色分配数据权限")
     @SystemLogTrace(description = "编辑角色分配数据权限", type = LogType.OPERATION)
-    public String updateRoleDep(@RequestParam String roleId,
-                                @RequestParam Integer dataType,
-                                @RequestParam(required = false) String[] depIds) {
+    public String updateRoleDep(@RequestParam String roleId, @RequestParam Integer dataType,
+            @RequestParam(required = false) String[] depIds) {
 
         Role r = roleService.getById(roleId);
         r.setDataType(dataType);
@@ -161,7 +162,7 @@ public class RoleController {
     public Role update(Role entity) {
 
         roleService.updateById(entity);
-        //手动批量删除缓存
+        // 手动批量删除缓存
         redissonClient.getKeys().deleteByPattern("user:" + "*");
         redissonClient.getKeys().deleteByPattern("userRole:" + "*");
 
@@ -179,9 +180,9 @@ public class RoleController {
         }
         roleService.removeByIds(Convert.toList(String.class, ids));
         for (String id : ids) {
-            //删除关联菜单权限
+            // 删除关联菜单权限
             rolePermissionService.deleteByRoleId(id);
-            //删除关联数据权限
+            // 删除关联数据权限
             roleDepartmentService.deleteByRoleId(id);
         }
         return "批量通过id删除数据成功";

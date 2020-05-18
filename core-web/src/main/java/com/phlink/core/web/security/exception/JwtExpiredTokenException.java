@@ -1,11 +1,15 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:11:23
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:11:23
+ */
 package com.phlink.core.web.security.exception;
 
 import com.phlink.core.web.security.model.token.JwtToken;
+
 import org.springframework.security.core.AuthenticationException;
 
-/**
- * @author wen
- */
 public class JwtExpiredTokenException extends AuthenticationException {
     private static final long serialVersionUID = -5959543783324224864L;
 

@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:11:55
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:11:55
+ */
 package com.phlink.core.web.security.model;
 
 import java.util.ArrayList;
@@ -15,9 +21,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 
-/**
- * @author wen
- */
 @Data
 public class SecurityUser extends User {
 

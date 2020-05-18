@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:14:45
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:14:45
+ */
 package com.phlink.core.web.config;
 
 import io.swagger.annotations.ApiOperation;
@@ -51,8 +57,7 @@ public class Swagger2Config {
 
     private List<SecurityContext> securityContexts() {
         List<SecurityContext> securityContexts = new ArrayList<>();
-        securityContexts.add(SecurityContext.builder()
-                .securityReferences(defaultAuth())
+        securityContexts.add(SecurityContext.builder().securityReferences(defaultAuth())
                 .forPaths(PathSelectors.regex("^(?!auth).*$")).build());
         return securityContexts;
     }
@@ -71,23 +76,14 @@ public class Swagger2Config {
 
         log.info("加载Swagger2");
 
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo()).select()
+        return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
                 // 扫描所有有注解的api，用这种方式更灵活
-                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
-                .paths(PathSelectors.any())
-                .build()
-                .securitySchemes(securitySchemes())
-                .securityContexts(securityContexts());
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class)).paths(PathSelectors.any())
+                .build().securitySchemes(securitySchemes()).securityContexts(securityContexts());
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title(title)
-                .description(description)
-                .termsOfServiceUrl(termsOfServiceUrl)
-                .contact(new Contact(name, url, email))
-                .version(version)
-                .build();
+        return new ApiInfoBuilder().title(title).description(description).termsOfServiceUrl(termsOfServiceUrl)
+                .contact(new Contact(name, url, email)).version(version).build();
     }
 }

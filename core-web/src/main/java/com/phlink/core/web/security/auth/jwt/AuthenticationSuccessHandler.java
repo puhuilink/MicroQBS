@@ -2,7 +2,7 @@
  * @Author: sevncz.wen
  * @Date: 2020-05-06 10:24:16
  * @Last Modified by: sevncz.wen
- * @Last Modified time: 2020-05-06 14:45:35
+ * @Last Modified time: 2020-05-18 18:10:12
  */
 package com.phlink.core.web.security.auth.jwt;
 
@@ -39,7 +39,8 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 
     @Override
     @SystemLogTrace(description = "登录系统", type = LogType.LOGIN)
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+            Authentication authentication) throws IOException, ServletException {
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
         log.info("{}登录成功", securityUser.getUsername());
         SecurityContextHolder.getContext().setAuthentication(authentication);

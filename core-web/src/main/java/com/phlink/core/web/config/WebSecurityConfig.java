@@ -2,7 +2,7 @@
  * @Author: sevncz.wen
  * @Date: 2020-05-06 11:03:59
  * @Last Modified by: sevncz.wen
- * @Last Modified time: 2020-05-06 13:39:29
+ * @Last Modified time: 2020-05-18 18:14:58
  */
 package com.phlink.core.web.config;
 
@@ -81,8 +81,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private RedissonClient redissonClient;
 
-
-    private SkipPathRequestMatcher buildSkipPathRequestMatcher(){
+    private SkipPathRequestMatcher buildSkipPathRequestMatcher() {
         List<String> pathsToSkip = CollUtil.newArrayList(NON_TOKEN_BASED_AUTH_ENTRY_POINTS);
         pathsToSkip.addAll(CollUtil.newArrayList(WS_TOKEN_BASED_AUTH_ENTRY_POINT, TOKEN_REFRESH_ENTRY_POINT,
                 USERNAME_LOGIN_ENTRY_POINT, MOBILE_LOGIN_ENTRY_POINT, IMAGE_LOGIN_ENTRY_POINT, WEBJARS_ENTRY_POINT,
@@ -151,37 +150,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         log.info("SpringSecurity 初始化");
-        http.headers()
-                .cacheControl()
-                .and()
-                .frameOptions().disable()
-                .and()
-                .cors()
-                .and()
-                .csrf().disable()
-                .exceptionHandling()
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers(WEBJARS_ENTRY_POINT).permitAll()
-                .antMatchers(USERNAME_LOGIN_ENTRY_POINT).permitAll()
-                .antMatchers(MOBILE_LOGIN_ENTRY_POINT).permitAll()
-                .antMatchers(IMAGE_LOGIN_ENTRY_POINT).permitAll()
-                .antMatchers(TOKEN_REFRESH_ENTRY_POINT).permitAll()
+        http.headers().cacheControl().and().frameOptions().disable().and().cors().and().csrf().disable()
+                .exceptionHandling().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().authorizeRequests().antMatchers(WEBJARS_ENTRY_POINT).permitAll()
+                .antMatchers(USERNAME_LOGIN_ENTRY_POINT).permitAll().antMatchers(MOBILE_LOGIN_ENTRY_POINT).permitAll()
+                .antMatchers(IMAGE_LOGIN_ENTRY_POINT).permitAll().antMatchers(TOKEN_REFRESH_ENTRY_POINT).permitAll()
                 .antMatchers(NON_TOKEN_BASED_AUTH_ENTRY_POINTS).permitAll()
                 .antMatchers(ignoredUrlsProperties.getUrls().toArray(new String[0])).permitAll()
-                .antMatchers(WS_TOKEN_BASED_AUTH_ENTRY_POINT).authenticated()
-                .antMatchers(TOKEN_BASED_AUTH_ENTRY_POINT).authenticated()
-                .anyRequest().authenticated()
-                .and()
-                .exceptionHandling()
-                .accessDeniedHandler(restAccessDeniedHandler)
-                .and()
+                .antMatchers(WS_TOKEN_BASED_AUTH_ENTRY_POINT).authenticated().antMatchers(TOKEN_BASED_AUTH_ENTRY_POINT)
+                .authenticated().anyRequest().authenticated().and().exceptionHandling()
+                .accessDeniedHandler(restAccessDeniedHandler).and()
                 .addFilterBefore(buildRestLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(buildRestPublicLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(buildWsJwtTokenAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(),
+                        UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(buildWsJwtTokenAuthenticationProcessingFilter(),
+                        UsernamePasswordAuthenticationFilter.class)
                 // 添加自定义权限过滤器
                 .addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);
     }

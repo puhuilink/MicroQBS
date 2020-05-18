@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:04:54
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:07:46
+ */
 package com.phlink.core.web.controller.manage;
 
 import java.util.List;
@@ -28,9 +34,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author wen
- */
 @Slf4j
 @RestController
 @Api(tags = "字典数据管理接口")
@@ -48,9 +51,9 @@ public class DictDataController {
 
     @GetMapping(value = "/page")
     @ApiOperation(value = "多条件分页获取用户列表")
-    public PageInfo<DictData> pageByCondition(DictData dictData,
-                                              PageVO pageVo) {
-        PageInfo<DictData> pageInfo = PageHelper.startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
+    public PageInfo<DictData> pageByCondition(DictData dictData, PageVO pageVo) {
+        PageInfo<DictData> pageInfo = PageHelper
+                .startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
                 .doSelectPageInfo(() -> dictDataService.listByCondition(dictData));
         return pageInfo;
     }

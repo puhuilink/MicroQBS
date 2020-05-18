@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:04:39
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:07:23
+ */
 package com.phlink.core.web.controller.auth;
 
 import java.util.List;
@@ -22,9 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-/**
- * @author wen
- */
 @Api(tags = "行政区域接口")
 @RequestMapping("/api/auth/region")
 @RestController

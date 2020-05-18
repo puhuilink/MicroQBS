@@ -1,8 +1,8 @@
 /*
  * @Author: sevncz.wen
  * @Date: 2020-05-06 14:53:29
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-06 14:53:29
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:14:11
  */
 package com.phlink.core.web.utils;
 
@@ -17,10 +17,9 @@ public class IPUtil {
     }
 
     /**
-     * 获取 IP地址
-     * 使用 Nginx等反向代理软件， 则不能通过 request.getRemoteAddr()获取 IP地址
-     * 如果使用了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP地址，
-     * X-Forwarded-For中第一个非 unknown的有效IP字符串，则为真实IP地址
+     * 获取 IP地址 使用 Nginx等反向代理软件， 则不能通过 request.getRemoteAddr()获取 IP地址
+     * 如果使用了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP地址， X-Forwarded-For中第一个非
+     * unknown的有效IP字符串，则为真实IP地址
      */
     public static String getIpAddr(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");

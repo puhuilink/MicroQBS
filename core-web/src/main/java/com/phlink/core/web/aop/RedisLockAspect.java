@@ -1,5 +1,10 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:17:03
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:17:03
+ */
 package com.phlink.core.web.aop;
-
 
 import com.phlink.core.base.annotation.DistributedLock;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +46,8 @@ public class RedisLockAspect {
         DistributedLock distributedLockAnnotation = method.getAnnotation(DistributedLock.class);
         RLock lock = redissonClient.getLock(distributedLockAnnotation.key());
         try {
-            boolean islock = lock.tryLock(distributedLockAnnotation.sleep(), distributedLockAnnotation.expire() * 1000, TimeUnit.MILLISECONDS);
+            boolean islock = lock.tryLock(distributedLockAnnotation.sleep(), distributedLockAnnotation.expire() * 1000,
+                    TimeUnit.MILLISECONDS);
             if (islock) {
                 result = point.proceed();
             } else {

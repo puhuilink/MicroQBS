@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:04:51
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:07:44
+ */
 package com.phlink.core.web.controller.manage;
 
 import java.util.List;
@@ -25,9 +31,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author wen
- */
 @Slf4j
 @RestController
 @Api(tags = "字典管理接口")
@@ -80,7 +83,6 @@ public class DictController {
     @ApiOperation(value = "通过id删除")
     @SystemLogTrace(description = "删除字典", type = LogType.OPERATION)
     public String delAllByIds(@PathVariable String id) {
-
 
         Dict dict = dictService.getById(id);
         dictService.removeById(id);

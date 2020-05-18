@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:04:20
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:04:20
+ */
 package com.phlink.core.web.controller.auth;
 
 import javax.validation.Valid;
@@ -22,9 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
 @Api(tags = "用户账户相关接口")
 @RequestMapping("/api/auth/account")

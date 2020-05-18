@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:04:47
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:07:41
+ */
 package com.phlink.core.web.controller.manage;
 
 import java.util.ArrayList;
@@ -40,9 +46,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author wen
- */
 @Slf4j
 @RestController
 @Api(tags = "部门管理接口")

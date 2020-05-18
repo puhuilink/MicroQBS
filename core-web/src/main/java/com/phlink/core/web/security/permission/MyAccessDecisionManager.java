@@ -1,8 +1,8 @@
 /*
  * @Author: sevncz.wen
  * @Date: 2020-05-06 14:51:51
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-06 14:51:51
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:12:13
  */
 package com.phlink.core.web.security.permission;
 
@@ -18,26 +18,27 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 /**
- * 权限管理决断器
- * 判断用户拥有的权限或角色是否有资源访问权限
+ * 权限管理决断器 判断用户拥有的权限或角色是否有资源访问权限
+ *
  * @author wen
  */
 @Component
 public class MyAccessDecisionManager implements AccessDecisionManager {
 
     @Override
-    public void decide(Authentication authentication, Object o, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
+    public void decide(Authentication authentication, Object o, Collection<ConfigAttribute> configAttributes)
+            throws AccessDeniedException, InsufficientAuthenticationException {
 
-        if(configAttributes==null){
+        if (configAttributes == null) {
             return;
         }
         Iterator<ConfigAttribute> iterator = configAttributes.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             ConfigAttribute c = iterator.next();
             String needPerm = c.getAttribute();
-            for(GrantedAuthority ga : authentication.getAuthorities()) {
+            for (GrantedAuthority ga : authentication.getAuthorities()) {
                 // 匹配用户拥有的ga 和 系统中的needPerm
-                if(needPerm.trim().equals(ga.getAuthority())) {
+                if (needPerm.trim().equals(ga.getAuthority())) {
                     return;
                 }
             }

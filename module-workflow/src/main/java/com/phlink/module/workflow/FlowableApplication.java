@@ -13,11 +13,10 @@ import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.jmx.support.RegistrationPolicy;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-/**
- * @author wen
- */
+
 @EnableSwagger2
 @SpringBootApplication
 @EnableTransactionManagement

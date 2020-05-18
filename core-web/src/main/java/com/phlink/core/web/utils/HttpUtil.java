@@ -1,8 +1,8 @@
 /*
  * @Author: sevncz.wen
  * @Date: 2020-05-06 14:53:15
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-06 14:53:15
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:14:04
  */
 package com.phlink.core.web.utils;
 
@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * restTemplate 封装get post 等请求
+ *
  * @author wen
  */
 @Slf4j
@@ -40,7 +41,8 @@ public class HttpUtil {
         ResponseEntity<T> responseEntity = this.restTemplate.getForEntity(url, cls, formEntity);
         HttpStatus statusCode = responseEntity.getStatusCode();
         T entity = responseEntity.getBody();
-        log.info("get {} params: {} \n response {} \n statusCode {}", url, new Gson().toJson(params), new Gson().toJson(responseEntity), statusCode);
+        log.info("get {} params: {} \n response {} \n statusCode {}", url, new Gson().toJson(params),
+                new Gson().toJson(responseEntity), statusCode);
         return entity;
     }
 
@@ -50,7 +52,8 @@ public class HttpUtil {
         ResponseEntity<T> responseEntity = this.restTemplate.postForEntity(url, formEntity, cls);
         HttpStatus statusCode = responseEntity.getStatusCode();
         T entity = responseEntity.getBody();
-        log.info("post {} params: {} \n response {} \n statusCode {}", url, new Gson().toJson(params), new Gson().toJson(responseEntity), statusCode);
+        log.info("post {} params: {} \n response {} \n statusCode {}", url, new Gson().toJson(params),
+                new Gson().toJson(responseEntity), statusCode);
         return entity;
     }
 
@@ -61,7 +64,8 @@ public class HttpUtil {
         ResponseEntity<T> responseEntity = this.restTemplate.postForEntity(url, formEntity, cls);
         HttpStatus statusCode = responseEntity.getStatusCode();
         T entity = responseEntity.getBody();
-        log.info("post {} params: {} \n response {} \n statusCode {}", url, new Gson().toJson(postParameters), new Gson().toJson(responseEntity), statusCode);
+        log.info("post {} params: {} \n response {} \n statusCode {}", url, new Gson().toJson(postParameters),
+                new Gson().toJson(responseEntity), statusCode);
         return entity;
     }
 
@@ -71,7 +75,8 @@ public class HttpUtil {
         ResponseEntity<T> responseEntity = this.restTemplate.exchange(url, HttpMethod.PUT, formEntity, cls, params);
         HttpStatus statusCode = responseEntity.getStatusCode();
         T entity = responseEntity.getBody();
-        log.info("put {} params: {} \n response {} \n statusCode {}", url, new Gson().toJson(params), new Gson().toJson(responseEntity), statusCode);
+        log.info("put {} params: {} \n response {} \n statusCode {}", url, new Gson().toJson(params),
+                new Gson().toJson(responseEntity), statusCode);
         return entity;
     }
 
@@ -81,7 +86,8 @@ public class HttpUtil {
         ResponseEntity<T> responseEntity = this.restTemplate.exchange(url, HttpMethod.DELETE, formEntity, cls);
         HttpStatus statusCode = responseEntity.getStatusCode();
         T entity = responseEntity.getBody();
-        log.info("delete {} params: {} \n response {} \n statusCode {}", url, new Gson().toJson(params), new Gson().toJson(responseEntity), statusCode);
+        log.info("delete {} params: {} \n response {} \n statusCode {}", url, new Gson().toJson(params),
+                new Gson().toJson(responseEntity), statusCode);
         return entity;
     }
 

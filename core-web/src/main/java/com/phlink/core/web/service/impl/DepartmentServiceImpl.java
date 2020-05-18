@@ -1,8 +1,8 @@
 /*
  * @Author: sevncz.wen
  * @Date: 2020-05-06 14:52:20
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-06 14:52:20
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:13:07
  */
 package com.phlink.core.web.service.impl;
 
@@ -21,9 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * @author wen
- */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Department> implements DepartmentService {
@@ -34,7 +31,7 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
     public List<Department> listByParentIdOrderBySortOrder(String parentId, Boolean openDataFilter) {
         // 数据权限
         List<String> depIds = new ArrayList<>();
-        if(openDataFilter) {
+        if (openDataFilter) {
             depIds = securityUtil.getDeparmentIds();
         }
         return listByParentIdAndIdInOrderBySortOrder(parentId, depIds);
@@ -49,7 +46,7 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
     public List<Department> listByTitleLikeOrderBySortOrder(String title, Boolean openDataFilter) {
         // 数据权限
         List<String> depIds = new ArrayList<>();
-        if(openDataFilter) {
+        if (openDataFilter) {
             depIds = securityUtil.getDeparmentIds();
         }
         return listByTitleLikeAndIdInOrderBySortOrder(title, depIds);

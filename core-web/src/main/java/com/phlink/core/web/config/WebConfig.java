@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:14:52
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:14:52
+ */
 package com.phlink.core.web.config;
 
 import java.time.LocalDate;
@@ -35,16 +41,15 @@ public class WebConfig implements WebMvcConfigurer {
                 .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
                 .registerTypeAdapter(LocalTime.class, new LocalTimeDeserializer())
                 .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .disableHtmlEscaping().serializeNulls().create();
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).disableHtmlEscaping()
+                .serializeNulls().create();
         return gson;
     }
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         Gson gson = buildGson();
-        CustomGsonHttpMessageConverter gsonHttpMessageConverter =
-                new CustomGsonHttpMessageConverter();
+        CustomGsonHttpMessageConverter gsonHttpMessageConverter = new CustomGsonHttpMessageConverter();
         gsonHttpMessageConverter.setGson(gson);
         converters.add(0, gsonHttpMessageConverter);
         converters.add(1, new ResourceHttpMessageConverter());

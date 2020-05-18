@@ -2,7 +2,7 @@
  * @Author: sevncz.wen
  * @Date: 2020-05-06 10:24:26
  * @Last Modified by: sevncz.wen
- * @Last Modified time: 2020-05-06 10:43:11
+ * @Last Modified time: 2020-05-18 18:10:08
  */
 package com.phlink.core.web.security.auth.jwt;
 
@@ -45,10 +45,12 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
     private RedissonClient redissonClient;
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException e) throws IOException, ServletException {
         LoginRequest loginRequest = InheritableThreadLocalUtil.get(LoginRequest.class);
-        if (e instanceof UsernameNotFoundException || e instanceof BadCredentialsException || e instanceof InternalAuthenticationServiceException) {
-            if(loginRequest == null) {
+        if (e instanceof UsernameNotFoundException || e instanceof BadCredentialsException
+                || e instanceof InternalAuthenticationServiceException) {
+            if (loginRequest == null) {
                 ResponseUtil.out(response, ResponseUtil.resultMap(false, ResultCode.JWT_TOKEN_EXPIRED, e.getMessage()));
                 return;
             }
@@ -60,14 +62,16 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
             if (StrUtil.isBlank(value)) {
                 value = "0";
             }
-            //获取已登录错误次数
+            // 获取已登录错误次数
             int loginFailTime = Integer.parseInt(value);
             int restLoginTime = tokenProperties.getLoginTimeLimit() - loginFailTime;
             log.info("用户" + username + "登录失败，还有" + restLoginTime + "次机会");
             if (restLoginTime <= tokenProperties.getLoginTimeNotify() && restLoginTime > 0) {
-                ResponseUtil.out(response, ResponseUtil.resultMap(false, ResultCode.INTERNAL_SERVER_ERROR, "用户名或密码错误，还有" + restLoginTime + "次尝试机会"));
+                ResponseUtil.out(response, ResponseUtil.resultMap(false, ResultCode.INTERNAL_SERVER_ERROR,
+                        "用户名或密码错误，还有" + restLoginTime + "次尝试机会"));
             } else if (restLoginTime <= 0) {
-                ResponseUtil.out(response, ResponseUtil.resultMap(false, ResultCode.LOGIN_FAIL_MANY_TIMES, "登录错误次数超过限制，请" + tokenProperties.getLoginAfterTime() + "分钟后再试"));
+                ResponseUtil.out(response, ResponseUtil.resultMap(false, ResultCode.LOGIN_FAIL_MANY_TIMES,
+                        "登录错误次数超过限制，请" + tokenProperties.getLoginAfterTime() + "分钟后再试"));
             } else {
                 ResponseUtil.out(response, ResponseUtil.resultMap(false, ResultCode.INTERNAL_SERVER_ERROR, "用户名或密码错误"));
             }
@@ -90,11 +94,13 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
         if (StrUtil.isBlank(value)) {
             value = "0";
         }
-        //获取已登录错误次数
+        // 获取已登录错误次数
         int loginFailTime = Integer.parseInt(value) + 1;
-        redissonClient.getBucket(key, new StringCodec()).set(String.valueOf(loginFailTime), tokenProperties.getLoginAfterTime(), TimeUnit.MINUTES);
+        redissonClient.getBucket(key, new StringCodec()).set(String.valueOf(loginFailTime),
+                tokenProperties.getLoginAfterTime(), TimeUnit.MINUTES);
         if (loginFailTime >= tokenProperties.getLoginTimeLimit()) {
-            redissonClient.getBucket(flagKey, new StringCodec()).set("fail", tokenProperties.getLoginAfterTime(), TimeUnit.MINUTES);
+            redissonClient.getBucket(flagKey, new StringCodec()).set("fail", tokenProperties.getLoginAfterTime(),
+                    TimeUnit.MINUTES);
             return false;
         }
         return true;

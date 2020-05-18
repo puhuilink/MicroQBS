@@ -1,8 +1,16 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:05:14
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:08:01
+ */
 package com.phlink.core.web.controller.manage;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletResponse;
+
 import com.alibaba.excel.EasyExcel;
 import com.phlink.core.base.annotation.SystemLogTrace;
 import com.phlink.core.base.enums.LogType;
@@ -14,6 +22,7 @@ import com.phlink.core.web.service.DepartmentService;
 import com.phlink.core.web.service.RoleService;
 import com.phlink.core.web.service.UserService;
 import com.phlink.core.web.utils.SecurityUtil;
+
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -24,13 +33,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author wen
- */
 @Slf4j
 @RestController
 @Api(tags = "User相关接口")

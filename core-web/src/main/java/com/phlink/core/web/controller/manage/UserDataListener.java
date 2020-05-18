@@ -1,19 +1,22 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:05:19
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:08:04
+ */
 package com.phlink.core.web.controller.manage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.google.gson.Gson;
 import com.phlink.core.web.controller.vo.UserData;
-import com.phlink.core.web.entity.User;
 import com.phlink.core.web.service.UserService;
+
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * @author wen
- */
 @Slf4j
 public class UserDataListener extends AnalysisEventListener<UserData> {
     /**
@@ -38,7 +41,8 @@ public class UserDataListener extends AnalysisEventListener<UserData> {
     /**
      * 这个每一条数据解析都会来调用
      *
-     * @param data    one row value. Is is same as {@link AnalysisContext#readRowHolder()}
+     * @param data    one row value. Is is same as
+     *                {@link AnalysisContext#readRowHolder()}
      * @param context
      */
     @Override

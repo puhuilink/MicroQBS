@@ -1,8 +1,8 @@
 /*
  * @Author: sevncz.wen
  * @Date: 2020-05-06 10:25:46
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-06 10:25:46
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:11:15
  */
 package com.phlink.core.web.security.auth.rest;
 
@@ -45,8 +45,9 @@ public class RestMobileLoginProcessingFilter extends AbstractAuthenticationProce
     private final AuthenticationFailureHandler failureHandler;
     private final RedissonClient redissonClient;
 
-    public RestMobileLoginProcessingFilter(String defaultFilterProcessesUrl, AuthenticationSuccessHandler successHandler,
-                                           AuthenticationFailureHandler failureHandler, RedissonClient redissonClient) {
+    public RestMobileLoginProcessingFilter(String defaultFilterProcessesUrl,
+            AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler,
+            RedissonClient redissonClient) {
         super(defaultFilterProcessesUrl);
         this.successHandler = successHandler;
         this.failureHandler = failureHandler;
@@ -54,7 +55,8 @@ public class RestMobileLoginProcessingFilter extends AbstractAuthenticationProce
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse httpServletResponse) throws AuthenticationException, IOException, ServletException {
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse httpServletResponse)
+            throws AuthenticationException, IOException, ServletException {
         if (!HttpMethod.POST.name().equals(request.getMethod())) {
             if (log.isDebugEnabled()) {
                 log.debug("请求方法不支持. Request method: " + request.getMethod());
@@ -85,22 +87,24 @@ public class RestMobileLoginProcessingFilter extends AbstractAuthenticationProce
         // 已验证清除key
         redissonClient.getKeys().delete(loginRequest.getMobile());
 
-        UserPrincipal principal = new UserPrincipal(UserPrincipal.Type.MOBILE, loginRequest.getMobile(), loginRequest.getSaveLogin());
+        UserPrincipal principal = new UserPrincipal(UserPrincipal.Type.MOBILE, loginRequest.getMobile(),
+                loginRequest.getSaveLogin());
 
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(principal, loginRequest.getCode());
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(principal,
+                loginRequest.getCode());
         token.setDetails(authenticationDetailsSource.buildDetails(request));
         return this.getAuthenticationManager().authenticate(token);
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-                                            Authentication authResult) throws IOException, ServletException {
+            Authentication authResult) throws IOException, ServletException {
         successHandler.onAuthenticationSuccess(request, response, authResult);
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-                                              AuthenticationException failed) throws IOException, ServletException {
+            AuthenticationException failed) throws IOException, ServletException {
         SecurityContextHolder.clearContext();
         failureHandler.onAuthenticationFailure(request, response, failed);
     }

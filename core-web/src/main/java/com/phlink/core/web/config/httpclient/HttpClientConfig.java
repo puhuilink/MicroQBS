@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:16:23
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:16:23
+ */
 package com.phlink.core.web.config.httpclient;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,10 +38,10 @@ import java.security.cert.X509Certificate;
 import java.util.concurrent.TimeUnit;
 
 /**
- * - Supports both HTTP and HTTPS
- * - Uses a connection pool to re-use connections and save overhead of creating connections.
- * - Has a custom connection keep-alive strategy (to apply a default keep-alive if one isn't specified)
- * - Starts an idle connection monitor to continuously clean up stale connections.
+ * - Supports both HTTP and HTTPS - Uses a connection pool to re-use connections
+ * and save overhead of creating connections. - Has a custom connection
+ * keep-alive strategy (to apply a default keep-alive if one isn't specified) -
+ * Starts an idle connection monitor to continuously clean up stale connections.
  */
 @Slf4j
 @Configuration
@@ -75,18 +81,17 @@ public class HttpClientConfig {
                 }
             };
             SSLContext ctx = SSLContext.getInstance(SSLConnectionSocketFactory.SSL);
-            ctx.init(null, new TrustManager[]{trustManager}, null);
+            ctx.init(null, new TrustManager[] { trustManager }, null);
             sslsf = new SSLConnectionSocketFactory(ctx, NoopHostnameVerifier.INSTANCE);
         } catch (KeyManagementException | NoSuchAlgorithmException e) {
             log.error("Pooling Connection Manager Initialisation failure because of " + e.getMessage(), e);
         }
 
-        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder
-            .<ConnectionSocketFactory>create().register("https", sslsf)
-            .register("http", new PlainConnectionSocketFactory())
-            .build();
+        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
+                .register("https", sslsf).register("http", new PlainConnectionSocketFactory()).build();
 
-        PoolingHttpClientConnectionManager poolingConnectionManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
+        PoolingHttpClientConnectionManager poolingConnectionManager = new PoolingHttpClientConnectionManager(
+                socketFactoryRegistry);
         poolingConnectionManager.setMaxTotal(MAX_TOTAL_CONNECTIONS);
         return poolingConnectionManager;
     }
@@ -96,8 +101,8 @@ public class HttpClientConfig {
         return new ConnectionKeepAliveStrategy() {
             @Override
             public long getKeepAliveDuration(HttpResponse response, HttpContext context) {
-                HeaderElementIterator it = new BasicHeaderElementIterator
-                    (response.headerIterator(HTTP.CONN_KEEP_ALIVE));
+                HeaderElementIterator it = new BasicHeaderElementIterator(
+                        response.headerIterator(HTTP.CONN_KEEP_ALIVE));
                 while (it.hasNext()) {
                     HeaderElement he = it.nextElement();
                     String param = he.getName();
@@ -114,16 +119,12 @@ public class HttpClientConfig {
 
     @Bean
     public CloseableHttpClient httpClient() {
-        RequestConfig requestConfig = RequestConfig.custom()
-            .setConnectionRequestTimeout(REQUEST_TIMEOUT)
-            .setConnectTimeout(CONNECT_TIMEOUT)
-            .setSocketTimeout(SOCKET_TIMEOUT).build();
+        RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(REQUEST_TIMEOUT)
+                .setConnectTimeout(CONNECT_TIMEOUT).setSocketTimeout(SOCKET_TIMEOUT).build();
 
-        return HttpClients.custom()
-            .setDefaultRequestConfig(requestConfig)
-            .setConnectionManager(poolingConnectionManager())
-            .setKeepAliveStrategy(connectionKeepAliveStrategy())
-            .build();
+        return HttpClients.custom().setDefaultRequestConfig(requestConfig)
+                .setConnectionManager(poolingConnectionManager()).setKeepAliveStrategy(connectionKeepAliveStrategy())
+                .build();
     }
 
     @Bean

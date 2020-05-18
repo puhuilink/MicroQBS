@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:16:07
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:16:07
+ */
 package com.phlink.core.web.config.mybatis;
 
 import java.util.Date;
@@ -23,11 +29,11 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             String username = "";
-            if(authentication.getPrincipal() instanceof SecurityUser) {
+            if (authentication.getPrincipal() instanceof SecurityUser) {
                 SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
                 username = securityUser.getUsername();
             }
-            if(authentication.getPrincipal() instanceof String) {
+            if (authentication.getPrincipal() instanceof String) {
                 username = (String) authentication.getPrincipal();
             }
             // UserDetails user = (UserDetails) authentication.getPrincipal();

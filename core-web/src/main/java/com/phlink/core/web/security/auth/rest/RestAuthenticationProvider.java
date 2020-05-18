@@ -1,8 +1,8 @@
 /*
  * @Author: sevncz.wen
  * @Date: 2020-05-06 10:25:23
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-06 10:25:23
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:11:01
  */
 package com.phlink.core.web.security.auth.rest;
 
@@ -58,7 +58,8 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
         }
     }
 
-    private Authentication authenticateByUsernameAndPassword(Authentication authentication, UserPrincipal userPrincipal, String username, String password) {
+    private Authentication authenticateByUsernameAndPassword(Authentication authentication, UserPrincipal userPrincipal,
+            String username, String password) {
         User user = userService.getByUsername(username);
         if (user == null) {
             log.info("用户{}不存在", username);
@@ -82,7 +83,8 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
         }
     }
 
-    private Authentication authenticateByMobile(Authentication authentication, UserPrincipal userPrincipal, String mobile) {
+    private Authentication authenticateByMobile(Authentication authentication, UserPrincipal userPrincipal,
+            String mobile) {
         User user = userService.getByMobile(mobile);
         if (user == null) {
             log.info("用户{}不存在", mobile);

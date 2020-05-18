@@ -1,10 +1,13 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:11:32
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:11:32
+ */
 package com.phlink.core.web.security.exception;
 
 import org.springframework.security.authentication.CredentialsExpiredException;
 
-/**
- * @author wen
- */
 public class UserPasswordExpiredException extends CredentialsExpiredException {
 
     private final String resetToken;

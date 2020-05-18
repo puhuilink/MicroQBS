@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:15:06
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:15:06
+ */
 package com.phlink.core.web.config.redis;
 
 import lombok.Data;
@@ -22,6 +28,6 @@ public class RedisPoolProperties {
     /**
      * 池大小
      */
-    private  int size;
+    private int size;
 
 }

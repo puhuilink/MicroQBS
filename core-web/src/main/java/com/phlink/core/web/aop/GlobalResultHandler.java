@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:16:54
+ * @Last Modified by:   sevncz.wen
+ * @Last Modified time: 2020-05-18 18:16:54
+ */
 package com.phlink.core.web.aop;
 
 import com.phlink.core.base.utils.ResultUtil;
@@ -14,7 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RestControllerAdvice(basePackages = {"com.phlink"})
+@RestControllerAdvice(basePackages = { "com.phlink" })
 public class GlobalResultHandler implements ResponseBodyAdvice {
 
     @Override
@@ -23,7 +29,8 @@ public class GlobalResultHandler implements ResponseBodyAdvice {
     }
 
     @Override
-    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
+            Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         if (body instanceof Result) {
             return body;
         }

@@ -1,3 +1,9 @@
+/*
+ * @Author: sevncz.wen
+ * @Date: 2020-05-18 18:05:00
+ * @Last Modified by: sevncz.wen
+ * @Last Modified time: 2020-05-18 18:07:49
+ */
 package com.phlink.core.web.controller.manage;
 
 import com.github.pagehelper.PageHelper;
@@ -18,9 +24,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author wen
- */
 @Slf4j
 @RestController
 @Api(tags = "日志管理接口")
@@ -33,11 +36,10 @@ public class LogController {
 
     @GetMapping(value = "/page")
     @ApiOperation(value = "分页获取全部")
-    public PageInfo<LogTrace> page(@RequestParam(required = false) Integer type,
-                                   @RequestParam String key,
-                                   SearchVO searchVo,
-                                   PageVO pageVo) {
-        PageInfo<LogTrace> page = PageHelper.startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
+    public PageInfo<LogTrace> page(@RequestParam(required = false) Integer type, @RequestParam String key,
+            SearchVO searchVo, PageVO pageVo) {
+        PageInfo<LogTrace> page = PageHelper
+                .startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
                 .doSelectPageInfo(() -> logService.listByCondition(type, key, searchVo));
         return page;
     }
@@ -46,16 +48,16 @@ public class LogController {
     // @ApiOperation(value = "批量删除")
     // public String delByIds(@PathVariable String[] ids) {
 
-    //     for (String id : ids) {
-    //         logService.removeById(id);
-    //     }
-    //     return "删除成功";
+    // for (String id : ids) {
+    // logService.removeById(id);
+    // }
+    // return "删除成功";
     // }
 
     // @DeleteMapping(value = "/all")
     // @ApiOperation(value = "全部删除")
     // public String deleteAll() {
-    //     logService.removeAll();
-    //     return "删除成功";
+    // logService.removeAll();
+    // return "删除成功";
     // }
 }
