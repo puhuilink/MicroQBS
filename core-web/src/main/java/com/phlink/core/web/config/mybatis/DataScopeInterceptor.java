@@ -1,29 +1,36 @@
 /*
  * @Author: sevncz.wen
- * @Date: 2020-05-18 18:15:59
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-18 18:15:59
+ * @Date: 2020-03-24 10:35:07
+ * @LastEditors: sevncz.wen
+ * @LastEditTime: 2020-05-19 09:17:56
+ * @FilePath: /phlink-common-framework/core-web/src/main/java/com/phlink/core/web/config/mybatis/DataScopeInterceptor.java
  */
 package com.phlink.core.web.config.mybatis;
-
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
-import com.baomidou.mybatisplus.extension.handlers.AbstractSqlParserHandler;
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.executor.statement.StatementHandler;
-import org.apache.ibatis.mapping.BoundSql;
-import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.mapping.SqlCommandType;
-import org.apache.ibatis.plugin.*;
-import org.apache.ibatis.reflection.MetaObject;
-import org.apache.ibatis.reflection.SystemMetaObject;
 
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
+import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
+import com.baomidou.mybatisplus.extension.handlers.AbstractSqlParserHandler;
+
+import org.apache.ibatis.executor.statement.StatementHandler;
+import org.apache.ibatis.mapping.BoundSql;
+import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.mapping.SqlCommandType;
+import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.plugin.Intercepts;
+import org.apache.ibatis.plugin.Invocation;
+import org.apache.ibatis.plugin.Plugin;
+import org.apache.ibatis.plugin.Signature;
+import org.apache.ibatis.reflection.MetaObject;
+import org.apache.ibatis.reflection.SystemMetaObject;
+
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 数据权限过滤器

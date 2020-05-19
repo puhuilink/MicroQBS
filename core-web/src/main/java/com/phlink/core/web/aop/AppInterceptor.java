@@ -1,8 +1,9 @@
 /*
  * @Author: sevncz.wen
- * @Date: 2020-05-18 18:16:46
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-18 18:16:46
+ * @Date: 2020-03-26 22:54:28
+ * @LastEditors: sevncz.wen
+ * @LastEditTime: 2020-05-19 09:16:34
+ * @FilePath: /phlink-common-framework/core-web/src/main/java/com/phlink/core/web/aop/AppInterceptor.java
  */
 package com.phlink.core.web.aop;
 

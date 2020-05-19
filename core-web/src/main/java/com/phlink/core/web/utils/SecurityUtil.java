@@ -1,9 +1,3 @@
-/*
- * @Author: sevncz.wen
- * @Date: 2020-05-06 14:53:46
- * @Last Modified by: sevncz.wen
- * @Last Modified time: 2020-05-18 18:14:19
- */
 package com.phlink.core.web.utils;
 
 import java.util.ArrayList;

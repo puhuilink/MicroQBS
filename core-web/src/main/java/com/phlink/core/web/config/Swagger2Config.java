@@ -1,27 +1,33 @@
 /*
  * @Author: sevncz.wen
- * @Date: 2020-05-18 18:14:45
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-18 18:14:45
+ * @Date: 2020-03-24 10:35:07
+ * @LastEditors: sevncz.wen
+ * @LastEditTime: 2020-05-19 09:16:03
+ * @FilePath: /phlink-common-framework/core-web/src/main/java/com/phlink/core/web/config/Swagger2Config.java
  */
 package com.phlink.core.web.config;
 
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.*;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
+import springfox.documentation.service.AuthorizationScope;
+import springfox.documentation.service.Contact;
+import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Configuration

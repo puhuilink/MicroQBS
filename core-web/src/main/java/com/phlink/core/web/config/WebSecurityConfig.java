@@ -1,8 +1,9 @@
 /*
  * @Author: sevncz.wen
- * @Date: 2020-05-06 11:03:59
- * @Last Modified by: sevncz.wen
- * @Last Modified time: 2020-05-18 18:14:58
+ * @Date: 2020-03-26 17:52:35
+ * @LastEditors: sevncz.wen
+ * @LastEditTime: 2020-05-19 09:16:19
+ * @FilePath: /phlink-common-framework/core-web/src/main/java/com/phlink/core/web/config/WebSecurityConfig.java
  */
 package com.phlink.core.web.config;
 

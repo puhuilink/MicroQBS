@@ -1,8 +1,9 @@
 /*
  * @Author: sevncz.wen
- * @Date: 2020-05-18 18:14:52
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-18 18:14:52
+ * @Date: 2020-03-24 10:35:07
+ * @LastEditors: sevncz.wen
+ * @LastEditTime: 2020-05-19 09:16:10
+ * @FilePath: /phlink-common-framework/core-web/src/main/java/com/phlink/core/web/config/WebConfig.java
  */
 package com.phlink.core.web.config;
 
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,12 +23,14 @@ import com.phlink.core.base.gson.LocalTimeDeserializer;
 import com.phlink.core.base.gson.LocalTimeSerializer;
 import com.phlink.core.web.aop.AppInterceptor;
 import com.phlink.core.web.config.gson.CustomGsonHttpMessageConverter;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.ResourceHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 import cn.hutool.core.date.DatePattern;
 
 @Configuration

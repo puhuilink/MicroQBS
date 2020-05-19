@@ -1,8 +1,9 @@
 /*
  * @Author: sevncz.wen
- * @Date: 2020-05-06 14:53:41
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-06 14:53:41
+ * @Date: 2020-03-26 20:56:00
+ * @LastEditors: sevncz.wen
+ * @LastEditTime: 2020-05-19 09:13:40
+ * @FilePath: /phlink-common-framework/core-web/src/main/java/com/phlink/core/web/utils/ResponseUtil.java
  */
 package com.phlink.core.web.utils;
 

@@ -1,15 +1,16 @@
 /*
  * @Author: sevncz.wen
- * @Date: 2020-05-18 18:15:14
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-18 18:15:14
+ * @Date: 2020-03-24 10:35:07
+ * @LastEditors: sevncz.wen
+ * @LastEditTime: 2020-05-19 09:14:50
+ * @FilePath: /phlink-common-framework/core-web/src/main/java/com/phlink/core/web/config/redis/RedisSentinelProperties.java
  */
 package com.phlink.core.web.config.redis;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.ToString;
-
-import java.util.List;
 
 @Data
 @ToString

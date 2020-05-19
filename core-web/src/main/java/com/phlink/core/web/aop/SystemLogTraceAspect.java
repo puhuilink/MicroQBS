@@ -1,8 +1,9 @@
 /*
  * @Author: sevncz.wen
- * @Date: 2020-05-18 18:17:07
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-18 18:17:07
+ * @Date: 2020-03-24 10:35:07
+ * @LastEditors: sevncz.wen
+ * @LastEditTime: 2020-05-19 09:17:14
+ * @FilePath: /phlink-common-framework/core-web/src/main/java/com/phlink/core/web/aop/SystemLogTraceAspect.java
  */
 package com.phlink.core.web.aop;
 
@@ -15,12 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.phlink.core.base.annotation.SystemLogTrace;
 import com.phlink.core.base.utils.InheritableThreadLocalUtil;
-import com.phlink.core.web.utils.IpInfoUtil;
 import com.phlink.core.base.utils.ThreadPoolUtil;
 import com.phlink.core.web.entity.LogTrace;
 import com.phlink.core.web.security.model.SecurityUser;
 import com.phlink.core.web.service.LogTraceService;
 import com.phlink.core.web.service.UserService;
+import com.phlink.core.web.utils.IpInfoUtil;
 import com.phlink.core.web.utils.SecurityUtil;
 
 import org.aspectj.lang.JoinPoint;

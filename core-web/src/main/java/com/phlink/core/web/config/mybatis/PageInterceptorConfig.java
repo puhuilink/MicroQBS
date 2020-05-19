@@ -1,8 +1,9 @@
 /*
  * @Author: sevncz.wen
- * @Date: 2020-04-02 14:38:40
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-04-02 14:38:40
+ * @Date: 2020-04-02 14:38:14
+ * @LastEditors: sevncz.wen
+ * @LastEditTime: 2020-05-19 09:18:13
+ * @FilePath: /phlink-common-framework/core-web/src/main/java/com/phlink/core/web/config/mybatis/PageInterceptorConfig.java
  */
 package com.phlink.core.web.config.mybatis;
 

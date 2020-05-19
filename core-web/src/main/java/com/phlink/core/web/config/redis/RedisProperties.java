@@ -1,14 +1,16 @@
 /*
  * @Author: sevncz.wen
- * @Date: 2020-05-18 18:15:11
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-18 18:15:11
+ * @Date: 2020-03-24 10:35:07
+ * @LastEditors: sevncz.wen
+ * @LastEditTime: 2020-05-19 09:14:58
+ * @FilePath: /phlink-common-framework/core-web/src/main/java/com/phlink/core/web/config/redis/RedisProperties.java
  */
 package com.phlink.core.web.config.redis;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "spring.redis", ignoreUnknownFields = false)
 @Data

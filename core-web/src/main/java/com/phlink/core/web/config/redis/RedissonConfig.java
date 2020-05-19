@@ -1,13 +1,15 @@
 /*
  * @Author: sevncz.wen
- * @Date: 2020-05-18 18:15:22
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-18 18:15:22
+ * @Date: 2020-03-24 10:35:07
+ * @LastEditors: sevncz.wen
+ * @LastEditTime: 2020-05-19 09:14:43
+ * @FilePath: /phlink-common-framework/core-web/src/main/java/com/phlink/core/web/config/redis/RedissonConfig.java
  */
 package com.phlink.core.web.config.redis;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.Codec;
@@ -26,6 +28,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ClassUtils;
+
 import cn.hutool.core.util.StrUtil;
 import io.netty.channel.nio.NioEventLoopGroup;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +48,6 @@ public class RedissonConfig {
         /**
          * 单机模式 redisson 客户端
          */
-
         @Bean(destroyMethod = "shutdown")
         @ConditionalOnProperty(name = "spring.redis.mode", havingValue = "single")
         RedissonClient redissonSingle() throws Exception {

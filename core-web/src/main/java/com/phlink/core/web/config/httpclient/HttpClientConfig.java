@@ -1,12 +1,21 @@
 /*
  * @Author: sevncz.wen
- * @Date: 2020-05-18 18:16:23
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-18 18:16:23
+ * @Date: 2020-03-24 10:35:07
+ * @LastEditors: sevncz.wen
+ * @LastEditTime: 2020-05-19 09:17:40
+ * @FilePath: /phlink-common-framework/core-web/src/main/java/com/phlink/core/web/config/httpclient/HttpClientConfig.java
  */
 package com.phlink.core.web.config.httpclient;
 
-import lombok.extern.slf4j.Slf4j;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
+import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
 import org.apache.http.HeaderElement;
 import org.apache.http.HeaderElementIterator;
 import org.apache.http.HttpResponse;
@@ -29,13 +38,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.X509Certificate;
-import java.util.concurrent.TimeUnit;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * - Supports both HTTP and HTTPS - Uses a connection pool to re-use connections

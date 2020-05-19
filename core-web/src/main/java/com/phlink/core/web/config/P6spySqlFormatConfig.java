@@ -1,16 +1,19 @@
 /*
  * @Author: sevncz.wen
- * @Date: 2020-05-18 18:14:36
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-18 18:14:36
+ * @Date: 2020-03-24 10:35:07
+ * @LastEditors: sevncz.wen
+ * @LastEditTime: 2020-05-19 09:15:53
+ * @FilePath: /phlink-common-framework/core-web/src/main/java/com/phlink/core/web/config/P6spySqlFormatConfig.java
  */
 package com.phlink.core.web.config;
 
-import cn.hutool.core.date.DateUtil;
+import java.util.Date;
+
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
+
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Date;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * 自定义 p6spy sql输出格式

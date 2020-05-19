@@ -1,13 +1,17 @@
 /*
  * @Author: sevncz.wen
- * @Date: 2020-05-18 18:17:03
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-18 18:17:03
+ * @Date: 2020-03-24 10:35:07
+ * @LastEditors: sevncz.wen
+ * @LastEditTime: 2020-05-19 09:17:06
+ * @FilePath: /phlink-common-framework/core-web/src/main/java/com/phlink/core/web/aop/RedisLockAspect.java
  */
 package com.phlink.core.web.aop;
 
+import java.lang.reflect.Method;
+import java.util.concurrent.TimeUnit;
+
 import com.phlink.core.base.annotation.DistributedLock;
-import lombok.extern.slf4j.Slf4j;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -18,8 +22,7 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Method;
-import java.util.concurrent.TimeUnit;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 分布式锁

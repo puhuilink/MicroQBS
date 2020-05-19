@@ -1,10 +1,15 @@
 /*
  * @Author: sevncz.wen
- * @Date: 2020-05-18 18:16:37
- * @Last Modified by:   sevncz.wen
- * @Last Modified time: 2020-05-18 18:16:37
+ * @Date: 2020-03-24 10:35:07
+ * @LastEditors: sevncz.wen
+ * @LastEditTime: 2020-05-19 09:17:22
+ * @FilePath: /phlink-common-framework/core-web/src/main/java/com/phlink/core/web/base/PhlinkBaseEntity.java
  */
 package com.phlink.core.web.base;
+
+import java.util.Date;
+
+import javax.validation.constraints.NotNull;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -16,13 +21,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.phlink.core.base.constant.CommonConstant;
 import com.phlink.core.base.utils.SnowFlakeUtil;
 import com.phlink.core.base.validation.tag.OnCheckID;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotNull;
-import java.util.Date;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler", "fieldHandler" })
