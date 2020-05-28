@@ -1,33 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <modules>
-    <module>core-base</module>
-    <module>core-web</module>
-    <module>module-file</module>
-    <module>module-proto</module>
-    <module>module-workflow</module>
-    <module>service-code-generator</module>
-    <module>demo-web</module>
-  </modules>
-
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.1.12.RELEASE</version>
-    <relativePath/>
-  </parent>
 
   <groupId>com.phlink.core</groupId>
   <artifactId>phlink-common-framework</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>0.0.1</version>
   <packaging>pom</packaging>
+
+  <modules>
+    <module>core/base</module>
+    <module>core/web</module>
+    <module>module/dfs-service</module>
+    <module>module/proto</module>
+    <module>module/workflow-service</module>
+    <module>code-generator</module>
+  </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
+    <ph.version>0.0.1</ph.version>
     <mybatis-plus.version>3.3.0</mybatis-plus.version>
     <springboot.version>2.1.12.RELEASE</springboot.version>
     <netty-socketio.version>1.7.17</netty-socketio.version>
@@ -39,6 +32,7 @@
     <commons-lang3.version>3.9</commons-lang3.version>
     <spring-admin.version>2.1.0</spring-admin.version>
     <flowable.version>6.4.2</flowable.version>
+    <lombok.version>1.18.10</lombok.version>
 
     <air.main.basedir>${project.basedir}</air.main.basedir>
     <air.check.fail-checkstyle>true</air.check.fail-checkstyle>
@@ -49,28 +43,28 @@
     <dependencies>
       <dependency>
         <groupId>com.phlink.core</groupId>
-        <artifactId>core-base</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <artifactId>phlink-base</artifactId>
+        <version>${ph.version}</version>
       </dependency>
       <dependency>
         <groupId>com.phlink.core</groupId>
-        <artifactId>core-web</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <artifactId>phlink-web</artifactId>
+        <version>${ph.version}</version>
       </dependency>
       <dependency>
         <groupId>com.phlink.core</groupId>
-        <artifactId>module-file</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <artifactId>phlink-service-dfs</artifactId>
+        <version>${ph.version}</version>
       </dependency>
       <dependency>
         <groupId>com.phlink.core</groupId>
-        <artifactId>module-proto</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <artifactId>phlink-proto</artifactId>
+        <version>${ph.version}</version>
       </dependency>
       <dependency>
         <groupId>com.phlink.core</groupId>
-        <artifactId>service-code-generator</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <artifactId>code-generator</artifactId>
+        <version>${ph.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework.boot</groupId>
