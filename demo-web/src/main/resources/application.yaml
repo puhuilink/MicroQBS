@@ -125,6 +125,10 @@ management:
         include: '*'
 
 phlink:
+  # 忽略鉴权url
+  ignored:
+    urls:
+      - /demo/index
   # 全局限流
   ratelimit:
     enable: true
@@ -173,21 +177,6 @@ fdfs:
     height: 150
   tracker-list:            #TrackerList参数,支持多个
     - 127.0.0.1:22122
-
-# 忽略鉴权url
-ignored:
-  urls:
-    - /actuator/**
-    - /dictData/getByType/**
-    - /swagger-ui.html
-    - /swagger-resources/**
-    - /swagger/**
-    - /**/v2/api-docs
-    - /**/*.js
-    - /**/*.css
-    - /**/*.png
-    - /**/*.ico
-    - /*/test/**
 
 # Swagger界面内容配置
 swagger:

@@ -4,7 +4,7 @@
  * @Last Modified by: sevncz.wen
  * @Last Modified time: 2020-05-18 18:07:23
  */
-package com.phlink.core.web.controller.auth;
+package com.phlink.core.web.controller.common;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Api(tags = "行政区域接口")
-@RequestMapping("/api/auth/region")
+@RequestMapping("/api/common/region")
 @RestController
 @Transactional
 public class RegionController {

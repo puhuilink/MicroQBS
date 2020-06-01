@@ -12,8 +12,7 @@
     <module>core/web</module>
     <module>module/dfs-service</module>
     <module>module/proto</module>
-    <module>module/workflow-service</module>
-    <module>code-generator</module>
+    <module>demo-web</module>
   </modules>
 
   <properties>
@@ -41,6 +40,13 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${springboot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+    </dependency>
       <dependency>
         <groupId>com.phlink.core</groupId>
         <artifactId>phlink-base</artifactId>
@@ -132,12 +138,6 @@
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
         <version>${commons-lang3.version}</version>
-      </dependency>
-      <!-- shiro-spring -->
-      <dependency>
-        <groupId>org.apache.shiro</groupId>
-        <artifactId>shiro-spring</artifactId>
-        <version>1.4.0</version>
       </dependency>
       <!-- JWT -->
       <dependency>

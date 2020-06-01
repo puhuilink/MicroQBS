@@ -2,7 +2,7 @@
  * @Author: sevncz.wen
  * @Date: 2020-03-26 17:52:35
  * @LastEditors: sevncz.wen
- * @LastEditTime: 2020-05-19 09:16:19
+ * @LastEditTime: 2020-06-01 11:17:29
  * @FilePath: /phlink-common-framework/core/web/src/main/java/com/phlink/core/web/config/WebSecurityConfig.java
  */
 package com.phlink.core.web.config;
@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static final String WS_TOKEN_BASED_AUTH_ENTRY_POINT = "/api/ws/**";
     public static final String NOAUTH_ENTRY_POINT = "/api/auth/**";
     protected static final String[] NON_TOKEN_BASED_AUTH_ENTRY_POINTS = new String[] { "/index.html", "/static/**",
-            "/api/auth/**", "/webjars/**" };
+            "/api/auth/**", "/api/common/**", "/webjars/**" };
 
     @Autowired
     private IgnoredUrlsProperties ignoredUrlsProperties;
