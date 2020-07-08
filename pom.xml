@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.phlink.core</groupId>
-  <artifactId>phlink-common-framework</artifactId>
+  <artifactId>qbs</artifactId>
   <version>0.0.1</version>
   <packaging>pom</packaging>
 
@@ -329,4 +329,11 @@
 
     </dependencies>
   </dependencyManagement>
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub OWNER Apache Maven Packages</name>
+      <url>https://maven.pkg.github.com/puhuilink/MicroQBS</url>
+    </repository>
+  </distributionManagement>
 </project>
