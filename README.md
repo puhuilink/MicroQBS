@@ -1,5 +1,5 @@
-# phlink-common-framework
-普惠互联通用框架
+# MicroQBS
+快速基础微服务框架
 
 ## 基础技术
 - JDK 1.8
