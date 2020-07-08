@@ -74,7 +74,7 @@ spring:
         - "redis://127.0.0.1:7004"
         - "redis://127.0.0.1:7001"
         - "redis://127.0.0.1:7000"
-      master-onlyWrite: true
+      master-onlyWrite: true  
       fail-max: 3
 #  kafka:
 #    producer:
