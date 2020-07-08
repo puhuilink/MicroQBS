@@ -3,13 +3,13 @@
   <parent>
     <artifactId>qbs</artifactId>
     <groupId>com.phlink.core</groupId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>qbs-base</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <dependencies>
