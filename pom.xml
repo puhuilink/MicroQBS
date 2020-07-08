@@ -12,7 +12,6 @@
     <module>core/web</module>
     <module>module/dfs-service</module>
     <module>module/proto</module>
-    <module>demo-web</module>
   </modules>
 
   <properties>
@@ -49,22 +48,22 @@
     </dependency>
       <dependency>
         <groupId>com.phlink.core</groupId>
-        <artifactId>phlink-base</artifactId>
+        <artifactId>qbs-base</artifactId>
         <version>${ph.version}</version>
       </dependency>
       <dependency>
         <groupId>com.phlink.core</groupId>
-        <artifactId>phlink-web</artifactId>
+        <artifactId>qbs-web</artifactId>
         <version>${ph.version}</version>
       </dependency>
       <dependency>
         <groupId>com.phlink.core</groupId>
-        <artifactId>phlink-service-dfs</artifactId>
+        <artifactId>qbs-service-dfs</artifactId>
         <version>${ph.version}</version>
       </dependency>
       <dependency>
         <groupId>com.phlink.core</groupId>
-        <artifactId>phlink-proto</artifactId>
+        <artifactId>qbs-proto</artifactId>
         <version>${ph.version}</version>
       </dependency>
       <dependency>

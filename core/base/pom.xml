@@ -4,10 +4,12 @@
     <artifactId>qbs</artifactId>
     <groupId>com.phlink.core</groupId>
     <version>0.0.1</version>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>qbs-base</artifactId>
+  <version>0.0.1</version>
   <packaging>jar</packaging>
 
   <dependencies>

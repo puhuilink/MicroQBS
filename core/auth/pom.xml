@@ -4,16 +4,18 @@
     <artifactId>qbs</artifactId>
     <groupId>com.phlink.core</groupId>
     <version>0.0.1</version>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>qbs-auth</artifactId>
+  <version>0.0.1</version>
   <packaging>jar</packaging>
 
   <dependencies>
     <dependency>
       <groupId>com.phlink.core</groupId>
-      <artifactId>phlink-base</artifactId>
+      <artifactId>qbs-base</artifactId>
       <exclusions>
         <exclusion>
           <artifactId>jackson-databind</artifactId>
