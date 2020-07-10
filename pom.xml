@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.puhuilink.qbs</groupId>
   <artifactId>qbs-parent</artifactId>
   <version>0.0.3-SNAPSHOT</version>
   <packaging>pom</packaging>
+
+  <licenses>
+    <license>
+      <name>Apache 2.0 License</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
   <modules>
     <module>core/base</module>
@@ -16,7 +25,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <java.version>1.8</java.version>
+    <jdk.compile.version>1.8</jdk.compile.version>
     <ph.version>0.0.3-SNAPSHOT</ph.version>
     <mybatis-plus.version>3.3.0</mybatis-plus.version>
     <springboot.version>2.1.12.RELEASE</springboot.version>
@@ -45,7 +54,8 @@
         <version>${springboot.version}</version>
         <type>pom</type>
         <scope>import</scope>
-    </dependency>
+      </dependency>
+
       <dependency>
         <groupId>com.puhuilink.qbs</groupId>
         <artifactId>qbs-base</artifactId>
@@ -343,6 +353,31 @@
 
     </dependencies>
   </dependencyManagement>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>2.5.1</version>
+          <configuration>
+            <source>${jdk.compile.version}</source>
+            <target>${jdk.compile.version}</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.6</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
   <distributionManagement>
     <repository>
       <id>github</id>
