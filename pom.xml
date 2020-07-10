@@ -4,7 +4,7 @@
 
   <groupId>com.phlink.core</groupId>
   <artifactId>qbs</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.3-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <modules>
@@ -18,7 +18,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
-    <ph.version>0.0.2-SNAPSHOT</ph.version>
+    <ph.version>0.0.3-SNAPSHOT</ph.version>
     <mybatis-plus.version>3.3.0</mybatis-plus.version>
     <springboot.version>2.1.12.RELEASE</springboot.version>
     <netty-socketio.version>1.7.17</netty-socketio.version>
