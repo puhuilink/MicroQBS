@@ -1,4 +1,4 @@
-package com.phlink.module.file;
+package com.puhuilink.module.file;
 
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 

@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.phlink.core</groupId>
-  <artifactId>qbs</artifactId>
+  <groupId>com.puhuilink.qbs</groupId>
+  <artifactId>qbs-parent</artifactId>
   <version>0.0.3-SNAPSHOT</version>
   <packaging>pom</packaging>
 
@@ -11,7 +11,6 @@
     <module>core/base</module>
     <module>core/web</module>
     <module>module/dfs-service</module>
-    <module>module/proto</module>
   </modules>
 
   <properties>
@@ -48,27 +47,32 @@
         <scope>import</scope>
     </dependency>
       <dependency>
-        <groupId>com.phlink.core</groupId>
+        <groupId>com.puhuilink.qbs</groupId>
         <artifactId>qbs-base</artifactId>
         <version>${ph.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.phlink.core</groupId>
+        <groupId>com.puhuilink.qbs</groupId>
+        <artifactId>qbs-dao</artifactId>
+        <version>${ph.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.puhuilink.qbs</groupId>
         <artifactId>qbs-web</artifactId>
         <version>${ph.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.phlink.core</groupId>
+        <groupId>com.puhuilink.qbs</groupId>
         <artifactId>qbs-service-dfs</artifactId>
         <version>${ph.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.phlink.core</groupId>
+        <groupId>com.puhuilink.core</groupId>
         <artifactId>qbs-proto</artifactId>
         <version>${ph.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.phlink.core</groupId>
+        <groupId>com.puhuilink.core</groupId>
         <artifactId>code-generator</artifactId>
         <version>${ph.version}</version>
       </dependency>

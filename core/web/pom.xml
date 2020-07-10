@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>qbs</artifactId>
-    <groupId>com.phlink.core</groupId>
+    <artifactId>qbs-parent</artifactId>
+    <groupId>com.puhuilink.qbs</groupId>
     <version>0.0.3-SNAPSHOT</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
@@ -14,7 +14,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.phlink.core</groupId>
+      <groupId>com.puhuilink.qbs</groupId>
       <artifactId>qbs-base</artifactId>
       <exclusions>
         <exclusion>
@@ -87,6 +87,11 @@
     <dependency>
       <groupId>com.github.ua-parser</groupId>
       <artifactId>uap-java</artifactId>
+    </dependency>
+    <!-- excel 支持 -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>easyexcel</artifactId>
     </dependency>
     <!-- lombok -->
     <dependency>
