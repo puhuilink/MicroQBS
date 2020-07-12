@@ -20,6 +20,7 @@
     <module>core/base</module>
     <module>core/web</module>
     <module>module/dfs-service</module>
+    <module>cloud</module>
   </modules>
 
   <properties>
