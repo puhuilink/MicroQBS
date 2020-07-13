@@ -24,7 +24,6 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.puhuilink.qbs.core.web.security.permission.MyFilterSecurityInterceptor,\
   com.puhuilink.qbs.core.web.security.permission.MyAccessDecisionManager,\
   com.puhuilink.qbs.core.web.security.permission.MySecurityMetadataSource,\
-  com.puhuilink.qbs.core.web.utils.IpInfoUtil,\
   com.puhuilink.qbs.core.web.utils.SecurityUtil,\
   com.puhuilink.qbs.core.web.aop.GlobalExceptionHandler,\
   com.puhuilink.qbs.core.web.aop.GlobalResultHandler,\

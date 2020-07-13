@@ -57,9 +57,6 @@ public class SecurityUtil {
     private UserRoleService iUserRoleService;
 
     @Autowired
-    private IpInfoUtil ipInfoUtil;
-
-    @Autowired
     private DepartmentService departmentService;
 
     @Autowired

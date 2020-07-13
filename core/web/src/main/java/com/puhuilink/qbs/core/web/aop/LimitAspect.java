@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import com.puhuilink.qbs.core.base.annotation.Limit;
 import com.puhuilink.qbs.core.base.entity.LimitType;
 import com.puhuilink.qbs.core.base.exception.LimitAccessException;
-import com.puhuilink.qbs.core.web.utils.IPUtil;
 
+import com.puhuilink.qbs.core.web.utils.IpInfoUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -61,7 +61,7 @@ public class LimitAspect {
         LimitType limitType = limitAnnotation.limitType();
         String name = limitAnnotation.name();
         String key;
-        String ip = IPUtil.getIpAddr(request);
+        String ip = IpInfoUtil.getIpAddr(request);
         int limitPeriod = limitAnnotation.period();
         int limitCount = limitAnnotation.count();
         switch (limitType) {

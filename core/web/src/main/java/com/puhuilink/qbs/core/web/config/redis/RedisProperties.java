@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import lombok.Data;
 import lombok.ToString;
 
-@ConfigurationProperties(prefix = "spring.redis", ignoreUnknownFields = false)
+@ConfigurationProperties(prefix = "qbs.redis", ignoreUnknownFields = false)
 @Data
 @ToString
 public class RedisProperties {

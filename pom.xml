@@ -21,6 +21,7 @@
     <module>core/web</module>
     <module>module/dfs-service</module>
     <module>cloud</module>
+    <module>example</module>
   </modules>
 
   <properties>
