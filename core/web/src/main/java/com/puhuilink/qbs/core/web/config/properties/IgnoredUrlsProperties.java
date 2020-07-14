@@ -17,7 +17,7 @@ import lombok.Data;
 
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "phlink.ignored")
+@ConfigurationProperties(prefix = "ignored")
 public class IgnoredUrlsProperties {
 
     private List<String> urls = new ArrayList<>();
