@@ -72,7 +72,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
             "/webjars/**",
             "/v2/**",
             "/swagger-ui.html/**",
-            "/configuration/**");;
+            "/configuration/**");
     }
 
     @Override
