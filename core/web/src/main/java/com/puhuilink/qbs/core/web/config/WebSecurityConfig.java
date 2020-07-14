@@ -8,6 +8,7 @@
 package com.puhuilink.qbs.core.web.config;
 
 import cn.hutool.core.collection.CollUtil;
+import com.google.common.collect.ImmutableList;
 import com.puhuilink.qbs.core.web.config.properties.IgnoredUrlsProperties;
 import com.puhuilink.qbs.core.web.security.auth.jwt.JwtAuthenticationProvider;
 import com.puhuilink.qbs.core.web.security.auth.jwt.JwtTokenAuthenticationProcessingFilter;
@@ -36,8 +37,11 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Security 核心配置类 开启注解控制权限至Controller
@@ -64,7 +68,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         "/swagger-resources/**",
         "/swagger-ui.html",
         "/v2/api-docs",
-        "/webjars/**"};
+        "/webjars/**",
+        "/configuration/ui",
+        "/configuration/security"};
 
     @Autowired
     private IgnoredUrlsProperties ignoredUrlsProperties;

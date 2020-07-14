@@ -17,38 +17,17 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-@RestControllerAdvice
+@RestControllerAdvice(value={"com.puhuilink"})
 public class GlobalResultHandler implements ResponseBodyAdvice {
-
-    private static String[] ignores = new String[]{
-        // swagger ui
-        "/swagger-resources/**",
-        "/swagger-ui.html",
-        "/v2/api-docs",
-        "/webjars/**"
-    };
 
     @Override
     public boolean supports(MethodParameter returnType, Class converterType) {
         return returnType.getMethod().getReturnType() != Result.class;
     }
 
-    private boolean ignoring(String uri) {
-        for (String string : ignores) {
-            if (uri.contains(string)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
                                   Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        //判断url是否需要拦截
-        if (this.ignoring(request.getURI().toString())) {
-            return body;
-        }
         if (body == null) {
             return ResultUtil.success("OK");
         }
