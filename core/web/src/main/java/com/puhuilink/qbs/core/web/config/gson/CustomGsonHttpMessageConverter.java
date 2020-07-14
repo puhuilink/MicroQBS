@@ -8,11 +8,11 @@
 package com.puhuilink.qbs.core.web.config.gson;
 
 import java.io.Writer;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import javax.annotation.Nullable;
 
-import com.puhuilink.qbs.core.base.utils.ResultUtil;
 import com.puhuilink.qbs.core.base.vo.Result;
 
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
@@ -23,13 +23,12 @@ public class CustomGsonHttpMessageConverter extends GsonHttpMessageConverter {
     protected void writeInternal(Object o, @Nullable Type type, Writer writer) throws Exception {
         Result<Object> result = null;
         if (o instanceof Result) {
-            result = (Result) o;
-        } else if (o == null) {
-            result = ResultUtil.success("OK");
+            super.getGson().toJson(result, writer);
+        } else if (type instanceof ParameterizedType) {
+            getGson().toJson(o, type, writer);
         } else {
-            result = ResultUtil.data(o);
+            getGson().toJson(o, writer);
         }
-        super.getGson().toJson(result, writer);
     }
 
 }

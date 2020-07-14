@@ -34,6 +34,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * AOP 记录用户操作日志
@@ -119,7 +122,6 @@ public class SystemLogTraceAspect {
         try {
             String username = "";
             String description = getControllerMethodInfo(joinPoint).get("description").toString();
-            Map<String, String[]> logParams = request.getParameterMap();
             String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
             // 判断允许不用登录的注解
             if ("anonymousUser".equals(principal) && !description.contains("短信登录")) {
@@ -129,13 +131,29 @@ public class SystemLogTraceAspect {
                 SecurityUser user = securityUtil.getSecurityUser();
                 username = user.getUsername();
             }
+            LogTrace logTrace = new LogTrace();
+
+            RequestAttributes attribs = RequestContextHolder.getRequestAttributes();
+            Map<String, String[]> logParams = new HashMap<>();
+            if (RequestContextHolder.getRequestAttributes() != null) {
+                HttpServletRequest request = ((ServletRequestAttributes) attribs).getRequest();
+                logParams = request.getParameterMap();
+                // 日志请求url
+                logTrace.setRequestUrl(request.getRequestURI());
+                // 请求方式
+                logTrace.setRequestType(request.getMethod());
+                // 请求IP
+                String ip = IpInfoUtil.getIpAddr(request);
+                logTrace.setIp(ip);
+                // IP地址
+                logTrace.setIpInfo(IpInfoUtil.getIpCity(ip));
+            }
             if (description.contains("短信登录")) {
                 if (logParams.get("mobile") != null) {
                     String mobile = logParams.get("mobile")[0];
                     username = userService.getByMobile(mobile).getUsername() + "(" + mobile + ")";
                 }
             }
-            LogTrace logTrace = new LogTrace();
 
             // 请求用户
             logTrace.setUsername(username);
@@ -143,17 +161,8 @@ public class SystemLogTraceAspect {
             logTrace.setName(description);
             // 日志类型
             logTrace.setLogType((int) getControllerMethodInfo(joinPoint).get("type"));
-            // 日志请求url
-            logTrace.setRequestUrl(request.getRequestURI());
-            // 请求方式
-            logTrace.setRequestType(request.getMethod());
             // 请求参数
             logTrace.setMapToParams(logParams);
-            // 请求IP
-            String ip = IpInfoUtil.getIpAddr(request);
-            logTrace.setIp(ip);
-            // IP地址
-            logTrace.setIpInfo(IpInfoUtil.getIpCity(ip));
             // 请求开始时间
             long beginTime = InheritableThreadLocalUtil.get(Date.class).getTime();
             long endTime = System.currentTimeMillis();

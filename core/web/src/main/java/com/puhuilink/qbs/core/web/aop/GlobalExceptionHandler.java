@@ -52,7 +52,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = BizException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<Object> handleParamsInvalidException(BizException e) {
-        log.error("系统内部异常，业务异常信息：", e);
+        log.error("系统内部异常，业务异常信息：{}, {}", e.getErrorMsg(), e.getErrorCode());
         return ResultUtil.error(e.getErrorCode(), e.getErrorMsg());
     }
 
@@ -108,7 +108,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = LimitAccessException.class)
     @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
     public Result<Object> handleLimitAccessException(LimitAccessException e) {
-        log.error("请求次数过多", e.getMessage());
+        log.error("请求次数过多 {}", e.getMessage());
         return ResultUtil.error(e.getErrorCode(), e.getErrorMsg());
     }
 

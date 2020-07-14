@@ -10,7 +10,7 @@ public interface SecurityConstant {
     /**
      * JWT签名加密key
      */
-    String JWT_SIGN_KEY = "puhuilink";
+    String JWT_SIGN_KEY = "QBS.CORE";
 
     String TOKEN_ISSUER = "SYSTEM";
 
@@ -36,10 +36,12 @@ public interface SecurityConstant {
     /**
      * 交互token前缀key
      */
-    String TOKEN_PRE = "puhuilink_TOKEN_PRE:";
+    String TOKEN_PRE = "QBS_TOKEN_PRE:";
 
     /**
      * 用户token前缀key 单点登录使用
      */
-    String USER_TOKEN = "puhuilink_USER_TOKEN:";
+    String USER_TOKEN = "QBS_USER_TOKEN:";
+
+
 }

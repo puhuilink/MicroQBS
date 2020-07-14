@@ -149,21 +149,16 @@ qbs:
 # 忽略鉴权url
 ignored:
   urls:
-    - /oauth2/**
     - /actuator/**
     - /admin/**
     - /dictData/getByType/**
     - /user/regist
-    - /common/**
-    - /swagger-ui.html
-    - /swagger-resources/**
-    - /swagger/**
-    - /**/v2/api-docs
     - /**/*.js
     - /**/*.css
     - /**/*.png
     - /**/*.ico
     - /*/test/**
+    - /index
 
 # Swagger界面内容配置
 swagger:

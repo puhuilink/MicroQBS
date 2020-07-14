@@ -21,20 +21,23 @@ import com.puhuilink.qbs.core.base.gson.LocalDateTimeDeserializer;
 import com.puhuilink.qbs.core.base.gson.LocalDateTimeSerializer;
 import com.puhuilink.qbs.core.base.gson.LocalTimeDeserializer;
 import com.puhuilink.qbs.core.base.gson.LocalTimeSerializer;
+import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.web.aop.AppInterceptor;
 import com.puhuilink.qbs.core.web.config.gson.CustomGsonHttpMessageConverter;
 
+import com.puhuilink.qbs.core.web.config.gson.SpringfoxJsonToGsonAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.ResourceHttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.*;
 
 import cn.hutool.core.date.DatePattern;
+import springfox.documentation.spring.web.json.Json;
 
 @Configuration
-public class WebConfig implements WebMvcConfigurer {
+public class WebConfig extends WebMvcConfigurationSupport {
     @Bean
     public Gson buildGson() {
         Gson gson = new GsonBuilder().setDateFormat(DatePattern.NORM_DATETIME_PATTERN)
@@ -44,6 +47,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
                 .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
                 .registerTypeAdapter(LocalTime.class, new LocalTimeDeserializer())
+                .registerTypeAdapter(Json.class, new SpringfoxJsonToGsonAdapter())
                 .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).disableHtmlEscaping()
                 .serializeNulls().create();
@@ -53,14 +57,31 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         Gson gson = buildGson();
-        CustomGsonHttpMessageConverter gsonHttpMessageConverter = new CustomGsonHttpMessageConverter();
+        GsonHttpMessageConverter gsonHttpMessageConverter = new GsonHttpMessageConverter();
         gsonHttpMessageConverter.setGson(gson);
         converters.add(0, gsonHttpMessageConverter);
         converters.add(1, new ResourceHttpMessageConverter());
+        super.addDefaultHttpMessageConverters(converters);
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AppInterceptor());
+        registry.addInterceptor(new AppInterceptor())
+            .excludePathPatterns(
+            "/swagger-resources/**",
+            "/webjars/**",
+            "/v2/**",
+            "/swagger-ui.html/**",
+            "/configuration/**");;
+    }
+
+    @Override
+    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+            .addResourceHandler("swagger-ui.html")
+            .addResourceLocations("classpath:/META-INF/resources/");
+        registry
+            .addResourceHandler("/webjars/**")
+            .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 }
