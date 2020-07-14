@@ -14,6 +14,7 @@ import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
 import com.puhuilink.qbs.core.base.enums.LogType;
 import com.puhuilink.qbs.core.base.exception.BizException;
 import com.puhuilink.qbs.core.base.vo.PageVO;
+import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.web.entity.Role;
 import com.puhuilink.qbs.core.web.entity.RoleDepartment;
 import com.puhuilink.qbs.core.web.entity.RolePermission;
@@ -64,13 +65,13 @@ public class RoleController {
 
     @GetMapping(value = "")
     @ApiOperation(value = "获取全部角色")
-    public List<Role> listAll() {
-        return roleService.list();
+    public Result listAll() {
+        return Result.ok().data(roleService.list());
     }
 
     @GetMapping(value = "/page")
     @ApiOperation(value = "分页获取角色")
-    public PageInfo<Role> allPage(PageVO pageVo) {
+    public Result allPage(PageVO pageVo) {
 
         PageInfo<Role> page = PageHelper
                 .startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
@@ -83,27 +84,27 @@ public class RoleController {
             List<RoleDepartment> departments = roleDepartmentService.listByRoleId(role.getId());
             role.setDepartments(departments);
         }
-        return page;
+        return Result.ok().data(page);
     }
 
     @PostMapping(value = "/default")
     @ApiOperation(value = "设置或取消默认角色")
     @SystemLogTrace(description = "设置或取消默认角色", type = LogType.OPERATION)
-    public String setDefault(@RequestParam String id, @RequestParam Boolean isDefault) {
+    public Result setDefault(@RequestParam String id, @RequestParam Boolean isDefault) {
 
         Role role = roleService.getById(id);
         if (role == null) {
-            return "角色不存在";
+            return Result.error("角色不存在");
         }
         role.setDefaultRole(isDefault);
         roleService.updateById(role);
-        return "设置成功";
+        return Result.ok("设置成功");
     }
 
     @PutMapping(value = "/role-permission")
     @ApiOperation(value = "编辑角色分配菜单权限")
     @SystemLogTrace(description = "编辑角色分配菜单权限", type = LogType.OPERATION)
-    public String updateRolePermission(@RequestParam String roleId, @RequestParam(required = false) String[] permIds) {
+    public Result updateRolePermission(@RequestParam String roleId, @RequestParam(required = false) String[] permIds) {
 
         // 删除其关联权限
         rolePermissionService.deleteByRoleId(roleId);
@@ -120,7 +121,7 @@ public class RoleController {
         redissonClient.getKeys().deleteByPattern("userPermission:" + "*");
         redissonClient.getKeys().deleteByPattern("permission::userMenuList:*");
 
-        return "编辑成功";
+        return Result.ok("编辑成功");
     }
 
     @PutMapping(value = "/role-department")

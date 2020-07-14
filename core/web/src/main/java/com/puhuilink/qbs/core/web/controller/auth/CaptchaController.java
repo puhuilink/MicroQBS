@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.puhuilink.qbs.core.base.enums.ResultCode;
 import com.puhuilink.qbs.core.base.exception.BizException;
 import com.puhuilink.qbs.core.base.utils.CreateVerifyCode;
+import com.puhuilink.qbs.core.base.vo.Result;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.StringCodec;
@@ -41,24 +42,24 @@ public class CaptchaController {
 
     @RequestMapping(value = "/init-mobile/{mobile}", method = RequestMethod.GET)
     @ApiOperation(value = "初始化手机验证码")
-    public String initMobileCaptcha(@PathVariable String mobile) {
+    public Result initMobileCaptcha(@PathVariable String mobile) {
         Long codeL = System.nanoTime();
         String codeStr = Long.toString(codeL);
         String code = codeStr.substring(codeStr.length() - 6);
         // 缓存验证码
         redissonClient.getBucket(mobile, new StringCodec()).set(code, 5L, TimeUnit.MINUTES);
-        return code;
+        return Result.ok().data(code);
     }
 
     @RequestMapping(value = "/init", method = RequestMethod.GET)
     @ApiOperation(value = "初始化验证码")
-    public String initCaptcha() {
+    public Result initCaptcha() {
 
         String captchaId = UUID.randomUUID().toString().replace("-", "");
         String code = new CreateVerifyCode().randomStr(4);
         // 缓存验证码
         redissonClient.getBucket(captchaId, new StringCodec()).set(code, 5L, TimeUnit.MINUTES);
-        return captchaId;
+        return Result.ok().data(captchaId);
     }
 
     @RequestMapping(value = "/draw/{captchaId}", method = RequestMethod.GET)

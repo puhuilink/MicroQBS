@@ -16,6 +16,7 @@ import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
 import com.puhuilink.qbs.core.base.constant.CommonConstant;
 import com.puhuilink.qbs.core.base.enums.LogType;
 import com.puhuilink.qbs.core.base.exception.BizException;
+import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.web.controller.vo.MenuVO;
 import com.puhuilink.qbs.core.web.entity.Permission;
 import com.puhuilink.qbs.core.web.entity.RolePermission;
@@ -72,7 +73,7 @@ public class PermissionController {
 
     @GetMapping(value = "/user")
     @ApiOperation(value = "获取用户页面菜单数据")
-    public List<MenuVO> getAllMenuList() {
+    public Result getAllMenuList() {
 
         List<MenuVO> menuList = new ArrayList<>();
         // 读取缓存
@@ -83,7 +84,7 @@ public class PermissionController {
         if (StrUtil.isNotBlank(v)) {
             menuList = new Gson().fromJson(v, new TypeToken<List<MenuVO>>() {
             }.getType());
-            return menuList;
+            return Result.ok().data(menuList);
         }
 
         // 用户所有权限 已排序去重
@@ -151,13 +152,13 @@ public class PermissionController {
 
         // 缓存
         rBucket.set(new Gson().toJson(menuList), 15L, TimeUnit.DAYS);
-        return menuList;
+        return Result.ok().data(menuList);
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ApiOperation(value = "获取权限菜单树")
     @Cacheable(key = "'allList'")
-    public List<Permission> listAll() {
+    public Result listAll() {
 
         // 0级
         List<Permission> list0 = permissionService.listByLevelOrderBySortOrder(CommonConstant.LEVEL_ZERO);
@@ -176,7 +177,7 @@ public class PermissionController {
                 }
             }
         }
-        return list0;
+        return Result.ok().data(list0);
     }
 
     @PostMapping(value = "")

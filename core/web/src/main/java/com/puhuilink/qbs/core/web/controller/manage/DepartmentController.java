@@ -17,6 +17,7 @@ import com.puhuilink.qbs.core.base.constant.CommonConstant;
 import com.puhuilink.qbs.core.base.enums.LogType;
 import com.puhuilink.qbs.core.base.exception.BizException;
 import com.puhuilink.qbs.core.base.utils.CommonUtil;
+import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.web.entity.Department;
 import com.puhuilink.qbs.core.web.entity.DepartmentMaster;
 import com.puhuilink.qbs.core.web.entity.User;
@@ -74,8 +75,8 @@ public class DepartmentController {
 
     @GetMapping(value = "/parent/{parentId}")
     @ApiOperation(value = "通过parentId获取")
-    public List<Department> listByParentId(@PathVariable String parentId,
-                                           @ApiParam("是否开始数据权限过滤") @RequestParam(required = false, defaultValue = "true") Boolean openDataFilter) {
+    public Result listByParentId(@PathVariable String parentId,
+                                                  @ApiParam("是否开始数据权限过滤") @RequestParam(required = false, defaultValue = "true") Boolean openDataFilter) {
 
         List<Department> list = new ArrayList<>();
         User u = securityUtil.getCurrUser();
@@ -86,18 +87,18 @@ public class DepartmentController {
         if (StrUtil.isNotBlank(v)) {
             list = new Gson().fromJson(v, new TypeToken<List<Department>>() {
             }.getType());
-            return list;
+            return Result.ok().data(list);
         }
         list = departmentService.listByParentIdOrderBySortOrder(parentId, openDataFilter);
         list = setInfo(list);
         redissonClient.getBucket(key).set(new Gson().toJson(list), 15L, TimeUnit.DAYS);
-        return list;
+        return Result.ok().data(list);
     }
 
     @PostMapping(value = "")
     @ApiOperation(value = "添加")
     @SystemLogTrace(description = "添加部门", type = LogType.OPERATION)
-    public String add(Department department) {
+    public Result add(Department department) {
         // 同步该节点缓存
         departmentService.save(department);
         redissonClient.getKeys().deleteByPattern("department::" + department.getParentId() + ":*");
@@ -112,13 +113,13 @@ public class DepartmentController {
                 redissonClient.getKeys().deleteByPattern("department::" + parent.getParentId() + ":*");
             }
         }
-        return "添加成功";
+        return Result.ok("添加成功");
     }
 
     @PutMapping(value = "")
     @ApiOperation(value = "编辑")
     @SystemLogTrace(description = "编辑部门", type = LogType.OPERATION)
-    public String edit(Department department, @RequestParam(required = false) String[] mainHeader,
+    public Result edit(Department department, @RequestParam(required = false) String[] mainHeader,
             @RequestParam(required = false) String[] viceHeader) {
 
         departmentService.updateById(department);
@@ -142,13 +143,13 @@ public class DepartmentController {
         redissonClient.getKeys().deleteByPattern("department:" + "*");
         // 删除所有用户缓存
         redissonClient.getKeys().deleteByPattern("user:" + "*");
-        return "编辑成功";
+        return Result.ok("编辑成功");
     }
 
     @DeleteMapping(value = "/{ids}")
     @ApiOperation(value = "批量通过id删除")
     @SystemLogTrace(description = "批量删除部门", type = LogType.OPERATION)
-    public String delByIds(@PathVariable String[] ids) {
+    public Result delByIds(@PathVariable String[] ids) {
 
         for (String id : ids) {
             deleteRecursion(id, ids);
@@ -158,10 +159,10 @@ public class DepartmentController {
         // 删除数据权限缓存
         redissonClient.getKeys().deleteByPattern("userRole::depIds:" + "*");
 
-        return "批量通过id删除数据成功";
+        return Result.ok("批量通过id删除数据成功");
     }
 
-    public void deleteRecursion(String id, String[] ids) {
+    public Result deleteRecursion(String id, String[] ids) {
 
         List<User> list = userService.listByDepartmentId(id);
         if (list != null && list.size() > 0) {
@@ -193,16 +194,16 @@ public class DepartmentController {
                 deleteRecursion(d.getId(), ids);
             }
         }
+        return Result.ok("删除成功");
     }
 
     @GetMapping(value = "/search")
     @ApiOperation(value = "部门名模糊搜索")
-    public List<Department> searchByTitle(@RequestParam String title,
+    public Result searchByTitle(@RequestParam String title,
             @ApiParam("是否开始数据权限过滤") @RequestParam(required = false, defaultValue = "true") Boolean openDataFilter) {
 
         List<Department> list = departmentService.listByTitleLikeOrderBySortOrder(title, openDataFilter);
-        list = setInfo(list);
-        return list;
+        return Result.ok().data(setInfo(list));
     }
 
     public List<Department> setInfo(List<Department> list) {

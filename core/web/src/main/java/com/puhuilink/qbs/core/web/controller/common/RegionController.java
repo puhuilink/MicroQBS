@@ -11,6 +11,7 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
+import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.web.entity.City;
 import com.puhuilink.qbs.core.web.entity.Country;
 import com.puhuilink.qbs.core.web.entity.Province;
@@ -42,20 +43,23 @@ public class RegionController {
 
     @ApiOperation(value = "省级行政地区", httpMethod = "GET")
     @GetMapping("/province")
-    public List<Province> provinces(@RequestParam(required = false) String name) {
-        return this.provinceService.listByCondition(name);
+    public Result provinces(@RequestParam(required = false) String name) {
+        List<Province> provinces = this.provinceService.listByCondition(name);
+        return Result.ok().data(provinces);
     }
 
     @ApiOperation(value = "市级行政地区", httpMethod = "GET")
     @GetMapping("/city")
-    public List<City> cities(@Valid @RequestParam @NotBlank(message = "{required}") String provinceId) {
-        return this.cityService.listByProvinceId(provinceId);
+    public Result cities(@Valid @RequestParam @NotBlank(message = "{required}") String provinceId) {
+        List<City> cities = this.cityService.listByProvinceId(provinceId);
+        return Result.ok().data(cities);
     }
 
     @ApiOperation(value = "县区级行政地区", httpMethod = "GET")
     @GetMapping("/country")
-    public List<Country> countries(@Valid @RequestParam @NotBlank(message = "{required}") String cityId) {
-        return this.countryService.listByCityId(cityId);
+    public Result countries(@Valid @RequestParam @NotBlank(message = "{required}") String cityId) {
+        List<Country> countries = this.countryService.listByCityId(cityId);
+        return Result.ok().data(countries);
     }
 
 }

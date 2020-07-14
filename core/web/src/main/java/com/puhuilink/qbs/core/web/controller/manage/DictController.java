@@ -11,6 +11,7 @@ import java.util.List;
 import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
 import com.puhuilink.qbs.core.base.enums.LogType;
 import com.puhuilink.qbs.core.base.exception.BizException;
+import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.web.entity.Dict;
 import com.puhuilink.qbs.core.web.service.DictDataService;
 import com.puhuilink.qbs.core.web.service.DictService;
@@ -49,26 +50,27 @@ public class DictController {
 
     @GetMapping(value = "")
     @ApiOperation(value = "获取全部数据")
-    public List<Dict> listAll() {
-        return dictService.listAllOrderBySortOrder();
+    public Result listAll() {
+        List<Dict> dicts = dictService.listAllOrderBySortOrder();
+        return Result.ok().data(dicts);
     }
 
     @PostMapping(value = "")
     @ApiOperation(value = "添加")
     @SystemLogTrace(description = "添加字典", type = LogType.OPERATION)
-    public String save(Dict dict) {
+    public Result save(Dict dict) {
 
         if (dictService.getByType(dict.getType()) != null) {
             throw new BizException("字典类型Type已存在");
         }
         dictService.save(dict);
-        return "添加成功";
+        return Result.ok("添加成功");
     }
 
     @PutMapping(value = "")
     @ApiOperation(value = "编辑")
     @SystemLogTrace(description = "编辑字典", type = LogType.OPERATION)
-    public String update(Dict dict) {
+    public Result update(Dict dict) {
 
         Dict old = dictService.getById(dict.getId());
         // 若type修改判断唯一
@@ -76,25 +78,26 @@ public class DictController {
             throw new BizException("字典类型Type已存在");
         }
         dictService.updateById(dict);
-        return "编辑成功";
+        return Result.ok("编辑成功");
     }
 
     @DeleteMapping(value = "/{id}")
     @ApiOperation(value = "通过id删除")
     @SystemLogTrace(description = "删除字典", type = LogType.OPERATION)
-    public String delAllByIds(@PathVariable String id) {
+    public Result delAllByIds(@PathVariable String id) {
 
         Dict dict = dictService.getById(id);
         dictService.removeById(id);
         dictDataService.deleteByDictId(id);
         // 删除缓存
         redissonClient.getKeys().delete("dictData::" + dict.getType());
-        return "删除成功";
+        return Result.ok("删除成功");
     }
 
     @GetMapping(value = "/search")
     @ApiOperation(value = "搜索字典")
-    public List<Dict> searchPermissionList(@RequestParam String key) {
-        return dictService.listByTitleOrTypeLike(key);
+    public Result searchPermissionList(@RequestParam String key) {
+        List<Dict> dicts = dictService.listByTitleOrTypeLike(key);
+        return Result.ok().data(dicts);
     }
 }

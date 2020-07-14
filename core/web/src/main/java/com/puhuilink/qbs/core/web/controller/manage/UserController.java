@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.excel.EasyExcel;
 import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
 import com.puhuilink.qbs.core.base.enums.LogType;
-import com.puhuilink.qbs.core.base.utils.ResultUtil;
 import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.web.controller.vo.UserData;
 import com.puhuilink.qbs.core.web.entity.User;
@@ -59,10 +58,10 @@ public class UserController {
 
     @GetMapping("/info")
     @ApiOperation(value = "已登录用户")
-    public User userInfo() {
+    public Result userInfo() {
         User u = securityUtil.getCurrUser();
         u.setPassword(null);
-        return u;
+        return Result.ok().data(u);
     }
 
     @PostMapping(value = "/reset")
@@ -75,7 +74,7 @@ public class UserController {
             userService.updateById(u);
             redissonClient.getBucket("user::" + u.getUsername()).delete();
         }
-        return ResultUtil.success("操作成功");
+        return Result.ok("操作成功");
     }
 
     @GetMapping("/excel/download")

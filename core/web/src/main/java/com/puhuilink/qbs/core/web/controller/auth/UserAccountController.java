@@ -12,6 +12,7 @@ import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
 import com.puhuilink.qbs.core.base.constant.CommonConstant;
 import com.puhuilink.qbs.core.base.enums.LogType;
 import com.puhuilink.qbs.core.base.validation.tag.OnAdd;
+import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.web.controller.vo.UserRegistVO;
 import com.puhuilink.qbs.core.web.entity.User;
 import com.puhuilink.qbs.core.web.service.UserService;
@@ -42,7 +43,7 @@ public class UserAccountController {
     @PostMapping("/regist")
     @ApiOperation(value = "注册用户")
     @SystemLogTrace(description = "用户注册", type = LogType.OPERATION)
-    public User regist(
+    public Result regist(
             @RequestBody @Valid @ApiParam(name = "用户注册表单", value = "传入json格式", required = true) UserRegistVO userRegistVo) {
         User u = new User();
         String encryptPass = new BCryptPasswordEncoder().encode(userRegistVo.getPassword());
@@ -53,7 +54,7 @@ public class UserAccountController {
         u.setMobile(userRegistVo.getMobile());
         u.setRealname(userRegistVo.getRealname());
         userService.save(u);
-        return u;
+        return Result.ok().data(u);
     }
 
 }

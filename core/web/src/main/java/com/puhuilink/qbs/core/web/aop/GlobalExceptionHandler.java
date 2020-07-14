@@ -20,7 +20,6 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.puhuilink.qbs.core.base.enums.ResultCode;
 import com.puhuilink.qbs.core.base.exception.BizException;
 import com.puhuilink.qbs.core.base.exception.LimitAccessException;
-import com.puhuilink.qbs.core.base.utils.ResultUtil;
 import com.puhuilink.qbs.core.base.vo.Result;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.Ordered;
@@ -46,14 +45,14 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<String> handleException(Exception e) {
         log.error("系统内部异常，未知异常信息：", e);
-        return ResultUtil.error("系统内部异常");
+        return Result.error("系统内部异常");
     }
 
     @ExceptionHandler(value = BizException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<Object> handleParamsInvalidException(BizException e) {
         log.error("系统内部异常，业务异常信息：{}, {}", e.getErrorMsg(), e.getErrorCode());
-        return ResultUtil.error(e.getErrorCode(), e.getErrorMsg());
+        return Result.error(e.getErrorCode(), e.getErrorMsg());
     }
 
     /**
@@ -72,7 +71,7 @@ public class GlobalExceptionHandler {
             message.append(error.getField()).append(error.getDefaultMessage()).append(StringPool.COMMA);
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
-        return ResultUtil.error(ResultCode.BODY_NOT_MATCH.getCode(), message.toString());
+        return Result.error(ResultCode.BODY_NOT_MATCH.getCode(), message.toString());
 
     }
 
@@ -94,14 +93,14 @@ public class GlobalExceptionHandler {
             message.append(pathArr[pathArr.length - 1]).append(violation.getMessage()).append(StringPool.COMMA);
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
-        return ResultUtil.error(ResultCode.BODY_NOT_MATCH.getCode(), message.toString());
+        return Result.error(ResultCode.BODY_NOT_MATCH.getCode(), message.toString());
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<Object> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         log.warn("请求错误", e);
-        return ResultUtil.error(ResultCode.BODY_NOT_MATCH.getCode(), e.getMessage());
+        return Result.error(ResultCode.BODY_NOT_MATCH.getCode(), e.getMessage());
 
     }
 
@@ -109,7 +108,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
     public Result<Object> handleLimitAccessException(LimitAccessException e) {
         log.error("请求次数过多 {}", e.getMessage());
-        return ResultUtil.error(e.getErrorCode(), e.getErrorMsg());
+        return Result.error(e.getErrorCode(), e.getErrorMsg());
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
@@ -119,13 +118,13 @@ public class GlobalExceptionHandler {
         // Get all errors
         List<String> errors = e.getBindingResult().getFieldErrors().stream()
                 .map(x -> x.getField() + x.getDefaultMessage()).collect(Collectors.toList());
-        return ResultUtil.error(ResultCode.BODY_NOT_MATCH.getCode(), String.join(";", errors));
+        return Result.error(ResultCode.BODY_NOT_MATCH.getCode(), String.join(";", errors));
     }
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<Object> handleHttpMessageNotReadableException(MethodArgumentNotValidException e) {
         log.error("参数格式错误，{}", e.getMessage());
-        return ResultUtil.error(ResultCode.BODY_NOT_MATCH.getCode(), "参数格式错误");
+        return Result.error(ResultCode.BODY_NOT_MATCH.getCode(), "参数格式错误");
     }
 }

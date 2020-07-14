@@ -21,9 +21,7 @@ import com.puhuilink.qbs.core.base.gson.LocalDateTimeDeserializer;
 import com.puhuilink.qbs.core.base.gson.LocalDateTimeSerializer;
 import com.puhuilink.qbs.core.base.gson.LocalTimeDeserializer;
 import com.puhuilink.qbs.core.base.gson.LocalTimeSerializer;
-import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.web.aop.AppInterceptor;
-import com.puhuilink.qbs.core.web.config.gson.CustomGsonHttpMessageConverter;
 
 import com.puhuilink.qbs.core.web.config.gson.SpringfoxJsonToGsonAdapter;
 import org.springframework.context.annotation.Bean;

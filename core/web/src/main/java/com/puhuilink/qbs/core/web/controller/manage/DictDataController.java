@@ -12,6 +12,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.puhuilink.qbs.core.base.exception.BizException;
 import com.puhuilink.qbs.core.base.vo.PageVO;
+import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.web.entity.Dict;
 import com.puhuilink.qbs.core.web.entity.DictData;
 import com.puhuilink.qbs.core.web.service.DictDataService;
@@ -51,28 +52,29 @@ public class DictDataController {
 
     @GetMapping(value = "/page")
     @ApiOperation(value = "多条件分页获取用户列表")
-    public PageInfo<DictData> pageByCondition(DictData dictData, PageVO pageVo) {
+    public Result pageByCondition(DictData dictData, PageVO pageVo) {
         PageInfo<DictData> pageInfo = PageHelper
                 .startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
                 .doSelectPageInfo(() -> dictDataService.listByCondition(dictData));
-        return pageInfo;
+        return Result.ok().data(pageInfo);
     }
 
     @GetMapping(value = "/type/{type}")
     @ApiOperation(value = "通过类型获取")
     @Cacheable(key = "#type")
-    public List<DictData> getByType(@PathVariable String type) {
+    public Result getByType(@PathVariable String type) {
 
         Dict dict = dictService.getByType(type);
         if (dict == null) {
             throw new BizException("字典类型 " + type + " 不存在");
         }
-        return dictDataService.listByDictId(dict.getId());
+        List<DictData> dictDataList = dictDataService.listByDictId(dict.getId());
+        return Result.ok().data(dictDataList);
     }
 
     @PostMapping(value = "")
     @ApiOperation(value = "保存")
-    public String save(DictData dictData) {
+    public Result save(DictData dictData) {
 
         Dict dict = dictService.getById(dictData.getDictId());
         if (dict == null) {
@@ -81,22 +83,22 @@ public class DictDataController {
         dictDataService.save(dictData);
         // 删除缓存
         redissonClient.getKeys().delete("dictData::" + dict.getType());
-        return "添加成功";
+        return Result.ok("添加成功");
     }
 
     @PutMapping(value = "")
     @ApiOperation(value = "编辑")
-    public String update(DictData dictData) {
+    public Result update(DictData dictData) {
         dictDataService.updateById(dictData);
         // 删除缓存
         Dict dict = dictService.getById(dictData.getDictId());
         redissonClient.getKeys().delete("dictData::" + dict.getType());
-        return "编辑成功";
+        return Result.ok("添加成功");
     }
 
     @DeleteMapping(value = "/{ids}")
     @ApiOperation(value = "批量通过id删除")
-    public String delByIds(@PathVariable String[] ids) {
+    public Result delByIds(@PathVariable String[] ids) {
 
         for (String id : ids) {
             DictData dictData = dictDataService.getById(id);
@@ -105,6 +107,6 @@ public class DictDataController {
             // 删除缓存
             redissonClient.getKeys().delete("dictData::" + dict.getType());
         }
-        return "批量通过id删除数据成功";
+        return Result.ok("批量通过id删除数据成功");
     }
 }

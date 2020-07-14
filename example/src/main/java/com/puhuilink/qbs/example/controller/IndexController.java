@@ -1,5 +1,6 @@
 package com.puhuilink.qbs.example.controller;
 
+import com.puhuilink.qbs.core.base.vo.Result;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,8 +12,8 @@ public class IndexController {
 
     @ApiOperation("Hello world")
     @GetMapping
-    public String hello(){
-        return "hello world";
+    public Result hello(){
+        return Result.ok("hello world");
     }
 
 }

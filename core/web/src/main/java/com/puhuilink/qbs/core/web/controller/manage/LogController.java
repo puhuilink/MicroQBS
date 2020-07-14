@@ -9,6 +9,7 @@ package com.puhuilink.qbs.core.web.controller.manage;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.puhuilink.qbs.core.base.vo.PageVO;
+import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.base.vo.SearchVO;
 import com.puhuilink.qbs.core.web.entity.LogTrace;
 import com.puhuilink.qbs.core.web.service.LogTraceService;
@@ -36,12 +37,12 @@ public class LogController {
 
     @GetMapping(value = "/page")
     @ApiOperation(value = "分页获取全部")
-    public PageInfo<LogTrace> page(@RequestParam(required = false) Integer type, @RequestParam String key,
-                                   SearchVO searchVo, PageVO pageVo) {
+    public Result page(@RequestParam(required = false) Integer type, @RequestParam String key,
+                       SearchVO searchVo, PageVO pageVo) {
         PageInfo<LogTrace> page = PageHelper
                 .startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
                 .doSelectPageInfo(() -> logService.listByCondition(type, key, searchVo));
-        return page;
+        return Result.ok().data(page);
     }
 
     // @DeleteMapping(value = "/{ids}")
