@@ -29,16 +29,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
-            String username = "";
-            if (authentication.getPrincipal() instanceof SecurityUser) {
-                SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
-                username = securityUser.getUsername();
-            }
-            if (authentication.getPrincipal() instanceof String) {
-                username = (String) authentication.getPrincipal();
-            }
-            // UserDetails user = (UserDetails) authentication.getPrincipal();
-            // String username = (String) authentication.getPrincipal();
+            String username = getUsername(authentication);
             this.setFieldValByName("createBy", username, metaObject);
         }
         this.setFieldValByName("createTime", new Date(), metaObject);
@@ -49,9 +40,21 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
-            UserDetails user = (UserDetails) authentication.getPrincipal();
-            this.setFieldValByName("updateBy", user.getUsername(), metaObject);
+            String username = getUsername(authentication);
+            this.setFieldValByName("updateBy", username, metaObject);
         }
         this.setFieldValByName("updateTime", new Date(), metaObject);
+    }
+
+    private String getUsername(Authentication authentication) {
+        String username = "";
+        if (authentication.getPrincipal() instanceof SecurityUser) {
+            SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+            username = securityUser.getUsername();
+        }
+        if (authentication.getPrincipal() instanceof String) {
+            username = (String) authentication.getPrincipal();
+        }
+        return username;
     }
 }
