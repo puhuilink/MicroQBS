@@ -5,7 +5,7 @@
  * @LastEditTime: 2020-06-01 10:32:32
  * @FilePath: /puhuilink-common-framework/module/dfs-service/src/main/java/com/puhuilink/module/file/impl/FdfsStorageServiceImpl.java
  */
-package com.puhuilink.module.file.impl;
+package com.puhuilink.qbs.module.file.impl;
 
 import java.io.InputStream;
 
@@ -13,7 +13,7 @@ import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.exception.FdfsServerException;
 import com.github.tobato.fastdfs.service.AppendFileStorageClient;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
-import com.puhuilink.module.file.FdfsStorageService;
+import com.puhuilink.qbs.module.file.FdfsStorageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

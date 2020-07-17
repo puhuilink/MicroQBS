@@ -1,4 +1,4 @@
-package com.puhuilink.module.file;
+package com.puhuilink.qbs.module.file;
 
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 

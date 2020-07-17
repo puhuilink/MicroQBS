@@ -17,6 +17,8 @@ import com.puhuilink.qbs.core.base.enums.ResultCode;
 import com.puhuilink.qbs.core.base.exception.BizException;
 import com.puhuilink.qbs.core.base.utils.CreateVerifyCode;
 import com.puhuilink.qbs.core.base.vo.Result;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.StringCodec;
@@ -41,6 +43,7 @@ public class CaptchaController {
     private RedissonClient redissonClient;
 
     @RequestMapping(value = "/init-mobile/{mobile}", method = RequestMethod.GET)
+    @ApiImplicitParams({@ApiImplicitParam(name = "mobile",value = "手机号",defaultValue = "18600001111")})
     @ApiOperation(value = "初始化手机验证码")
     public Result initMobileCaptcha(@PathVariable String mobile) {
         Long codeL = System.nanoTime();
@@ -63,6 +66,7 @@ public class CaptchaController {
     }
 
     @RequestMapping(value = "/draw/{captchaId}", method = RequestMethod.GET)
+    @ApiImplicitParams({@ApiImplicitParam(name = "captchaId",value = "验证码ID", defaultValue = "00")})
     @ApiOperation(value = "根据验证码ID获取图片")
     public void drawCaptcha(@PathVariable("captchaId") String captchaId, HttpServletResponse response)
             throws IOException {

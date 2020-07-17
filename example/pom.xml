@@ -16,27 +16,6 @@
       <groupId>com.puhuilink.qbs</groupId>
       <artifactId>qbs-web</artifactId>
     </dependency>
-    <dependency>
-      <groupId>io.springfox</groupId>
-      <artifactId>springfox-swagger2</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>io.swagger</groupId>
-          <artifactId>swagger-models</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/io.swagger/swagger-models -->
-    <dependency>
-      <groupId>io.swagger</groupId>
-      <artifactId>swagger-models</artifactId>
-      <version>1.5.21</version>
-    </dependency>
-    <dependency>
-      <groupId>io.springfox</groupId>
-      <artifactId>springfox-swagger-ui</artifactId>
-    </dependency>
 
   </dependencies>
 
