@@ -5,7 +5,7 @@
 
   <groupId>com.puhuilink.qbs</groupId>
   <artifactId>qbs-parent</artifactId>
-  <version>0.0.3-SNAPSHOT</version>
+  <version>0.0.4</version>
   <packaging>pom</packaging>
 
   <licenses>
@@ -28,7 +28,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <jdk.compile.version>1.8</jdk.compile.version>
-    <ph.version>0.0.3-SNAPSHOT</ph.version>
+    <ph.version>0.0.4</ph.version>
     <mybatis-plus.version>3.3.0</mybatis-plus.version>
     <springboot.version>2.1.12.RELEASE</springboot.version>
     <netty-socketio.version>1.7.17</netty-socketio.version>
