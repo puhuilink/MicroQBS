@@ -3,13 +3,13 @@
   <parent>
     <artifactId>qbs-parent</artifactId>
     <groupId>com.puhuilink.qbs</groupId>
-    <version>0.0.4</version>
+    <version>0.0.4-SNAPSHOT</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>qbs-service-dfs</artifactId>
-  <version>0.0.4</version>
+  <version>0.0.4-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <properties>
