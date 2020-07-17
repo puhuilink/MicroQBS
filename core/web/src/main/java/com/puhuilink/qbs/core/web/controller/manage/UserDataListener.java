@@ -6,16 +6,15 @@
  */
 package com.puhuilink.qbs.core.web.controller.manage;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.google.gson.Gson;
 import com.puhuilink.qbs.core.web.controller.vo.UserData;
 import com.puhuilink.qbs.core.web.service.UserService;
-
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 public class UserDataListener extends AnalysisEventListener<UserData> {
@@ -64,7 +63,6 @@ public class UserDataListener extends AnalysisEventListener<UserData> {
      */
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
-        // 这里也要保存数据，确保最后遗留的数据也存储到数据库
         saveData();
         log.info("所有数据解析完成！");
     }

@@ -6,11 +6,6 @@
  */
 package com.puhuilink.qbs.core.web.controller.manage;
 
-import java.io.IOException;
-import java.net.URLEncoder;
-
-import javax.servlet.http.HttpServletResponse;
-
 import com.alibaba.excel.EasyExcel;
 import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
 import com.puhuilink.qbs.core.base.enums.LogType;
@@ -21,21 +16,19 @@ import com.puhuilink.qbs.core.web.service.DepartmentService;
 import com.puhuilink.qbs.core.web.service.RoleService;
 import com.puhuilink.qbs.core.web.service.UserService;
 import com.puhuilink.qbs.core.web.utils.SecurityUtil;
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
 
 @Slf4j
 @RestController

@@ -6,8 +6,6 @@
  */
 package com.puhuilink.qbs.core.web.controller.manage;
 
-import java.util.List;
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.puhuilink.qbs.core.base.exception.BizException;
@@ -17,23 +15,17 @@ import com.puhuilink.qbs.core.web.entity.Dict;
 import com.puhuilink.qbs.core.web.entity.DictData;
 import com.puhuilink.qbs.core.web.service.DictDataService;
 import com.puhuilink.qbs.core.web.service.DictService;
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -54,8 +46,8 @@ public class DictDataController {
     @ApiOperation(value = "多条件分页获取用户列表")
     public Result pageByCondition(DictData dictData, PageVO pageVo) {
         PageInfo<DictData> pageInfo = PageHelper
-                .startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
-                .doSelectPageInfo(() -> dictDataService.listByCondition(dictData));
+            .startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
+            .doSelectPageInfo(() -> dictDataService.listByCondition(dictData));
         return Result.ok().data(pageInfo);
     }
 

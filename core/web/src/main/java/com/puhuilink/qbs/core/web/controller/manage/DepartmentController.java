@@ -6,10 +6,7 @@
  */
 package com.puhuilink.qbs.core.web.controller.manage;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
+import cn.hutool.core.util.StrUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
@@ -26,26 +23,20 @@ import com.puhuilink.qbs.core.web.service.DepartmentService;
 import com.puhuilink.qbs.core.web.service.RoleDepartmentService;
 import com.puhuilink.qbs.core.web.service.UserService;
 import com.puhuilink.qbs.core.web.utils.SecurityUtil;
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import cn.hutool.core.util.StrUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @RestController
@@ -76,7 +67,7 @@ public class DepartmentController {
     @GetMapping(value = "/parent/{parentId}")
     @ApiOperation(value = "通过parentId获取")
     public Result listByParentId(@PathVariable String parentId,
-                                                  @ApiParam("是否开始数据权限过滤") @RequestParam(required = false, defaultValue = "true") Boolean openDataFilter) {
+                                 @ApiParam("是否开始数据权限过滤") @RequestParam(required = false, defaultValue = "true") Boolean openDataFilter) {
 
         List<Department> list = new ArrayList<>();
         User u = securityUtil.getCurrUser();
@@ -120,7 +111,7 @@ public class DepartmentController {
     @ApiOperation(value = "编辑")
     @SystemLogTrace(description = "编辑部门", type = LogType.OPERATION)
     public Result edit(Department department, @RequestParam(required = false) String[] mainHeader,
-            @RequestParam(required = false) String[] viceHeader) {
+                       @RequestParam(required = false) String[] viceHeader) {
 
         departmentService.updateById(department);
         // 先删除原数据
@@ -162,10 +153,9 @@ public class DepartmentController {
         return Result.ok("批量通过id删除数据成功");
     }
 
-    public Result deleteRecursion(String id, String[] ids) {
-
+    public void deleteRecursion(String id, String[] ids) {
         List<User> list = userService.listByDepartmentId(id);
-        if (list != null && list.size() > 0) {
+        if (list == null || list.isEmpty()) {
             throw new BizException("删除失败，包含正被用户使用关联的部门");
         }
         // 获得其父节点
@@ -194,21 +184,17 @@ public class DepartmentController {
                 deleteRecursion(d.getId(), ids);
             }
         }
-        return Result.ok("删除成功");
     }
 
     @GetMapping(value = "/search")
     @ApiOperation(value = "部门名模糊搜索")
     public Result searchByTitle(@RequestParam String title,
-            @ApiParam("是否开始数据权限过滤") @RequestParam(required = false, defaultValue = "true") Boolean openDataFilter) {
-
+                                @ApiParam("是否开始数据权限过滤") @RequestParam(required = false, defaultValue = "true") Boolean openDataFilter) {
         List<Department> list = departmentService.listByTitleLikeOrderBySortOrder(title, openDataFilter);
         return Result.ok().data(setInfo(list));
     }
 
     public List<Department> setInfo(List<Department> list) {
-
-        // lambda表达式
         list.forEach(item -> {
             if (!CommonConstant.PARENT_ID.equals(item.getParentId())) {
                 Department parent = departmentService.getById(item.getParentId());
@@ -218,9 +204,9 @@ public class DepartmentController {
             }
             // 设置负责人
             item.setMainMaster(
-                    departmentMasterService.listMasterByDepartmentId(item.getId(), CommonConstant.MASTER_TYPE_MAIN));
+                departmentMasterService.listMasterByDepartmentId(item.getId(), CommonConstant.MASTER_TYPE_MAIN));
             item.setViceMaster(
-                    departmentMasterService.listMasterByDepartmentId(item.getId(), CommonConstant.MASTER_TYPE_VICE));
+                departmentMasterService.listMasterByDepartmentId(item.getId(), CommonConstant.MASTER_TYPE_VICE));
         });
         return list;
     }

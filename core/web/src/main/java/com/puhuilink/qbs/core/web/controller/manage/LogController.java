@@ -44,21 +44,4 @@ public class LogController {
                 .doSelectPageInfo(() -> logService.listByCondition(type, key, searchVo));
         return Result.ok().data(page);
     }
-
-    // @DeleteMapping(value = "/{ids}")
-    // @ApiOperation(value = "批量删除")
-    // public String delByIds(@PathVariable String[] ids) {
-
-    // for (String id : ids) {
-    // logService.removeById(id);
-    // }
-    // return "删除成功";
-    // }
-
-    // @DeleteMapping(value = "/all")
-    // @ApiOperation(value = "全部删除")
-    // public String deleteAll() {
-    // logService.removeAll();
-    // return "删除成功";
-    // }
 }

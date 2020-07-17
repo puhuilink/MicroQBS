@@ -6,10 +6,7 @@
  */
 package com.puhuilink.qbs.core.web.controller.manage;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
+import cn.hutool.core.util.StrUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
@@ -26,7 +23,9 @@ import com.puhuilink.qbs.core.web.service.PermissionService;
 import com.puhuilink.qbs.core.web.service.RolePermissionService;
 import com.puhuilink.qbs.core.web.utils.SecurityUtil;
 import com.puhuilink.qbs.core.web.utils.VoUtil;
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,19 +33,11 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import cn.hutool.core.util.StrUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @RestController
@@ -114,7 +105,7 @@ public class PermissionController {
         List<MenuVO> buttonPermissions = new ArrayList<>();
         for (Permission p : list) {
             if (CommonConstant.PERMISSION_OPERATION.equals(p.getType())
-                    && CommonConstant.LEVEL_THREE.equals(p.getLevel())) {
+                && CommonConstant.LEVEL_THREE.equals(p.getLevel())) {
                 buttonPermissions.add(VoUtil.permissionToMenuVO(p));
             }
         }

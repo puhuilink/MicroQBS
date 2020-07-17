@@ -6,8 +6,7 @@
  */
 package com.puhuilink.qbs.core.web.controller.manage;
 
-import java.util.List;
-
+import cn.hutool.core.convert.Convert;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
@@ -23,23 +22,15 @@ import com.puhuilink.qbs.core.web.service.RoleDepartmentService;
 import com.puhuilink.qbs.core.web.service.RolePermissionService;
 import com.puhuilink.qbs.core.web.service.RoleService;
 import com.puhuilink.qbs.core.web.service.UserRoleService;
-
-import org.redisson.api.RedissonClient;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import cn.hutool.core.convert.Convert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -66,7 +57,8 @@ public class RoleController {
     @GetMapping(value = "")
     @ApiOperation(value = "获取全部角色")
     public Result listAll() {
-        return Result.ok().data(roleService.list());
+        List<Role> roles = roleService.list();
+        return Result.ok().data(roles);
     }
 
     @GetMapping(value = "/page")
@@ -74,8 +66,8 @@ public class RoleController {
     public Result allPage(PageVO pageVo) {
 
         PageInfo<Role> page = PageHelper
-                .startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
-                .doSelectPageInfo(() -> roleService.list());
+            .startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
+            .doSelectPageInfo(() -> roleService.list());
         for (Role role : page.getList()) {
             // 角色拥有权限
             List<RolePermission> permissions = rolePermissionService.listByRoleId(role.getId());
@@ -128,7 +120,7 @@ public class RoleController {
     @ApiOperation(value = "编辑角色分配数据权限")
     @SystemLogTrace(description = "编辑角色分配数据权限", type = LogType.OPERATION)
     public String updateRoleDep(@RequestParam String roleId, @RequestParam Integer dataType,
-            @RequestParam(required = false) String[] depIds) {
+                                @RequestParam(required = false) String[] depIds) {
 
         Role r = roleService.getById(roleId);
         r.setDataType(dataType);
