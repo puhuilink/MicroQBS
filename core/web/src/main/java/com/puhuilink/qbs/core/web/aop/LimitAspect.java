@@ -83,7 +83,7 @@ public class LimitAspect {
         if (count != null && count <= limitCount) {
             return point.proceed();
         } else {
-            throw new LimitAccessException();
+            throw new LimitAccessException(String.format("接口请求次数超过%s", limitCount));
         }
     }
 

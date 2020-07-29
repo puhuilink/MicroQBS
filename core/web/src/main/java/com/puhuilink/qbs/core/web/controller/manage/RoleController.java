@@ -11,13 +11,15 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
 import com.puhuilink.qbs.core.base.enums.LogType;
-import com.puhuilink.qbs.core.base.exception.BizException;
+import com.puhuilink.qbs.core.base.enums.ResultCode;
+import com.puhuilink.qbs.core.base.exception.WarnException;
 import com.puhuilink.qbs.core.base.vo.PageVO;
 import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.web.entity.Role;
 import com.puhuilink.qbs.core.web.entity.RoleDepartment;
 import com.puhuilink.qbs.core.web.entity.RolePermission;
 import com.puhuilink.qbs.core.web.entity.UserRole;
+import com.puhuilink.qbs.core.web.exception.WebCommonException;
 import com.puhuilink.qbs.core.web.service.RoleDepartmentService;
 import com.puhuilink.qbs.core.web.service.RolePermissionService;
 import com.puhuilink.qbs.core.web.service.RoleService;
@@ -169,7 +171,7 @@ public class RoleController {
 
         List<UserRole> list = userRoleService.listByIds(Convert.toList(String.class, ids));
         if (list != null && list.size() > 0) {
-            throw new BizException("删除失败，包含正被用户使用关联的角色");
+            throw new WarnException(ResultCode.BAD_REQUEST_PARAMS.getCode(), "删除失败，包含正被用户使用关联的角色");
         }
         roleService.removeByIds(Convert.toList(String.class, ids));
         for (String id : ids) {

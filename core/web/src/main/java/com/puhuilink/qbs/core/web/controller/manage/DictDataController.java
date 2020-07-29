@@ -8,7 +8,8 @@ package com.puhuilink.qbs.core.web.controller.manage;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.puhuilink.qbs.core.base.exception.BizException;
+import com.puhuilink.qbs.core.base.enums.ResultCode;
+import com.puhuilink.qbs.core.base.exception.WarnException;
 import com.puhuilink.qbs.core.base.vo.PageVO;
 import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.web.entity.Dict;
@@ -58,7 +59,7 @@ public class DictDataController {
 
         Dict dict = dictService.getByType(type);
         if (dict == null) {
-            throw new BizException("字典类型 " + type + " 不存在");
+            throw new WarnException(ResultCode.BAD_REQUEST_PARAMS.getCode(), "字典类型 " + type + " 不存在");
         }
         List<DictData> dictDataList = dictDataService.listByDictId(dict.getId());
         return Result.ok().data(dictDataList);
@@ -70,7 +71,7 @@ public class DictDataController {
 
         Dict dict = dictService.getById(dictData.getDictId());
         if (dict == null) {
-            throw new BizException("字典类型id不存在");
+            throw new WarnException(ResultCode.BAD_REQUEST_PARAMS.getCode(), "字典类型id不存在");
         }
         dictDataService.save(dictData);
         // 删除缓存

@@ -12,7 +12,6 @@ import com.google.gson.reflect.TypeToken;
 import com.puhuilink.qbs.core.base.constant.CommonConstant;
 import com.puhuilink.qbs.core.base.constant.SecurityConstant;
 import com.puhuilink.qbs.core.base.enums.ResultCode;
-import com.puhuilink.qbs.core.base.exception.BizException;
 import com.puhuilink.qbs.core.base.vo.TokenUser;
 import com.puhuilink.qbs.core.web.config.properties.QbsTokenProperties;
 import com.puhuilink.qbs.core.web.entity.Department;
@@ -65,7 +64,7 @@ public class SecurityUtil {
     public String getAccessJwtToken(String username, Boolean saveLogin) {
 
         if (StrUtil.isBlank(username)) {
-            throw new BizException("username不能为空");
+            throw new WebCommonException("username不能为空");
         }
         boolean saved = false;
         if (saveLogin == null || saveLogin) {
@@ -151,7 +150,7 @@ public class SecurityUtil {
         if (authentication != null && authentication.getPrincipal() instanceof SecurityUser) {
             return (SecurityUser) authentication.getPrincipal();
         } else {
-            throw new BizException(ResultCode.AUTHENTICATION, "You aren't authorized to perform this operation!");
+            throw new WebCommonException(ResultCode.AUTHENTICATION, "You aren't authorized to perform this operation!");
         }
     }
 

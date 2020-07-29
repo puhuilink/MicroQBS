@@ -12,7 +12,8 @@ import com.google.gson.reflect.TypeToken;
 import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
 import com.puhuilink.qbs.core.base.constant.CommonConstant;
 import com.puhuilink.qbs.core.base.enums.LogType;
-import com.puhuilink.qbs.core.base.exception.BizException;
+import com.puhuilink.qbs.core.base.enums.ResultCode;
+import com.puhuilink.qbs.core.base.exception.WarnException;
 import com.puhuilink.qbs.core.base.utils.CommonUtil;
 import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.web.entity.Department;
@@ -156,7 +157,7 @@ public class DepartmentController {
     public void deleteRecursion(String id, String[] ids) {
         List<User> list = userService.listByDepartmentId(id);
         if (list == null || list.isEmpty()) {
-            throw new BizException("删除失败，包含正被用户使用关联的部门");
+            throw new WarnException(ResultCode.BAD_REQUEST_PARAMS.getCode(), "删除失败，包含正被用户使用关联的部门");
         }
         // 获得其父节点
         Department dep = departmentService.getById(id);

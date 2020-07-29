@@ -11,7 +11,8 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.puhuilink.qbs.core.base.exception.CheckedException;
+import com.puhuilink.qbs.core.base.enums.ResultCode;
+import com.puhuilink.qbs.core.base.exception.WarnException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -102,7 +103,7 @@ public class SqlFilterArgumentResolver implements HandlerMethodArgumentResolver 
         for (String keyword : KEYWORDS) {
             if (inStr.contains(keyword)) {
                 log.error("查询包含非法字符 {}", keyword);
-                throw new CheckedException(keyword + "包含非法字符");
+                throw new WarnException(ResultCode.FAIL.getCode(), keyword + "包含非法字符");
             }
         }
 

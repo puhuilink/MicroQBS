@@ -1,12 +1,14 @@
 package com.puhuilink.qbs.core.base.vo;
 
 import com.puhuilink.qbs.core.base.enums.ResultCode;
+import com.puhuilink.qbs.core.base.exception.QbsException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
+import java.util.Map;
 
 @Data
 public class Result<T> implements Serializable {
@@ -26,7 +28,7 @@ public class Result<T> implements Serializable {
     /**
      * 返回代码
      */
-    private String code;
+    private Integer code;
 
     /**
      * 时间戳
@@ -44,7 +46,7 @@ public class Result<T> implements Serializable {
         this.setCode(ResultCode.SUCCESS.getCode());
     }
 
-    public Result(String errorCode) {
+    public Result(Integer errorCode) {
         this.setSuccess(false);
         this.setCode(errorCode);
     }
@@ -64,13 +66,16 @@ public class Result<T> implements Serializable {
         return new Result<T>(ResultCode.INTERNAL_SERVER_ERROR.getCode()).setMessage(msg);
     }
 
-    public static <T> Result<T> error(String code, String msg) {
+    public static <T> Result<T> error(Integer code, String msg) {
         return new Result<T>(code).setMessage(msg);
+    }
+
+    public static Result<String> error(QbsException e) {
+        return new Result<String>(e.getErrCode()).setMessage(e.getMessage()).data(e.toString());
     }
 
     public Result<T> data(T t) {
         this.result = t;
-        this.code = ResultCode.SUCCESS.getCode();
         return this;
     }
 

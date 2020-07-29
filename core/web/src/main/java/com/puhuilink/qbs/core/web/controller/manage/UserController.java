@@ -60,7 +60,7 @@ public class UserController {
     @PostMapping(value = "/reset")
     @ApiOperation(value = "重置密码")
     @SystemLogTrace(description = "重置密码", type = LogType.OPERATION)
-    public Result<Object> resetPass(@RequestParam String[] ids) {
+    public Result resetPass(@RequestParam String[] ids) {
         for (String id : ids) {
             User u = userService.getById(id);
             u.setPassword(new BCryptPasswordEncoder().encode("123456"));

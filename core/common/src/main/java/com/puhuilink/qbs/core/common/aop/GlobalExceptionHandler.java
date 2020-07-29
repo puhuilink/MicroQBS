@@ -9,8 +9,10 @@ package com.puhuilink.qbs.core.common.aop;
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.puhuilink.qbs.core.base.enums.ResultCode;
-import com.puhuilink.qbs.core.base.exception.BizException;
+import com.puhuilink.qbs.core.base.exception.ErrorException;
+import com.puhuilink.qbs.core.base.exception.FatalException;
 import com.puhuilink.qbs.core.base.exception.LimitAccessException;
+import com.puhuilink.qbs.core.base.exception.WarnException;
 import com.puhuilink.qbs.core.base.vo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -45,11 +47,26 @@ public class GlobalExceptionHandler {
         return Result.error("系统内部异常");
     }
 
-    @ExceptionHandler(value = BizException.class)
+
+    @ExceptionHandler(value = WarnException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result<Object> handleParamsInvalidException(BizException e) {
-        log.error("系统内部异常，业务异常信息：{}, {}", e.getErrorMsg(), e.getErrorCode());
-        return Result.error(e.getErrorCode(), e.getErrorMsg());
+    public Result<Object> handleWarnException(WarnException e) {
+        log.warn("WARN：{}", e.toString());
+        return Result.error(e.getErrCode(), e.getDesc()).data(e.toMap());
+    }
+
+    @ExceptionHandler(value = ErrorException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result<Object> handleErrorException(ErrorException e) {
+        log.error("ERROR：{}", e.toString());
+        return Result.error(e.getErrCode(), e.getDesc()).data(e.toMap());
+    }
+
+    @ExceptionHandler(value = FatalException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result<Object> handleFatalException(FatalException e) {
+        log.error("FATAL：{}", e.toString());
+        return Result.error(e.getErrCode(), e.getDesc()).data(e.toMap());
     }
 
     /**
@@ -104,8 +121,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = LimitAccessException.class)
     @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
     public Result<Object> handleLimitAccessException(LimitAccessException e) {
-        log.error("请求次数过多 {}", e.getMessage());
-        return Result.error(e.getErrorCode(), e.getErrorMsg());
+        log.error(e.toString());
+        return Result.error(e.getErrCode(), e.getDesc()).data(e.toMap());
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)

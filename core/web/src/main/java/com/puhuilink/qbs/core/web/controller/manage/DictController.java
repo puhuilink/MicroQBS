@@ -8,7 +8,8 @@ package com.puhuilink.qbs.core.web.controller.manage;
 
 import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
 import com.puhuilink.qbs.core.base.enums.LogType;
-import com.puhuilink.qbs.core.base.exception.BizException;
+import com.puhuilink.qbs.core.base.enums.ResultCode;
+import com.puhuilink.qbs.core.base.exception.WarnException;
 import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.web.entity.Dict;
 import com.puhuilink.qbs.core.web.service.DictDataService;
@@ -52,7 +53,7 @@ public class DictController {
     public Result save(Dict dict) {
 
         if (dictService.getByType(dict.getType()) != null) {
-            throw new BizException("字典类型Type已存在");
+            throw new WarnException(ResultCode.BAD_REQUEST_PARAMS.getCode(), "字典类型Type已存在");
         }
         dictService.save(dict);
         return Result.ok("添加成功");
@@ -66,7 +67,7 @@ public class DictController {
         Dict old = dictService.getById(dict.getId());
         // 若type修改判断唯一
         if (!old.getType().equals(dict.getType()) && dictService.getByType(dict.getType()) != null) {
-            throw new BizException("字典类型Type已存在");
+            throw new WarnException(ResultCode.BAD_REQUEST_PARAMS.getCode(), "字典类型Type已存在");
         }
         dictService.updateById(dict);
         return Result.ok("编辑成功");

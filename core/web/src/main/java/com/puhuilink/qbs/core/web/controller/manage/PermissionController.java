@@ -12,7 +12,8 @@ import com.google.gson.reflect.TypeToken;
 import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
 import com.puhuilink.qbs.core.base.constant.CommonConstant;
 import com.puhuilink.qbs.core.base.enums.LogType;
-import com.puhuilink.qbs.core.base.exception.BizException;
+import com.puhuilink.qbs.core.base.enums.ResultCode;
+import com.puhuilink.qbs.core.base.exception.WarnException;
 import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.web.controller.vo.MenuVO;
 import com.puhuilink.qbs.core.web.entity.Permission;
@@ -175,13 +176,13 @@ public class PermissionController {
     @ApiOperation(value = "添加")
     @CacheEvict(key = "'menuList'")
     @SystemLogTrace(description = "添加权限", type = LogType.OPERATION)
-    public Permission add(Permission permission) {
+    public Result add(Permission permission) {
 
         // 判断拦截请求的操作权限按钮名是否已存在
         if (CommonConstant.PERMISSION_OPERATION.equals(permission.getType())) {
             List<Permission> list = permissionService.listByTitle(permission.getTitle());
             if (list != null && list.size() > 0) {
-                throw new BizException("名称已存在");
+                throw new WarnException(ResultCode.BAD_REQUEST_PARAMS.getCode(), "名称已存在");
             }
         }
         permissionService.save(permission);
@@ -189,7 +190,7 @@ public class PermissionController {
         mySecurityMetadataSource.loadResourceDefine();
         // 手动删除缓存
         redissonClient.getKeys().delete("permission::allList");
-        return permission;
+        return Result.ok().data(permission);
     }
 
     @PutMapping(value = "")
@@ -204,7 +205,7 @@ public class PermissionController {
             if (!p.getTitle().equals(permission.getTitle())) {
                 List<Permission> list = permissionService.listByTitle(permission.getTitle());
                 if (list != null && list.size() > 0) {
-                    throw new BizException("名称已存在");
+                    throw new WarnException(ResultCode.BAD_REQUEST_PARAMS.getCode(), "名称已存在");
                 }
             }
         }
@@ -223,12 +224,12 @@ public class PermissionController {
     @ApiOperation(value = "批量通过id删除")
     @CacheEvict(key = "'menuList'")
     @SystemLogTrace(description = "批量删除权限", type = LogType.OPERATION)
-    public String deleteByIds(@PathVariable String[] ids) {
+    public Result deleteByIds(@PathVariable String[] ids) {
 
         for (String id : ids) {
             List<RolePermission> list = rolePermissionService.listByPermissionId(id);
             if (list != null && list.size() > 0) {
-                throw new BizException("删除失败，包含正被角色使用关联的菜单或权限");
+                throw new WarnException(ResultCode.BAD_REQUEST_PARAMS.getCode(), "删除失败，包含正被角色使用关联的菜单或权限");
             }
         }
         for (String id : ids) {
@@ -238,14 +239,14 @@ public class PermissionController {
         mySecurityMetadataSource.loadResourceDefine();
         // 手动删除缓存
         redissonClient.getKeys().delete("permission::allList");
-        return "批量通过id删除数据成功";
+        return Result.ok("批量通过id删除数据成功");
     }
 
     @GetMapping(value = "/search")
     @ApiOperation(value = "搜索菜单")
-    public List<Permission> searchPermission(@RequestParam String title) {
+    public Result searchPermission(@RequestParam String title) {
 
         List<Permission> list = permissionService.listByTitleLikeOrderBySortOrder("%" + title + "%");
-        return list;
+        return Result.ok().data(list);
     }
 }
