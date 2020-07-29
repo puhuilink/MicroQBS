@@ -46,7 +46,7 @@ public class CaptchaController {
     @ApiImplicitParams({@ApiImplicitParam(name = "mobile",value = "手机号",defaultValue = "18600001111")})
     @ApiOperation(value = "初始化手机验证码")
     public Result initMobileCaptcha(@PathVariable String mobile) {
-        Long codeL = System.nanoTime();
+        long codeL = System.nanoTime();
         String codeStr = Long.toString(codeL);
         String code = codeStr.substring(codeStr.length() - 6);
         // 缓存验证码
@@ -75,7 +75,7 @@ public class CaptchaController {
         RBucket<String> bucket = redissonClient.getBucket(captchaId, new StringCodec());
         String code = bucket.get();
         if (StrUtil.isBlank(code)) {
-            throw new BizException(ResultCode.FAIL, "验证码ID失效");
+            throw new BizException(ResultCode.BAD_REQUEST_PARAMS, "验证码ID失效");
         }
         CreateVerifyCode vCode = new CreateVerifyCode(116, 36, 4, 10, code);
         response.setContentType("image/png");

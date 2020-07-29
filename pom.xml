@@ -22,6 +22,7 @@
     <module>module/dfs-service</module>
     <module>cloud</module>
     <module>example</module>
+    <module>core/common</module>
   </modules>
 
   <properties>
@@ -295,7 +296,7 @@
       <dependency>
         <groupId>cn.hutool</groupId>
         <artifactId>hutool-all</artifactId>
-        <version>5.1.4</version>
+        <version>5.3.9</version>
       </dependency>
       <!-- ip2region -->
       <dependency>
@@ -315,11 +316,6 @@
         <artifactId>httpclient</artifactId>
         <version>4.5.11</version>
       </dependency>
-      <dependency>
-        <groupId>org.keycloak</groupId>
-        <artifactId>keycloak-spring-boot-starter</artifactId>
-        <version>9.0.0</version>
-      </dependency>
       <!-- excel 支持 -->
       <dependency>
         <groupId>com.alibaba</groupId>
@@ -331,28 +327,6 @@
         <artifactId>uap-java</artifactId>
         <version>1.4.3</version>
       </dependency>
-      <!-- flowable-modeler 核心 -->
-      <dependency>
-        <groupId>org.flowable</groupId>
-        <artifactId>flowable-spring-boot-starter</artifactId>
-        <version>${flowable.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.flowable</groupId>
-        <artifactId>flowable-ui-modeler-conf</artifactId>
-        <version>${flowable.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.flowable</groupId>
-        <artifactId>flowable-ui-modeler-rest</artifactId>
-        <version>${flowable.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.flowable</groupId>
-        <artifactId>flowable-ui-modeler-logic</artifactId>
-        <version>${flowable.version}</version>
-      </dependency>
-
     </dependencies>
   </dependencyManagement>
   <build>
