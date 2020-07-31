@@ -19,7 +19,6 @@ import com.puhuilink.qbs.core.web.entity.Role;
 import com.puhuilink.qbs.core.web.entity.RoleDepartment;
 import com.puhuilink.qbs.core.web.entity.RolePermission;
 import com.puhuilink.qbs.core.web.entity.UserRole;
-import com.puhuilink.qbs.core.web.exception.WebCommonException;
 import com.puhuilink.qbs.core.web.service.RoleDepartmentService;
 import com.puhuilink.qbs.core.web.service.RolePermissionService;
 import com.puhuilink.qbs.core.web.service.RoleService;

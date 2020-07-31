@@ -14,9 +14,8 @@
   <dependencies>
     <dependency>
       <groupId>com.puhuilink.qbs</groupId>
-      <artifactId>qbs-web</artifactId>
+      <artifactId>qbs-common</artifactId>
     </dependency>
-
   </dependencies>
 
 </project>

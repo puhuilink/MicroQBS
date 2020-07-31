@@ -18,12 +18,12 @@
 
   <modules>
     <module>core/base</module>
-    <module>core/web</module>
-    <module>module/dfs-service</module>
-    <module>example</module>
     <module>core/common</module>
+    <module>web</module>
+    <module>module/dfs-service</module>
     <module>cloud/gateway</module>
     <module>cloud/nacos</module>
+    <module>example</module>
   </modules>
 
   <properties>
@@ -44,6 +44,7 @@
     <flowable.version>6.4.2</flowable.version>
     <lombok.version>1.18.10</lombok.version>
     <log4j.version>2.13.3</log4j.version>
+    <fasterxml.jackson.version>2.11.1</fasterxml.jackson.version>
 
     <air.main.basedir>${project.basedir}</air.main.basedir>
     <air.check.fail-checkstyle>true</air.check.fail-checkstyle>
@@ -67,22 +68,12 @@
       </dependency>
       <dependency>
         <groupId>com.puhuilink.qbs</groupId>
-        <artifactId>qbs-dao</artifactId>
-        <version>${ph.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.puhuilink.qbs</groupId>
         <artifactId>qbs-web</artifactId>
         <version>${ph.version}</version>
       </dependency>
       <dependency>
         <groupId>com.puhuilink.qbs</groupId>
-        <artifactId>qbs-service-dfs</artifactId>
-        <version>${ph.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.puhuilink.core</groupId>
-        <artifactId>qbs-proto</artifactId>
+        <artifactId>qbs-common</artifactId>
         <version>${ph.version}</version>
       </dependency>
       <dependency>
@@ -328,6 +319,18 @@
         <artifactId>uap-java</artifactId>
         <version>1.4.3</version>
       </dependency>
+      <!-- fastxml -->
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${fasterxml.jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>${fasterxml.jackson.version}</version>
+      </dependency>
+
     </dependencies>
   </dependencyManagement>
   <build>

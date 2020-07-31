@@ -17,7 +17,6 @@ import com.puhuilink.qbs.core.base.enums.ResultCode;
 import com.puhuilink.qbs.core.base.exception.WarnException;
 import com.puhuilink.qbs.core.base.utils.CreateVerifyCode;
 import com.puhuilink.qbs.core.base.vo.Result;
-import com.puhuilink.qbs.core.web.exception.WebCommonException;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import org.redisson.api.RBucket;
@@ -70,7 +69,7 @@ public class CaptchaController {
     @ApiImplicitParams({@ApiImplicitParam(name = "captchaId",value = "验证码ID", defaultValue = "00")})
     @ApiOperation(value = "根据验证码ID获取图片")
     public void drawCaptcha(@PathVariable("captchaId") String captchaId, HttpServletResponse response)
-            throws IOException, WebCommonException {
+            throws IOException {
 
         // 得到验证码 生成指定验证码
         RBucket<String> bucket = redissonClient.getBucket(captchaId, new StringCodec());

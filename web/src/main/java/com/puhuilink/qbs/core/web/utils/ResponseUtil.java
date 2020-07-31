@@ -65,7 +65,7 @@ public class ResponseUtil {
         return resultMap(flag, resultCode.getCode(), resultCode.getMsg(), null);
     }
 
-    public static Map<String, Object> resultMap(boolean flag, String code, String msg, Object data) {
+    public static Map<String, Object> resultMap(boolean flag, Integer code, String msg, Object data) {
 
         Map<String, Object> resultMap = new HashMap<String, Object>(16);
         resultMap.put("success", flag);
