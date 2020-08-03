@@ -2,13 +2,10 @@ package com.puhuilink.qbs.core.base.vo;
 
 import com.puhuilink.qbs.core.base.enums.ResultCode;
 import com.puhuilink.qbs.core.base.exception.QbsException;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
-import java.util.Map;
 
 @Data
 public class Result<T> implements Serializable {
@@ -55,23 +52,23 @@ public class Result<T> implements Serializable {
         if (StringUtils.isEmpty(msg)) {
             msg = "ok";
         }
-        return new Result<T>().setMessage(msg);
+        return new Result<T>().msg(msg);
     }
 
     public static <T> Result<T> ok() {
-        return new Result<T>().setMessage("ok");
+        return new Result<T>().msg("ok");
     }
 
-    public static <T> Result<T> error(String msg) {
-        return new Result<T>(ResultCode.INTERNAL_SERVER_ERROR.getCode()).setMessage(msg);
+    public static <T> Result<T> error() {
+        return new Result<T>(ResultCode.INTERNAL_SERVER_ERROR.getCode());
     }
 
-    public static <T> Result<T> error(Integer code, String msg) {
-        return new Result<T>(code).setMessage(msg);
+    public static <T> Result<T> error(Integer code) {
+        return new Result<T>(code);
     }
 
     public static Result<String> error(QbsException e) {
-        return new Result<String>(e.getErrCode()).setMessage(e.getMessage()).data(e.toString());
+        return new Result<String>(e.getErrCode()).msg(e.getMessage()).data(e.toString());
     }
 
     public Result<T> data(T t) {
@@ -79,7 +76,7 @@ public class Result<T> implements Serializable {
         return this;
     }
 
-    public Result<T> setMessage(String msg) {
+    public Result<T> msg(String msg) {
         this.message = msg;
         return this;
     }

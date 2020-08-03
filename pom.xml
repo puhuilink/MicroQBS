@@ -20,7 +20,6 @@
         <module>core/base</module>
         <module>core/common</module>
         <module>core/mybatis</module>
-        <module>core/module</module>
         <module>web</module>
         <module>module/dfs-service</module>
         <module>cloud/gateway</module>
@@ -81,6 +80,16 @@
             <dependency>
                 <groupId>com.puhuilink.qbs</groupId>
                 <artifactId>qbs-mybatis</artifactId>
+                <version>${ph.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.puhuilink.qbs</groupId>
+                <artifactId>qbs-mapper</artifactId>
+                <version>${ph.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.puhuilink.qbs</groupId>
+                <artifactId>qbs-security</artifactId>
                 <version>${ph.version}</version>
             </dependency>
             <dependency>

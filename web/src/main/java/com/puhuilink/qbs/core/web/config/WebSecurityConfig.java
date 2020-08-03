@@ -8,6 +8,7 @@
 package com.puhuilink.qbs.core.web.config;
 
 import com.google.common.collect.Lists;
+import com.puhuilink.qbs.core.base.constant.Constant;
 import com.puhuilink.qbs.core.web.config.properties.IgnoredUrlsProperties;
 import com.puhuilink.qbs.core.web.security.auth.jwt.JwtAuthenticationProvider;
 import com.puhuilink.qbs.core.web.security.auth.jwt.JwtTokenAuthenticationProcessingFilter;
@@ -48,18 +49,17 @@ import java.util.List;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static final String WEBJARS_ENTRY_POINT = "/webjars/**";
-    public static final String USERNAME_LOGIN_ENTRY_POINT = "/api/auth/login";
-    public static final String MOBILE_LOGIN_ENTRY_POINT = "/api/auth/login/mobile";
-    public static final String IMAGE_LOGIN_ENTRY_POINT = "/api/auth/login/image";
-    public static final String TOKEN_REFRESH_ENTRY_POINT = "/api/auth/token";
-    public static final String TOKEN_BASED_AUTH_ENTRY_POINT = "/api/**";
-    public static final String WS_TOKEN_BASED_AUTH_ENTRY_POINT = "/api/ws/**";
-    public static final String NOAUTH_ENTRY_POINT = "/api/auth/**";
+    public static final String USERNAME_LOGIN_ENTRY_POINT = String.format("/%s/auth/login", Constant.TOKEN_ACCESS_PREFIX);
+    public static final String MOBILE_LOGIN_ENTRY_POINT = String.format("/%s/auth/login/mobile", Constant.TOKEN_ACCESS_PREFIX);
+    public static final String IMAGE_LOGIN_ENTRY_POINT = String.format("/%s/auth/login/image", Constant.TOKEN_ACCESS_PREFIX);
+    public static final String TOKEN_REFRESH_ENTRY_POINT = String.format("/%s/auth/token", Constant.TOKEN_ACCESS_PREFIX);
+    public static final String TOKEN_BASED_AUTH_ENTRY_POINT = String.format("/%s/**", Constant.TOKEN_ACCESS_PREFIX);
+    public static final String WS_TOKEN_BASED_AUTH_ENTRY_POINT = String.format("/%s/ws/**", Constant.TOKEN_ACCESS_PREFIX);
+    public static final String NOAUTH_ENTRY_POINT = String.format("/%s/auth/**", Constant.TOKEN_ACCESS_PREFIX);
     protected static final String[] NON_TOKEN_BASED_AUTH_ENTRY_POINTS = new String[]{
+            NOAUTH_ENTRY_POINT,
             "/index.html",
             "/static/**",
-            "/api/auth/**",
-            "/api/common/**",
             // swagger ui
             "/swagger-resources/**",
             "/swagger-ui.html",

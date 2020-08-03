@@ -41,9 +41,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result<String> handleException(Exception e) {
+    public Result<Object> handleException(Exception e) {
         log.error("系统内部异常，未知异常信息：", e);
-        return Result.error("系统内部异常");
+        return Result.error().msg("系统内部异常");
     }
 
 
@@ -51,21 +51,21 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<Object> handleWarnException(WarnException e) {
         log.warn("WARN：{}", e.toString());
-        return Result.error(e.getErrCode(), e.getDesc()).data(e.toMap());
+        return Result.error(e.getErrCode()).msg(e.getDesc()).data(e.toMap());
     }
 
     @ExceptionHandler(value = ErrorException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<Object> handleErrorException(ErrorException e) {
         log.error("ERROR：{}", e.toString());
-        return Result.error(e.getErrCode(), e.getDesc()).data(e.toMap());
+        return Result.error(e.getErrCode()).msg(e.getDesc()).data(e.toMap());
     }
 
     @ExceptionHandler(value = FatalException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<Object> handleFatalException(FatalException e) {
         log.error("FATAL：{}", e.toString());
-        return Result.error(e.getErrCode(), e.getDesc()).data(e.toMap());
+        return Result.error(e.getErrCode()).msg(e.getDesc()).data(e.toMap());
     }
 
     /**
@@ -84,7 +84,7 @@ public class GlobalExceptionHandler {
             message.append(error.getField()).append(error.getDefaultMessage()).append(",");
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
-        return Result.error(ResultCode.BODY_NOT_MATCH.getCode(), message.toString());
+        return Result.error(ResultCode.BODY_NOT_MATCH.getCode()).msg(message.toString());
 
     }
 
@@ -106,14 +106,14 @@ public class GlobalExceptionHandler {
             message.append(pathArr[pathArr.length - 1]).append(violation.getMessage()).append(",");
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
-        return Result.error(ResultCode.BODY_NOT_MATCH.getCode(), message.toString());
+        return Result.error(ResultCode.BODY_NOT_MATCH.getCode()).msg(message.toString());
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<Object> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         log.warn("请求错误", e);
-        return Result.error(ResultCode.BODY_NOT_MATCH.getCode(), e.getMessage());
+        return Result.error(ResultCode.BODY_NOT_MATCH.getCode()).msg(e.getMessage());
 
     }
 
@@ -121,7 +121,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
     public Result<Object> handleLimitAccessException(LimitAccessException e) {
         log.error(e.toString());
-        return Result.error(e.getErrCode(), e.getDesc()).data(e.toMap());
+        return Result.error(e.getErrCode()).msg(e.getDesc()).data(e.toMap());
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
@@ -131,13 +131,13 @@ public class GlobalExceptionHandler {
         // Get all errors
         List<String> errors = e.getBindingResult().getFieldErrors().stream()
                 .map(x -> x.getField() + x.getDefaultMessage()).collect(Collectors.toList());
-        return Result.error(ResultCode.BODY_NOT_MATCH.getCode(), String.join(";", errors));
+        return Result.error(ResultCode.BODY_NOT_MATCH.getCode()).msg(String.join(";", errors));
     }
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<Object> handleHttpMessageNotReadableException(MethodArgumentNotValidException e) {
         log.error("参数格式错误，{}", e.getMessage());
-        return Result.error(ResultCode.BODY_NOT_MATCH.getCode(), "参数格式错误");
+        return Result.error(ResultCode.BODY_NOT_MATCH.getCode()).msg("参数格式错误");
     }
 }

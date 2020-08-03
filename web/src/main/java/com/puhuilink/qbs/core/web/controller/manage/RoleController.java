@@ -87,7 +87,7 @@ public class RoleController {
 
         Role role = roleService.getById(id);
         if (role == null) {
-            return Result.error("角色不存在");
+            throw new WarnException(ResultCode.FAIL.getCode(), "角色不存在");
         }
         role.setDefaultRole(isDefault);
         roleService.updateById(role);

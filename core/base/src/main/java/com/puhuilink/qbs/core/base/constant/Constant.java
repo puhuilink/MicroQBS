@@ -8,5 +8,6 @@ public class Constant {
     public static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String VERSION_FORMAT = "%06d";
     public static final String VERSION_PREFIX = "v";
+    public static final String TOKEN_ACCESS_PREFIX = "api";
 
 }
