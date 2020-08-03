@@ -25,6 +25,7 @@ import com.puhuilink.qbs.core.web.service.DepartmentService;
 import com.puhuilink.qbs.core.web.service.UserRoleService;
 import com.puhuilink.qbs.core.web.service.UserService;
 
+import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.StringCodec;
@@ -36,7 +37,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import cn.hutool.core.util.StrUtil;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -64,7 +65,7 @@ public class SecurityUtil {
 
     public String getAccessJwtToken(String username, Boolean saveLogin) {
 
-        if (StrUtil.isBlank(username)) {
+        if (StringUtils.isBlank(username)) {
             throw new WarnException(ResultCode.AUTHENTICATION.getCode(), "username不能为空");
         }
         boolean saved = false;
@@ -83,8 +84,8 @@ public class SecurityUtil {
         // 缓存权限
         if (tokenProperties.getStorePerms() && u != null) {
             for (Permission p : u.getPermissions()) {
-                if (CommonConstant.PERMISSION_OPERATION.equals(p.getType()) && StrUtil.isNotBlank(p.getTitle())
-                        && StrUtil.isNotBlank(p.getPath())) {
+                if (CommonConstant.PERMISSION_OPERATION.equals(p.getType()) && StringUtils.isNotBlank(p.getTitle())
+                        && StringUtils.isNotBlank(p.getPath())) {
                     list.add(p.getTitle());
                 }
             }
@@ -104,7 +105,7 @@ public class SecurityUtil {
                         new StringCodec());
                 if (bucket != null) {
                     String oldToken = bucket.get();
-                    if (StrUtil.isNotBlank(oldToken)) {
+                    if (StringUtils.isNotBlank(oldToken)) {
                         redissonClient.getKeys().delete(SecurityConstant.TOKEN_PRE + oldToken);
                     }
                 }
@@ -166,7 +167,7 @@ public class SecurityUtil {
         String key = "userRole::depIds:" + u.getId();
         RBucket<String> bucket = redissonClient.getBucket(key, new StringCodec());
         String v = bucket.get();
-        if (StrUtil.isNotBlank(v)) {
+        if (StringUtils.isNotBlank(v)) {
             deparmentIds = new Gson().fromJson(v, new TypeToken<List<String>>() {
             }.getType());
             return deparmentIds;
@@ -189,7 +190,7 @@ public class SecurityUtil {
         for (Role r : roles) {
             if (r.getDataType().equals(CommonConstant.DATA_TYPE_UNDER)) {
                 // 本部门及以下
-                if (StrUtil.isBlank(u.getDepartmentId())) {
+                if (StringUtils.isBlank(u.getDepartmentId())) {
                     // 用户无部门
                     deparmentIds.add("-1");
                 } else {
@@ -200,7 +201,7 @@ public class SecurityUtil {
                 }
             } else if (r.getDataType().equals(CommonConstant.DATA_TYPE_SAME)) {
                 // 本部门
-                if (StrUtil.isBlank(u.getDepartmentId())) {
+                if (StringUtils.isBlank(u.getDepartmentId())) {
                     // 用户无部门
                     deparmentIds.add("-1");
                 } else {
@@ -270,7 +271,7 @@ public class SecurityUtil {
                 throw new BadCredentialsException("登录已失效，请重新登录");
             }
             String v = bucket.get();
-            if (StrUtil.isBlank(v)) {
+            if (StringUtils.isBlank(v)) {
                 throw new BadCredentialsException("登录已失效，请重新登录");
             }
             TokenUser user = new Gson().fromJson(v, TokenUser.class);
@@ -309,7 +310,7 @@ public class SecurityUtil {
                 if (tokenProperties.getStorePerms()) {
                     // 缓存了权限
                     String authority = claims.get(SecurityConstant.AUTHORITIES).toString();
-                    if (StrUtil.isNotBlank(authority)) {
+                    if (StringUtils.isNotBlank(authority)) {
                         List<String> list = new Gson().fromJson(authority,
                                 new com.google.common.reflect.TypeToken<List<String>>() {
                                 }.getType());
@@ -329,7 +330,7 @@ public class SecurityUtil {
             }
         }
 
-        if (StrUtil.isNotBlank(username)) {
+        if (StringUtils.isNotBlank(username)) {
             // 踩坑提醒 此处password不能为null
             User user = userService.getByUsername(username);
             SecurityUser securityUser = new SecurityUser(user);

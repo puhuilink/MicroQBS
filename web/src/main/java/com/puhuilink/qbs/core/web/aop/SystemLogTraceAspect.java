@@ -15,8 +15,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
-import com.puhuilink.qbs.core.base.utils.InheritableThreadLocalUtil;
-import com.puhuilink.qbs.core.base.utils.ThreadPoolUtil;
+import com.puhuilink.qbs.core.common.utils.InheritableThreadLocalUtil;
+import com.puhuilink.qbs.core.common.utils.ThreadPoolUtil;
 import com.puhuilink.qbs.core.web.entity.LogTrace;
 import com.puhuilink.qbs.core.web.security.model.SecurityUser;
 import com.puhuilink.qbs.core.web.service.LogTraceService;

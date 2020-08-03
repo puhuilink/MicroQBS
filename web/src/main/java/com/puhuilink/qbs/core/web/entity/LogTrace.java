@@ -3,7 +3,7 @@ package com.puhuilink.qbs.core.web.entity;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.puhuilink.qbs.core.base.utils.ObjectUtil;
+import com.puhuilink.qbs.core.common.utils.ObjectUtil;
 import com.puhuilink.qbs.core.web.base.QbsBaseEntity;
 
 import io.swagger.annotations.ApiModelProperty;

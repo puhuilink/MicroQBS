@@ -14,11 +14,12 @@ import com.puhuilink.qbs.core.web.entity.Province;
 import com.puhuilink.qbs.core.web.mapper.ProvinceMapper;
 import com.puhuilink.qbs.core.web.service.ProvinceService;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.hutool.core.util.StrUtil;
+
 
 @Service("provinceService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
@@ -27,7 +28,7 @@ public class ProvinceServiceImpl extends ServiceImpl<ProvinceMapper, Province> i
     @Override
     public List<Province> listByCondition(String name) {
         LambdaQueryWrapper<Province> queryWrapper = new LambdaQueryWrapper<>();
-        if (StrUtil.isNotBlank(name)) {
+        if (StringUtils.isNotBlank(name)) {
             queryWrapper.like(Province::getName, name);
         }
         return list(queryWrapper);

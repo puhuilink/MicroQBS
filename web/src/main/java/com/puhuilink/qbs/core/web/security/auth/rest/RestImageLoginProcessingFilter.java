@@ -6,17 +6,10 @@
  */
 package com.puhuilink.qbs.core.web.security.auth.rest;
 
-import java.io.IOException;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.google.gson.Gson;
 import com.puhuilink.qbs.core.web.security.exception.AuthMethodNotSupportedException;
 import com.puhuilink.qbs.core.web.security.model.UserPrincipal;
-
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
@@ -33,8 +26,11 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import cn.hutool.core.util.StrUtil;
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Slf4j
 public class RestImageLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
@@ -46,7 +42,7 @@ public class RestImageLoginProcessingFilter extends AbstractAuthenticationProces
     private final RedissonClient redissonClient;
 
     public RestImageLoginProcessingFilter(String defaultFilterProcessesUrl, AuthenticationSuccessHandler successHandler,
-            AuthenticationFailureHandler failureHandler, RedissonClient redissonClient) {
+                                          AuthenticationFailureHandler failureHandler, RedissonClient redissonClient) {
         super(defaultFilterProcessesUrl);
         this.successHandler = successHandler;
         this.failureHandler = failureHandler;
@@ -79,7 +75,7 @@ public class RestImageLoginProcessingFilter extends AbstractAuthenticationProces
 
         RBucket<String> bucket = redissonClient.getBucket(loginRequest.getCaptchaId(), new StringCodec());
         String redisCode = bucket.get();
-        if (StrUtil.isBlank(redisCode)) {
+        if (StringUtils.isBlank(redisCode)) {
             throw new BadCredentialsException("验证码过期");
         }
 
@@ -101,13 +97,13 @@ public class RestImageLoginProcessingFilter extends AbstractAuthenticationProces
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-            Authentication authResult) throws IOException, ServletException {
+                                            Authentication authResult) throws IOException, ServletException {
         successHandler.onAuthenticationSuccess(request, response, authResult);
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-            AuthenticationException failed) throws IOException, ServletException {
+                                              AuthenticationException failed) throws IOException, ServletException {
         SecurityContextHolder.clearContext();
         failureHandler.onAuthenticationFailure(request, response, failed);
     }

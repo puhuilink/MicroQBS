@@ -7,7 +7,6 @@
  */
 package com.puhuilink.qbs.core.common.aop;
 
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.puhuilink.qbs.core.base.enums.ResultCode;
 import com.puhuilink.qbs.core.base.exception.ErrorException;
 import com.puhuilink.qbs.core.base.exception.FatalException;
@@ -82,7 +81,7 @@ public class GlobalExceptionHandler {
         StringBuilder message = new StringBuilder();
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         for (FieldError error : fieldErrors) {
-            message.append(error.getField()).append(error.getDefaultMessage()).append(StringPool.COMMA);
+            message.append(error.getField()).append(error.getDefaultMessage()).append(",");
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
         return Result.error(ResultCode.BODY_NOT_MATCH.getCode(), message.toString());
@@ -103,8 +102,8 @@ public class GlobalExceptionHandler {
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
         for (ConstraintViolation<?> violation : violations) {
             Path path = violation.getPropertyPath();
-            String[] pathArr = StringUtils.splitByWholeSeparatorPreserveAllTokens(path.toString(), StringPool.DOT);
-            message.append(pathArr[pathArr.length - 1]).append(violation.getMessage()).append(StringPool.COMMA);
+            String[] pathArr = StringUtils.splitByWholeSeparatorPreserveAllTokens(path.toString(), ".");
+            message.append(pathArr[pathArr.length - 1]).append(violation.getMessage()).append(",");
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
         return Result.error(ResultCode.BODY_NOT_MATCH.getCode(), message.toString());

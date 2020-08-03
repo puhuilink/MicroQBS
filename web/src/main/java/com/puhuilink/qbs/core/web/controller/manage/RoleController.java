@@ -6,9 +6,9 @@
  */
 package com.puhuilink.qbs.core.web.controller.manage;
 
-import cn.hutool.core.convert.Convert;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
 import com.puhuilink.qbs.core.base.enums.LogType;
 import com.puhuilink.qbs.core.base.enums.ResultCode;
@@ -67,8 +67,8 @@ public class RoleController {
     public Result allPage(PageVO pageVo) {
 
         PageInfo<Role> page = PageHelper
-            .startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
-            .doSelectPageInfo(() -> roleService.list());
+                .startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
+                .doSelectPageInfo(() -> roleService.list());
         for (Role role : page.getList()) {
             // 角色拥有权限
             List<RolePermission> permissions = rolePermissionService.listByRoleId(role.getId());
@@ -168,11 +168,11 @@ public class RoleController {
     @SystemLogTrace(description = "批量删除角色数据", type = LogType.OPERATION)
     public String delByIds(@PathVariable String[] ids) {
 
-        List<UserRole> list = userRoleService.listByIds(Convert.toList(String.class, ids));
+        List<UserRole> list = userRoleService.listByIds(Lists.newArrayList(ids));
         if (list != null && list.size() > 0) {
             throw new WarnException(ResultCode.BAD_REQUEST_PARAMS.getCode(), "删除失败，包含正被用户使用关联的角色");
         }
-        roleService.removeByIds(Convert.toList(String.class, ids));
+        roleService.removeByIds(Lists.newArrayList(ids));
         for (String id : ids) {
             // 删除关联菜单权限
             rolePermissionService.deleteByRoleId(id);

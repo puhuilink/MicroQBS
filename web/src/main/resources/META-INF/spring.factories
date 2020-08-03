@@ -1,14 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.puhuilink.qbs.core.web.config.WebSecurityConfig,\
-  com.puhuilink.qbs.core.web.config.Swagger2Config,\
   com.puhuilink.qbs.core.web.config.redis.RedissonConfig,\
-  com.puhuilink.qbs.core.web.config.WebConfig,\
-  com.puhuilink.qbs.core.web.config.httpclient.HttpClientConfig,\
-  com.puhuilink.qbs.core.web.config.httpclient.RestTemplateConfig,\
-  com.puhuilink.qbs.core.web.config.mybatis.DataScopeInterceptor,\
-  com.puhuilink.qbs.core.web.config.mybatis.MybatisPlusConfig,\
-  com.puhuilink.qbs.core.web.config.mybatis.MyMetaObjectHandler,\
-  com.puhuilink.qbs.core.web.config.mybatis.SqlFilterArgumentResolver,\
   com.puhuilink.qbs.core.web.config.properties.QbsTokenProperties,\
   com.puhuilink.qbs.core.web.config.properties.QbsIpLimitProperties,\
   com.puhuilink.qbs.core.web.config.properties.QbsLimitProperties,\
@@ -25,9 +17,6 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.puhuilink.qbs.core.web.security.permission.MyAccessDecisionManager,\
   com.puhuilink.qbs.core.web.security.permission.MySecurityMetadataSource,\
   com.puhuilink.qbs.core.web.utils.SecurityUtil,\
-  com.puhuilink.qbs.core.web.aop.GlobalExceptionHandler,\
-  com.puhuilink.qbs.core.web.aop.GlobalResultHandler,\
-  com.puhuilink.qbs.core.web.aop.RedisLockAspect,\
   com.puhuilink.qbs.core.web.aop.SystemLogTraceAspect,\
   com.puhuilink.qbs.core.web.service.impl.UserServiceImpl,\
   com.puhuilink.qbs.core.web.service.impl.DepartmentServiceImpl,\

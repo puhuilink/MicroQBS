@@ -13,10 +13,11 @@ import com.puhuilink.qbs.core.base.constant.CommonConstant;
 import com.puhuilink.qbs.core.web.entity.Permission;
 import com.puhuilink.qbs.core.web.entity.Role;
 import com.puhuilink.qbs.core.web.entity.User;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import cn.hutool.core.util.StrUtil;
+
 
 public class SecurityUserDetails extends User implements UserDetails {
 
@@ -48,7 +49,7 @@ public class SecurityUserDetails extends User implements UserDetails {
         if (permissions != null && permissions.size() > 0) {
             for (Permission permission : permissions) {
                 if (CommonConstant.PERMISSION_OPERATION.equals(permission.getType())
-                        && StrUtil.isNotBlank(permission.getTitle()) && StrUtil.isNotBlank(permission.getPath())) {
+                        && StringUtils.isNotBlank(permission.getTitle()) && StringUtils.isNotBlank(permission.getPath())) {
 
                     authorityList.add(new SimpleGrantedAuthority(permission.getTitle()));
                 }
@@ -58,7 +59,7 @@ public class SecurityUserDetails extends User implements UserDetails {
         List<Role> roles = this.getRoles();
         if (roles != null && roles.size() > 0) {
             roles.forEach(item -> {
-                if (StrUtil.isNotBlank(item.getName())) {
+                if (StringUtils.isNotBlank(item.getName())) {
                     authorityList.add(new SimpleGrantedAuthority(item.getName()));
                 }
             });

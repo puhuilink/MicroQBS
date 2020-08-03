@@ -6,9 +6,6 @@
  */
 package com.puhuilink.qbs.core.web.service.impl;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -23,14 +20,16 @@ import com.puhuilink.qbs.core.web.mapper.PermissionMapper;
 import com.puhuilink.qbs.core.web.mapper.UserMapper;
 import com.puhuilink.qbs.core.web.mapper.UserRoleMapper;
 import com.puhuilink.qbs.core.web.service.UserService;
-
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.StrUtil;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
@@ -50,7 +49,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return null;
         }
         // 关联部门
-        if (StrUtil.isNotBlank(user.getDepartmentId())) {
+        if (StringUtils.isNotBlank(user.getDepartmentId())) {
             Department department = departmentMapper.selectById(user.getDepartmentId());
             if (department != null) {
                 user.setDepartmentTitle(department.getTitle());
@@ -104,7 +103,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         return users.stream().map(u -> {
             UserData ud = new UserData();
-            BeanUtil.copyProperties(u, ud);
+            BeanUtils.copyProperties(u, ud);
             return ud;
         }).collect(Collectors.toList());
     }
@@ -113,7 +112,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public void saveBatch(List<UserData> dataList) {
         List<User> users = dataList.stream().map(ud -> {
             User u = new User();
-            BeanUtil.copyProperties(ud, u);
+            BeanUtils.copyProperties(ud, u);
             return u;
         }).collect(Collectors.toList());
         saveBatch(users);

@@ -5,7 +5,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 
-import com.puhuilink.qbs.core.base.validation.tag.OnAdd;
+import com.puhuilink.qbs.core.common.validate.tag.OnAdd;
 import lombok.Data;
 
 @Data

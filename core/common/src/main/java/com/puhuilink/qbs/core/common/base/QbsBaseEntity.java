@@ -12,8 +12,8 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.puhuilink.qbs.core.base.constant.CommonConstant;
-import com.puhuilink.qbs.core.base.utils.SnowFlakeUtil;
-import com.puhuilink.qbs.core.base.validation.tag.OnCheckID;
+import com.puhuilink.qbs.core.common.utils.SnowFlakeUtil;
+import com.puhuilink.qbs.core.common.validate.tag.OnCheckID;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

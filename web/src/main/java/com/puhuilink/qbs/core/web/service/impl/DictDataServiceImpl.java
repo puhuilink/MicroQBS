@@ -15,11 +15,12 @@ import com.puhuilink.qbs.core.web.entity.DictData;
 import com.puhuilink.qbs.core.web.mapper.DictDataMapper;
 import com.puhuilink.qbs.core.web.service.DictDataService;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.hutool.core.util.StrUtil;
+
 
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
@@ -28,13 +29,13 @@ public class DictDataServiceImpl extends ServiceImpl<DictDataMapper, DictData> i
     @Override
     public List<DictData> listByCondition(DictData dictData) {
         QueryWrapper<DictData> queryWrapper = new QueryWrapper<>();
-        if (StrUtil.isNotBlank(dictData.getTitle())) {
+        if (StringUtils.isNotBlank(dictData.getTitle())) {
             queryWrapper.lambda().like(DictData::getTitle, dictData.getTitle());
         }
         if (dictData.getStatus() != null) {
             queryWrapper.lambda().eq(DictData::getStatus, dictData.getStatus());
         }
-        if (StrUtil.isNotBlank(dictData.getDictId())) {
+        if (StringUtils.isNotBlank(dictData.getDictId())) {
             queryWrapper.lambda().eq(DictData::getDictId, dictData.getDictId());
         }
         return baseMapper.selectList(queryWrapper);

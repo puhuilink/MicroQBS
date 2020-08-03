@@ -6,7 +6,7 @@
  */
 package com.puhuilink.qbs.core.web.controller.manage;
 
-import cn.hutool.core.util.StrUtil;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
@@ -14,7 +14,7 @@ import com.puhuilink.qbs.core.base.constant.CommonConstant;
 import com.puhuilink.qbs.core.base.enums.LogType;
 import com.puhuilink.qbs.core.base.enums.ResultCode;
 import com.puhuilink.qbs.core.base.exception.WarnException;
-import com.puhuilink.qbs.core.base.utils.CommonUtil;
+import com.puhuilink.qbs.core.common.utils.CommonUtil;
 import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.web.entity.Department;
 import com.puhuilink.qbs.core.web.entity.DepartmentMaster;
@@ -28,6 +28,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,7 @@ public class DepartmentController {
 
         RBucket<String> rBucket = redissonClient.getBucket(key);
         String v = rBucket.get();
-        if (StrUtil.isNotBlank(v)) {
+        if (StringUtils.isNotBlank(v)) {
             list = new Gson().fromJson(v, new TypeToken<List<Department>>() {
             }.getType());
             return Result.ok().data(list);
@@ -162,7 +163,7 @@ public class DepartmentController {
         // 获得其父节点
         Department dep = departmentService.getById(id);
         Department parent = null;
-        if (dep != null && StrUtil.isNotBlank(dep.getParentId())) {
+        if (dep != null && StringUtils.isNotBlank(dep.getParentId())) {
             parent = departmentService.getById(dep.getParentId());
         }
         departmentService.removeById(id);

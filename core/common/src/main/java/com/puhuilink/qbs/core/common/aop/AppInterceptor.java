@@ -7,7 +7,7 @@
  */
 package com.puhuilink.qbs.core.common.aop;
 
-import com.puhuilink.qbs.core.base.utils.InheritableThreadLocalUtil;
+import com.puhuilink.qbs.core.common.utils.InheritableThreadLocalUtil;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 

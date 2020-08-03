@@ -6,7 +6,7 @@
  */
 package com.puhuilink.qbs.core.web.controller.manage;
 
-import cn.hutool.core.util.StrUtil;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
@@ -27,6 +27,7 @@ import com.puhuilink.qbs.core.web.utils.VoUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +74,7 @@ public class PermissionController {
         String key = "permission::userMenuList:" + u.getId();
         RBucket<String> rBucket = redissonClient.getBucket(key);
         String v = rBucket.get();
-        if (StrUtil.isNotBlank(v)) {
+        if (StringUtils.isNotBlank(v)) {
             menuList = new Gson().fromJson(v, new TypeToken<List<MenuVO>>() {
             }.getType());
             return Result.ok().data(menuList);

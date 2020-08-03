@@ -6,20 +6,18 @@
  */
 package com.puhuilink.qbs.core.web.security.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import com.puhuilink.qbs.core.base.constant.CommonConstant;
 import com.puhuilink.qbs.core.web.entity.Permission;
 import com.puhuilink.qbs.core.web.entity.Role;
 import com.puhuilink.qbs.core.web.entity.User;
-
+import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import cn.hutool.core.util.StrUtil;
-import lombok.Data;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Data
 public class SecurityUser extends User {
@@ -50,7 +48,7 @@ public class SecurityUser extends User {
         if (permissions != null && permissions.size() > 0) {
             for (Permission permission : permissions) {
                 if (CommonConstant.PERMISSION_OPERATION.equals(permission.getType())
-                        && StrUtil.isNotBlank(permission.getTitle()) && StrUtil.isNotBlank(permission.getPath())) {
+                        && StringUtils.isNotBlank(permission.getTitle()) && StringUtils.isNotBlank(permission.getPath())) {
 
                     this.authorities.add(new SimpleGrantedAuthority(permission.getTitle()));
                 }
@@ -60,7 +58,7 @@ public class SecurityUser extends User {
         List<Role> roles = this.getRoles();
         if (roles != null && roles.size() > 0) {
             roles.forEach(item -> {
-                if (StrUtil.isNotBlank(item.getName())) {
+                if (StringUtils.isNotBlank(item.getName())) {
                     this.authorities.add(new SimpleGrantedAuthority(item.getName()));
                 }
             });

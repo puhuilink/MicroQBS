@@ -21,6 +21,10 @@
             <artifactId>qbs-base</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.puhuilink.qbs</groupId>
+            <artifactId>qbs-mybatis</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${springboot.version}</version>
@@ -86,6 +90,11 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
+        </dependency>
+        <!-- ip2region -->
+        <dependency>
+            <groupId>org.lionsoul</groupId>
+            <artifactId>ip2region</artifactId>
         </dependency>
     </dependencies>
     <build>

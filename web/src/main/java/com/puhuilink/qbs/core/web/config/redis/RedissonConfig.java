@@ -7,9 +7,9 @@
  */
 package com.puhuilink.qbs.core.web.config.redis;
 
-import cn.hutool.core.util.StrUtil;
 import io.netty.channel.nio.NioEventLoopGroup;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.Codec;
@@ -48,16 +48,16 @@ public class RedissonConfig {
         RedissonClient redissonSingle() throws Exception {
             Config config = new Config();
             Codec codec = (Codec) ClassUtils.forName(redisProperties.getCodec(), ClassUtils.getDefaultClassLoader())
-                .newInstance();
+                    .newInstance();
             config.setCodec(codec);
             config.setEventLoopGroup(new NioEventLoopGroup());
             String node = redisProperties.getSingle().getAddress();
             node = node.startsWith("redis://") ? node : "redis://" + node;
             SingleServerConfig serverConfig = config.useSingleServer().setAddress(node)
-                .setDatabase(redisProperties.getDatabase()).setTimeout(redisProperties.getPool().getConnTimeout())
-                .setConnectionPoolSize(redisProperties.getPool().getSize())
-                .setConnectionMinimumIdleSize(redisProperties.getPool().getMinIdle());
-            if (StrUtil.isNotBlank(redisProperties.getPassword())) {
+                    .setDatabase(redisProperties.getDatabase()).setTimeout(redisProperties.getPool().getConnTimeout())
+                    .setConnectionPoolSize(redisProperties.getPool().getSize())
+                    .setConnectionMinimumIdleSize(redisProperties.getPool().getMinIdle());
+            if (StringUtils.isNotBlank(redisProperties.getPassword())) {
                 serverConfig.setPassword(redisProperties.getPassword());
             }
             return Redisson.create(config);
@@ -82,24 +82,24 @@ public class RedissonConfig {
 
             Config config = new Config();
             Codec codec = (Codec) ClassUtils.forName(redisProperties.getCodec(), ClassUtils.getDefaultClassLoader())
-                .newInstance();
+                    .newInstance();
             config.setCodec(codec);
             config.setEventLoopGroup(new NioEventLoopGroup());
             List<String> newNodes = redisProperties.getCluster().getNodes().stream()
-                .map(n -> n.startsWith("redis://") ? n : "redis://" + n).collect(Collectors.toList());
+                    .map(n -> n.startsWith("redis://") ? n : "redis://" + n).collect(Collectors.toList());
 
             ClusterServersConfig serverConfig = config.useClusterServers()
-                .addNodeAddress(newNodes.toArray(new String[0]))
-                .setScanInterval(redisProperties.getCluster().getScanInterval())
-                .setIdleConnectionTimeout(redisProperties.getPool().getSoTimeout())
-                .setConnectTimeout(redisProperties.getPool().getConnTimeout())
-                .setFailedSlaveCheckInterval(redisProperties.getCluster().getFailedAttempts())
-                .setRetryAttempts(redisProperties.getCluster().getRetryAttempts())
-                .setRetryInterval(redisProperties.getCluster().getRetryInterval())
-                .setMasterConnectionPoolSize(redisProperties.getCluster().getMasterConnectionPoolSize())
-                .setSlaveConnectionPoolSize(redisProperties.getCluster().getSlaveConnectionPoolSize())
-                .setTimeout(redisProperties.getTimeout());
-            if (StrUtil.isNotBlank(redisProperties.getPassword())) {
+                    .addNodeAddress(newNodes.toArray(new String[0]))
+                    .setScanInterval(redisProperties.getCluster().getScanInterval())
+                    .setIdleConnectionTimeout(redisProperties.getPool().getSoTimeout())
+                    .setConnectTimeout(redisProperties.getPool().getConnTimeout())
+                    .setFailedSlaveCheckInterval(redisProperties.getCluster().getFailedAttempts())
+                    .setRetryAttempts(redisProperties.getCluster().getRetryAttempts())
+                    .setRetryInterval(redisProperties.getCluster().getRetryInterval())
+                    .setMasterConnectionPoolSize(redisProperties.getCluster().getMasterConnectionPoolSize())
+                    .setSlaveConnectionPoolSize(redisProperties.getCluster().getSlaveConnectionPoolSize())
+                    .setTimeout(redisProperties.getTimeout());
+            if (StringUtils.isNotBlank(redisProperties.getPassword())) {
                 serverConfig.setPassword(redisProperties.getPassword());
             }
             return Redisson.create(config);
@@ -124,21 +124,21 @@ public class RedissonConfig {
             log.info("sentinel redisProperties:" + redisProperties.getSentinel());
             Config config = new Config();
             Codec codec = (Codec) ClassUtils.forName(redisProperties.getCodec(), ClassUtils.getDefaultClassLoader())
-                .newInstance();
+                    .newInstance();
             config.setCodec(codec);
             config.setEventLoopGroup(new NioEventLoopGroup());
             List<String> newNodes = redisProperties.getCluster().getNodes().stream()
-                .map(n -> n.startsWith("redis://") ? n : "redis://" + n).collect(Collectors.toList());
+                    .map(n -> n.startsWith("redis://") ? n : "redis://" + n).collect(Collectors.toList());
 
             SentinelServersConfig serverConfig = config.useSentinelServers()
-                .addSentinelAddress(newNodes.toArray(new String[0]))
-                .setMasterName(redisProperties.getSentinel().getMaster()).setReadMode(ReadMode.SLAVE)
-                .setFailedSlaveCheckInterval(redisProperties.getSentinel().getFailMax())
-                .setTimeout(redisProperties.getTimeout())
-                .setMasterConnectionPoolSize(redisProperties.getPool().getSize())
-                .setSlaveConnectionPoolSize(redisProperties.getPool().getSize());
+                    .addSentinelAddress(newNodes.toArray(new String[0]))
+                    .setMasterName(redisProperties.getSentinel().getMaster()).setReadMode(ReadMode.SLAVE)
+                    .setFailedSlaveCheckInterval(redisProperties.getSentinel().getFailMax())
+                    .setTimeout(redisProperties.getTimeout())
+                    .setMasterConnectionPoolSize(redisProperties.getPool().getSize())
+                    .setSlaveConnectionPoolSize(redisProperties.getPool().getSize());
 
-            if (StrUtil.isNotBlank(redisProperties.getPassword())) {
+            if (StringUtils.isNotBlank(redisProperties.getPassword())) {
                 serverConfig.setPassword(redisProperties.getPassword());
             }
 

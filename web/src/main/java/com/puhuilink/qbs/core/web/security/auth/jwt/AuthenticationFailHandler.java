@@ -14,11 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.puhuilink.qbs.core.base.enums.ResultCode;
-import com.puhuilink.qbs.core.base.utils.InheritableThreadLocalUtil;
+import com.puhuilink.qbs.core.common.utils.InheritableThreadLocalUtil;
 import com.puhuilink.qbs.core.web.config.properties.QbsTokenProperties;
 import com.puhuilink.qbs.core.web.security.auth.rest.LoginRequest;
 import com.puhuilink.qbs.core.web.utils.ResponseUtil;
 
+import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.StringCodec;
@@ -31,7 +32,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
-import cn.hutool.core.util.StrUtil;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -59,7 +60,7 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
             String key = "loginTimeLimit:" + username;
             RBucket<String> bucket = redissonClient.getBucket(key, new StringCodec());
             String value = bucket.get();
-            if (StrUtil.isBlank(value)) {
+            if (StringUtils.isBlank(value)) {
                 value = "0";
             }
             // 获取已登录错误次数
@@ -91,7 +92,7 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
         String flagKey = "loginFailFlag:" + username;
         RBucket<String> bucket = redissonClient.getBucket(key, new StringCodec());
         String value = bucket.get();
-        if (StrUtil.isBlank(value)) {
+        if (StringUtils.isBlank(value)) {
             value = "0";
         }
         // 获取已登录错误次数

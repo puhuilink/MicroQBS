@@ -15,10 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.puhuilink.qbs.core.base.enums.ResultCode;
 import com.puhuilink.qbs.core.base.exception.WarnException;
-import com.puhuilink.qbs.core.base.utils.CreateVerifyCode;
+import com.puhuilink.qbs.core.common.utils.CreateVerifyCode;
 import com.puhuilink.qbs.core.base.vo.Result;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
+import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.StringCodec;
@@ -29,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.hutool.core.util.StrUtil;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -74,7 +75,7 @@ public class CaptchaController {
         // 得到验证码 生成指定验证码
         RBucket<String> bucket = redissonClient.getBucket(captchaId, new StringCodec());
         String code = bucket.get();
-        if (StrUtil.isBlank(code)) {
+        if (StringUtils.isBlank(code)) {
             throw new WarnException(ResultCode.BAD_REQUEST_PARAMS.getCode(), "验证码ID失效");
         }
         CreateVerifyCode vCode = new CreateVerifyCode(116, 36, 4, 10, code);

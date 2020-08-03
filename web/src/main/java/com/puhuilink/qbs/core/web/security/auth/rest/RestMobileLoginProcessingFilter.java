@@ -33,7 +33,7 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import cn.hutool.core.util.StrUtil;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -76,7 +76,7 @@ public class RestMobileLoginProcessingFilter extends AbstractAuthenticationProce
         }
         RBucket<String> bucket = redissonClient.getBucket(loginRequest.getMobile(), new StringCodec());
         String redisCode = bucket.get();
-        if (StrUtil.isBlank(redisCode)) {
+        if (StringUtils.isBlank(redisCode)) {
             throw new BadCredentialsException("验证码过期");
         }
 

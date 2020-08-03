@@ -8,15 +8,15 @@ package com.puhuilink.qbs.core.web.utils;
 
 import com.puhuilink.qbs.core.web.controller.vo.MenuVO;
 import com.puhuilink.qbs.core.web.entity.Permission;
+import org.springframework.beans.BeanUtils;
 
-import cn.hutool.core.bean.BeanUtil;
 
 public class VoUtil {
 
     public static MenuVO permissionToMenuVO(Permission p) {
 
         MenuVO menuVo = new MenuVO();
-        BeanUtil.copyProperties(p, menuVo);
+        BeanUtils.copyProperties(p, menuVo);
         return menuVo;
     }
 }

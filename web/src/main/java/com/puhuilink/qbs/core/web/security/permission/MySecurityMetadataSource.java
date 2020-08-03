@@ -17,6 +17,7 @@ import com.puhuilink.qbs.core.base.constant.CommonConstant;
 import com.puhuilink.qbs.core.web.entity.Permission;
 import com.puhuilink.qbs.core.web.service.PermissionService;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -26,7 +27,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
-import cn.hutool.core.util.StrUtil;
+
 
 /**
  * 权限资源管理器 为权限决断器提供支持
@@ -53,7 +54,7 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
         List<Permission> permissions = permissionService
                 .listByTypeAndStatusOrderBySortOrder(CommonConstant.PERMISSION_OPERATION, CommonConstant.STATUS_NORMAL);
         for (Permission permission : permissions) {
-            if (StrUtil.isNotBlank(permission.getTitle()) && StrUtil.isNotBlank(permission.getPath())) {
+            if (StringUtils.isNotBlank(permission.getTitle()) && StringUtils.isNotBlank(permission.getPath())) {
                 configAttributes = new ArrayList<>();
                 cfg = new SecurityConfig(permission.getTitle());
                 // 作为MyAccessDecisionManager类的decide的第三个参数
@@ -83,7 +84,7 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
         Iterator<String> iterator = map.keySet().iterator();
         while (iterator.hasNext()) {
             String resURL = iterator.next();
-            if (StrUtil.isNotBlank(resURL) && pathMatcher.match(resURL, url)) {
+            if (StringUtils.isNotBlank(resURL) && pathMatcher.match(resURL, url)) {
                 return map.get(resURL);
             }
         }

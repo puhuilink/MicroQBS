@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
 import com.puhuilink.qbs.core.base.constant.CommonConstant;
 import com.puhuilink.qbs.core.base.enums.LogType;
-import com.puhuilink.qbs.core.base.validation.tag.OnAdd;
+import com.puhuilink.qbs.core.common.validate.tag.OnAdd;
 import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.web.controller.vo.UserRegistVO;
 import com.puhuilink.qbs.core.web.entity.User;
