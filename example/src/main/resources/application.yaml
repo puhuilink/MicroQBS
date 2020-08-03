@@ -180,13 +180,4 @@ mybatis-plus:
 
 # 日志
 logging:
-  # 输出级别
-  level:
-    root: info
-  file:
-    # 指定路径
-    path: qbs-logs
-    # 最大保存天数
-    max-history: 7
-    # 每个文件最大大小
-    max-size: 5MB
+  config: classpath:log4j2.xml
