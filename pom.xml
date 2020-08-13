@@ -76,6 +76,11 @@
                 <version>${ph.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.puhuilink.qbs</groupId>
+                <artifactId>qbs-logtrace</artifactId>
+                <version>${ph.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.puhuilink.core</groupId>
                 <artifactId>code-generator</artifactId>
                 <version>${ph.version}</version>

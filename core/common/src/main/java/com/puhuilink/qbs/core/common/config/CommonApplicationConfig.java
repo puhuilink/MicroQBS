@@ -12,6 +12,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import(value = {WebConfig.class, Swagger2Config.class, HttpClientConfig.class, RestTemplateConfig.class})
+@Import(value = {
+        WebConfig.class,
+        Swagger2Config.class,
+        HttpClientConfig.class,
+        RestTemplateConfig.class,
+        MybatisConfig.class
+})
 public class CommonApplicationConfig {
 }

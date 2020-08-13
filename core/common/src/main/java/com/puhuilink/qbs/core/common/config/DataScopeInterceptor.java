@@ -5,7 +5,7 @@
  * @LastEditTime: 2020-05-19 09:17:56
  * @FilePath: /phlink-common-framework/core/web/src/main/java/com/phlink/core/web/config/mybatis/DataScopeInterceptor.java
  */
-package com.puhuilink.qbs.core.mybatis.config;
+package com.puhuilink.qbs.core.common.config;
 
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;

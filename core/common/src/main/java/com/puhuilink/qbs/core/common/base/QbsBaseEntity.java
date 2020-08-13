@@ -10,6 +10,7 @@ package com.puhuilink.qbs.core.common.base;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.Version;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.puhuilink.qbs.core.base.constant.CommonConstant;
@@ -32,5 +33,10 @@ public class QbsBaseEntity {
     @JsonIgnore
     @TableLogic
     @ApiModelProperty(value = "删除标志 默认0")
-    private Integer delFlag = CommonConstant.STATUS_NORMAL;
+    private Integer delFlag;
+
+    @JsonIgnore
+    @Version
+    @ApiModelProperty(value = "乐观锁")
+    private Integer version;
 }

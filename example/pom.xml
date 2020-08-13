@@ -17,6 +17,11 @@
             <artifactId>qbs-common</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.puhuilink.qbs</groupId>
+            <artifactId>qbs-logtrace</artifactId>
+            <version>${ph.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>
