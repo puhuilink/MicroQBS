@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.puhuilink.qbs.core.common.utils.InheritableThreadLocalUtil;
+import com.puhuilink.qbs.core.base.utils.InheritableThreadLocalUtil;
 import com.puhuilink.qbs.web.security.exception.AuthMethodNotSupportedException;
 import com.puhuilink.qbs.web.security.model.UserPrincipal;
 

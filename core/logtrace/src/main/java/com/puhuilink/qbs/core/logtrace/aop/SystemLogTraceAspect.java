@@ -5,39 +5,28 @@
  * @LastEditTime: 2020-05-19 09:17:14
  * @FilePath: /phlink-common-framework/core/web/src/main/java/com/phlink/core/web/aop/SystemLogTraceAspect.java
  */
-package com.puhuilink.qbs.web.aop;
-
-import java.lang.reflect.Method;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
+package com.puhuilink.qbs.core.logtrace.aop;
 
 import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
-import com.puhuilink.qbs.core.common.utils.InheritableThreadLocalUtil;
-import com.puhuilink.qbs.core.common.utils.ThreadPoolUtil;
-import com.puhuilink.qbs.web.entity.LogTrace;
-import com.puhuilink.qbs.web.security.model.SecurityUser;
-import com.puhuilink.qbs.web.service.LogTraceService;
-import com.puhuilink.qbs.web.service.UserService;
-import com.puhuilink.qbs.web.utils.IpInfoUtil;
-import com.puhuilink.qbs.web.utils.SecurityUtil;
-
+import com.puhuilink.qbs.core.base.utils.InheritableThreadLocalUtil;
+import com.puhuilink.qbs.core.base.utils.IpInfoUtil;
+import com.puhuilink.qbs.core.logtrace.entity.LogTrace;
+import com.puhuilink.qbs.core.logtrace.service.LogTraceService;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * AOP 记录用户操作日志
@@ -51,10 +40,6 @@ public class SystemLogTraceAspect {
 
     @Autowired
     private LogTraceService logTraceService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private SecurityUtil securityUtil;
     @Autowired(required = false)
     private HttpServletRequest request;
 
@@ -112,51 +97,28 @@ public class SystemLogTraceAspect {
      */
     @Before("controllerAspect()")
     public void doBefore(JoinPoint joinPoint) throws InterruptedException {
-
         // 线程绑定变量（该数据只有当前请求的线程可见）
-        Date beginTime = new Date();
-        InheritableThreadLocalUtil.put(beginTime);
+        Long start = System.currentTimeMillis();
+        InheritableThreadLocalUtil.put(start);
     }
 
     @AfterReturning("controllerAspect()")
     public void after(JoinPoint joinPoint) {
         try {
-            String username = "";
             String description = getControllerMethodInfo(joinPoint).get("description").toString();
-            String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-            // 判断允许不用登录的注解
-            if ("anonymousUser".equals(principal) && !description.contains("短信登录")) {
-                return;
-            }
-            if (!"anonymousUser".equals(principal)) {
-                SecurityUser user = securityUtil.getSecurityUser();
-                username = user.getUsername();
-            }
             LogTrace logTrace = new LogTrace();
-
-            RequestAttributes attribs = RequestContextHolder.getRequestAttributes();
-            Map<String, String[]> logParams = new HashMap<>();
-            if (RequestContextHolder.getRequestAttributes() != null) {
-                HttpServletRequest request = ((ServletRequestAttributes) attribs).getRequest();
-                logParams = request.getParameterMap();
-                // 日志请求url
-                logTrace.setRequestUrl(request.getRequestURI());
-                // 请求方式
-                logTrace.setRequestType(request.getMethod());
-                // 请求IP
-                String ip = IpInfoUtil.getIpAddr(request);
-                logTrace.setIp(ip);
-                // IP地址
-                logTrace.setIpInfo(IpInfoUtil.getIpCity(ip));
-            }
-            if (description.contains("短信登录")) {
-                if (logParams.get("mobile") != null) {
-                    String mobile = logParams.get("mobile")[0];
-                    username = userService.getByMobile(mobile).getUsername() + "(" + mobile + ")";
-                }
-            }
-
+            Map<String, String[]> logParams;
+            logParams = request.getParameterMap();
+            // 日志请求url
+            logTrace.setRequestUrl(request.getRequestURI());
+            // 请求方式
+            logTrace.setRequestType(request.getMethod());
+            // 请求IP
+            String ip = IpInfoUtil.getIpAddr(request);
+            logTrace.setIp(ip);
             // 请求用户
+            // TODO 获取请求登录用户
+            String username = "";
             logTrace.setUsername(username);
             // 日志标题
             logTrace.setName(description);
@@ -165,36 +127,15 @@ public class SystemLogTraceAspect {
             // 请求参数
             logTrace.setMapToParams(logParams);
             // 请求开始时间
-            long beginTime = InheritableThreadLocalUtil.get(Date.class).getTime();
+            long beginTime = InheritableThreadLocalUtil.get(Long.class);
             long endTime = System.currentTimeMillis();
             // 请求耗时
-            Long logElapsedTime = endTime - beginTime;
-            logTrace.setCostTime(logElapsedTime.intValue());
+            long logElapsedTime = endTime - beginTime;
+            logTrace.setCostTime(logElapsedTime);
             logTrace.setCreateTime(LocalDateTime.now());
-
-            // 调用线程保存至ES
-            ThreadPoolUtil.getPool().execute(new SaveSystemLogThread(logTrace, logTraceService));
+            logTraceService.save(logTrace);
         } catch (Exception e) {
-            log.error("AOP后置通知异常", e);
-        }
-    }
-
-    /**
-     * 保存日志至数据库
-     */
-    private static class SaveSystemLogThread implements Runnable {
-
-        private LogTrace logTrace;
-        private LogTraceService logService;
-
-        public SaveSystemLogThread(LogTrace logTrace, LogTraceService logService) {
-            this.logTrace = logTrace;
-            this.logService = logService;
-        }
-
-        @Override
-        public void run() {
-            logService.save(logTrace);
+            log.error("LogTrace 后置通知异常", e);
         }
     }
 }

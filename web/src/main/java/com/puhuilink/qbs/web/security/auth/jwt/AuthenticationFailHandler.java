@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.puhuilink.qbs.core.base.enums.ResultCode;
-import com.puhuilink.qbs.core.common.utils.InheritableThreadLocalUtil;
+import com.puhuilink.qbs.core.base.utils.InheritableThreadLocalUtil;
 import com.puhuilink.qbs.web.config.properties.QbsTokenProperties;
 import com.puhuilink.qbs.web.security.auth.rest.LoginRequest;
 import com.puhuilink.qbs.web.utils.ResponseUtil;

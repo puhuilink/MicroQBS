@@ -21,11 +21,13 @@
         <module>core/common</module>
         <module>core/mybatis</module>
         <module>core/limiter</module>
+        <module>core/logtrace</module>
         <module>web</module>
         <module>module/dfs-service</module>
         <module>cloud/gateway</module>
         <module>cloud/nacos</module>
         <module>example</module>
+        <module>core/logtrace</module>
     </modules>
 
     <properties>
@@ -71,21 +73,6 @@
             <dependency>
                 <groupId>com.puhuilink.qbs</groupId>
                 <artifactId>qbs-common</artifactId>
-                <version>${ph.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.puhuilink.qbs</groupId>
-                <artifactId>qbs-mybatis</artifactId>
-                <version>${ph.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.puhuilink.qbs</groupId>
-                <artifactId>qbs-mapper</artifactId>
-                <version>${ph.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.puhuilink.qbs</groupId>
-                <artifactId>qbs-limiter</artifactId>
                 <version>${ph.version}</version>
             </dependency>
             <dependency>

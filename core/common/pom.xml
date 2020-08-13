@@ -23,10 +23,17 @@
         <dependency>
             <groupId>com.puhuilink.qbs</groupId>
             <artifactId>qbs-mybatis</artifactId>
+            <version>${ph.version}</version>
         </dependency>
         <dependency>
             <groupId>com.puhuilink.qbs</groupId>
             <artifactId>qbs-limiter</artifactId>
+            <version>${ph.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.puhuilink.qbs</groupId>
+            <artifactId>qbs-logtrace</artifactId>
+            <version>${ph.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

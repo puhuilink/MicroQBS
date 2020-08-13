@@ -1,4 +1,4 @@
-package com.puhuilink.qbs.core.common.utils;
+package com.puhuilink.qbs.core.base.utils;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -8,9 +8,9 @@
 package com.puhuilink.qbs.core.limiter.aop;
 
 import com.google.common.util.concurrent.RateLimiter;
-import com.puhuilink.qbs.core.limiter.IpInfoUtil;
-import com.puhuilink.qbs.core.limiter.exception.LimitAccessException;
+import com.puhuilink.qbs.core.base.utils.IpInfoUtil;
 import com.puhuilink.qbs.core.limiter.annotation.Limiter;
+import com.puhuilink.qbs.core.limiter.exception.LimitAccessException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -63,14 +63,14 @@ public class LimitAspect {
         }
         String limiterKey = StringUtils.join(key, keyType);
         RateLimiter rateLimiter;
-        if(!rateLimiterCache.containsKey(limiterKey)) {
+        if (!rateLimiterCache.containsKey(limiterKey)) {
             rateLimiter = RateLimiter.create(limitAnnotation.QPS());
             rateLimiterCache.put(limiterKey, rateLimiter);
-        }else{
+        } else {
             rateLimiter = rateLimiterCache.get(limiterKey);
         }
         boolean acquire = rateLimiter.tryAcquire(limitAnnotation.timeout(), limitAnnotation.timeunit());
-        if(acquire) {
+        if (acquire) {
             return point.proceed();
         } else {
             log.warn("接口请求次数超过限制，限制次数为:{}", limitAnnotation.QPS());

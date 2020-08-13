@@ -4,21 +4,12 @@
  * @Last Modified by: sevncz.wen
  * @Last Modified time: 2020-05-06 14:53:24
  */
-package com.puhuilink.qbs.core.limiter;
-
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+package com.puhuilink.qbs.core.base.utils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 public class IpInfoUtil {
 
     /**

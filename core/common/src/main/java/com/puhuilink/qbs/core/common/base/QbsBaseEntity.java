@@ -7,6 +7,7 @@
  */
 package com.puhuilink.qbs.core.common.base;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,10 +24,10 @@ import javax.validation.constraints.NotNull;
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
 public class QbsBaseEntity {
 
-    @TableId
+    @TableId(type = IdType.ASSIGN_ID)
     @NotNull(message = "{required}", groups = {OnCheckID.class})
     @ApiModelProperty(value = "唯一标识")
-    private String id = String.valueOf(SnowFlakeUtil.getFlowIdInstance().nextId());
+    private String id;
 
     @JsonIgnore
     @TableLogic
