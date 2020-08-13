@@ -20,11 +20,11 @@ public @interface Limiter {
     // 限制每秒访问次数
     int QPS() default 10;
 
-    // 获取令牌超时时间 默认：1
-    long timeout() default 1;
+    // 获取令牌超时时间 默认：100
+    long timeout() default 100;
 
-    // 获取令牌超时时间单位，默认：秒
-    TimeUnit timeunit() default TimeUnit.SECONDS;
+    // 获取令牌超时时间单位，默认：毫秒
+    TimeUnit timeunit() default TimeUnit.MILLISECONDS;
 
     // 限流类型，默认全局限流
     LimiterType type() default LimiterType.ALL;
