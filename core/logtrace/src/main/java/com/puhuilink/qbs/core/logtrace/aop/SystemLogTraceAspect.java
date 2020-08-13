@@ -20,6 +20,8 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -40,8 +42,6 @@ public class SystemLogTraceAspect {
 
     @Autowired
     private LogTraceService logTraceService;
-    @Autowired(required = false)
-    private HttpServletRequest request;
 
     /**
      * 获取注解中对方法的描述信息 用于Controller层注解
@@ -50,9 +50,9 @@ public class SystemLogTraceAspect {
      * @return 方法描述
      * @throws Exception
      */
-    public static Map<String, Object> getControllerMethodInfo(JoinPoint joinPoint) throws Exception {
+    public static Map<String, Object> getControllerMethodInfo(JoinPoint joinPoint) {
 
-        Map<String, Object> map = new HashMap<String, Object>(16);
+        Map<String, Object> map = new HashMap<>(16);
         // 获取目标类名
         String targetName = joinPoint.getTarget().getClass().getName();
         // 获取方法名
@@ -60,26 +60,29 @@ public class SystemLogTraceAspect {
         // 获取相关参数
         Object[] arguments = joinPoint.getArgs();
         // 生成类对象
-        Class targetClass = Class.forName(targetName);
-        // 获取该类中的方法
-        Method[] methods = targetClass.getMethods();
-
+        Class targetClass = null;
         String description = "";
         Integer type = null;
-
-        for (Method method : methods) {
-            if (!method.getName().equals(methodName)) {
-                continue;
+        try {
+            targetClass = Class.forName(targetName);
+            // 获取该类中的方法
+            Method[] methods = targetClass.getMethods();
+            for (Method method : methods) {
+                if (!method.getName().equals(methodName)) {
+                    continue;
+                }
+                Class[] clazzs = method.getParameterTypes();
+                if (clazzs.length != arguments.length) {
+                    // 比较方法中参数个数与从切点中获取的参数个数是否相同，原因是方法可以重载哦
+                    continue;
+                }
+                description = method.getAnnotation(SystemLogTrace.class).description();
+                type = method.getAnnotation(SystemLogTrace.class).type().ordinal();
+                map.put("description", description);
+                map.put("type", type);
             }
-            Class[] clazzs = method.getParameterTypes();
-            if (clazzs.length != arguments.length) {
-                // 比较方法中参数个数与从切点中获取的参数个数是否相同，原因是方法可以重载哦
-                continue;
-            }
-            description = method.getAnnotation(SystemLogTrace.class).description();
-            type = method.getAnnotation(SystemLogTrace.class).type().ordinal();
-            map.put("description", description);
-            map.put("type", type);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return map;
     }
@@ -97,35 +100,40 @@ public class SystemLogTraceAspect {
      */
     @Before("controllerAspect()")
     public void doBefore(JoinPoint joinPoint) throws InterruptedException {
+        ServletRequestAttributes attributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        LogTrace logTrace = new LogTrace();
+        Map<String, String[]> logParams;
+        logParams = request.getParameterMap();
+        // 日志请求url
+        logTrace.setRequestUrl(request.getRequestURI());
+        // 请求方式
+        logTrace.setRequestType(request.getMethod());
+        // 请求IP
+        String ip = IpInfoUtil.getIpAddr(request);
+        logTrace.setIp(ip);
+        String description = getControllerMethodInfo(joinPoint).get("description").toString();
+        // 请求用户
+        // TODO 获取请求登录用户
+        String username = "";
+        logTrace.setUsername(username);
+        // 日志标题
+        logTrace.setName(description);
+        // 日志类型
+        logTrace.setLogType((int) getControllerMethodInfo(joinPoint).get("type"));
+        // 请求参数
+        logTrace.setMapToParams(logParams);
         // 线程绑定变量（该数据只有当前请求的线程可见）
         Long start = System.currentTimeMillis();
         InheritableThreadLocalUtil.put(start);
+        InheritableThreadLocalUtil.put(logTrace);
     }
 
     @AfterReturning("controllerAspect()")
     public void after(JoinPoint joinPoint) {
         try {
-            String description = getControllerMethodInfo(joinPoint).get("description").toString();
-            LogTrace logTrace = new LogTrace();
-            Map<String, String[]> logParams;
-            logParams = request.getParameterMap();
-            // 日志请求url
-            logTrace.setRequestUrl(request.getRequestURI());
-            // 请求方式
-            logTrace.setRequestType(request.getMethod());
-            // 请求IP
-            String ip = IpInfoUtil.getIpAddr(request);
-            logTrace.setIp(ip);
-            // 请求用户
-            // TODO 获取请求登录用户
-            String username = "";
-            logTrace.setUsername(username);
-            // 日志标题
-            logTrace.setName(description);
-            // 日志类型
-            logTrace.setLogType((int) getControllerMethodInfo(joinPoint).get("type"));
-            // 请求参数
-            logTrace.setMapToParams(logParams);
+
+            LogTrace logTrace = InheritableThreadLocalUtil.get(LogTrace.class);
             // 请求开始时间
             long beginTime = InheritableThreadLocalUtil.get(Long.class);
             long endTime = System.currentTimeMillis();

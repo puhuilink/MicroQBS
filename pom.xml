@@ -27,7 +27,6 @@
         <module>cloud/gateway</module>
         <module>cloud/nacos</module>
         <module>example</module>
-        <module>core/logtrace</module>
     </modules>
 
     <properties>
