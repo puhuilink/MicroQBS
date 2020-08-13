@@ -39,7 +39,6 @@ import java.util.List;
 @RestController
 @Api(tags = "菜单/权限管理接口")
 @RequestMapping("/api/manage/permission")
-@CacheConfig(cacheNames = "permission")
 @Transactional
 public class PermissionController {
 

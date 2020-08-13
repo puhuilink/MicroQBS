@@ -6,7 +6,6 @@ import org.springframework.cache.annotation.CacheConfig;
 
 import java.util.List;
 
-@CacheConfig(cacheNames = "role")
 public interface RoleService extends IService<Role> {
 
     /**

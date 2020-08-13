@@ -12,8 +12,8 @@ import com.puhuilink.qbs.core.base.vo.PageVO;
 import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.base.vo.SearchVO;
 import com.puhuilink.qbs.auth.entity.LogTrace;
-import com.puhuilink.qbs.auth.service.LogTraceService;
 
+import com.puhuilink.qbs.core.logtrace.service.LogTraceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;

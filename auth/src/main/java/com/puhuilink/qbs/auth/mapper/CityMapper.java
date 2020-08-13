@@ -8,8 +8,9 @@ package com.puhuilink.qbs.auth.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.puhuilink.qbs.auth.entity.City;
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public interface CityMapper extends BaseMapper<City> {
 
 }

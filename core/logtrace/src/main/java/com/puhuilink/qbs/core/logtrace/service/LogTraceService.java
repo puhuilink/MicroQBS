@@ -7,7 +7,6 @@ import org.springframework.cache.annotation.CacheConfig;
 
 import java.util.List;
 
-@CacheConfig(cacheNames = "logTrace")
 public interface LogTraceService extends IService<LogTrace> {
 
     List<LogTrace> listByCondition(Integer type, String key, SearchVO searchVo);

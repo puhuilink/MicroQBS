@@ -1,6 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.puhuilink.qbs.auth.config.WebSecurityConfig,\
-  com.puhuilink.qbs.auth.config.redis.RedissonConfig,\
   com.puhuilink.qbs.auth.config.properties.QbsTokenProperties,\
   com.puhuilink.qbs.auth.config.properties.CaptchaProperties,\
   com.puhuilink.qbs.auth.config.properties.IgnoredUrlsProperties,\
@@ -15,10 +14,8 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.puhuilink.qbs.auth.security.permission.MyAccessDecisionManager,\
   com.puhuilink.qbs.auth.security.permission.MySecurityMetadataSource,\
   com.puhuilink.qbs.auth.utils.SecurityUtil,\
-  com.puhuilink.qbs.auth.aop.SystemLogTraceAspect,\
   com.puhuilink.qbs.auth.service.impl.UserServiceImpl,\
   com.puhuilink.qbs.auth.service.impl.DepartmentServiceImpl,\
-  com.puhuilink.qbs.auth.service.impl.LogTraceServiceImpl,\
   com.puhuilink.qbs.auth.service.impl.PermissionServiceImpl,\
   com.puhuilink.qbs.auth.service.impl.UserRoleServiceImpl,\
   com.puhuilink.qbs.auth.service.impl.RoleServiceImpl,\

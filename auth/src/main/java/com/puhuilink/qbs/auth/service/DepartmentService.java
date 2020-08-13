@@ -6,7 +6,6 @@ import org.springframework.cache.annotation.CacheConfig;
 
 import java.util.List;
 
-@CacheConfig(cacheNames = "user")
 public interface DepartmentService extends IService<Department> {
     /**
      * 通过父id获取 升序

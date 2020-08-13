@@ -9,7 +9,6 @@ import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 
-@CacheConfig(cacheNames = "user")
 public interface UserService extends IService<User> {
 
     /**

@@ -69,44 +69,6 @@ qbs:
     loginTimeNotify: 5
     # 错误超过次数后多少分钟后才能继续登录（分钟）
     loginAfterTime: 10
-  redis:
-    database: 1
-    password: qwe@123
-    timeout: 3000
-    #sentinel/cluster/single
-    mode: single
-    codec: org.redisson.codec.JsonJacksonCodec
-    pool:
-      #连接池配置
-      max-idle: 16
-      min-idle: 8
-      max-active: 8
-      max-wait: 3000
-      conn-timeout: 3000
-      so-timeout: 3000
-      size: 10
-    #单机配置
-    single:
-      address: "redis://127.0.0.1:6379"
-    #集群配置
-    cluster:
-      scan-interval: 1000
-      nodes:
-        - "redis://127.0.0.1:7004"
-        - "redis://127.0.0.1:7001"
-        - "redis://127.0.0.1:7000"
-      read-mode: SLAVE
-      retry-attempts: 3
-      failed-attempts: 3
-      slave-connection-pool-size: 64
-      master-connection-pool-size: 64
-      retry-interval: 1500
-    #哨兵配置
-    sentinel:
-      master: business-master
-      nodes:
-      master-onlyWrite: true
-      fail-max: 3
 
 # 忽略鉴权url
 ignored:

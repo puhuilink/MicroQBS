@@ -9,9 +9,11 @@ package com.puhuilink.qbs.auth.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.puhuilink.qbs.auth.entity.Permission;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface PermissionMapper extends BaseMapper<Permission> {
 
     /**

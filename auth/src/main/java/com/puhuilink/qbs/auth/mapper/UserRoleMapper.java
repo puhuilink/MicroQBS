@@ -10,9 +10,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.puhuilink.qbs.auth.entity.Role;
 import com.puhuilink.qbs.auth.entity.UserRole;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface UserRoleMapper extends BaseMapper<UserRole> {
 
     /**

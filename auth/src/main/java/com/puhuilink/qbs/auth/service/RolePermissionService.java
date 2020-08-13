@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * 角色权限接口
  */
-@CacheConfig(cacheNames = "rolePermission")
 public interface RolePermissionService extends IService<RolePermission> {
     /**
      * 通过permissionId获取

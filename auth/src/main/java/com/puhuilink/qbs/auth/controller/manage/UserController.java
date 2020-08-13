@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Api(tags = "User相关接口")
 @RequestMapping("/api/manage/user")
-@CacheConfig(cacheNames = "user")
 @Transactional
 public class UserController {
 

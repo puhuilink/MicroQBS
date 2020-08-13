@@ -17,6 +17,10 @@
             <groupId>com.puhuilink.qbs</groupId>
             <artifactId>qbs-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.puhuilink.qbs</groupId>
+            <artifactId>qbs-logtrace</artifactId>
+        </dependency>
         <!-- Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

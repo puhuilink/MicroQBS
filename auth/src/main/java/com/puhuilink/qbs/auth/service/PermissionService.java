@@ -7,7 +7,6 @@ import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 
-@CacheConfig(cacheNames = "userPermission")
 public interface PermissionService extends IService<Permission> {
 
     /**

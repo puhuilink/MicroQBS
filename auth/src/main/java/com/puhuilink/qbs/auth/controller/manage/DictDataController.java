@@ -31,7 +31,6 @@ import java.util.List;
 @RestController
 @Api(tags = "字典数据管理接口")
 @RequestMapping("/api/manage/dict-data")
-@CacheConfig(cacheNames = "dictData")
 @Transactional
 public class DictDataController {
 

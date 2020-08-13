@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * 角色部门接口
  */
-@CacheConfig(cacheNames = "roleDepartment")
 public interface RoleDepartmentService extends IService<RoleDepartment> {
     /**
      * 通过roleId获取

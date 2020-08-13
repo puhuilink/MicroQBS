@@ -49,6 +49,7 @@
         <lombok.version>1.18.12</lombok.version>
         <log4j.version>2.13.3</log4j.version>
         <fasterxml.jackson.version>2.11.1</fasterxml.jackson.version>
+        <junit.jupiter.version>5.5.2</junit.jupiter.version>
 
         <air.main.basedir>${project.basedir}</air.main.basedir>
         <air.check.fail-checkstyle>true</air.check.fail-checkstyle>
@@ -81,29 +82,9 @@
                 <version>${ph.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.puhuilink.core</groupId>
-                <artifactId>code-generator</artifactId>
-                <version>${ph.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.puhuilink.qbs</groupId>
                 <artifactId>qbs-auth</artifactId>
                 <version>${ph.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-actuator</artifactId>
-                <version>${spring.boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-starter-server</artifactId>
-                <version>${spring-admin.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-starter-client</artifactId>
-                <version>${spring-admin.version}</version>
             </dependency>
             <!-- 动态数据源 -->
             <dependency>
@@ -199,7 +180,6 @@
                 <artifactId>grpc-api</artifactId>
                 <version>${grpc.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
@@ -208,13 +188,13 @@
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-api</artifactId>
-                <version>5.5.2</version>
+                <version>${junit.jupiter.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
-                <version>5.5.2</version>
+                <version>${junit.jupiter.version}</version>
                 <scope>test</scope>
             </dependency>
             <!-- redisson -->

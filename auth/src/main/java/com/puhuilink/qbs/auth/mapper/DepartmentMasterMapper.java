@@ -8,7 +8,9 @@ package com.puhuilink.qbs.auth.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.puhuilink.qbs.auth.entity.DepartmentMaster;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface DepartmentMasterMapper extends BaseMapper<DepartmentMaster> {
 
 }

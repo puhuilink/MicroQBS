@@ -8,7 +8,6 @@ import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 
-@CacheConfig(cacheNames = "userRole")
 public interface UserRoleService extends IService<UserRole> {
 
     /**

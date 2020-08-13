@@ -38,7 +38,6 @@ import java.util.List;
 @RestController
 @Api(tags = "部门管理接口")
 @RequestMapping("/api/manage/department")
-@CacheConfig(cacheNames = "department")
 @Transactional
 public class DepartmentController {
 
