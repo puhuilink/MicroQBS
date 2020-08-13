@@ -8,6 +8,7 @@
 package com.puhuilink.qbs.web.aop;
 
 import java.lang.reflect.Method;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -169,6 +170,7 @@ public class SystemLogTraceAspect {
             // 请求耗时
             Long logElapsedTime = endTime - beginTime;
             logTrace.setCostTime(logElapsedTime.intValue());
+            logTrace.setCreateTime(LocalDateTime.now());
 
             // 调用线程保存至ES
             ThreadPoolUtil.getPool().execute(new SaveSystemLogThread(logTrace, logTraceService));

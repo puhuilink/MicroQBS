@@ -1,5 +1,6 @@
 package com.puhuilink.qbs.web.entity;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -38,6 +39,9 @@ public class LogTrace extends QbsBaseEntity {
 
     @ApiModelProperty(value = "花费时间")
     private Integer costTime;
+
+    @ApiModelProperty(value = "创建时间")
+    private LocalDateTime createTime;
 
     /**
      * 转换请求参数为Json

@@ -10,7 +10,6 @@ package com.puhuilink.qbs.core.common.aop;
 import com.puhuilink.qbs.core.base.enums.ResultCode;
 import com.puhuilink.qbs.core.base.exception.ErrorException;
 import com.puhuilink.qbs.core.base.exception.FatalException;
-import com.puhuilink.qbs.core.base.exception.LimitAccessException;
 import com.puhuilink.qbs.core.base.exception.WarnException;
 import com.puhuilink.qbs.core.base.vo.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +45,12 @@ public class GlobalExceptionHandler {
         return Result.error().msg("系统内部异常");
     }
 
+    @ExceptionHandler(value = RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result<Object> handleRuntimeException(RuntimeException e) {
+        log.error("系统运行时异常：", e);
+        return Result.error().msg(e.getMessage());
+    }
 
     @ExceptionHandler(value = WarnException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -115,13 +120,6 @@ public class GlobalExceptionHandler {
         log.warn("请求错误", e);
         return Result.error(ResultCode.BODY_NOT_MATCH.getCode()).msg(e.getMessage());
 
-    }
-
-    @ExceptionHandler(value = LimitAccessException.class)
-    @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
-    public Result<Object> handleLimitAccessException(LimitAccessException e) {
-        log.error(e.toString());
-        return Result.error(e.getErrCode()).msg(e.getDesc()).data(e.toMap());
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)

@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.puhuilink.qbs.core.limiter.config.RateLimiterApplicationConfig
