@@ -73,8 +73,8 @@ public class LimitAspect {
         if (acquire) {
             return point.proceed();
         } else {
-            log.warn("接口请求次数超过限制，限制次数为:{}", limitAnnotation.QPS());
-            throw new LimitAccessException("接口请求次数超过限制");
+            log.warn("接口请求次数超过限制，限制QPS为:{}", limitAnnotation.QPS());
+            throw new LimitAccessException("请求频繁，请稍后再试");
         }
 
     }

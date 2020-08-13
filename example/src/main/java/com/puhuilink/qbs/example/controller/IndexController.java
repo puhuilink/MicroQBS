@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("index")
 public class IndexController {
 
-    @SystemLogTrace()
+    @SystemLogTrace(description = "index欢迎")
     @Limiter(QPS = 1, key = "index:hello")
     @ApiOperation("Hello world")
     @GetMapping
