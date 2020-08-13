@@ -10,7 +10,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.puhuilink.qbs.core.base.vo.SearchVO;
-import com.puhuilink.qbs.auth.controller.vo.UserData;
 import com.puhuilink.qbs.auth.entity.Department;
 import com.puhuilink.qbs.auth.entity.Permission;
 import com.puhuilink.qbs.auth.entity.Role;
@@ -95,26 +94,5 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public List<User> listByUsernameLikeAndStatus(String username, Integer status) {
         return null;
-    }
-
-    @Override
-    public List<UserData> listUserData() {
-        List<User> users = list();
-
-        return users.stream().map(u -> {
-            UserData ud = new UserData();
-            BeanUtils.copyProperties(u, ud);
-            return ud;
-        }).collect(Collectors.toList());
-    }
-
-    @Override
-    public void saveBatch(List<UserData> dataList) {
-        List<User> users = dataList.stream().map(ud -> {
-            User u = new User();
-            BeanUtils.copyProperties(ud, u);
-            return u;
-        }).collect(Collectors.toList());
-        saveBatch(users);
     }
 }

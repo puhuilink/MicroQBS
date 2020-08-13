@@ -8,18 +8,17 @@ package com.puhuilink.qbs.auth.controller.manage;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.puhuilink.qbs.core.base.enums.ResultCode;
-import com.puhuilink.qbs.core.base.exception.WarnException;
-import com.puhuilink.qbs.core.base.vo.PageVO;
-import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.auth.entity.Dict;
 import com.puhuilink.qbs.auth.entity.DictData;
 import com.puhuilink.qbs.auth.service.DictDataService;
 import com.puhuilink.qbs.auth.service.DictService;
+import com.puhuilink.qbs.core.base.enums.ResultCode;
+import com.puhuilink.qbs.core.base.exception.WarnException;
+import com.puhuilink.qbs.core.base.vo.PageVO;
+import com.puhuilink.qbs.core.base.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -40,15 +39,13 @@ public class DictDataController {
     private DictService dictService;
     @Autowired
     private DictDataService dictDataService;
-    @Autowired
-    private RedissonClient redissonClient;
 
     @GetMapping(value = "/page")
     @ApiOperation(value = "多条件分页获取用户列表")
     public Result pageByCondition(DictData dictData, PageVO pageVo) {
         PageInfo<DictData> pageInfo = PageHelper
-            .startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
-            .doSelectPageInfo(() -> dictDataService.listByCondition(dictData));
+                .startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
+                .doSelectPageInfo(() -> dictDataService.listByCondition(dictData));
         return Result.ok().data(pageInfo);
     }
 
@@ -74,8 +71,6 @@ public class DictDataController {
             throw new WarnException(ResultCode.BAD_REQUEST_PARAMS.getCode(), "字典类型id不存在");
         }
         dictDataService.save(dictData);
-        // 删除缓存
-        redissonClient.getKeys().delete("dictData::" + dict.getType());
         return Result.ok("添加成功");
     }
 
@@ -83,9 +78,7 @@ public class DictDataController {
     @ApiOperation(value = "编辑")
     public Result update(DictData dictData) {
         dictDataService.updateById(dictData);
-        // 删除缓存
         Dict dict = dictService.getById(dictData.getDictId());
-        redissonClient.getKeys().delete("dictData::" + dict.getType());
         return Result.ok("添加成功");
     }
 
@@ -97,8 +90,6 @@ public class DictDataController {
             DictData dictData = dictDataService.getById(id);
             Dict dict = dictService.getById(dictData.getDictId());
             dictDataService.removeById(id);
-            // 删除缓存
-            redissonClient.getKeys().delete("dictData::" + dict.getType());
         }
         return Result.ok("批量通过id删除数据成功");
     }

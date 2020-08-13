@@ -1,19 +1,7 @@
 package com.puhuilink.qbs.auth.utils;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.puhuilink.qbs.core.base.constant.CommonConstant;
-import com.puhuilink.qbs.core.base.constant.SecurityConstant;
-import com.puhuilink.qbs.core.base.enums.ResultCode;
-import com.puhuilink.qbs.core.base.exception.WarnException;
-import com.puhuilink.qbs.core.base.vo.TokenUser;
 import com.puhuilink.qbs.auth.config.properties.QbsTokenProperties;
 import com.puhuilink.qbs.auth.entity.Department;
 import com.puhuilink.qbs.auth.entity.Permission;
@@ -24,11 +12,16 @@ import com.puhuilink.qbs.auth.security.model.token.RawAccessJwtToken;
 import com.puhuilink.qbs.auth.service.DepartmentService;
 import com.puhuilink.qbs.auth.service.UserRoleService;
 import com.puhuilink.qbs.auth.service.UserService;
-
+import com.puhuilink.qbs.core.base.constant.CommonConstant;
+import com.puhuilink.qbs.core.base.constant.SecurityConstant;
+import com.puhuilink.qbs.core.base.enums.ResultCode;
+import com.puhuilink.qbs.core.base.exception.WarnException;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.redisson.api.RBucket;
-import org.redisson.api.RedissonClient;
-import org.redisson.client.codec.StringCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -37,12 +30,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -59,9 +50,6 @@ public class SecurityUtil {
 
     @Autowired
     private DepartmentService departmentService;
-
-    @Autowired
-    private RedissonClient redissonClient;
 
     public String getAccessJwtToken(String username, Boolean saveLogin) {
 
@@ -94,46 +82,16 @@ public class SecurityUtil {
             }
         }
         // 登陆成功生成token
-        String token;
-        if (tokenProperties.getRedis()) {
-            // redis
-            token = UUID.randomUUID().toString().replace("-", "");
-            TokenUser user = new TokenUser(username, list, saved);
-            // 单设备登录 之前的token失效
-            if (tokenProperties.getSdl()) {
-                RBucket<String> bucket = redissonClient.getBucket(SecurityConstant.USER_TOKEN + username,
-                        new StringCodec());
-                if (bucket != null) {
-                    String oldToken = bucket.get();
-                    if (StringUtils.isNotBlank(oldToken)) {
-                        redissonClient.getKeys().delete(SecurityConstant.TOKEN_PRE + oldToken);
-                    }
-                }
-            }
-            if (saved) {
-                redissonClient.getBucket(SecurityConstant.USER_TOKEN + username, new StringCodec()).set(token,
-                        tokenProperties.getSaveLoginTime(), TimeUnit.DAYS);
-                redissonClient.getBucket(SecurityConstant.TOKEN_PRE + token, new StringCodec())
-                        .set(new Gson().toJson(user), tokenProperties.getSaveLoginTime(), TimeUnit.DAYS);
-            } else {
-                redissonClient.getBucket(SecurityConstant.USER_TOKEN + username, new StringCodec()).set(token,
-                        tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
-                redissonClient.getBucket(SecurityConstant.TOKEN_PRE + token, new StringCodec())
-                        .set(new Gson().toJson(user), tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
-            }
-        } else {
-            // jwt
-            token = SecurityConstant.TOKEN_SPLIT + Jwts.builder()
-                    // 主题 放入用户名
-                    .setSubject(username)
-                    // 自定义属性 放入用户拥有请求权限
-                    .claim(SecurityConstant.AUTHORITIES, new Gson().toJson(list))
-                    // 失效时间
-                    .setExpiration(
-                            new Date(System.currentTimeMillis() + tokenProperties.getTokenExpireTime() * 60 * 1000))
-                    // 签名算法和密钥
-                    .signWith(SignatureAlgorithm.HS512, SecurityConstant.JWT_SIGN_KEY).compact();
-        }
+        String token = SecurityConstant.TOKEN_SPLIT + Jwts.builder()
+                // 主题 放入用户名
+                .setSubject(username)
+                // 自定义属性 放入用户拥有请求权限
+                .claim(SecurityConstant.AUTHORITIES, new Gson().toJson(list))
+                // 失效时间
+                .setExpiration(
+                        new Date(System.currentTimeMillis() + tokenProperties.getTokenExpireTime() * 60 * 1000))
+                // 签名算法和密钥
+                .signWith(SignatureAlgorithm.HS512, SecurityConstant.JWT_SIGN_KEY).compact();
         return token;
     }
 
@@ -163,15 +121,6 @@ public class SecurityUtil {
 
         List<String> deparmentIds = new ArrayList<>();
         User u = getCurrUser();
-        // 读取缓存
-        String key = "userRole::depIds:" + u.getId();
-        RBucket<String> bucket = redissonClient.getBucket(key, new StringCodec());
-        String v = bucket.get();
-        if (StringUtils.isNotBlank(v)) {
-            deparmentIds = new Gson().fromJson(v, new TypeToken<List<String>>() {
-            }.getType());
-            return deparmentIds;
-        }
         // 当前用户拥有角色
         List<Role> roles = iUserRoleService.listByUserId(u.getId());
         // 判断有无全部数据的角色
@@ -222,8 +171,6 @@ public class SecurityUtil {
         set.addAll(deparmentIds);
         deparmentIds.clear();
         deparmentIds.addAll(set);
-        // 缓存
-        redissonClient.getBucket(key, new StringCodec()).set(new Gson().toJson(deparmentIds));
         return deparmentIds;
     }
 
@@ -263,71 +210,35 @@ public class SecurityUtil {
         // 权限
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        if (tokenProperties.getRedis()) {
-            // redis
-            RBucket<String> bucket = redissonClient.getBucket(SecurityConstant.TOKEN_PRE + rawAccessToken.getToken(),
-                    new StringCodec());
-            if (bucket == null) {
-                throw new BadCredentialsException("登录已失效，请重新登录");
-            }
-            String v = bucket.get();
-            if (StringUtils.isBlank(v)) {
-                throw new BadCredentialsException("登录已失效，请重新登录");
-            }
-            TokenUser user = new Gson().fromJson(v, TokenUser.class);
-            username = user.getUsername();
+        // JWT
+        try {
+            // 解析token
+            Claims claims = Jwts.parser().setSigningKey(SecurityConstant.JWT_SIGN_KEY)
+                    .parseClaimsJws(rawAccessToken.getToken().replace(SecurityConstant.TOKEN_SPLIT, "")).getBody();
+
+            // 获取用户名
+            username = claims.getSubject();
+            // 获取权限
             if (tokenProperties.getStorePerms()) {
                 // 缓存了权限
-                for (String ga : user.getPermissions()) {
-                    authorities.add(new SimpleGrantedAuthority(ga));
+                String authority = claims.get(SecurityConstant.AUTHORITIES).toString();
+                if (StringUtils.isNotBlank(authority)) {
+                    List<String> list = new Gson().fromJson(authority,
+                            new TypeToken<List<String>>() {
+                            }.getType());
+                    for (String ga : list) {
+                        authorities.add(new SimpleGrantedAuthority(ga));
+                    }
                 }
             } else {
                 // 未缓存 读取权限数据
                 authorities = getCurrUserPerms(username);
             }
-            if (!user.getSaveLogin()) {
-                // 若未保存登录状态重新设置失效时间
-                RBucket<String> userTokenBucket = redissonClient.getBucket(SecurityConstant.USER_TOKEN + username,
-                        new StringCodec());
-                userTokenBucket.set(rawAccessToken.getToken());
-                userTokenBucket.expire(tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
-
-                RBucket<String> tokenBucket = redissonClient
-                        .getBucket(SecurityConstant.TOKEN_PRE + rawAccessToken.getToken(), new StringCodec());
-                tokenBucket.set(v);
-                tokenBucket.expire(tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
-            }
-        } else {
-            // JWT
-            try {
-                // 解析token
-                Claims claims = Jwts.parser().setSigningKey(SecurityConstant.JWT_SIGN_KEY)
-                        .parseClaimsJws(rawAccessToken.getToken().replace(SecurityConstant.TOKEN_SPLIT, "")).getBody();
-
-                // 获取用户名
-                username = claims.getSubject();
-                // 获取权限
-                if (tokenProperties.getStorePerms()) {
-                    // 缓存了权限
-                    String authority = claims.get(SecurityConstant.AUTHORITIES).toString();
-                    if (StringUtils.isNotBlank(authority)) {
-                        List<String> list = new Gson().fromJson(authority,
-                                new com.google.common.reflect.TypeToken<List<String>>() {
-                                }.getType());
-                        for (String ga : list) {
-                            authorities.add(new SimpleGrantedAuthority(ga));
-                        }
-                    }
-                } else {
-                    // 未缓存 读取权限数据
-                    authorities = getCurrUserPerms(username);
-                }
-            } catch (ExpiredJwtException e) {
-                throw new BadCredentialsException("登录已失效，请重新登录");
-            } catch (Exception e) {
-                log.error(e.toString());
-                throw new BadCredentialsException("解析token错误");
-            }
+        } catch (ExpiredJwtException e) {
+            throw new BadCredentialsException("登录已失效，请重新登录");
+        } catch (Exception e) {
+            log.error(e.toString());
+            throw new BadCredentialsException("解析token错误");
         }
 
         if (StringUtils.isNotBlank(username)) {

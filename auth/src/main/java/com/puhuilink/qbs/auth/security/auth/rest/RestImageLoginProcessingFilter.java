@@ -9,11 +9,10 @@ package com.puhuilink.qbs.auth.security.auth.rest;
 import com.google.gson.Gson;
 import com.puhuilink.qbs.auth.security.exception.AuthMethodNotSupportedException;
 import com.puhuilink.qbs.auth.security.model.UserPrincipal;
+import com.puhuilink.qbs.auth.utils.AuthConstants;
+import com.puhuilink.qbs.auth.utils.CookieUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.redisson.api.RBucket;
-import org.redisson.api.RedissonClient;
-import org.redisson.client.codec.StringCodec;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -28,9 +27,11 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 @Slf4j
 public class RestImageLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
@@ -39,15 +40,13 @@ public class RestImageLoginProcessingFilter extends AbstractAuthenticationProces
 
     private final AuthenticationSuccessHandler successHandler;
     private final AuthenticationFailureHandler failureHandler;
-    private final RedissonClient redissonClient;
 
     public RestImageLoginProcessingFilter(String defaultFilterProcessesUrl, AuthenticationSuccessHandler successHandler,
-                                          AuthenticationFailureHandler failureHandler, RedissonClient redissonClient) {
+                                          AuthenticationFailureHandler failureHandler) {
         super(defaultFilterProcessesUrl);
         this.successHandler = successHandler;
         this.failureHandler = failureHandler;
-        this.redissonClient = redissonClient;
-    }
+     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
@@ -73,18 +72,17 @@ public class RestImageLoginProcessingFilter extends AbstractAuthenticationProces
             throw new BadCredentialsException("请提供验证码");
         }
 
-        RBucket<String> bucket = redissonClient.getBucket(loginRequest.getCaptchaId(), new StringCodec());
-        String redisCode = bucket.get();
-        if (StringUtils.isBlank(redisCode)) {
+        String code = CookieUtil.getCookieByName(request, AuthConstants.COOKIE_CAPTCHA_CODE);
+        if (StringUtils.isBlank(code)) {
             throw new BadCredentialsException("验证码过期");
         }
 
-        if (!redisCode.toLowerCase().equals(loginRequest.getCode().toLowerCase())) {
-            log.info("验证码错误：code:" + loginRequest.getCode() + "，redisCode:" + redisCode);
+        if (!code.toLowerCase().equals(loginRequest.getCode().toLowerCase())) {
+            log.info("验证码错误：request code:" + loginRequest.getCode() + "，code:" + code);
             throw new BadCredentialsException("验证码错误");
         }
         // 已验证清除key
-        redissonClient.getKeys().delete(loginRequest.getCaptchaId());
+        CookieUtil.deleteCookie(request, response, AuthConstants.COOKIE_CAPTCHA_CODE);
 
         UserPrincipal principal = new UserPrincipal(UserPrincipal.Type.USER_NAME, loginRequest.getUsername(),
                 loginRequest.getSaveLogin());

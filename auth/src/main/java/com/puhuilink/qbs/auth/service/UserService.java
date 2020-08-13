@@ -3,7 +3,6 @@ package com.puhuilink.qbs.auth.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.puhuilink.qbs.core.base.vo.SearchVO;
-import com.puhuilink.qbs.auth.controller.vo.UserData;
 import com.puhuilink.qbs.auth.entity.User;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -57,8 +56,4 @@ public interface UserService extends IService<User> {
      * @return
      */
     List<User> listByUsernameLikeAndStatus(String username, Integer status);
-
-    List<UserData> listUserData();
-
-    void saveBatch(List<UserData> dataList);
 }

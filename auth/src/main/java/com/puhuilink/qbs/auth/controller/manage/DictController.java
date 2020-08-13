@@ -6,18 +6,17 @@
  */
 package com.puhuilink.qbs.auth.controller.manage;
 
+import com.puhuilink.qbs.auth.entity.Dict;
+import com.puhuilink.qbs.auth.service.DictDataService;
+import com.puhuilink.qbs.auth.service.DictService;
 import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
 import com.puhuilink.qbs.core.base.enums.LogType;
 import com.puhuilink.qbs.core.base.enums.ResultCode;
 import com.puhuilink.qbs.core.base.exception.WarnException;
 import com.puhuilink.qbs.core.base.vo.Result;
-import com.puhuilink.qbs.auth.entity.Dict;
-import com.puhuilink.qbs.auth.service.DictDataService;
-import com.puhuilink.qbs.auth.service.DictService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -36,9 +35,6 @@ public class DictController {
 
     @Autowired
     private DictDataService dictDataService;
-
-    @Autowired
-    private RedissonClient redissonClient;
 
     @GetMapping(value = "")
     @ApiOperation(value = "获取全部数据")
@@ -81,8 +77,6 @@ public class DictController {
         Dict dict = dictService.getById(id);
         dictService.removeById(id);
         dictDataService.deleteByDictId(id);
-        // 删除缓存
-        redissonClient.getKeys().delete("dictData::" + dict.getType());
         return Result.ok("删除成功");
     }
 

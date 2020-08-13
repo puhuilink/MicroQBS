@@ -17,10 +17,8 @@ import com.google.gson.Gson;
 import com.puhuilink.qbs.auth.security.exception.AuthMethodNotSupportedException;
 import com.puhuilink.qbs.auth.security.model.UserPrincipal;
 
+import com.puhuilink.qbs.auth.utils.CookieUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.redisson.api.RBucket;
-import org.redisson.api.RedissonClient;
-import org.redisson.client.codec.StringCodec;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -43,19 +41,16 @@ public class RestMobileLoginProcessingFilter extends AbstractAuthenticationProce
 
     private final AuthenticationSuccessHandler successHandler;
     private final AuthenticationFailureHandler failureHandler;
-    private final RedissonClient redissonClient;
 
     public RestMobileLoginProcessingFilter(String defaultFilterProcessesUrl,
-            AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler,
-            RedissonClient redissonClient) {
+            AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler) {
         super(defaultFilterProcessesUrl);
         this.successHandler = successHandler;
         this.failureHandler = failureHandler;
-        this.redissonClient = redissonClient;
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse httpServletResponse)
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException, IOException, ServletException {
         if (!HttpMethod.POST.name().equals(request.getMethod())) {
             if (log.isDebugEnabled()) {
@@ -74,18 +69,17 @@ public class RestMobileLoginProcessingFilter extends AbstractAuthenticationProce
         if (StringUtils.isBlank(loginRequest.getMobile()) || StringUtils.isBlank(loginRequest.getCode())) {
             throw new AuthenticationServiceException("请提供手机号和验证码");
         }
-        RBucket<String> bucket = redissonClient.getBucket(loginRequest.getMobile(), new StringCodec());
-        String redisCode = bucket.get();
-        if (StringUtils.isBlank(redisCode)) {
+        String code = CookieUtil.getCookieByName(request, loginRequest.getMobile());
+        if (StringUtils.isBlank(code)) {
             throw new BadCredentialsException("验证码过期");
         }
 
-        if (!redisCode.toLowerCase().equals(loginRequest.getCode().toLowerCase())) {
-            log.info("验证码错误：code:" + loginRequest.getCode() + "，redisCode:" + redisCode);
+        if (!code.toLowerCase().equals(loginRequest.getCode().toLowerCase())) {
+            log.info("验证码错误：request code:" + loginRequest.getCode() + "，code:" + code);
             throw new BadCredentialsException("验证码错误");
         }
         // 已验证清除key
-        redissonClient.getKeys().delete(loginRequest.getMobile());
+        CookieUtil.deleteCookie(request, response, loginRequest.getMobile());
 
         UserPrincipal principal = new UserPrincipal(UserPrincipal.Type.MOBILE, loginRequest.getMobile(),
                 loginRequest.getSaveLogin());

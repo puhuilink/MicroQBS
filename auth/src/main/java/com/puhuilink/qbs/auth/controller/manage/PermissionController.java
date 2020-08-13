@@ -7,14 +7,6 @@
 package com.puhuilink.qbs.auth.controller.manage;
 
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
-import com.puhuilink.qbs.core.base.constant.CommonConstant;
-import com.puhuilink.qbs.core.base.enums.LogType;
-import com.puhuilink.qbs.core.base.enums.ResultCode;
-import com.puhuilink.qbs.core.base.exception.WarnException;
-import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.auth.controller.vo.MenuVO;
 import com.puhuilink.qbs.auth.entity.Permission;
 import com.puhuilink.qbs.auth.entity.RolePermission;
@@ -24,12 +16,15 @@ import com.puhuilink.qbs.auth.service.PermissionService;
 import com.puhuilink.qbs.auth.service.RolePermissionService;
 import com.puhuilink.qbs.auth.utils.SecurityUtil;
 import com.puhuilink.qbs.auth.utils.VoUtil;
+import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
+import com.puhuilink.qbs.core.base.constant.CommonConstant;
+import com.puhuilink.qbs.core.base.enums.LogType;
+import com.puhuilink.qbs.core.base.enums.ResultCode;
+import com.puhuilink.qbs.core.base.exception.WarnException;
+import com.puhuilink.qbs.core.base.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.redisson.api.RBucket;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -39,7 +34,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @RestController
@@ -61,9 +55,6 @@ public class PermissionController {
     @Autowired
     private MySecurityMetadataSource mySecurityMetadataSource;
 
-    @Autowired
-    private RedissonClient redissonClient;
-
     @GetMapping(value = "/user")
     @ApiOperation(value = "获取用户页面菜单数据")
     public Result getAllMenuList() {
@@ -71,14 +62,6 @@ public class PermissionController {
         List<MenuVO> menuList = new ArrayList<>();
         // 读取缓存
         User u = securityUtil.getCurrUser();
-        String key = "permission::userMenuList:" + u.getId();
-        RBucket<String> rBucket = redissonClient.getBucket(key);
-        String v = rBucket.get();
-        if (StringUtils.isNotBlank(v)) {
-            menuList = new Gson().fromJson(v, new TypeToken<List<MenuVO>>() {
-            }.getType());
-            return Result.ok().data(menuList);
-        }
 
         // 用户所有权限 已排序去重
         List<Permission> list = permissionService.listByUserId(u.getId());
@@ -107,7 +90,7 @@ public class PermissionController {
         List<MenuVO> buttonPermissions = new ArrayList<>();
         for (Permission p : list) {
             if (CommonConstant.PERMISSION_OPERATION.equals(p.getType())
-                && CommonConstant.LEVEL_THREE.equals(p.getLevel())) {
+                    && CommonConstant.LEVEL_THREE.equals(p.getLevel())) {
                 buttonPermissions.add(VoUtil.permissionToMenuVO(p));
             }
         }
@@ -142,9 +125,6 @@ public class PermissionController {
             }
             m.setChildren(firstMenu);
         }
-
-        // 缓存
-        rBucket.set(new Gson().toJson(menuList), 15L, TimeUnit.DAYS);
         return Result.ok().data(menuList);
     }
 
@@ -189,8 +169,6 @@ public class PermissionController {
         permissionService.save(permission);
         // 重新加载权限
         mySecurityMetadataSource.loadResourceDefine();
-        // 手动删除缓存
-        redissonClient.getKeys().delete("permission::allList");
         return Result.ok().data(permission);
     }
 
@@ -213,11 +191,6 @@ public class PermissionController {
         permissionService.updateById(permission);
         // 重新加载权限
         mySecurityMetadataSource.loadResourceDefine();
-        // 手动批量删除缓存
-        redissonClient.getKeys().deleteByPattern("userPermission:" + "*");
-        redissonClient.getKeys().deleteByPattern("user:" + "*");
-        redissonClient.getKeys().deleteByPattern("permission::userMenuList:*");
-        redissonClient.getKeys().delete("permission::allList");
         return permission;
     }
 
@@ -238,8 +211,6 @@ public class PermissionController {
         }
         // 重新加载权限
         mySecurityMetadataSource.loadResourceDefine();
-        // 手动删除缓存
-        redissonClient.getKeys().delete("permission::allList");
         return Result.ok("批量通过id删除数据成功");
     }
 

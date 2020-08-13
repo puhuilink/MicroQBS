@@ -6,29 +6,22 @@
  */
 package com.puhuilink.qbs.auth.controller.manage;
 
-import com.alibaba.excel.EasyExcel;
-import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
-import com.puhuilink.qbs.core.base.enums.LogType;
-import com.puhuilink.qbs.core.base.vo.Result;
-import com.puhuilink.qbs.auth.controller.vo.UserData;
 import com.puhuilink.qbs.auth.entity.User;
 import com.puhuilink.qbs.auth.service.DepartmentService;
 import com.puhuilink.qbs.auth.service.RoleService;
 import com.puhuilink.qbs.auth.service.UserService;
 import com.puhuilink.qbs.auth.utils.SecurityUtil;
+import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
+import com.puhuilink.qbs.core.base.enums.LogType;
+import com.puhuilink.qbs.core.base.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.net.URLEncoder;
 
 @Slf4j
 @RestController
@@ -46,8 +39,6 @@ public class UserController {
     private DepartmentService departmentService;
     @Autowired
     private SecurityUtil securityUtil;
-    @Autowired
-    private RedissonClient redissonClient;
 
     @GetMapping("/info")
     @ApiOperation(value = "已登录用户")
@@ -65,18 +56,7 @@ public class UserController {
             User u = userService.getById(id);
             u.setPassword(new BCryptPasswordEncoder().encode("123456"));
             userService.updateById(u);
-            redissonClient.getBucket("user::" + u.getUsername()).delete();
         }
         return Result.ok("操作成功");
-    }
-
-    @GetMapping("/excel/download")
-    @SystemLogTrace(description = "用户数据Excel下载", type = LogType.OPERATION)
-    public void download(HttpServletResponse response) throws IOException {
-        response.setContentType("application/vnd.ms-excel");
-        response.setCharacterEncoding("utf-8");
-        String fileName = URLEncoder.encode("系统用户列表", "UTF-8");
-        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-        EasyExcel.write(response.getOutputStream(), UserData.class).sheet("用户信息").doWrite(userService.listUserData());
     }
 }

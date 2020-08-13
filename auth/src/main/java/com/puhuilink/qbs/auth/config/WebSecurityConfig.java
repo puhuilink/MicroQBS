@@ -8,7 +8,6 @@
 package com.puhuilink.qbs.auth.config;
 
 import com.google.common.collect.Lists;
-import com.puhuilink.qbs.core.base.constant.Constant;
 import com.puhuilink.qbs.auth.config.properties.IgnoredUrlsProperties;
 import com.puhuilink.qbs.auth.security.auth.jwt.JwtAuthenticationProvider;
 import com.puhuilink.qbs.auth.security.auth.jwt.JwtTokenAuthenticationProcessingFilter;
@@ -20,8 +19,8 @@ import com.puhuilink.qbs.auth.security.auth.rest.RestImageLoginProcessingFilter;
 import com.puhuilink.qbs.auth.security.auth.rest.RestLoginProcessingFilter;
 import com.puhuilink.qbs.auth.security.auth.rest.RestMobileLoginProcessingFilter;
 import com.puhuilink.qbs.auth.security.permission.MyFilterSecurityInterceptor;
+import com.puhuilink.qbs.core.base.constant.Constant;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -89,8 +88,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private RestAccessDeniedHandler restAccessDeniedHandler;
     @Autowired
     private MyFilterSecurityInterceptor myFilterSecurityInterceptor;
-    @Autowired
-    private RedissonClient redissonClient;
 
     @Bean
     public BCryptPasswordEncoder encoder() {
@@ -126,7 +123,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected RestMobileLoginProcessingFilter buildRestPublicLoginProcessingFilter() throws Exception {
         RestMobileLoginProcessingFilter filter = new RestMobileLoginProcessingFilter(MOBILE_LOGIN_ENTRY_POINT,
-                successHandler, failureHandler, redissonClient);
+                successHandler, failureHandler);
         filter.setAuthenticationManager(this.authenticationManager);
         return filter;
     }
@@ -134,7 +131,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected RestImageLoginProcessingFilter buildRestImageLoginProcessingFilter() throws Exception {
         RestImageLoginProcessingFilter filter = new RestImageLoginProcessingFilter(IMAGE_LOGIN_ENTRY_POINT,
-                successHandler, failureHandler, redissonClient);
+                successHandler, failureHandler);
         filter.setAuthenticationManager(this.authenticationManager);
         return filter;
     }

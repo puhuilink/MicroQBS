@@ -7,15 +7,6 @@
 package com.puhuilink.qbs.auth.controller.manage;
 
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
-import com.puhuilink.qbs.core.base.constant.CommonConstant;
-import com.puhuilink.qbs.core.base.enums.LogType;
-import com.puhuilink.qbs.core.base.enums.ResultCode;
-import com.puhuilink.qbs.core.base.exception.WarnException;
-import com.puhuilink.qbs.core.common.utils.CommonUtil;
-import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.auth.entity.Department;
 import com.puhuilink.qbs.auth.entity.DepartmentMaster;
 import com.puhuilink.qbs.auth.entity.User;
@@ -24,21 +15,24 @@ import com.puhuilink.qbs.auth.service.DepartmentService;
 import com.puhuilink.qbs.auth.service.RoleDepartmentService;
 import com.puhuilink.qbs.auth.service.UserService;
 import com.puhuilink.qbs.auth.utils.SecurityUtil;
+import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
+import com.puhuilink.qbs.core.base.constant.CommonConstant;
+import com.puhuilink.qbs.core.base.enums.LogType;
+import com.puhuilink.qbs.core.base.enums.ResultCode;
+import com.puhuilink.qbs.core.base.exception.WarnException;
+import com.puhuilink.qbs.core.base.vo.Result;
+import com.puhuilink.qbs.core.common.utils.CommonUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.redisson.api.RBucket;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @RestController
@@ -61,30 +55,15 @@ public class DepartmentController {
     private DepartmentMasterService departmentMasterService;
 
     @Autowired
-    private RedissonClient redissonClient;
-
-    @Autowired
     private SecurityUtil securityUtil;
 
     @GetMapping(value = "/parent/{parentId}")
     @ApiOperation(value = "通过parentId获取")
     public Result listByParentId(@PathVariable String parentId,
                                  @ApiParam("是否开始数据权限过滤") @RequestParam(required = false, defaultValue = "true") Boolean openDataFilter) {
-
-        List<Department> list = new ArrayList<>();
         User u = securityUtil.getCurrUser();
-        String key = "department::" + parentId + ":" + u.getId() + "_" + openDataFilter;
-
-        RBucket<String> rBucket = redissonClient.getBucket(key);
-        String v = rBucket.get();
-        if (StringUtils.isNotBlank(v)) {
-            list = new Gson().fromJson(v, new TypeToken<List<Department>>() {
-            }.getType());
-            return Result.ok().data(list);
-        }
-        list = departmentService.listByParentIdOrderBySortOrder(parentId, openDataFilter);
+        List<Department> list = departmentService.listByParentIdOrderBySortOrder(parentId, openDataFilter);
         list = setInfo(list);
-        redissonClient.getBucket(key).set(new Gson().toJson(list), 15L, TimeUnit.DAYS);
         return Result.ok().data(list);
     }
 
@@ -94,7 +73,6 @@ public class DepartmentController {
     public Result add(Department department) {
         // 同步该节点缓存
         departmentService.save(department);
-        redissonClient.getKeys().deleteByPattern("department::" + department.getParentId() + ":*");
 
         // 如果不是添加的一级 判断设置上级为父节点标识
         if (!CommonConstant.PARENT_ID.equals(department.getParentId())) {
@@ -102,8 +80,6 @@ public class DepartmentController {
             if (parent.getIsParent() == null || !parent.getIsParent()) {
                 parent.setIsParent(true);
                 departmentService.updateById(parent);
-                // 更新上级节点的缓存
-                redissonClient.getKeys().deleteByPattern("department::" + parent.getParentId() + ":*");
             }
         }
         return Result.ok("添加成功");
@@ -132,10 +108,6 @@ public class DepartmentController {
             dh.setType(CommonConstant.MASTER_TYPE_VICE);
             departmentMasterService.save(dh);
         }
-        // 手动删除所有部门缓存
-        redissonClient.getKeys().deleteByPattern("department:" + "*");
-        // 删除所有用户缓存
-        redissonClient.getKeys().deleteByPattern("user:" + "*");
         return Result.ok("编辑成功");
     }
 
@@ -147,11 +119,6 @@ public class DepartmentController {
         for (String id : ids) {
             deleteRecursion(id, ids);
         }
-        // 手动删除所有部门缓存
-        redissonClient.getKeys().deleteByPattern("department:" + "*");
-        // 删除数据权限缓存
-        redissonClient.getKeys().deleteByPattern("userRole::depIds:" + "*");
-
         return Result.ok("批量通过id删除数据成功");
     }
 
@@ -206,9 +173,9 @@ public class DepartmentController {
             }
             // 设置负责人
             item.setMainMaster(
-                departmentMasterService.listMasterByDepartmentId(item.getId(), CommonConstant.MASTER_TYPE_MAIN));
+                    departmentMasterService.listMasterByDepartmentId(item.getId(), CommonConstant.MASTER_TYPE_MAIN));
             item.setViceMaster(
-                departmentMasterService.listMasterByDepartmentId(item.getId(), CommonConstant.MASTER_TYPE_VICE));
+                    departmentMasterService.listMasterByDepartmentId(item.getId(), CommonConstant.MASTER_TYPE_VICE));
         });
         return list;
     }

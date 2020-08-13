@@ -9,12 +9,6 @@ package com.puhuilink.qbs.auth.controller.manage;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
-import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
-import com.puhuilink.qbs.core.base.enums.LogType;
-import com.puhuilink.qbs.core.base.enums.ResultCode;
-import com.puhuilink.qbs.core.base.exception.WarnException;
-import com.puhuilink.qbs.core.base.vo.PageVO;
-import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.auth.entity.Role;
 import com.puhuilink.qbs.auth.entity.RoleDepartment;
 import com.puhuilink.qbs.auth.entity.RolePermission;
@@ -23,10 +17,15 @@ import com.puhuilink.qbs.auth.service.RoleDepartmentService;
 import com.puhuilink.qbs.auth.service.RolePermissionService;
 import com.puhuilink.qbs.auth.service.RoleService;
 import com.puhuilink.qbs.auth.service.UserRoleService;
+import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
+import com.puhuilink.qbs.core.base.enums.LogType;
+import com.puhuilink.qbs.core.base.enums.ResultCode;
+import com.puhuilink.qbs.core.base.exception.WarnException;
+import com.puhuilink.qbs.core.base.vo.PageVO;
+import com.puhuilink.qbs.core.base.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -51,9 +50,6 @@ public class RoleController {
 
     @Autowired
     private RoleDepartmentService roleDepartmentService;
-
-    @Autowired
-    private RedissonClient redissonClient;
 
     @GetMapping(value = "")
     @ApiOperation(value = "获取全部角色")
@@ -108,11 +104,6 @@ public class RoleController {
             rolePermission.setPermissionId(permId);
             rolePermissionService.save(rolePermission);
         }
-        // 手动批量删除缓存
-        redissonClient.getKeys().deleteByPattern("user:" + "*");
-        redissonClient.getKeys().deleteByPattern("userRole:" + "*");
-        redissonClient.getKeys().deleteByPattern("userPermission:" + "*");
-        redissonClient.getKeys().deleteByPattern("permission::userMenuList:*");
 
         return Result.ok("编辑成功");
     }
@@ -135,9 +126,6 @@ public class RoleController {
             roleDepartment.setDepartmentId(depId);
             roleDepartmentService.save(roleDepartment);
         }
-        // 手动删除相关缓存
-        redissonClient.getKeys().deleteByPattern("department:" + "*");
-        redissonClient.getKeys().deleteByPattern("userRole:" + "*");
 
         return "编辑成功";
     }
@@ -154,12 +142,7 @@ public class RoleController {
     @ApiOperation(value = "更新数据")
     @SystemLogTrace(description = "更新角色数据", type = LogType.OPERATION)
     public Role update(Role entity) {
-
         roleService.updateById(entity);
-        // 手动批量删除缓存
-        redissonClient.getKeys().deleteByPattern("user:" + "*");
-        redissonClient.getKeys().deleteByPattern("userRole:" + "*");
-
         return entity;
     }
 
