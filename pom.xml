@@ -22,7 +22,7 @@
         <module>core/mybatis</module>
         <module>core/limiter</module>
         <module>core/logtrace</module>
-        <module>web</module>
+        <module>auth</module>
         <module>module/dfs-service</module>
         <module>cloud/gateway</module>
         <module>cloud/nacos</module>
@@ -87,7 +87,7 @@
             </dependency>
             <dependency>
                 <groupId>com.puhuilink.qbs</groupId>
-                <artifactId>qbs-web</artifactId>
+                <artifactId>qbs-auth</artifactId>
                 <version>${ph.version}</version>
             </dependency>
             <dependency>
