@@ -6,6 +6,7 @@ import com.puhuilink.qbs.core.common.base.QbsBaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @TableName("t_role_permission")

@@ -46,7 +46,7 @@
         <commons-lang3.version>3.9</commons-lang3.version>
         <spring-admin.version>2.1.0</spring-admin.version>
         <flowable.version>6.4.2</flowable.version>
-        <lombok.version>1.18.10</lombok.version>
+        <lombok.version>1.18.12</lombok.version>
         <log4j.version>2.13.3</log4j.version>
         <fasterxml.jackson.version>2.11.1</fasterxml.jackson.version>
 

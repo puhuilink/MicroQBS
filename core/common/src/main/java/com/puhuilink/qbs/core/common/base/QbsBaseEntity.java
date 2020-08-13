@@ -18,6 +18,7 @@ import com.puhuilink.qbs.core.common.utils.SnowFlakeUtil;
 import com.puhuilink.qbs.core.common.validate.tag.OnCheckID;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotNull;
 
@@ -40,3 +41,4 @@ public class QbsBaseEntity {
     @ApiModelProperty(value = "乐观锁")
     private Integer version;
 }
+
