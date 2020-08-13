@@ -8,6 +8,7 @@ package com.puhuilink.qbs.core.common.config;
 
 import com.puhuilink.qbs.core.common.config.httpclient.HttpClientConfig;
 import com.puhuilink.qbs.core.common.config.httpclient.RestTemplateConfig;
+import com.puhuilink.qbs.core.common.config.mybatis.MybatisConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 

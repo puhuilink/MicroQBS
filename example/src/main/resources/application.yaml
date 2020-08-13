@@ -47,6 +47,10 @@ qbs:
   ratelimit:
     enable: true
     QPS: 1
+    # AUTHORITY_WHITE, AUTHORITY_BLACK, NULL
+    ruleAuthority: AUTHORITY_WHITE
+    ipList:
+      - 127.0.0.1
   # token交互方式
   token:
     # 设置为true后，token将存入redis，并具有单点登录功能 默认false使用JWT交互

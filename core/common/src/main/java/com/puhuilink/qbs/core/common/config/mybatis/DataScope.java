@@ -5,7 +5,7 @@
  * @LastEditTime: 2020-05-19 09:17:50
  * @FilePath: /phlink-common-framework/core/web/src/main/java/com/phlink/core/web/config/mybatis/DataScope.java
  */
-package com.puhuilink.qbs.core.common.config;
+package com.puhuilink.qbs.core.common.config.mybatis;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

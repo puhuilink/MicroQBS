@@ -6,9 +6,12 @@
  */
 package com.puhuilink.qbs.core.limiter.config.properties;
 
+import com.puhuilink.qbs.core.limiter.enums.RuleAuthority;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 /**
  * @program: qbs-web
@@ -26,4 +29,11 @@ public class RateLimiterProperties {
      * 全局每秒请求数量
      */
     private Double QPS = Double.MAX_VALUE;
+
+    private RuleAuthority ruleAuthority = RuleAuthority.NULL;
+    /**
+     * 全局限流黑/白名单
+     */
+    private List<String> ipList;
+
 }

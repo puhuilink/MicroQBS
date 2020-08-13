@@ -26,9 +26,11 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
 /**
  * 接口限流
@@ -53,12 +55,15 @@ public class LimitAspect {
         }
         HttpServletRequest request = ((ServletRequestAttributes) Objects
                 .requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        String ip = IpInfoUtil.getIpAddr(request);
+        if(!isAllow(ip)) {
+            throw new LimitAccessException("您被限制访问本系统");
+        }
 
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
         Limiter limitAnnotation = method.getAnnotation(Limiter.class);
         String key = limitAnnotation.key();
-        String ip = IpInfoUtil.getIpAddr(request);
         String keyType;
         double qbs;
         switch (limitAnnotation.type()) {
@@ -87,7 +92,21 @@ public class LimitAspect {
             log.warn("接口请求次数超过限制，限制QPS为:{}", qbs);
             throw new LimitAccessException("请求频繁，请稍后再试");
         }
+    }
 
+    public boolean isAllow(String ip) {
+        boolean allow;
+        switch (rateLimiterProperties.getRuleAuthority()) {
+            case AUTHORITY_BLACK:
+                allow = rateLimiterProperties.getIpList().stream().noneMatch(s -> s.equals(ip));
+                break;
+            case AUTHORITY_WHITE:
+                allow = rateLimiterProperties.getIpList().contains(ip);
+                break;
+            default:
+                allow = true;
+        }
+        return allow;
     }
 
 }
