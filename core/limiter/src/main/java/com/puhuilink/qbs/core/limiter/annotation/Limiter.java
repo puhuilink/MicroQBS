@@ -17,8 +17,8 @@ public @interface Limiter {
     // 限流标志
     String key() default "";
 
-    // 限制每秒访问次数
-    int QPS() default 10;
+    // 限制IP每秒访问次数
+    double QPS() default Double.MAX_VALUE;
 
     // 获取令牌超时时间 默认：100
     long timeout() default 100;

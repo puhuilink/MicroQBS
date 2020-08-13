@@ -42,7 +42,7 @@ public class SpringAsyncConfiguration implements AsyncConfigurer {
     static class SpringAsyncExceptionHandler implements AsyncUncaughtExceptionHandler {
         @Override
         public void handleUncaughtException(Throwable throwable, Method method, Object... obj) {
-            log.error("Exception occurs in async method {}", throwable.getMessage());
+            log.error("异步方法执行异常 {}", throwable.getMessage());
         }
     }
 

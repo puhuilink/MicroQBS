@@ -34,55 +34,19 @@ spring:
 #          password: Pwd4PgSQLinCCCC.2019
 #          driver-class-name: org.postgresql.Driver
 #          url: jdbc:postgresql://10.1.13.19:5432/rec_main
-
-
-
   # 文件大小上传配置
   messages:
     encoding: utf-8
-
   servlet:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
 
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
-    serialization:
-      fail-on-empty-beans: false
-
-management:
-  endpoint:
-    health:
-      show-details: always
-      status:
-        http-mapping:
-          DOWN: 200
-          OUT_OF_SERVICE: 200
-          FATAL: 200
-          UNKNOWN: 200
-  endpoints:
-    web:
-      base-path: /actuator/
-      exposure:
-        include: '*'
-
 qbs:
-  # 全局限流
+  # 全局限流，type=all的情况
   ratelimit:
     enable: true
-    # 每1秒内
-    timeout: 1000
-    # 总限制200个请求
-    limit: 200
-  # IP限流
-  iplimit:
-    enable: true
-    # 每1秒内
-    timeout: 1000
-    # 每个ip限制20个请求
-    limit: 20
+    QPS: 1
   # token交互方式
   token:
     # 设置为true后，token将存入redis，并具有单点登录功能 默认false使用JWT交互
@@ -101,12 +65,6 @@ qbs:
     loginTimeNotify: 5
     # 错误超过次数后多少分钟后才能继续登录（分钟）
     loginAfterTime: 10
-  boot:
-    admin:
-      # 修改上下文路径
-      context-path: /admin
-      client:
-        url: http://127.0.0.1:${server.port}/admin
   redis:
     database: 1
     password: qwe@123

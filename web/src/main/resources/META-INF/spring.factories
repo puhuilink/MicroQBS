@@ -2,8 +2,6 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.puhuilink.qbs.web.config.WebSecurityConfig,\
   com.puhuilink.qbs.web.config.redis.RedissonConfig,\
   com.puhuilink.qbs.web.config.properties.QbsTokenProperties,\
-  com.puhuilink.qbs.web.config.properties.QbsIpLimitProperties,\
-  com.puhuilink.qbs.web.config.properties.QbsLimitProperties,\
   com.puhuilink.qbs.web.config.properties.CaptchaProperties,\
   com.puhuilink.qbs.web.config.properties.IgnoredUrlsProperties,\
   com.puhuilink.qbs.web.security.auth.jwt.AuthenticationSuccessHandler,\
