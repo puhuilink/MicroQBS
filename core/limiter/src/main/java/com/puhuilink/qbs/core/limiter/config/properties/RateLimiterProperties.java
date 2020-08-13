@@ -25,5 +25,5 @@ public class RateLimiterProperties {
     /**
      * 全局每秒请求数量
      */
-    private Double QPS = 100d;
+    private Double QPS = Double.MAX_VALUE;
 }
