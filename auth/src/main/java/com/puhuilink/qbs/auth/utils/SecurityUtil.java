@@ -3,23 +3,20 @@ package com.puhuilink.qbs.auth.utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.puhuilink.qbs.auth.config.properties.QbsTokenProperties;
-import com.puhuilink.qbs.auth.entity.Department;
-import com.puhuilink.qbs.auth.entity.Permission;
-import com.puhuilink.qbs.auth.entity.Role;
-import com.puhuilink.qbs.auth.entity.User;
+import com.puhuilink.qbs.auth.entity.*;
 import com.puhuilink.qbs.auth.security.model.SecurityUser;
 import com.puhuilink.qbs.auth.security.model.token.RawAccessJwtToken;
 import com.puhuilink.qbs.auth.service.DepartmentService;
 import com.puhuilink.qbs.auth.service.UserRoleService;
 import com.puhuilink.qbs.auth.service.UserService;
-import com.puhuilink.qbs.core.base.constant.CommonConstant;
-import com.puhuilink.qbs.core.base.constant.SecurityConstant;
+import com.puhuilink.qbs.auth.service.UserTokenService;
+import com.puhuilink.qbs.core.common.utils.CommonConstant;
 import com.puhuilink.qbs.core.base.enums.ResultCode;
 import com.puhuilink.qbs.core.base.exception.WarnException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +27,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.List;
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -41,36 +37,32 @@ public class SecurityUtil {
 
     @Autowired
     private QbsTokenProperties tokenProperties;
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private UserRoleService iUserRoleService;
-
+    @Autowired
+    private UserTokenService userTokenService;
     @Autowired
     private DepartmentService departmentService;
 
     public String getAccessJwtToken(String username, Boolean saveLogin) {
-
         if (StringUtils.isBlank(username)) {
-            throw new WarnException(ResultCode.AUTHENTICATION.getCode(), "username不能为空");
+            throw new WarnException(ResultCode.AUTHENTICATION.getCode(), "用户名不能为空");
         }
-        boolean saved = false;
+        long expireTime = tokenProperties.getTokenExpireTime();
         if (saveLogin == null || saveLogin) {
-            saved = true;
-            if (!tokenProperties.getRedis()) {
-                tokenProperties.setTokenExpireTime(tokenProperties.getSaveLoginTime() * 60 * 24);
-            }
+            expireTime = tokenProperties.getSaveLoginTime() * 60 * 24;
         }
         // 生成token
         User u = userService.getByUsername(username);
         if (u == null) {
-            log.info("匿名登录");
+            log.warn("用户{}不存在", username);
+            throw new WarnException(ResultCode.AUTHENTICATION.getCode(), "用户不存在");
         }
         List<String> list = new ArrayList<>();
         // 缓存权限
-        if (tokenProperties.getStorePerms() && u != null) {
+        if (tokenProperties.getStorePerms()) {
             for (Permission p : u.getPermissions()) {
                 if (CommonConstant.PERMISSION_OPERATION.equals(p.getType()) && StringUtils.isNotBlank(p.getTitle())
                         && StringUtils.isNotBlank(p.getPath())) {
@@ -81,18 +73,37 @@ public class SecurityUtil {
                 list.add(r.getName());
             }
         }
+        SecretKey key = getSecretKey();
         // 登陆成功生成token
-        String token = SecurityConstant.TOKEN_SPLIT + Jwts.builder()
+        String token = Jwts.builder()
                 // 主题 放入用户名
                 .setSubject(username)
+                .setIssuer(SecurityConstant.TOKEN_ISSUER)
+                .setIssuedAt(new Date())
+                .setId(UUID.randomUUID().toString())
                 // 自定义属性 放入用户拥有请求权限
-                .claim(SecurityConstant.AUTHORITIES, new Gson().toJson(list))
+                .claim(SecurityConstant.CLAIMS_AUTHORITIES, new Gson().toJson(list))
+                // 自定义属性 放入用户ID
+                .claim(SecurityConstant.CLAIMS_USER_ID, u.getId())
                 // 失效时间
                 .setExpiration(
-                        new Date(System.currentTimeMillis() + tokenProperties.getTokenExpireTime() * 60 * 1000))
+                        new Date(System.currentTimeMillis() + expireTime * 60 * 1000))
                 // 签名算法和密钥
-                .signWith(SignatureAlgorithm.HS512, SecurityConstant.JWT_SIGN_KEY).compact();
-        return token;
+                .signWith(key)
+                .compact();
+
+        String tokenEncode = EncrypterHelper.encrypt(token);
+        if(tokenProperties.getSdl()) {
+            // 单设备登录，只允许一个存在
+            userTokenService.logoutAndCreate(u, tokenEncode);
+        }else{
+            userTokenService.create(u, tokenEncode);
+        }
+        return tokenEncode;
+    }
+
+    private SecretKey getSecretKey() {
+        return Keys.hmacShaKeyFor(SecurityConstant.JWT_SIGN_KEY.getBytes(StandardCharsets.UTF_8));
     }
 
     /**
@@ -110,7 +121,7 @@ public class SecurityUtil {
         if (authentication != null && authentication.getPrincipal() instanceof SecurityUser) {
             return (SecurityUser) authentication.getPrincipal();
         } else {
-            throw new WarnException(ResultCode.AUTHENTICATION.getCode(), "You aren't authorized to perform this operation!");
+            throw new WarnException(ResultCode.AUTHENTICATION.getCode(), "无效的认证签名，请重新登录");
         }
     }
 
@@ -204,7 +215,8 @@ public class SecurityUtil {
     }
 
     public SecurityUser parseAccessJwtToken(RawAccessJwtToken rawAccessToken) throws BadCredentialsException {
-
+        String tokenEncode = rawAccessToken.getToken();
+        String token = EncrypterHelper.decrypt(tokenEncode);
         // 用户名
         String username = null;
         // 权限
@@ -212,33 +224,39 @@ public class SecurityUtil {
 
         // JWT
         try {
+            SecretKey key = getSecretKey();
             // 解析token
-            Claims claims = Jwts.parser().setSigningKey(SecurityConstant.JWT_SIGN_KEY)
-                    .parseClaimsJws(rawAccessToken.getToken().replace(SecurityConstant.TOKEN_SPLIT, "")).getBody();
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token).getBody();
+            String userId = claims.getOrDefault(SecurityConstant.CLAIMS_USER_ID, "").toString();
 
-            // 获取用户名
+            UserToken userToken = userTokenService.getLoginStatusTokenByUserId(userId, tokenEncode);
+
+            if(userToken == null) {
+                log.warn("User Token 不存在 userId:{} tokenEncode: {}", userId, tokenEncode);
+                throw new BadCredentialsException("认证签名已失效，请重新登录");
+            }
             username = claims.getSubject();
+
             // 获取权限
-            if (tokenProperties.getStorePerms()) {
-                // 缓存了权限
-                String authority = claims.get(SecurityConstant.AUTHORITIES).toString();
-                if (StringUtils.isNotBlank(authority)) {
-                    List<String> list = new Gson().fromJson(authority,
-                            new TypeToken<List<String>>() {
-                            }.getType());
-                    for (String ga : list) {
-                        authorities.add(new SimpleGrantedAuthority(ga));
-                    }
+            // 缓存了权限
+            String authority = claims.getOrDefault(SecurityConstant.CLAIMS_AUTHORITIES, "").toString();
+            if (StringUtils.isNotBlank(authority)) {
+                List<String> list = new Gson().fromJson(authority,
+                        new TypeToken<List<String>>() {
+                        }.getType());
+                for (String ga : list) {
+                    authorities.add(new SimpleGrantedAuthority(ga));
                 }
             } else {
                 // 未缓存 读取权限数据
                 authorities = getCurrUserPerms(username);
             }
         } catch (ExpiredJwtException e) {
-            throw new BadCredentialsException("登录已失效，请重新登录");
-        } catch (Exception e) {
-            log.error(e.toString());
-            throw new BadCredentialsException("解析token错误");
+            log.warn("Token 过期 tokenEncode: {} Exception: {}", tokenEncode, e.getMessage());
+            throw new BadCredentialsException("认证签名已失效，请重新登录");
         }
 
         if (StringUtils.isNotBlank(username)) {
@@ -248,6 +266,6 @@ public class SecurityUtil {
             securityUser.setAuthorities(authorities);
             return securityUser;
         }
-        throw new BadCredentialsException("token无效");
+        throw new BadCredentialsException("认证签名无效");
     }
 }

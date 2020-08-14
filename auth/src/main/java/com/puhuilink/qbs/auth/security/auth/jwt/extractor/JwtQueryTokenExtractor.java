@@ -9,7 +9,7 @@ package com.puhuilink.qbs.auth.security.auth.jwt.extractor;
 import javax.servlet.http.HttpServletRequest;
 
 
-import com.puhuilink.qbs.core.base.constant.SecurityConstant;
+import com.puhuilink.qbs.auth.utils.SecurityConstant;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.stereotype.Component;
@@ -27,7 +27,7 @@ public class JwtQueryTokenExtractor implements TokenExtractor {
             }
         }
         if (StringUtils.isBlank(token)) {
-            throw new AuthenticationServiceException("Authorization query parameter cannot be blank!");
+            throw new AuthenticationServiceException("认证签名错误");
         }
 
         return token;

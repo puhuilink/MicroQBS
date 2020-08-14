@@ -9,7 +9,7 @@ package com.puhuilink.qbs.auth.security;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import com.puhuilink.qbs.core.base.constant.CommonConstant;
+import com.puhuilink.qbs.core.common.utils.CommonConstant;
 import com.puhuilink.qbs.auth.entity.Permission;
 import com.puhuilink.qbs.auth.entity.Role;
 import com.puhuilink.qbs.auth.entity.User;

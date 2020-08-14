@@ -6,8 +6,8 @@
  */
 package com.puhuilink.qbs.auth.controller.auth;
 
-import com.puhuilink.qbs.auth.utils.AuthConstants;
 import com.puhuilink.qbs.auth.utils.CookieUtil;
+import com.puhuilink.qbs.auth.utils.SecurityConstant;
 import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.common.utils.CreateVerifyCode;
 import io.swagger.annotations.Api;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -52,7 +51,7 @@ public class CaptchaController {
         CreateVerifyCode vCode = new CreateVerifyCode(116, 36, 4, 10, code);
         response.setContentType("image/png");
         log.info("draw captcha code: {}", code);
-        CookieUtil.setCookie(response, AuthConstants.COOKIE_CAPTCHA_CODE, code);
+        CookieUtil.setCookie(response, SecurityConstant.COOKIE_CAPTCHA_CODE, code);
         vCode.write(response.getOutputStream());
     }
 }

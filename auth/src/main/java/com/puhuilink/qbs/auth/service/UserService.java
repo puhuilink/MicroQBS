@@ -55,4 +55,6 @@ public interface UserService extends IService<User> {
      * @return
      */
     List<User> listByUsernameLikeAndStatus(String username, Integer status);
+
+    void resetPassword(String[] id);
 }

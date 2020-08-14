@@ -22,7 +22,7 @@ public class CookieUtil {
 
     public static void setCookie(HttpServletResponse response, String name, String value) {
         Cookie cookie = new Cookie(name, value);
-        cookie.setMaxAge(AuthConstants.COOKIE_CAPTCHA_TIMEOUT);
+        cookie.setMaxAge(SecurityConstant.COOKIE_CAPTCHA_TIMEOUT);
         cookie.setHttpOnly(true);
         response.addCookie(cookie);
     }

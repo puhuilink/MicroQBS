@@ -18,11 +18,6 @@ import lombok.Data;
 public class QbsTokenProperties {
 
     /**
-     * 使用redis存储token
-     */
-    private Boolean redis = false;
-
-    /**
      * 单点登陆
      */
     private Boolean sdl = true;

@@ -9,8 +9,8 @@ package com.puhuilink.qbs.auth.security.auth.rest;
 import com.google.gson.Gson;
 import com.puhuilink.qbs.auth.security.exception.AuthMethodNotSupportedException;
 import com.puhuilink.qbs.auth.security.model.UserPrincipal;
-import com.puhuilink.qbs.auth.utils.AuthConstants;
 import com.puhuilink.qbs.auth.utils.CookieUtil;
+import com.puhuilink.qbs.auth.utils.SecurityConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
@@ -27,11 +27,9 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 
 @Slf4j
 public class RestImageLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
@@ -72,7 +70,7 @@ public class RestImageLoginProcessingFilter extends AbstractAuthenticationProces
             throw new BadCredentialsException("请提供验证码");
         }
 
-        String code = CookieUtil.getCookieByName(request, AuthConstants.COOKIE_CAPTCHA_CODE);
+        String code = CookieUtil.getCookieByName(request, SecurityConstant.COOKIE_CAPTCHA_CODE);
         if (StringUtils.isBlank(code)) {
             throw new BadCredentialsException("验证码过期");
         }
@@ -82,7 +80,7 @@ public class RestImageLoginProcessingFilter extends AbstractAuthenticationProces
             throw new BadCredentialsException("验证码错误");
         }
         // 已验证清除key
-        CookieUtil.deleteCookie(request, response, AuthConstants.COOKIE_CAPTCHA_CODE);
+        CookieUtil.deleteCookie(request, response, SecurityConstant.COOKIE_CAPTCHA_CODE);
 
         UserPrincipal principal = new UserPrincipal(UserPrincipal.Type.USER_NAME, loginRequest.getUsername(),
                 loginRequest.getSaveLogin());

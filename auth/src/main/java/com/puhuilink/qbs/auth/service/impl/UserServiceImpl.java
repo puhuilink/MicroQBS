@@ -7,9 +7,9 @@
 package com.puhuilink.qbs.auth.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.puhuilink.qbs.core.base.vo.SearchVO;
 import com.puhuilink.qbs.auth.entity.Department;
 import com.puhuilink.qbs.auth.entity.Permission;
 import com.puhuilink.qbs.auth.entity.Role;
@@ -18,16 +18,18 @@ import com.puhuilink.qbs.auth.mapper.DepartmentMapper;
 import com.puhuilink.qbs.auth.mapper.PermissionMapper;
 import com.puhuilink.qbs.auth.mapper.UserMapper;
 import com.puhuilink.qbs.auth.mapper.UserRoleMapper;
+import com.puhuilink.qbs.auth.security.model.TokenStatus;
 import com.puhuilink.qbs.auth.service.UserService;
+import com.puhuilink.qbs.auth.service.UserTokenService;
+import com.puhuilink.qbs.core.base.vo.SearchVO;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -40,6 +42,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private PermissionMapper permissionMapper;
     @Autowired
     private UserRoleMapper userRoleMapper;
+    @Autowired
+    private UserTokenService userTokenService;
 
     @Override
     public User getByUsername(String username) {
@@ -94,5 +98,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public List<User> listByUsernameLikeAndStatus(String username, Integer status) {
         return null;
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
+    @Override
+    public void resetPassword(String[] userIds) {
+        String newPassword = new BCryptPasswordEncoder().encode("123456");
+        LambdaUpdateWrapper<User> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.in(User::getId, userIds).set(User::getPassword, newPassword);
+        this.update(updateWrapper);
+        // 将token设置为reset
+        userTokenService.updateLoginStatusToReset(userIds, TokenStatus.RESET);
     }
 }

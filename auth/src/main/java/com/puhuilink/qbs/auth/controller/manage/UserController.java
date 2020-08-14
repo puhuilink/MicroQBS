@@ -7,9 +7,9 @@
 package com.puhuilink.qbs.auth.controller.manage;
 
 import com.puhuilink.qbs.auth.entity.User;
-import com.puhuilink.qbs.auth.service.DepartmentService;
-import com.puhuilink.qbs.auth.service.RoleService;
 import com.puhuilink.qbs.auth.service.UserService;
+import com.puhuilink.qbs.auth.service.UserTokenService;
+import com.puhuilink.qbs.auth.utils.SecurityConstant;
 import com.puhuilink.qbs.auth.utils.SecurityUtil;
 import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
 import com.puhuilink.qbs.core.base.enums.LogType;
@@ -18,10 +18,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @RestController
@@ -33,11 +34,9 @@ public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
-    private RoleService roleService;
-    @Autowired
-    private DepartmentService departmentService;
-    @Autowired
     private SecurityUtil securityUtil;
+    @Autowired
+    private UserTokenService userTokenService;
 
     @GetMapping("/info")
     @ApiOperation(value = "已登录用户")
@@ -51,11 +50,18 @@ public class UserController {
     @ApiOperation(value = "重置密码")
     @SystemLogTrace(description = "重置密码", type = LogType.OPERATION)
     public Result resetPass(@RequestParam String[] ids) {
-        for (String id : ids) {
-            User u = userService.getById(id);
-            u.setPassword(new BCryptPasswordEncoder().encode("123456"));
-            userService.updateById(u);
-        }
+        userService.resetPassword(ids);
         return Result.ok("操作成功");
+    }
+
+    @PostMapping("/logout")
+    @ApiOperation(value = "用户注销")
+    @SystemLogTrace(description = "用户注销", type = LogType.LOGIN)
+    public Result<Object> logout(HttpServletRequest request) {
+        String accessToken = request.getHeader(SecurityConstant.HEADER_PARAM);
+        User u = securityUtil.getCurrUser();
+        userTokenService.logout(u.getId(), accessToken);
+        SecurityContextHolder.clearContext();
+        return Result.ok().msg("注销成功");
     }
 }

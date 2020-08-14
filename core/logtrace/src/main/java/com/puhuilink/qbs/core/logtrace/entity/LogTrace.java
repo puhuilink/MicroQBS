@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.Gson;
-import com.puhuilink.qbs.core.base.constant.CommonConstant;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -23,7 +22,7 @@ public class LogTrace {
     @JsonIgnore
     @TableLogic
     @ApiModelProperty(value = "删除标志 默认0")
-    private Integer delFlag = CommonConstant.STATUS_NORMAL;
+    private Integer delFlag;
 
     @ApiModelProperty(value = "方法操作名称")
     private String name;

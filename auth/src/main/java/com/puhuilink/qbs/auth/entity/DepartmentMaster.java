@@ -1,7 +1,7 @@
 package com.puhuilink.qbs.auth.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.puhuilink.qbs.core.base.constant.CommonConstant;
+import com.puhuilink.qbs.core.common.utils.CommonConstant;
 import com.puhuilink.qbs.core.common.base.QbsBaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

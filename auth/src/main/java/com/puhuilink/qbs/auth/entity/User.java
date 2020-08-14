@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.puhuilink.qbs.core.base.constant.CommonConstant;
+import com.puhuilink.qbs.core.common.utils.CommonConstant;
 import com.puhuilink.qbs.core.common.base.QbsBaseEntity;
 import com.puhuilink.qbs.auth.security.model.Authority;
 

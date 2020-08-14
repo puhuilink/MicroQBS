@@ -6,7 +6,7 @@
  */
 package com.puhuilink.qbs.auth.security.model;
 
-import com.puhuilink.qbs.core.base.constant.CommonConstant;
+import com.puhuilink.qbs.core.common.utils.CommonConstant;
 import com.puhuilink.qbs.auth.entity.Permission;
 import com.puhuilink.qbs.auth.entity.Role;
 import com.puhuilink.qbs.auth.entity.User;

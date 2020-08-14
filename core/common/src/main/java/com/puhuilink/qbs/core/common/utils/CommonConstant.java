@@ -1,4 +1,4 @@
-package com.puhuilink.qbs.core.base.constant;
+package com.puhuilink.qbs.core.common.utils;
 
 public interface CommonConstant {
 

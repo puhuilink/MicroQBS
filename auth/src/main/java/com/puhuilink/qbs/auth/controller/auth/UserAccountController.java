@@ -6,18 +6,22 @@
  */
 package com.puhuilink.qbs.auth.controller.auth;
 
-import javax.validation.Valid;
-
-import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
-import com.puhuilink.qbs.core.base.constant.CommonConstant;
-import com.puhuilink.qbs.core.base.enums.LogType;
-import com.puhuilink.qbs.core.common.validate.tag.OnAdd;
-import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.auth.controller.vo.UserRegistVO;
 import com.puhuilink.qbs.auth.entity.User;
 import com.puhuilink.qbs.auth.service.UserService;
-
+import com.puhuilink.qbs.auth.service.UserTokenService;
+import com.puhuilink.qbs.auth.utils.SecurityConstant;
+import com.puhuilink.qbs.auth.utils.SecurityUtil;
+import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
+import com.puhuilink.qbs.core.base.enums.LogType;
+import com.puhuilink.qbs.core.base.vo.Result;
+import com.puhuilink.qbs.core.common.utils.CommonConstant;
+import com.puhuilink.qbs.core.common.validate.tag.OnAdd;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -26,9 +30,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RestController
 @Api(tags = "用户账户相关接口")
@@ -39,11 +42,11 @@ public class UserAccountController {
     @Autowired
     private UserService userService;
 
-    @Validated({ OnAdd.class })
+    @Validated({OnAdd.class})
     @PostMapping("/regist")
     @ApiOperation(value = "注册用户")
     @SystemLogTrace(description = "用户注册", type = LogType.OPERATION)
-    public Result regist(
+    public Result<Object> regist(
             @RequestBody @Valid @ApiParam(name = "用户注册表单", value = "传入json格式", required = true) UserRegistVO userRegistVo) {
         User u = new User();
         String encryptPass = new BCryptPasswordEncoder().encode(userRegistVo.getPassword());

@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.puhuilink.qbs.core.base.constant.CommonConstant;
+import com.puhuilink.qbs.core.common.utils.CommonConstant;
 import com.puhuilink.qbs.auth.entity.Permission;
 import com.puhuilink.qbs.auth.service.PermissionService;
 
