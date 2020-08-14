@@ -42,16 +42,12 @@ public class DepartmentController {
 
     @Autowired
     private DepartmentService departmentService;
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private RoleDepartmentService roleDepartmentService;
-
     @Autowired
     private DepartmentMasterService departmentMasterService;
-
     @Autowired
     private SecurityUtil securityUtil;
 
