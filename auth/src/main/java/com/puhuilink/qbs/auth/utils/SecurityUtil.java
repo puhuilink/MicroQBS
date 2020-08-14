@@ -216,6 +216,10 @@ public class SecurityUtil {
 
     public SecurityUser parseAccessJwtToken(RawAccessJwtToken rawAccessToken) throws BadCredentialsException {
         String tokenEncode = rawAccessToken.getToken();
+        if(StringUtils.isBlank(tokenEncode)) {
+            log.warn("Token 为空");
+            throw new BadCredentialsException("认证签名不存在，请登录后再操作");
+        }
         String token = EncrypterHelper.decrypt(tokenEncode);
         // 用户名
         String username = null;
