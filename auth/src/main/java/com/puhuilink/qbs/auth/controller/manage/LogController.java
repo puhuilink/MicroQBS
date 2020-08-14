@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @Api(tags = "日志管理接口")
-@RequestMapping("/api/manage/log")
+@RequestMapping("${qbs.api.path}" + "/manage/log")
 @Transactional
 public class LogController {
 

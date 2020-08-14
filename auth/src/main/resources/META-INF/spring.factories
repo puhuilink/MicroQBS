@@ -1,7 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.puhuilink.qbs.auth.config.WebSecurityConfig,\
   com.puhuilink.qbs.auth.config.properties.QbsTokenProperties,\
-  com.puhuilink.qbs.auth.config.properties.CaptchaProperties,\
   com.puhuilink.qbs.auth.config.properties.IgnoredUrlsProperties,\
   com.puhuilink.qbs.auth.security.auth.jwt.AuthenticationSuccessHandler,\
   com.puhuilink.qbs.auth.security.auth.jwt.AuthenticationFailHandler,\

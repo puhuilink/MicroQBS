@@ -35,7 +35,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @Api(tags = "角色管理接口")
-@RequestMapping("/api/manage/role")
+@RequestMapping("${qbs.api.path}" + "/manage/role")
 @Transactional
 public class RoleController {
 

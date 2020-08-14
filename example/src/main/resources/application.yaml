@@ -61,20 +61,23 @@ qbs:
     tokenExpireTime: 60
     # 用户选择保存登录状态对应token过期时间（天）
     saveLoginTime: 7
-
-# 忽略鉴权url
-ignored:
-  urls:
-    - /actuator/**
-    - /admin/**
-    - /dictData/getByType/**
-    - /user/regist
-    - /**/*.js
-    - /**/*.css
-    - /**/*.png
-    - /**/*.ico
-    - /*/test/**
-    - /index
+  api:
+    version: v1
+    prefix: api
+    path: /${qbs.api.prefix}/${qbs.api.version}
+  # 忽略鉴权url
+  ignored:
+    urls:
+      - /actuator/**
+      - /admin/**
+      - /dictData/getByType/**
+      - /user/regist
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /*/test/**
+      - /index
 
 # Swagger界面内容配置
 swagger:

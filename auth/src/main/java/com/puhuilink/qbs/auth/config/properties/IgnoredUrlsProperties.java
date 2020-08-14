@@ -17,7 +17,7 @@ import lombok.Data;
 
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "ignored")
+@ConfigurationProperties(prefix = "qbs.ignored")
 public class IgnoredUrlsProperties {
 
     private List<String> urls = new ArrayList<>();

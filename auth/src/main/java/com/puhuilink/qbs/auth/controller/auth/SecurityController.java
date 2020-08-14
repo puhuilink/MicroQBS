@@ -25,7 +25,7 @@ import java.util.Map;
 
 @RestController
 @Api(tags = "Security相关接口")
-@RequestMapping("/api/auth")
+@RequestMapping("${qbs.api.path}" + "/auth")
 public class SecurityController {
 
     @Autowired
@@ -34,8 +34,8 @@ public class SecurityController {
     private RestTemplate restTemplate;
 
     @GetMapping(value = "/swagger/login")
-    @ApiImplicitParams({@ApiImplicitParam(name = "username",value = "用户名", defaultValue = "admin"),
-        @ApiImplicitParam(name = "password",value = "密码", defaultValue = "123456")
+    @ApiImplicitParams({@ApiImplicitParam(name = "username", value = "用户名", defaultValue = "admin"),
+            @ApiImplicitParam(name = "password", value = "密码", defaultValue = "123456")
     })
     @ApiOperation(value = "Swagger接口文档专用登录接口 方便测试")
     public Result swaggerLogin(@RequestParam String username,

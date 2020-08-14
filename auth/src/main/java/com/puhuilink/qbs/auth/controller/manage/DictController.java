@@ -26,7 +26,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @Api(tags = "字典管理接口")
-@RequestMapping("/api/manage/dict")
+@RequestMapping("${qbs.api.path}" + "/manage/dict")
 @Transactional
 public class DictController {
 

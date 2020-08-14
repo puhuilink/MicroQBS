@@ -37,7 +37,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @Api(tags = "菜单/权限管理接口")
-@RequestMapping("/api/manage/permission")
+@RequestMapping("${qbs.api.path}" + "/manage/permission")
 @Transactional
 public class PermissionController {
 
