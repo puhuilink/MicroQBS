@@ -27,6 +27,7 @@
         <module>cloud/gateway</module>
         <module>cloud/nacos</module>
         <module>example</module>
+        <module>graphApi</module>
     </modules>
 
     <properties>
@@ -54,6 +55,7 @@
         <air.main.basedir>${project.basedir}</air.main.basedir>
         <air.check.fail-checkstyle>true</air.check.fail-checkstyle>
         <air.check.skip-checkstyle>false</air.check.skip-checkstyle>
+
     </properties>
 
     <dependencyManagement>
