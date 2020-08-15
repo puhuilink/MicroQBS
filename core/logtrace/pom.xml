@@ -5,32 +5,31 @@
     <parent>
         <artifactId>qbs-parent</artifactId>
         <groupId>com.puhuilink.qbs</groupId>
-        <version>0.0.5-SNAPSHOT</version>
+        <version>${version}</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>qbs-logtrace</artifactId>
-    <version>0.0.5-SNAPSHOT</version>
+    <version>${version}</version>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>com.puhuilink.qbs</groupId>
             <artifactId>qbs-base</artifactId>
-            <version>${ph.version}</version>
+            <version>${version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.puhuilink.qbs</groupId>
             <artifactId>qbs-mybatis</artifactId>
-            <version>${ph.version}</version>
+            <version>${version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>${spring.boot.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
