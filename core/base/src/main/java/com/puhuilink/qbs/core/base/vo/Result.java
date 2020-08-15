@@ -1,9 +1,8 @@
 package com.puhuilink.qbs.core.base.vo;
 
 import com.puhuilink.qbs.core.base.enums.ResultCode;
-import lombok.AllArgsConstructor;
+import com.puhuilink.qbs.core.base.exception.QbsException;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
@@ -26,7 +25,7 @@ public class Result<T> implements Serializable {
     /**
      * 返回代码
      */
-    private String code;
+    private Integer code;
 
     /**
      * 时间戳
@@ -44,7 +43,7 @@ public class Result<T> implements Serializable {
         this.setCode(ResultCode.SUCCESS.getCode());
     }
 
-    public Result(String errorCode) {
+    public Result(Integer errorCode) {
         this.setSuccess(false);
         this.setCode(errorCode);
     }
@@ -53,28 +52,31 @@ public class Result<T> implements Serializable {
         if (StringUtils.isEmpty(msg)) {
             msg = "ok";
         }
-        return new Result<T>().setMessage(msg);
+        return new Result<T>().msg(msg);
     }
 
     public static <T> Result<T> ok() {
-        return new Result<T>().setMessage("ok");
+        return new Result<T>().msg("ok");
     }
 
-    public static <T> Result<T> error(String msg) {
-        return new Result<T>(ResultCode.INTERNAL_SERVER_ERROR.getCode()).setMessage(msg);
+    public static <T> Result<T> error() {
+        return new Result<T>(ResultCode.INTERNAL_SERVER_ERROR.getCode());
     }
 
-    public static <T> Result<T> error(String code, String msg) {
-        return new Result<T>(code).setMessage(msg);
+    public static <T> Result<T> error(Integer code) {
+        return new Result<T>(code);
+    }
+
+    public static Result<String> error(QbsException e) {
+        return new Result<String>(e.getErrCode()).msg(e.getMessage()).data(e.toString());
     }
 
     public Result<T> data(T t) {
         this.result = t;
-        this.code = ResultCode.SUCCESS.getCode();
         return this;
     }
 
-    public Result<T> setMessage(String msg) {
+    public Result<T> msg(String msg) {
         this.message = msg;
         return this;
     }

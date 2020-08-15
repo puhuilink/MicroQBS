@@ -3,8 +3,8 @@ package com.puhuilink.qbs.core.base.utils;
 import java.text.ParseException;
 import java.time.Instant;
 import java.util.Date;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import cn.hutool.core.date.format.FastDateFormat;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 
 public class DateFormatUtil {
 

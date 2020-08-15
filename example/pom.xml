@@ -2,21 +2,30 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <parent>
-    <artifactId>qbs-parent</artifactId>
-    <groupId>com.puhuilink.qbs</groupId>
-    <version>0.0.3</version>
-  </parent>
-  <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>qbs-parent</artifactId>
+        <groupId>com.puhuilink.qbs</groupId>
+        <version>0.0.4-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>qbs-example</artifactId>
+    <artifactId>qbs-example</artifactId>
 
-  <dependencies>
-    <dependency>
-      <groupId>com.puhuilink.qbs</groupId>
-      <artifactId>qbs-web</artifactId>
-    </dependency>
-
-  </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>com.puhuilink.qbs</groupId>
+            <artifactId>qbs-auth</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
 </project>

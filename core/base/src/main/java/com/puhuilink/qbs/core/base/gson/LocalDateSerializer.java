@@ -13,12 +13,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import cn.hutool.core.date.DatePattern;
+import com.puhuilink.qbs.core.base.constant.Constant;
 
 public class LocalDateSerializer implements JsonSerializer<LocalDate> {
 
     @Override
     public JsonElement serialize(LocalDate src, Type typeOfSrc, JsonSerializationContext context) {
-        return new JsonPrimitive(src.format(DateTimeFormatter.ofPattern(DatePattern.NORM_DATE_PATTERN)));
+        return new JsonPrimitive(src.format(DateTimeFormatter.ofPattern(Constant.DATE_FORMAT)));
     }
 }

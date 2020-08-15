@@ -1,24 +1,29 @@
 # MicroQBS
-快速基础微服务框架
+快速基础微服务框架，基于 springboot2 开发，将web应用中经常用到的功能模块化，同时针对微服务云环境提供一套解决方案
 
-## 基础技术
-- JDK 1.8
-- Springboot 2.1.12
-- Mybatis-plus
-- Postgres
-- Redisson
-- 分页使用 pagehelper
-- Freemark（代码生成模版，邮件模版等）
+## 功能清单
+- 系统日志追踪
+- 请求限流，可配合白名单、黑名单同时服用
+- 用户权限管理，集成 JWT 实现用户登录，路由可配置
+- 集成 spring 失败重试功能，可用于第三方接口调用
 
-## QA
-### VSCODE
-修改module之后Springboot-dashboard无法渲染
-```
-Try closing vscode and cleaning your workspace storage:
+## RoadMap
+### 0.0.5
+- antDesign 界面
+- graphql 支持
 
-On linux: $HOME/.config/Code/User/workspaceStorage
-On mac: $HOME/Library/Application\ Support/Code/User/workspaceStorage
-On windows: %APPDATA%\Code\User\workspaceStorage
-In case it did't help, if you have the VScodeVim extension, try disabling it and restarting vscode. This might be helpful.
+### 0.0.6
+- 服务注册、服务发现统一
+- gateway 支持，gateway 统一登录管理
+- 单点登录服务
 
-```
+## 更新日志
+### 0.0.4
+- 将 web 中各个功能抽取模块化
+- 限流模块可配置，可配合黑名单、白名单控制系统访问
+- 系统轻量化，取消 redis、postgres 等第三方中间件的引用
+- 增加 Cloud 模块，后续微服务化的基础
+- 取消 hutool 等第三方工具包的引用，尽量使用 guava、apache common 等工具包实现相关功能
+
+### 0.0.3
+- 实现一键导入 web 模块开箱使用

@@ -1,5 +1,0 @@
-pagehelper:
-  offsetAsPageNum: true
-  rowBoundsWithCount: true
-  reasonable: true
-  params: count=countSql
