@@ -5,7 +5,7 @@
 
     <groupId>com.puhuilink.qbs</groupId>
     <artifactId>qbs-parent</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.5-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <licenses>
