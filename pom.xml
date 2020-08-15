@@ -5,7 +5,7 @@
 
     <groupId>com.puhuilink.qbs</groupId>
     <artifactId>qbs-parent</artifactId>
-    <version>${version}</version>
+    <version>0.0.5-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <licenses>
@@ -31,10 +31,10 @@
     </modules>
 
     <properties>
-        <version>0.0.5-SNAPSHOT</version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jdk.compile.version>1.8</jdk.compile.version>
+        <qbs.version>0.0.5-SNAPSHOT</qbs.version>
         <mybatis-plus.version>3.3.0</mybatis-plus.version>
         <spring.boot.version>2.1.12.RELEASE</spring.boot.version>
         <netty-socketio.version>1.7.17</netty-socketio.version>
@@ -71,19 +71,19 @@
             <dependency>
                 <groupId>com.puhuilink.qbs</groupId>
                 <artifactId>qbs-common</artifactId>
-                <version>${version}</version>
+                <version>${qbs.version}</version>
             </dependency>
             <!-- 系统日志 -->
             <dependency>
                 <groupId>com.puhuilink.qbs</groupId>
                 <artifactId>qbs-logtrace</artifactId>
-                <version>${version}</version>
+                <version>${qbs.version}</version>
             </dependency>
             <!-- 系统权限 -->
             <dependency>
                 <groupId>com.puhuilink.qbs</groupId>
                 <artifactId>qbs-auth</artifactId>
-                <version>${version}</version>
+                <version>${qbs.version}</version>
             </dependency>
             <!-- 动态数据源 -->
             <dependency>

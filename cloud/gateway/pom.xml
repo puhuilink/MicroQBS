@@ -5,11 +5,11 @@
     <parent>
         <artifactId>qbs-parent</artifactId>
         <groupId>com.puhuilink.qbs</groupId>
-        <version>${version}</version>
+        <version>0.0.5-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <version>${version}</version>
+    <version>0.0.5-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <artifactId>qbs-cloud-gateway</artifactId>
