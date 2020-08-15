@@ -5,10 +5,10 @@
     <select id="listByUserId" resultType="com.puhuilink.qbs.auth.entity.Permission">
       SELECT DISTINCT p.id, p.name, p.show_always, p.title, p.path, p.icon, p.type, p.component, p.level,
         p.button_type, p.parent_id, p.sort_order, p.description, p.status, p.url
-      FROM t_user u
-      LEFT JOIN t_user_role ur ON u.id = ur.user_id
-      LEFT JOIN t_role_permission rp ON ur.role_id = rp.role_id
-      LEFT JOIN t_permission p ON p.id = rp.permission_id
+      FROM qbs_user u
+      LEFT JOIN qbs_user_role ur ON u.id = ur.user_id
+      LEFT JOIN qbs_role_permission rp ON ur.role_id = rp.role_id
+      LEFT JOIN qbs_permission p ON p.id = rp.permission_id
       WHERE u.id = #{userId} AND p.status = 0
       ORDER BY p.sort_order ASC
     </select>

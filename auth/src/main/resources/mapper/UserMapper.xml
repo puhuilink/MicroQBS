@@ -4,7 +4,7 @@
 
     <select id="getByUsername" resultType="com.puhuilink.qbs.auth.entity.User">
         select *
-        from t_user
+        from qbs_user
         where username = #{username}
         limit 1
     </select>

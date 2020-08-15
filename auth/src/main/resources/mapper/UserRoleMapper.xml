@@ -4,16 +4,16 @@
 
     <select id="listByUserId" resultType="com.puhuilink.qbs.auth.entity.Role">
       SELECT r.id id, name, r.data_type
-      FROM t_user_role ur
-      LEFT JOIN t_role r
+      FROM qbs_user_role ur
+      LEFT JOIN qbs_role r
       ON ur.role_id = r.id
       WHERE user_Id = #{userId}
     </select>
 
     <select id="listDepIdsByUserId" resultType="java.lang.String">
         SELECT DISTINCT rd.department_id
-        FROM t_role_department rd
+        FROM qbs_role_department rd
         WHERE role_id IN
-        ( SELECT ur.role_id FROM t_user_role ur WHERE ur.user_id = #{userId} )
+        ( SELECT ur.role_id FROM qbs_user_role ur WHERE ur.user_id = #{userId} )
     </select>
 </mapper>
