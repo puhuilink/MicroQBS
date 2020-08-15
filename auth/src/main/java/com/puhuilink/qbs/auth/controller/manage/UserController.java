@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @RestController
 @Api(tags = "User相关接口")
-@RequestMapping("${qbs.api.path}" + "/manage/user")
+@RequestMapping("/api/manage/user")
 @Transactional
 public class UserController {
 

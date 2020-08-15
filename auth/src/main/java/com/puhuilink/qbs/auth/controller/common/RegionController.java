@@ -30,7 +30,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Api(tags = "行政区域接口")
-@RequestMapping("${qbs.api.path}" + "/common/region")
+@RequestMapping("/api/common/region")
 @RestController
 @Transactional
 public class RegionController {

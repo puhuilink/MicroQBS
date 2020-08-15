@@ -49,8 +49,8 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
         AccessJwtToken accessToken = new AccessJwtToken(token);
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("accessToken", accessToken.getToken());
-        tokenMap.put("refreshToken", "待实现");
-        tokenMap.put("expireTime", "待实现");
+//        tokenMap.put("refreshToken", "待实现");
+//        tokenMap.put("expireTime", "待实现");
         ResponseUtil.out(response, ResponseUtil.resultMap(true, ResultCode.SUCCESS.getCode(), "登录成功", tokenMap));
         clearAuthenticationAttributes(request);
     }
