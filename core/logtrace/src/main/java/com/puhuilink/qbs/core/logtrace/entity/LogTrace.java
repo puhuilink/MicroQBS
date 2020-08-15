@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 @Data
-@TableName("t_log")
+@TableName("qbs_log")
 public class LogTrace {
     @TableId(type = IdType.ASSIGN_ID)
     @ApiModelProperty(value = "唯一标识")

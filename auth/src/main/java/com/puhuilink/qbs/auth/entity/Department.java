@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@TableName("t_department")
+@TableName("qbs_department")
 @ApiModel(value = "部门")
 public class Department extends QbsBaseEntity {
 

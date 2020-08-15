@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@TableName("t_log")
+@TableName("qbs_log")
 public class LogTrace extends QbsBaseEntity {
     @ApiModelProperty(value = "方法操作名称")
     private String name;

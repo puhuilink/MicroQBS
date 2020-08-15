@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@TableName("t_dict")
+@TableName("qbs_dict")
 @ApiModel(value = "字典数据")
 public class Dict extends QbsBaseEntity {
 

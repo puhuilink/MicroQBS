@@ -19,7 +19,7 @@ import lombok.Data;
  * @create: 2020-08-14 11:24
  **/
 @Data
-@TableName("t_user_token")
+@TableName("qbs_user_token")
 @ApiModel(value = "用户TOKEN信息")
 public class UserToken extends QbsBaseEntity {
 

@@ -62,9 +62,7 @@ qbs:
     # 用户选择保存登录状态对应token过期时间（天）
     saveLoginTime: 7
   api:
-    version: v1
-    prefix: api
-    path: /${qbs.api.prefix}/${qbs.api.version}
+    path: /api/v1
   # 忽略鉴权url
   ignored:
     urls:
@@ -77,7 +75,7 @@ qbs:
       - /**/*.png
       - /**/*.ico
       - /*/test/**
-      - /index
+      - /api/v1/index
 
 # Swagger界面内容配置
 swagger:

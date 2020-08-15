@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@TableName("t_setting")
+@TableName("qbs_setting")
 @ApiModel(value = "配置")
 @NoArgsConstructor
 public class Setting extends QbsBaseEntity {

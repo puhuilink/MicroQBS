@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@TableName("t_user")
+@TableName("qbs_user")
 @ApiModel(value = "用户")
 public class User extends QbsBaseEntity {
 

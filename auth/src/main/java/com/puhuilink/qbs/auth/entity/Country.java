@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
-@TableName("t_country")
+@TableName("qbs_country")
 public class Country implements Serializable {
 
     /**
