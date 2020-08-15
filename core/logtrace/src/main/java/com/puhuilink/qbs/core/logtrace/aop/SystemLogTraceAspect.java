@@ -87,7 +87,7 @@ public class SystemLogTraceAspect {
         return map;
     }
 
-    @Pointcut("@annotation(com.puhuilink.qbs.core.base.annotation.SystemLogTrace)")
+    @Pointcut("@annotation(com.puhuilink.qbs.core.logtrace.annotation.SystemLogTrace)")
     public void controllerAspect() {
 
     }
