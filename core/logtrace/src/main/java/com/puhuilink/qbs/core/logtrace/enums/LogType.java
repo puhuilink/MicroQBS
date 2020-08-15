@@ -1,4 +1,4 @@
-package com.puhuilink.qbs.core.base.enums;
+package com.puhuilink.qbs.core.logtrace.enums;
 
 public enum LogType {
 

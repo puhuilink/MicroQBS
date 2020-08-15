@@ -1,6 +1,7 @@
 package com.puhuilink.qbs.core.logtrace.annotation;
 
-import com.puhuilink.qbs.core.base.enums.LogType;
+
+import com.puhuilink.qbs.core.logtrace.enums.LogType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

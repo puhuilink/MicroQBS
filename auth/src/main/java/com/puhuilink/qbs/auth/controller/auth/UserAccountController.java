@@ -9,19 +9,15 @@ package com.puhuilink.qbs.auth.controller.auth;
 import com.puhuilink.qbs.auth.controller.vo.UserRegistVO;
 import com.puhuilink.qbs.auth.entity.User;
 import com.puhuilink.qbs.auth.service.UserService;
-import com.puhuilink.qbs.auth.service.UserTokenService;
-import com.puhuilink.qbs.auth.utils.SecurityConstant;
-import com.puhuilink.qbs.auth.utils.SecurityUtil;
-import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
-import com.puhuilink.qbs.core.base.enums.LogType;
 import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.common.utils.CommonConstant;
 import com.puhuilink.qbs.core.common.validate.tag.OnAdd;
+import com.puhuilink.qbs.core.logtrace.annotation.SystemLogTrace;
+import com.puhuilink.qbs.core.logtrace.enums.LogType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -30,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController

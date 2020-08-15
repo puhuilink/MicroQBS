@@ -7,9 +7,9 @@
  */
 package com.puhuilink.qbs.core.logtrace.aop;
 
-import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
 import com.puhuilink.qbs.core.base.utils.InheritableThreadLocalUtil;
 import com.puhuilink.qbs.core.base.utils.IpInfoUtil;
+import com.puhuilink.qbs.core.logtrace.annotation.SystemLogTrace;
 import com.puhuilink.qbs.core.logtrace.entity.LogTrace;
 import com.puhuilink.qbs.core.logtrace.service.LogTraceService;
 import lombok.extern.slf4j.Slf4j;

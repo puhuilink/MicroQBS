@@ -14,14 +14,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
-import com.puhuilink.qbs.core.base.enums.LogType;
 import com.puhuilink.qbs.core.base.enums.ResultCode;
 import com.puhuilink.qbs.auth.security.model.SecurityUser;
 import com.puhuilink.qbs.auth.security.model.token.AccessJwtToken;
 import com.puhuilink.qbs.auth.utils.ResponseUtil;
 import com.puhuilink.qbs.auth.utils.SecurityUtil;
 
+import com.puhuilink.qbs.core.logtrace.annotation.SystemLogTrace;
+import com.puhuilink.qbs.core.logtrace.enums.LogType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

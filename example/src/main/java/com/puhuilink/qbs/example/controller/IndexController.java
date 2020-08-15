@@ -1,8 +1,8 @@
 package com.puhuilink.qbs.example.controller;
 
-import com.puhuilink.qbs.core.base.annotation.SystemLogTrace;
 import com.puhuilink.qbs.core.base.vo.Result;
 import com.puhuilink.qbs.core.limiter.annotation.Limiter;
+import com.puhuilink.qbs.core.logtrace.annotation.SystemLogTrace;
 import com.puhuilink.qbs.example.service.IndexService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
