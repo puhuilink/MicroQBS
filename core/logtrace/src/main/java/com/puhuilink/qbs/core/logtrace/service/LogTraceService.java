@@ -3,7 +3,6 @@ package com.puhuilink.qbs.core.logtrace.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.puhuilink.qbs.core.base.vo.SearchVO;
 import com.puhuilink.qbs.core.logtrace.entity.LogTrace;
-import org.springframework.cache.annotation.CacheConfig;
 
 import java.util.List;
 

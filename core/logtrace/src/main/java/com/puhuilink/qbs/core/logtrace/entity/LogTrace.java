@@ -27,7 +27,7 @@ public class LogTrace {
     @ApiModelProperty(value = "方法操作名称")
     private String name;
 
-    @ApiModelProperty(value = "日志类型 0登陆日志 1操作日志")
+    @ApiModelProperty(value = "日志类型")
     private Integer logType;
 
     @ApiModelProperty(value = "请求路径")
