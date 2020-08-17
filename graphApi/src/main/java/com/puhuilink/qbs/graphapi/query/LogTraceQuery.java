@@ -1,4 +1,4 @@
-package com.puhuilink.qbs.graphapi;
+package com.puhuilink.qbs.graphapi.query;
 
 import com.puhuilink.qbs.core.logtrace.annotation.SystemLogTrace;
 import com.puhuilink.qbs.core.logtrace.entity.LogTrace;
@@ -11,12 +11,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class LogTraceQuery implements GraphQLQueryResolver {
+public class LogTraceQuery implements GraphQLQueryResolver{
     @Autowired
     public LogTraceService logTraceService;
 
-    @SystemLogTrace(description = "Query Graphql....", type = LogType.QUERY)
-    public List<LogTrace> logtrace() {
+    @SystemLogTrace(description = "Query Graphql Api", type = LogType.QUERY)
+    public List<LogTrace> listLogtrace() {
         return logTraceService.list();
     }
 }
