@@ -1,2 +1,100 @@
 server:
-    port: 9080
+  port: 9080
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+
+spring:
+  # 数据源
+  datasource:
+    dynamic:
+      p6spy: true
+      hikari:
+        connection-timeout: 30000
+        max-lifetime: 1800000
+        max-pool-size: 100
+        min-idle: 5
+        connection-test-query: select 1
+        pool-name: DemoHikariCP
+      # 配置默认数据源
+      primary: primary
+      datasource:
+        # 数据源-1，名称为 primary
+        primary:
+          username: postgres
+          password: postgres
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://localhost:5432/qbs_demo
+        # 数据源-2，名称为 test
+  #        recMain:
+  #          username: postgres
+  #          password: Pwd4PgSQLinCCCC.2019
+  #          driver-class-name: org.postgresql.Driver
+  #          url: jdbc:postgresql://10.1.13.19:5432/rec_main
+  # 文件大小上传配置
+  messages:
+    encoding: utf-8
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+qbs:
+  # 全局限流，type=all的情况
+  ratelimit:
+    enable: true
+    QPS: 1
+    # AUTHORITY_WHITE, AUTHORITY_BLACK, NULL
+    ruleAuthority: AUTHORITY_WHITE
+    ipList:
+      - 127.0.0.1
+  # token交互方式
+  token:
+    # 是否开启单设备登陆
+    sdl: true
+    # token中存储用户权限数据 设为true开启后可避免每次请求再获取用户权限，但有可能导致编辑权限菜单后无法读取到最新权限数据（需用户重新登录）
+    storePerms: true
+    # token过期时间（分钟）
+    tokenExpireTime: 60
+    # 用户选择保存登录状态对应token过期时间（天）
+    saveLoginTime: 7
+  api:
+    path: /api/v1
+  # 忽略鉴权url
+  ignored:
+    urls:
+      - /actuator/**
+      - /admin/**
+      - /dictData/getByType/**
+      - /user/regist
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /*/test/**
+      - /api/v1/index
+
+# Swagger界面内容配置
+swagger:
+  title: QBS API接口文档
+  description: QBS Api Documentation
+  version: 0.0.4
+  termsOfServiceUrl: http://puhuilink.com
+  contact:
+    name: wen wen
+    url: http://puhuilink.com
+    email: wenwen@puhuilink.com
+
+# Mybatis-plus
+mybatis-plus:
+  mapper-locations:
+    - classpath*:demo-mapper/*.xml
+    - classpath*:mapper/*.xml
+  type-enums-package: com.puhuilink.qbs.*
+
+# 日志
+logging:
+  config: classpath:log4j2.xml

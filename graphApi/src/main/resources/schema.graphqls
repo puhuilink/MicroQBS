@@ -1,16 +1,12 @@
 type Query {
-  bookById(id: ID): Book
+    logtrace: [LogTrace]
 }
 
-type Book {
-  id: ID
-  name: String
-  pageCount: Int
-  author: Author
-}
-
-type Author {
-  id: ID
-  firstName: String
-  lastName: String
+type LogTrace {
+    id: String!
+    name: String
+    requestUrl: String
+    requestType: String
+    ip: String
+    costTime: String
 }
