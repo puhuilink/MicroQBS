@@ -216,22 +216,6 @@
                 <version>${junit.jupiter.version}</version>
                 <scope>test</scope>
             </dependency>
-            <!-- redisson -->
-            <dependency>
-                <groupId>org.redisson</groupId>
-                <artifactId>redisson</artifactId>
-                <version>${redisson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.redisson</groupId>
-                <artifactId>redisson-spring-boot-starter</artifactId>
-                <version>${redisson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.redisson</groupId>
-                <artifactId>redisson-spring-data-21</artifactId>
-                <version>${redisson.version}</version>
-            </dependency>
             <!-- swagger -->
             <dependency>
                 <groupId>io.springfox</groupId>
