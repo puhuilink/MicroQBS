@@ -1,5 +1,7 @@
 package com.puhuilink.qbs.graphapi.resolver;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.puhuilink.qbs.core.logtrace.entity.LogTrace;
 import com.puhuilink.qbs.core.logtrace.service.LogTraceService;
 import graphql.kickstart.tools.GraphQLQueryResolver;
@@ -13,11 +15,16 @@ public class LogTraceQuery implements GraphQLQueryResolver {
     @Autowired
     public LogTraceService logTraceService;
 
-    public List<LogTrace> logTraces() {
+    public List<LogTrace> listLogTrace() {
         return logTraceService.list();
     }
 
-    public LogTrace logTrace(String id) {
+    public List<LogTrace> pageLogTrace(int pageNumber, int pageSize) {
+        PageInfo<LogTrace> pages = PageHelper.startPage(pageNumber, pageSize).doSelectPageInfo(() -> logTraceService.list());
+        return pages.getList();
+    }
+
+    public LogTrace getLogTrace(String id) {
         return logTraceService.getById(id);
     }
 }

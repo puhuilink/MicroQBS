@@ -8,8 +8,9 @@ type LogTrace {
 }
 
 type Query {
-    logTraces: [LogTrace]
-    logTrace(id: String!): LogTrace
+    listLogTrace: [LogTrace]
+    pageLogTrace(pageNumber: Int!, pageSize: Int!): [LogTrace]
+    getLogTrace(id: String!): LogTrace
 }
 
 type Mutation{
