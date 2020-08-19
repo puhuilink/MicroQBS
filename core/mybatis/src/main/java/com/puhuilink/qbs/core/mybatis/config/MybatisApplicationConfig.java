@@ -8,9 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.PostConstruct;
 
 @Configuration
-@ComponentScan(basePackageClasses = {
-        PageInterceptorConfig.class
-})
 public class MybatisApplicationConfig {
     @Autowired
     ApplicationContext applicationContext;
