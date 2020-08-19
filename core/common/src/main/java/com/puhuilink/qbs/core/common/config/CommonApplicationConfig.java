@@ -9,13 +9,11 @@ package com.puhuilink.qbs.core.common.config;
 import com.puhuilink.qbs.core.common.config.httpclient.HttpClientConfig;
 import com.puhuilink.qbs.core.common.config.httpclient.RestTemplateConfig;
 import com.puhuilink.qbs.core.common.config.mybatis.MybatisConfig;
-import com.puhuilink.qbs.core.limiter.aop.LimitAspect;
-import com.puhuilink.qbs.core.limiter.config.properties.RateLimiterProperties;
+import com.puhuilink.qbs.core.common.config.properties.QbsThreadPoolProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 import javax.annotation.PostConstruct;
 
@@ -25,6 +23,7 @@ import javax.annotation.PostConstruct;
         Swagger2Config.class,
         HttpClientConfig.class,
         RestTemplateConfig.class,
+        QbsThreadPoolProperties.class,
         MybatisConfig.class
 })
 public class CommonApplicationConfig {

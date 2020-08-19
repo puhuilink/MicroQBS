@@ -23,6 +23,7 @@ import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 import springfox.documentation.spring.web.json.Json;
 
 import java.time.LocalDate;
@@ -82,5 +83,10 @@ public class WebConfig extends WebMvcConfigurationSupport {
     @Bean
     public RequestContextListener requestContextListener(){
         return new RequestContextListener();
+    }
+
+    @Bean(name = "mvcHandlerMappingIntrospector")
+    public HandlerMappingIntrospector mvcHandlerMappingIntrospector() {
+        return new HandlerMappingIntrospector();
     }
 }

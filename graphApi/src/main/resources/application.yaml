@@ -1,5 +1,5 @@
 server:
-  port: 9080
+  port: 8899
   servlet:
     context-path: /
   tomcat:
@@ -41,6 +41,10 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
+
+graphql:
+  servlet:
+    mapping: /api/graphql
 
 qbs:
   # 全局限流，type=all的情况
