@@ -49,11 +49,6 @@
             <groupId>com.puhuilink.qbs</groupId>
             <artifactId>qbs-auth</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.puhuilink.qbs</groupId>-->
-<!--            <artifactId>qbs-logtrace</artifactId>-->
-<!--        </dependency>-->
-
         <dependency>
             <groupId>com.graphql-java-kickstart</groupId>
             <artifactId>graphql-spring-boot-starter</artifactId>
