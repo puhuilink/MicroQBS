@@ -5,16 +5,13 @@ pagehelper:
   params: count=countSql
 
 qbs:
-  api:
-    version: v1
-    prefix: api
-    path: /${qbs.api.prefix}/${qbs.api.version}
-  security:
-    WEBJARS_ENTRY_POINT: /webjars/**
-    USERNAME_LOGIN_ENTRY_POINT: ${qbs.api.path}/auth/login
-    MOBILE_LOGIN_ENTRY_POINT: ${qbs.api.path}/auth/login/mobile
-    IMAGE_LOGIN_ENTRY_POINT: ${qbs.api.path}/auth/login/image
-    TOKEN_REFRESH_ENTRY_POINT: ${qbs.api.path}/auth/token
-    TOKEN_BASED_AUTH_ENTRY_POINT: ${qbs.api.path}
-    WS_TOKEN_BASED_AUTH_ENTRY_POINT: ${qbs.api.path}/ws
-    NOAUTH_ENTRY_POINT: ${qbs.api.path}/auth/**
+  entrypoint:
+    base: /api
+    auth:
+      base: ${qbs.entrypoint.base}/auth
+      usernameLogin: ${qbs.entrypoint.auth.base}/login
+      mobileLogin: ${qbs.entrypoint.auth.base}/login/mobile
+      imageLogin: ${qbs.entrypoint.auth.base}/login/image
+      tokenProtect: ${qbs.entrypoint.base}/**
+    ignored:
+      - ${qbs.entrypoint.auth.base}/**

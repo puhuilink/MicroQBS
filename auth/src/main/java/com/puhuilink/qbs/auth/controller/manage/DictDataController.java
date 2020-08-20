@@ -30,7 +30,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @Api(tags = "字典数据管理接口")
-@RequestMapping("/api/manage/dict-data")
+@RequestMapping("${qbs.entrypoint.base}" + "/manage/dict-data")
 @Transactional
 public class DictDataController {
 

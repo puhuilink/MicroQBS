@@ -36,7 +36,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @Api(tags = "部门管理接口")
-@RequestMapping("/api/manage/department")
+@RequestMapping("${qbs.entrypoint.base}" + "/manage/department")
 @Transactional
 public class DepartmentController {
 
