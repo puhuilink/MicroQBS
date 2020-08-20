@@ -18,8 +18,26 @@ type Country {
     countryId: String!
 }
 
+
+type LogTrace {
+    id: String!
+    name: String
+    requestUrl: String
+    requestType: String
+    ip: String
+    costTime: String
+}
+
 type Query {
+    listLogTrace: [LogTrace]
+    pageLogTrace(pageNumber: Int!, pageSize: Int!): [LogTrace]
+    getLogTrace(id: String!): LogTrace
     provinces: [Province]
     cities(provinceId: String!): [City]
     countries(cityId: String!): [Country]
+}
+
+
+type Mutation{
+    deleteLogTrace(id: String!): Boolean
 }
