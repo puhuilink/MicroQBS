@@ -1,6 +1,7 @@
 package com.puhuilink.qbs.core.common.base;
 
 import com.google.gson.annotations.Expose;
+import com.puhuilink.qbs.core.base.gson.annotation.Exclude;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -8,25 +9,25 @@ import java.time.LocalDateTime;
 @Data
 public class RecordInfo<T> extends QbsBaseEntity{
 
-    @Expose(serialize = false, deserialize = true)
-    Long createBy;
+    @Exclude
+    String createBy;
 
-    @Expose(serialize = false, deserialize = true)
+    @Exclude
     LocalDateTime createTime;
 
-    @Expose(serialize = false, deserialize = true)
-    Long updateBy;
+    @Exclude
+    String updateBy;
 
-    @Expose(serialize = false, deserialize = true)
+    @Exclude
     LocalDateTime updateTime;
 
-    public T createdBy(Long userId) {
+    public T createdBy(String userId) {
         this.createBy = userId;
         this.createTime = LocalDateTime.now();
         return (T) this;
     }
 
-    public void updatedBy(Long userId) {
+    public void updatedBy(String userId) {
         this.updateBy = userId;
         this.updateTime = LocalDateTime.now();
     }
