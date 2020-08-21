@@ -6,6 +6,7 @@
  */
 package com.puhuilink.qbs.auth.controller.manage;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.puhuilink.qbs.core.base.vo.PageVO;
@@ -37,11 +38,11 @@ public class LogController {
 
     @GetMapping(value = "/page")
     @ApiOperation(value = "分页获取全部")
-    public Result page(@RequestParam(required = false) Integer type, @RequestParam String key,
+    public Result<Object> page(@RequestParam(required = false) Integer type, @RequestParam String key,
                        SearchVO searchVo, PageVO pageVo) {
-        PageInfo<LogTrace> page = PageHelper
+        Page<LogTrace> page = PageHelper
                 .startPage(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getSort() + " " + pageVo.getOrder())
-                .doSelectPageInfo(() -> logService.listByCondition(type, key, searchVo));
+                .doSelectPage(() -> logService.listByCondition(type, key, searchVo));
         return Result.ok().data(page);
     }
 }

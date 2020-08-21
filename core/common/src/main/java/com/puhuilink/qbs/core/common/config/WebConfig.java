@@ -7,14 +7,12 @@
  */
 package com.puhuilink.qbs.core.common.config;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import com.puhuilink.qbs.core.base.constant.Constant;
 import com.puhuilink.qbs.core.base.gson.*;
 import com.puhuilink.qbs.core.common.aop.AppInterceptor;
+import com.puhuilink.qbs.core.base.gson.ExcludeExclusionStrategy;
 import com.puhuilink.qbs.core.common.config.gson.SpringfoxJsonToGsonAdapter;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -38,6 +36,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
     public Gson buildGson() {
         Gson gson = new GsonBuilder()
                 .setDateFormat(Constant.DATETIME_FORMAT)
+                .addSerializationExclusionStrategy(new ExcludeExclusionStrategy())
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
                 .registerTypeAdapter(LocalDate.class, new LocalDateSerializer())
                 .registerTypeAdapter(LocalTime.class, new LocalTimeSerializer())
