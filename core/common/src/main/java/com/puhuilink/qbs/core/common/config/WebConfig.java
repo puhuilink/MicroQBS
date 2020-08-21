@@ -10,6 +10,7 @@ package com.puhuilink.qbs.core.common.config;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.puhuilink.qbs.core.base.constant.Constant;
 import com.puhuilink.qbs.core.base.gson.*;
 import com.puhuilink.qbs.core.common.aop.AppInterceptor;
 import com.puhuilink.qbs.core.common.config.gson.SpringfoxJsonToGsonAdapter;
@@ -35,7 +36,8 @@ import java.util.List;
 public class WebConfig extends WebMvcConfigurationSupport {
     @Bean
     public Gson buildGson() {
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss")
+        Gson gson = new GsonBuilder()
+                .setDateFormat(Constant.DATETIME_FORMAT)
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
                 .registerTypeAdapter(LocalDate.class, new LocalDateSerializer())
                 .registerTypeAdapter(LocalTime.class, new LocalTimeSerializer())
