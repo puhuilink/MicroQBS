@@ -13,7 +13,7 @@ public class PageVO implements Serializable {
 
     private int pageSize = Integer.MAX_VALUE;
 
-    private String sort;
+    private String sort = "id";
 
-    private String order;
+    private String order = "desc";
 }
