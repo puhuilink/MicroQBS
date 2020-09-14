@@ -1,13 +1,12 @@
 package com.puhuilink.qbs.core.common.base;
 
-import com.google.gson.annotations.Expose;
 import com.puhuilink.qbs.core.base.gson.annotation.Exclude;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-public class RecordInfo<T> extends QbsBaseEntity{
+public class RecordInfo<T> extends QbsBaseEntity {
 
     @Exclude
     String createBy;
