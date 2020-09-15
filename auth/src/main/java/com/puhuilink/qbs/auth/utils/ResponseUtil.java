@@ -8,6 +8,7 @@
 package com.puhuilink.qbs.auth.utils;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +41,7 @@ public class ResponseUtil {
             response.setCharacterEncoding(StandardCharsets.UTF_8.name());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             out = response.getOutputStream();
-            out.write(new Gson().toJson(resultMap).getBytes());
+            out.write(new Gson().toJson(resultMap).getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
             log.error(e + "输出JSON出错");
         } finally {
