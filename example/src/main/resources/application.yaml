@@ -25,9 +25,9 @@ spring:
         # 数据源-1，名称为 primary
         primary:
           username: postgres
-          password: postgres
+          password: root.123*
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://localhost:5432/qbs_demo
+          url: jdbc:postgresql://62.234.37.170:5432/qbs_demo
         # 数据源-2，名称为 test
 #        recMain:
 #          username: postgres
