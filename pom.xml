@@ -23,9 +23,6 @@
     <module>core/limiter</module>
     <module>core/logtrace</module>
     <module>auth</module>
-    <module>cloud/gateway</module>
-    <module>cloud/nacos</module>
-    <module>example</module>
   </modules>
 
   <properties>
