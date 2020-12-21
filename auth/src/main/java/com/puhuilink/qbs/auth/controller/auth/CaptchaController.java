@@ -26,7 +26,7 @@ import java.io.IOException;
 
 @Slf4j
 @Api(tags = "验证码相关接口")
-@RequestMapping("/api/auth/captcha")
+@RequestMapping("${qbs.entrypoint.auth.base}" + "/captcha")
 @RestController
 @Transactional
 public class CaptchaController {

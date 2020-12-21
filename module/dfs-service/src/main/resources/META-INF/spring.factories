@@ -1,2 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.puhuilink.qbs.module.file.impl.FdfsStorageServiceImpl\

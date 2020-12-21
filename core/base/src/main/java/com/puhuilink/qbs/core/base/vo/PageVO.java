@@ -9,11 +9,11 @@ public class PageVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private int pageNumber;
+    private int pageNumber = 1;
 
-    private int pageSize;
+    private int pageSize = Integer.MAX_VALUE;
 
-    private String sort;
+    private String sort = "id";
 
-    private String order;
+    private String order = "desc";
 }

@@ -11,8 +11,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.Version;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.puhuilink.qbs.core.base.gson.annotation.Exclude;
 import com.puhuilink.qbs.core.common.validate.tag.OnCheckID;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -28,12 +28,12 @@ public class QbsBaseEntity {
     @ApiModelProperty(value = "唯一标识")
     private String id;
 
-    @JsonIgnore
+    @Exclude
     @TableLogic
     @ApiModelProperty(value = "删除标志 默认0")
     private Integer delFlag;
 
-    @JsonIgnore
+    @Exclude
     @Version
     @ApiModelProperty(value = "乐观锁")
     private Integer version;

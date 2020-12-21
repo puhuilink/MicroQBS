@@ -1,5 +1,10 @@
 package com.puhuilink.qbs.auth.utils;
 
+import cn.hutool.crypto.Mode;
+import cn.hutool.crypto.Padding;
+import cn.hutool.crypto.SecureUtil;
+import cn.hutool.crypto.symmetric.AES;
+import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.puhuilink.qbs.auth.config.properties.QbsTokenProperties;
@@ -25,6 +30,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -34,7 +40,8 @@ import java.util.*;
 @Slf4j
 @Component
 public class SecurityUtil {
-
+    private static final String QBS_KEY = "0CoJUm6Qyw8W8jud";
+    private static final String QBS_IV = "QBS.IV.010203040";
     @Autowired
     private QbsTokenProperties tokenProperties;
     @Autowired
@@ -91,8 +98,8 @@ public class SecurityUtil {
                 // 签名算法和密钥
                 .signWith(key)
                 .compact();
-
-        String tokenEncode = EncrypterHelper.encrypt(token);
+        AES aes = new AES(Mode.CTS, Padding.PKCS5Padding, QBS_KEY.getBytes(), QBS_IV.getBytes());
+        String tokenEncode = aes.encryptBase64(token);
         if(tokenProperties.getSdl()) {
             // 单设备登录，只允许一个存在
             userTokenService.logoutAndCreate(u, tokenEncode);
@@ -220,7 +227,9 @@ public class SecurityUtil {
             log.warn("Token 为空");
             throw new BadCredentialsException("认证签名不存在，请登录后再操作");
         }
-        String token = EncrypterHelper.decrypt(tokenEncode);
+//        byte[] keyBytes = SecureUtil.generateKey(SymmetricAlgorithm.AES.getValue()).getEncoded();
+        AES aes = new AES(Mode.CTS, Padding.PKCS5Padding, QBS_KEY.getBytes(), QBS_IV.getBytes());
+        String token = aes.decryptStr(tokenEncode);
         // 用户名
         String username = null;
         // 权限

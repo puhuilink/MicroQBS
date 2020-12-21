@@ -2,8 +2,8 @@
  * @Author: sevncz.wen
  * @Date: 2020-03-24 10:35:07
  * @LastEditors: sevncz.wen
- * @LastEditTime: 2020-05-19 09:17:45
- * @FilePath: /phlink-common-framework/core/web/src/main/java/com/phlink/core/web/config/httpclient/RestTemplateConfig.java
+ * @LastEditTime: 2020-11-13 18:20:26
+ * @FilePath: /MicroQBS/core/common/src/main/java/com/puhuilink/qbs/core/common/config/httpclient/RestTemplateConfig.java
  */
 package com.puhuilink.qbs.core.common.config.httpclient;
 

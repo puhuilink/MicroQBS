@@ -25,9 +25,9 @@ spring:
         # 数据源-1，名称为 primary
         primary:
           username: postgres
-          password: postgres
+          password: root.123*
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://localhost:5432/qbs_demo
+          url: jdbc:postgresql://62.234.37.170:5432/qbs_demo
         # 数据源-2，名称为 test
 #        recMain:
 #          username: postgres
@@ -61,21 +61,16 @@ qbs:
     tokenExpireTime: 60
     # 用户选择保存登录状态对应token过期时间（天）
     saveLoginTime: 7
-  api:
-    path: /api/v1
-  # 忽略鉴权url
-  ignored:
-    urls:
-      - /actuator/**
-      - /admin/**
-      - /dictData/getByType/**
-      - /user/regist
-      - /**/*.js
-      - /**/*.css
-      - /**/*.png
-      - /**/*.ico
-      - /*/test/**
-      - /api/v1/index
+  entrypoint:
+    base: /api/v1
+    auth:
+      base: ${qbs.entrypoint.base}/auth
+      usernameLogin: ${qbs.entrypoint.auth.base}/login
+      mobileLogin: ${qbs.entrypoint.auth.base}/login/mobile
+      imageLogin: ${qbs.entrypoint.auth.base}/login/image
+      tokenProtect: ${qbs.entrypoint.base}/**
+    ignored:
+      - ${qbs.entrypoint.auth.base}/**
 
 # Swagger界面内容配置
 swagger:

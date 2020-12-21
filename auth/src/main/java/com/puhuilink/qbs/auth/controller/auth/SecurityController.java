@@ -25,7 +25,7 @@ import java.util.Map;
 
 @RestController
 @Api(tags = "Security相关接口")
-@RequestMapping("/api/auth")
+@RequestMapping("${qbs.entrypoint.auth.base}" + "/auth")
 public class SecurityController {
 
     @Autowired

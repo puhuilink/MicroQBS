@@ -17,8 +17,11 @@ import lombok.Data;
 
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "qbs.ignored")
-public class IgnoredUrlsProperties {
+@ConfigurationProperties(prefix = "qbs.entrypoint")
+public class QbsApiEntryPointProperties {
+    private String base = "/api";
+    private QbsAuthEntryPoint auth = new QbsAuthEntryPoint();
+    private List<String> ignored = new ArrayList<>();
 
-    private List<String> urls = new ArrayList<>();
+
 }

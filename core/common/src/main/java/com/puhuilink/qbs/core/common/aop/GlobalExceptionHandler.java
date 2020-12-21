@@ -39,35 +39,35 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.OK)
     public Result<Object> handleException(Exception e) {
         log.error("系统内部异常，未知异常信息：", e);
         return Result.error().msg("系统内部异常");
     }
 
     @ExceptionHandler(value = RuntimeException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.OK)
     public Result<Object> handleRuntimeException(RuntimeException e) {
         log.error("系统运行时异常：", e);
         return Result.error().msg(e.getMessage());
     }
 
     @ExceptionHandler(value = WarnException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.OK)
     public Result<Object> handleWarnException(WarnException e) {
         log.warn("WARN：{}", e.toString());
         return Result.error(e.getErrCode()).msg(e.getDesc()).data(e.toMap());
     }
 
     @ExceptionHandler(value = ErrorException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.OK)
     public Result<Object> handleErrorException(ErrorException e) {
         log.error("ERROR：{}", e.toString());
         return Result.error(e.getErrCode()).msg(e.getDesc()).data(e.toMap());
     }
 
     @ExceptionHandler(value = FatalException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.OK)
     public Result<Object> handleFatalException(FatalException e) {
         log.error("FATAL：{}", e.toString());
         return Result.error(e.getErrCode()).msg(e.getDesc()).data(e.toMap());
@@ -80,7 +80,7 @@ public class GlobalExceptionHandler {
      * @return Result
      */
     @ExceptionHandler(BindException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.OK)
     public Result<Object> validExceptionHandler(BindException e) {
         log.warn("参数错误：", e);
         StringBuilder message = new StringBuilder();
@@ -100,7 +100,7 @@ public class GlobalExceptionHandler {
      * @return BusApiResponse
      */
     @ExceptionHandler(value = ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.OK)
     public Result<Object> handleConstraintViolationException(ConstraintViolationException e) {
         log.warn("参数错误：", e);
         StringBuilder message = new StringBuilder();
@@ -115,7 +115,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.OK)
     public Result<Object> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         log.warn("请求错误", e);
         return Result.error(ResultCode.BODY_NOT_MATCH.getCode()).msg(e.getMessage());
@@ -123,7 +123,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.OK)
     public Result<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error("参数错误，{}", e.getMessage());
         // Get all errors
@@ -133,7 +133,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.OK)
     public Result<Object> handleHttpMessageNotReadableException(MethodArgumentNotValidException e) {
         log.error("参数格式错误，{}", e.getMessage());
         return Result.error(ResultCode.BODY_NOT_MATCH.getCode()).msg("参数格式错误");

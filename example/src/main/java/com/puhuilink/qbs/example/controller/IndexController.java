@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("${qbs.api.path}" + "/index")
+@RequestMapping("${qbs.entrypoint.base}" + "/index")
 public class IndexController {
 
     @Autowired

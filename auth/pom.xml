@@ -4,12 +4,12 @@
     <parent>
         <artifactId>qbs-parent</artifactId>
         <groupId>com.puhuilink.qbs</groupId>
-        <version>0.0.5-SNAPSHOT</version>
+        <version>0.0.6-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>qbs-auth</artifactId>
-    <version>0.0.5-SNAPSHOT</version>
+    <version>0.0.6-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -62,6 +62,11 @@
         <dependency>
             <groupId>org.jasypt</groupId>
             <artifactId>jasypt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-crypto</artifactId>
+            <version>5.4.0</version>
         </dependency>
         <!-- lombok -->
         <dependency>

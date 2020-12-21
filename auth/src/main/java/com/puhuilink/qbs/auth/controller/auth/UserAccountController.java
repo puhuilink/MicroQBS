@@ -30,7 +30,7 @@ import javax.validation.Valid;
 
 @RestController
 @Api(tags = "用户账户相关接口")
-@RequestMapping("/api/auth/account")
+@RequestMapping("${qbs.entrypoint.auth.base}" + "/account")
 @Transactional
 public class UserAccountController {
 

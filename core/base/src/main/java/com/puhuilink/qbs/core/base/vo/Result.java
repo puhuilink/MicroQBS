@@ -6,6 +6,7 @@ import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 @Data
 public class Result<T> implements Serializable {
@@ -48,6 +49,16 @@ public class Result<T> implements Serializable {
         this.setCode(errorCode);
     }
 
+    public Result<T> data(T t) {
+        this.result = t;
+        return this;
+    }
+
+    public Result<T> msg(String msg) {
+        this.message = msg;
+        return this;
+    }
+
     public static <T> Result<T> ok(String msg) {
         if (StringUtils.isEmpty(msg)) {
             msg = "ok";
@@ -71,13 +82,7 @@ public class Result<T> implements Serializable {
         return new Result<String>(e.getErrCode()).msg(e.getMessage()).data(e.toString());
     }
 
-    public Result<T> data(T t) {
-        this.result = t;
-        return this;
-    }
-
-    public Result<T> msg(String msg) {
-        this.message = msg;
-        return this;
+    public static <T> Result<T> body(T t) {
+        return new Result<T>().msg("ok").data(t);
     }
 }
